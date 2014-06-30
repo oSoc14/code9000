@@ -5,7 +5,7 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class School extends Eloquent  {
+class Appointment extends Eloquent  {
 
 
 	/**
@@ -13,7 +13,11 @@ class School extends Eloquent  {
 	 *
 	 * @var string
 	 */
-	protected $table = 'schools';
+	protected $table = 'appointments';
 
-
+    //returns the group the appointment belongs to
+    public function group()
+    {
+        return $this->hasOne('Group');
+    }
 }
