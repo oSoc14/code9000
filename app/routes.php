@@ -36,11 +36,19 @@ Route::group(array('prefix' => 'calendar'), function()
         'uses' => 'CalendarController@index'
     ]);
 
+    //Shows the selected day's events
+    Route::get('/event/create', [
+        'as'   => 'event.create',
+        'uses' => 'CalendarController@create'
+    ]);
+
+    //Shows the selected day's events
     Route::get('/events', [
         'as'   => 'calendar.list',
         'uses' => 'CalendarController@listView'
     ]);
 
+    //Returns all events for the users school
     Route::get('/api/events', [
         'as'   => 'calendar.events',
         'uses' => 'CalendarController@events'

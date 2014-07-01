@@ -1,5 +1,4 @@
 <?php
-use Cartalyst\Sentry\Groups\Eloquent\Group;
 class CalendarController extends \BaseController {
 
     //MASTER LAYOUT THEMPLATE
@@ -25,7 +24,7 @@ class CalendarController extends \BaseController {
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listView of the resource.
      *
      * @return Response
      */
@@ -48,16 +47,12 @@ class CalendarController extends \BaseController {
         }
         else
         {
+            //GETS THE APPOINTMENTS FROM THE SCHOOL
             $user = Sentry::getUser();
             $user->load('school.groups.appointments');
-
-            
-            $appointments = Appointment::get();
-            return Response::json($user)->setCallback(Input::get('callback'));
-            //return View::make('calendar.events');
+            //RETURNS JSON RESPONS OFF THE USER
+            return Response::json($user)->setCallback(Input::get('callback'));//return View::make('calendar.events');
         }
-
-
     }
 
 
@@ -68,9 +63,17 @@ class CalendarController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
-	}
+        $user = Sentry::getUser();
+        $user->load('school.groups.appointments');
+        $groups = $user->school->groups;
+        $smartgroup = [];
 
+        foreach($groups as $group){
+            $smartgroup[$group->id] = $group->name;
+        }
+
+        return View::make('calendar.create')->with('groups',$smartgroup);
+	}
 
 	/**
 	 * Store a newly created resource in storage.
@@ -79,7 +82,15 @@ class CalendarController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+        if ( ! Sentry::check())
+        {
+            // User is not logged in, or is not activated
+            return Redirect::route('index');
+        }
+        else
+        {
+
+        }
 	}
 
 
