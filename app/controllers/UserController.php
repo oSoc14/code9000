@@ -11,9 +11,11 @@ class UserController extends \BaseController {
      */
     public function index()
     {
+        // If user is logged in, redirect to calendar index
         if(Sentry::check()) {
             $this->layout->content = View::make('calendar.index');
         } else {
+            // else, redirect to login page
             $this->layout->content = View::make('login');
         }
     }
@@ -39,7 +41,7 @@ class UserController extends \BaseController {
             }
 
             // Redirect to logged in page
-            return Redirect::to('home');
+            return Redirect::to('calendar.index');
         }
         // Error handling
         catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
