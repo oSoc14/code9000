@@ -10,21 +10,20 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-//home
+
+//Login
 Route::get('/', [
     'as'   => 'index',
     'uses' => 'UserController@index'
 ]);
 
-Route::get('/home', function()
+Route::group(array('prefix' => 'user'), function()
 {
-  return View::make('home');
+    Route::post('/auth', [
+        'as' => 'user.auth',
+        'uses' => 'UserController@auth'
+    ]);
 });
-
-Route::post('user/auth', [
-    'as' => 'user.auth',
-    'uses' => 'UserController@auth'
-]);
 
 
 Route::group(array('prefix' => 'calendar'), function()
