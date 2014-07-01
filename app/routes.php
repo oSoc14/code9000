@@ -11,27 +11,33 @@
 |
 */
 
-Route::get('/', function()
-{
-  // if logged out --> go to login
-  return View::make('login');
-  // if logged in  --> go to home
-
-});
+Route::get('/', [
+    'as'   => 'index',
+    'uses' => 'UserController@index'
+]);
 
 Route::get('/home', function()
 {
-  // only view if logged in & is admin!
-  return View::make('home');
+    return View::make('home');
 });
 
-Route::get('/events', function()
+Route::group(['prefix' => 'user'], function () {
+    Route::post('/auth', [
+        'as' => 'user.auth',
+        'uses' => 'UserController@auth'
+    ]);
+
+    Route::get('/logout', [
+        'as'   => 'user.logout',
+        'uses' => 'UserController@logout'
+    ]);
+});
+
+Route::group(array('prefix' => 'calendar'), function()
 {
-  // only view if logged in & is admin!
-  return View::make('events');
+    //home
+    Route::get('/', [
+        'as'   => 'calendar.index',
+        'uses' => 'CalendarController@index'
+    ]);
 });
-
-Route::post('user/auth', [
-    'as' => 'user.auth',
-    'uses' => 'UserController@auth'
-]);
