@@ -20,30 +20,19 @@ class CalendarController extends \BaseController {
         }
         else
         {
-            // User is logged in
-            //$user = Sentry::getUser();
-
-            //$dateoffset = 0;
-            //CHECK IF AN OFFSET IS DEFINED
-            //if (Session::has('dateoffset'))
-            //{
-            //    $dateoffset = Session::get('dateoffset');
-            //}
-
-            //DEFINE DISPLAYING MONTH
-            //$today = new DateTime(date("Y-m"));
-            //$displayMonth = $today->modify($dateoffset.' month');
-            //print_r($displayMonth);
-
-            //GET APPOINTMENTS
-            //print_r($user->school_id);
-
             return View::make('calendar.index');
         }
+    }
 
-
-
-	}
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function listView()
+    {
+        return View::make('calendar.events');
+    }
 
 
 	/**
