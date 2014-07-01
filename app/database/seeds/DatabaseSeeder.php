@@ -27,7 +27,12 @@ class DatabaseSeeder extends Seeder {
         Sentry::register(array(
             'email'    => 'john.doe@example.com',
             'password' => 'foobar',
+            'activated' => true,
         ));
+
+        $user = Sentry::findUserById(1);
+        $adminGroup = Sentry::findGroupById(1);
+        $user->addGroup($adminGroup);
 	}
 
 }

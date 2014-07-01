@@ -3,9 +3,15 @@
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
+	"repositories": [
+        {
+            "type" : "vcs",
+            "url" : "https://github.com/oSoc14/sentry"
+        }
+    ],
 	"require": {
 		"laravel/framework": "4.2.*",
-		"cartalyst/sentry": "2.1.*",
+		"oSoc14/sentry": "dev-master",
 		"eluceo/ical": "*"
 	},
 	"autoload": {
@@ -34,5 +40,5 @@
 	"config": {
 		"preferred-install": "dist"
 	},
-	"minimum-stability": "stable"
+	"minimum-stability": "dev"
 }
