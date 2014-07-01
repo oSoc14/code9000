@@ -6,10 +6,8 @@
 
 <div class="page-container">
 
-    @extends('layout.navbar')
 
     <div class="container">
-        @extends('layout.sidebar')
 
         @section('content')
         <!-- main area -->
