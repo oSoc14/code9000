@@ -5,7 +5,6 @@
 @stop
 
 @section('content')
-
 <div class="page-container">
 
   <!-- top navbar -->
@@ -40,6 +39,7 @@
 
       <!-- main area -->
       <div class="col-xs-12 col-sm-9">
+          <div id='calendar'></div>
         <h1>Dashboard</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisi eu arcu tempus vehicula.
           Nulla faucibus cursus metus in sagittis. Nunc elit leo, imperdiet in ligula in, euismod varius est.
@@ -82,5 +82,10 @@
 @stop
 
 @section('footerScript')
+{{ HTML::style("packages/fullcalendar/fullcalendar.css") }}
+{{ HTML::style("css/calendar.css") }}
 {{ HTML::script('js/app.js') }}
+{{ HTML::script("packages/fullcalendar/lib/moment.min.js") }}
+{{ HTML::script("packages/fullcalendar/fullcalendar.min.js") }}
+{{ HTML::script('js/calendar.js') }}
 @stop
