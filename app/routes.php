@@ -48,6 +48,18 @@ Route::group(array('prefix' => 'calendar'), function()
         'uses' => 'CalendarController@store'
     ]);
 
+    //Shows creation form for events
+    Route::get('/event/edit/{id}', [
+        'as'   => 'event.edit',
+        'uses' => 'CalendarController@edit'
+    ]);
+
+    //Stores events
+    Route::post('/event/edit/{id}', [
+        'as'   => 'event.update',
+        'uses' => 'CalendarController@update'
+    ]);
+
     //Shows the selected day's events
     Route::get('/events', [
         'as'   => 'calendar.list',

@@ -143,7 +143,18 @@ class CalendarController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+        $user = Sentry::getUser();
+        $user->load('school.groups.appointments');
+        $groups = $user->school->groups;
+        $smartgroup = [];
+
+        foreach($groups as $group){
+            $smartgroup[$group->id] = $group->name;
+        }
+
+        $event = Appointment::find($id);
+
+        return View::make('calendar.edit')->with('groups',$smartgroup)->with('event',$event);
 	}
 
 
@@ -155,7 +166,44 @@ class CalendarController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+        if ( ! Sentry::check())
+        {
+            // User is not logged in, or is not activated
+            return Redirect::route('index');
+        }
+        else
+        {
+            $validator = Validator::make(
+                array(
+                    'group' => Input::get('group'),
+                    'description' => Input::get('description'),
+                    'end' => Input::get('end'),
+                    'start' => Input::get('start'),
+                    'title' => Input::get('title')
+                ),
+                array(
+                    'group' => 'required',
+                    'description' => 'required',
+                    'end' => 'required',
+                    'start' => 'required',
+                    'title' => 'required'
+                )
+            );
+            if ($validator->fails())
+            {
+                return Redirect::route('event.edit')->withInput()->withErrors($validator);
+            }
+            else{
+                $event = Appointment::find($id);
+                $event->title = Input::get('title');
+                $event->description = Input::get('description');
+                $event->start_date = new DateTime(Input::get('start'));
+                $event->end_date = new DateTime(Input::get('end'));
+                $event->group_id = Input::get('group');
+                $event->save();
+                return Redirect::route('calendar.index');
+            }
+        }
 	}
 
 
