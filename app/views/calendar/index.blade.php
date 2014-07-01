@@ -4,16 +4,8 @@
 {{ HTML::style("css/app.css") }}
 @stop
 
-<div class="page-container">
-
-    @extends('layout.navbar')
-
-    <div class="container">
-        @extends('layout.sidebar')
 
         @section('content')
-        <!-- main area -->
-        <div class="col-xs-12 col-sm-9">
             <h1>Dashboard</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisi eu arcu tempus vehicula.
                 Nulla faucibus cursus metus in sagittis. Nunc elit leo, imperdiet in ligula in, euismod varius est.
@@ -48,10 +40,6 @@
                 Vestibulum tristique tempor risus et malesuada. Sed eget ligula sed quam placerat dapibus.
                 Integer accumsan ac massa at tempus.</p>
 
-        </div><!-- /.col-xs-12 main -->
-    </div><!--/.row-->
-</div><!--/.container-->
-</div><!--/.page-container-->
 
 @stop
 
