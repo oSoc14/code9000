@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-<a type="button" class="btn btn-default btn-lg" href="calendar/event/create" id="addEvent">
+<a type="button" class="btn btn-default btn-lg" href="{{route('event.create')}}" id="addEvent">
     <span class="glyphicon glyphicon-pencil"></span> Add Events
 </a>
 

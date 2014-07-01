@@ -60,7 +60,7 @@
           <li><a href="events"><span class="glyphicon glyphicon-glass"></span> Events</a></li>
           <li><a href="about"><span class="glyphicon glyphicon-question-sign"></span> About</a></li>
           <li><a href="settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-          <li><a href="{{route('users.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+          <li><a href="{{route('user.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
         </ul>
       </div>
       <div class="col-xs-12 col-sm-9">
