@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>{{ HTML::entities('EduCal') }}</title>
     <!-- Bootstrap core CSS -->
-    {{ HTML::style("//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css") }}
-    {{ HTML::style("//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css") }}
+    {{ HTML::style("css/bootstrap.min.css") }}
+    {{ HTML::style("css/bootstrap-theme.min.css") }}
     <!-- Bootstrap Datepicker -->
     {{ HTML::style("css/datepicker.css") }}
     <!-- Global styles for this template -->
@@ -29,7 +29,8 @@
 <body>
 @yield('content')
 {{ HTML::script("js/jquery-1.11.1.min.js") }}
-{{ HTML::script("//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js") }}
+{{ HTML::script("js/bootstrap.min.js") }}
 {{ HTML::script("js/bootstrap-datepicker.js") }}
+@yield('footerScript')
 </body>
 </html>
