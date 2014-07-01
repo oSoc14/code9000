@@ -16,6 +16,22 @@ Route::get('/', [
     'uses' => 'UserController@index'
 ]);
 
+Route::get('/schools', function(){
+   return View::make('schools');
+});
+Route::get('/users', function(){
+  return View::make('users');
+});
+Route::get('/groups', function(){
+  return View::make('groups');
+});
+Route::get('/about', function(){
+  return View::make('about');
+});
+Route::get('/settings', function(){
+  return View::make('settings');
+});
+
 Route::group(['prefix' => 'user'], function () {
     Route::post('/auth', [
         'as' => 'user.auth',
@@ -30,7 +46,7 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(array('prefix' => 'calendar'), function()
 {
-    //home
+    // Home
     Route::get('/', [
         'as'   => 'calendar.index',
         'uses' => 'CalendarController@index'

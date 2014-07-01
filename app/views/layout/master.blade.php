@@ -53,15 +53,14 @@
       <!-- sidebar -->
       <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
         <ul class="nav">
-          <li class="active"><a href="home">Home</a></li>
-          <li><a href="calendar">Calendar</a></li>
-          <li><a href="schools">Schools</a></li>
-          <li><a href="users">Users</a></li>
-          <li><a href="groups">Groups</a></li>
-          <li><a href="events">Events</a></li>
-          <li><a href="about">About</a></li>
-          <li><a href="settings">Settings</a></li>
-          <li><a href="logout">Log out</a></li>
+          <li><a href="calendar"><span class="glyphicon glyphicon-calendar"></span> Calendar</a></li>
+          <li><a href="schools"><span class="glyphicon glyphicon-home"></span> Schools</a></li>
+          <li><a href="users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+          <li><a href="groups"><span class="glyphicon glyphicon-th-large"></span> Groups</a></li>
+          <li><a href="events"><span class="glyphicon glyphicon-glass"></span> Events</a></li>
+          <li><a href="about"><span class="glyphicon glyphicon-question-sign"></span> About</a></li>
+          <li><a href="settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+          <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
         </ul>
       </div>
       <div class="col-xs-12 col-sm-9">
