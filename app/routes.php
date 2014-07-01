@@ -21,6 +21,11 @@ Route::get('/home', function()
     return View::make('home');
 });
 
+Route::get('/events', function(){
+  return View::make('events');
+});
+
+
 Route::group(['prefix' => 'user'], function () {
     Route::post('/auth', [
         'as' => 'user.auth',

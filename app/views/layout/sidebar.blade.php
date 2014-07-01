@@ -10,5 +10,6 @@
       <li><a href="events">Events</a></li>
       <li><a href="#">About</a></li>
       <li><a href="#">Settings</a></li>
+      <li><a href="#">Log out</a></li>
     </ul>
   </div>
