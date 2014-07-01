@@ -1,10 +1,10 @@
 @extends('layout.master')
-
 @section('header')
-{{ HTML::style("css/landing.css") }}
+{{ HTML::style("css/app.css") }}
+@stop
 @section('content')
 
-<div class="container">
+<div class="col-xs-12 col-sm-9">
     <?php
         if ( ! Sentry::check()) {
         // User is not logged in, or is not activated

@@ -16,11 +16,11 @@
             </div>
             <div class="form-group">
                 <label for="group">Group</label>
-                {{Form::select('group', $groups, $event->group_id);}}
+                {{Form::select('group', $groups, $event->group_id, array('class'=>'form-control'));}}
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" id="description" cols="30" rows="10">{{$event->description}}</textarea>
+                <textarea name="description" id="description" class="form-control" rows="3">{{$event->description}}</textarea>
             </div>
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker1'>
@@ -41,7 +41,6 @@
             {{ Session::get('errorMessage') }}
 
         </div><!-- /.col-xs-12 main -->
-    </div><!--/.row-->
 
 @stop
 
