@@ -5,10 +5,14 @@ class UserController extends \BaseController {
   protected $layout = 'layout.master';
 
     /**
-     * Display a listing of the resource.
+     * Display a Loginform
      *
      * @return Response
      */
+    public function index()
+    {
+        $this->layout->content = View::make('index');
+    }
 
     public function auth()
     {
