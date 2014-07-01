@@ -4,8 +4,8 @@
 {{ HTML::style("css/app.css") }}
 @stop
 
-
         @section('content')
+            <div id="calendar"></div>
             <h1>Dashboard</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisi eu arcu tempus vehicula.
                 Nulla faucibus cursus metus in sagittis. Nunc elit leo, imperdiet in ligula in, euismod varius est.
@@ -39,7 +39,6 @@
                 rhoncus a vel justo. Donec iaculis quis sapien vel molestie. Aliquam sed elementum orci.
                 Vestibulum tristique tempor risus et malesuada. Sed eget ligula sed quam placerat dapibus.
                 Integer accumsan ac massa at tempus.</p>
-
 
 @stop
 
