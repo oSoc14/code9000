@@ -4,11 +4,6 @@
 {{ HTML::style("css/app.css") }}
 @stop
 
-<div class="page-container">
-
-
-    <div class="container">
-
         @section('content')
         <!-- main area -->
         <div class="col-xs-12 col-sm-9">
@@ -47,8 +42,6 @@
 
         </div><!-- /.col-xs-12 main -->
     </div><!--/.row-->
-</div><!--/.container-->
-</div><!--/.page-container-->
 
 @stop
 
