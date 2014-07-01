@@ -15,7 +15,7 @@
         <!-- main area -->
         <div class="col-xs-12 col-sm-9">
             {{ Form::open([
-            'route' => 'user.auth',
+            'route' => 'event.store',
             'data-ajax' => 'false',
             ]), PHP_EOL }}
             <h1>Create Event</h1>
@@ -33,14 +33,14 @@
             </div>
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
+                    <input type='text' name="start" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker2'>
-                    <input type='text' class="form-control" />
+                    <input type='text' name="end" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>

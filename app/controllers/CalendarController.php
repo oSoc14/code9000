@@ -89,7 +89,36 @@ class CalendarController extends \BaseController {
         }
         else
         {
-
+            $validator = Validator::make(
+                array(
+                    'group' => Input::get('group'),
+                    'description' => Input::get('description'),
+                    'end' => Input::get('end'),
+                    'start' => Input::get('start'),
+                    'title' => Input::get('title')
+                ),
+                array(
+                    'group' => 'required',
+                    'description' => 'required',
+                    'end' => 'required',
+                    'start' => 'required',
+                    'title' => 'required'
+                )
+            );
+            if ($validator->fails())
+            {
+                return Redirect::route('event.create')->withInput()->withErrors($validator);
+            }
+            else{
+                $event = new Appointment();
+                $event->title = Input::get('title');
+                $event->description = Input::get('description');
+                $event->start_date = new DateTime(Input::get('start'));
+                $event->end_date = new DateTime(Input::get('end'));
+                $event->group_id = Input::get('group');
+                $event->save();
+                return Redirect::route('calendar.index');
+            }
         }
 	}
 
