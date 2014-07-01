@@ -87,16 +87,16 @@ body {
 
 /* CONTENT
 ---------------------- */
-.events-overview{
+.modules-overview{
     list-style: none;
     padding: 0;
 }
 
-.event{
+.module{
     margin: 0 0 10px 0;
 }
 
-.event-detail-container{
+.module-detail-container{
     background: #ccc;
     height: 50px;
     max-height: 100px;
