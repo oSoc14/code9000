@@ -19,17 +19,26 @@
  */
 
 
-
-class User extends Cartalyst\Sentry\Users\Eloquent\User {
+class Group extends Cartalyst\Sentry\Groups\Eloquent\Group{
 
     /**
-     * Returns the user's School.
+     * Returns the group's School.
      *
      * @return  mixed
      */
     public function school()
     {
         return $this->belongsTo('School');
+    }
+
+    /**
+     * Returns the appointments's of a group.
+     *
+     * @return  mixed
+     */
+    public function appointments()
+    {
+        return $this->hasMany('Appointment');
     }
 
 }

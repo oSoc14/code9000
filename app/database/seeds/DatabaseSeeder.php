@@ -13,11 +13,16 @@ class DatabaseSeeder extends Seeder {
 
 		// $this->call('UserTableSeeder');
 
+
+        School::create(array(
+            'name'=>'Artevelde Mariakerke',
+        ));
+
         Sentry::createGroup(array(
-            'name'        => 'Admins',
+            'name'        => 'SchoolAdmin',
             'permissions' => array(
-                'school' => 1,
-                'admin' => 1,
+                'school' => 0,
+                'admin' => 0,
                 'groups' => 1,
                 'users' => 1,
                 'events' => 1,
@@ -25,9 +30,10 @@ class DatabaseSeeder extends Seeder {
         ));
 
         Sentry::register(array(
-            'email'    => 'john.doe@example.com',
+            'email'    => 'test@example.com',
             'password' => 'foobar',
             'activated' => true,
+            'school_id' => 1,
         ));
 
         $user = Sentry::findUserById(1);

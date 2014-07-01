@@ -1,12 +1,12 @@
 <?php
-
+use Cartalyst\Sentry\Groups\Eloquent\Group;
 class CalendarController extends \BaseController {
 
     //MASTER LAYOUT THEMPLATE
     protected $layout = 'layout.master';
 
 	/**
-	 * Display a listing of the resource.
+	 * Display a calendar view.
 	 *
 	 * @return Response
 	 */
@@ -20,30 +20,45 @@ class CalendarController extends \BaseController {
         }
         else
         {
-            // User is logged in
-            $user = Sentry::getUser();
-
-            $dateoffset = 0;
-            //CHECK IF AN OFFSET IS DEFINED
-            if (Session::has('dateoffset'))
-            {
-                $dateoffset = Session::get('dateoffset');
-            }
-
-            //DEFINE DISPLAYING MONTH
-            $today = new DateTime(date("Y-m"));
-            $displayMonth = $today->modify($dateoffset.' month');
-            //print_r($displayMonth);
-
-            //GET APPOINTMENTS
-            print_r($user->school_id);
-
             return View::make('calendar.index');
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function listView()
+    {
+        return View::make('calendar.events');
+    }
+
+    /**
+     * Return a listing of the resource.
+     *
+     * @return Response
+     */
+    public function events()
+    {
+        if ( ! Sentry::check())
+        {
+            // User is not logged in, or is not activated
+            return Redirect::route('index');
+        }
+        else
+        {
+            $user = Sentry::getUser();
+            $user->load('school.groups.appointments');
+
+            
+            $appointments = Appointment::get();
+            return Response::json($user)->setCallback(Input::get('callback'));
+            //return View::make('calendar.events');
         }
 
 
-
-	}
+    }
 
 
 	/**
