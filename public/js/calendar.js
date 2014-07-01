@@ -4,6 +4,7 @@ $(document).ready(function() {
   getEvents();
   function getEvents()
   {
+    $('#addEvent').hide();
     var events = [];
     $.ajax({
       type:"GET",
@@ -13,8 +14,10 @@ $(document).ready(function() {
       contentType: "application/json",
       success:function(data){
         setTimeout(function(){
-         events = data['school']['groups'];
-         parseEvents(events);
+          events = data['school']['groups'];
+          parseEvents(events);
+          $('#preloader').hide();
+          $('#addEvent').show();
         },800);
       },
       error:function(xhr, status, errorThrown) {
