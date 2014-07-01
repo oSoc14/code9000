@@ -20,3 +20,8 @@ Route::get('/home', function()
 {
   return View::make('home');
 });
+
+Route::post('user/auth', [
+    'as' => 'user.auth',
+    'uses' => 'UserController@auth'
+]);
