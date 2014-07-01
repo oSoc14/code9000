@@ -23,6 +23,10 @@ body {
     border-bottom-width:1px;
 }
 
+#sidebar .nav>li.active, #sidebar .nav>li:hover {
+    background: #f2f2f2;
+}
+
 /* collapsed sidebar styles */
 @media screen and (max-width: 767px) {
     .row-offcanvas {
@@ -61,11 +65,15 @@ body {
         border-top: 1px solid #484848;
         border-bottom: 1px solid #2E2E2E;
     }
+
     #sidebar .nav>li:first-child {
         border-top:0;
     }
     #sidebar .nav>li>a {
         color: #ddd;
+    }
+    #sidebar .nav>li.active, #sidebar .nav>li:hover {
+        background: linear-gradient(#383838, #3E3E3E);
     }
     #sidebar .nav>li>a>img {
         max-width: 14px;
@@ -75,6 +83,7 @@ body {
         background: linear-gradient(#373737, #323232);
         color: #fff;
     }
+
     #sidebar .nav .caret {
         border-top-color: #fff;
         border-bottom-color: #fff;
