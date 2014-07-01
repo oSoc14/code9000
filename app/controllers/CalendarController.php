@@ -49,7 +49,10 @@ class CalendarController extends \BaseController {
         else
         {
             $user = Sentry::getUser();
-            $user->load('school.groups');
+            $user->load('school.groups.appointments');
+
+            
+            $appointments = Appointment::get();
             return Response::json($user)->setCallback(Input::get('callback'));
             //return View::make('calendar.events');
         }
