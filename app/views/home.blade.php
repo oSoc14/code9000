@@ -4,40 +4,14 @@
 {{ HTML::style("css/app.css") }}
 @stop
 
-@section('content')
-
 <div class="page-container">
 
-  <!-- top navbar -->
-  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">EduCal</a>
-      </div>
-    </div>
-  </div>
+  @extends('layout.navbar')
 
   <div class="container">
-    <div class="row row-offcanvas row-offcanvas-left">
+    @extends('layout.sidebar')
 
-      <!-- sidebar -->
-      <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-        <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Schools</a></li>
-          <li><a href="#">User Management</a></li>
-          <li><a href="#">Groups</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Settings</a></li>
-        </ul>
-      </div>
-
+      @section('content')
       <!-- main area -->
       <div class="col-xs-12 col-sm-9">
         <h1>Dashboard</h1>

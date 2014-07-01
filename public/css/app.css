@@ -1,6 +1,9 @@
 body {
     padding-top: 51px;
 }
+
+/* SIDEBAR
+---------------------- */
 .text-center {
     padding-top: 20px;
 }
@@ -80,5 +83,23 @@ body {
         border-top-color: #fff;
         border-bottom-color: #fff;
     }
+}
+
+/* CONTENT
+---------------------- */
+.events-overview{
+    list-style: none;
+    padding: 0;
+}
+
+.event{
+    margin: 0 0 10px 0;
+}
+
+.event-detail-container{
+    background: #ccc;
+    height: 50px;
+    max-height: 100px;
+    padding: 15px;
 }
 

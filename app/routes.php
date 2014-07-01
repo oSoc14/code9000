@@ -13,12 +13,22 @@
 
 Route::get('/', function()
 {
-	return View::make('index');
+  // if logged out --> go to login
+  return View::make('login');
+  // if logged in  --> go to home
+
 });
 
 Route::get('/home', function()
 {
+  // only view if logged in & is admin!
   return View::make('home');
+});
+
+Route::get('/events', function()
+{
+  // only view if logged in & is admin!
+  return View::make('events');
 });
 
 Route::post('user/auth', [
