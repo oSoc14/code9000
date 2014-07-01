@@ -7,7 +7,7 @@ $(document).ready(function() {
       right: 'month,agendaWeek,agendaDay'
     },
     defaultDate: '2014-06-12',
-    editable: false,
+    editable: true,
     events: [
       {
         title: 'Event1',
@@ -20,6 +20,13 @@ $(document).ready(function() {
       }
       // etc...
     ],
+    theme: true,
+    themeButtonIcons: {
+      prev: 'circle-triangle-w',
+      next: 'circle-triangle-e',
+      prevYear: 'seek-prev',
+      nextYear: 'seek-next'
+    },
     /*{
      url: 'php/get-events.php',
      error: function() {
