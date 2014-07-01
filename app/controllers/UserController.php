@@ -41,7 +41,7 @@ class UserController extends \BaseController {
             }
 
             // Redirect to logged in page
-            return Redirect::to('calendar.index');
+            return Redirect::route('calendar.index');
         }
         // Error handling
         catch (Cartalyst\Sentry\Users\LoginRequiredException $e)

@@ -1,12 +1,12 @@
 <?php
-
+use Cartalyst\Sentry\Groups\Eloquent\Group;
 class CalendarController extends \BaseController {
 
     //MASTER LAYOUT THEMPLATE
     protected $layout = 'layout.master';
 
 	/**
-	 * Display a listing of the resource.
+	 * Display a calendar view.
 	 *
 	 * @return Response
 	 */
@@ -32,6 +32,29 @@ class CalendarController extends \BaseController {
     public function listView()
     {
         return View::make('calendar.events');
+    }
+
+    /**
+     * Return a listing of the resource.
+     *
+     * @return Response
+     */
+    public function events()
+    {
+        if ( ! Sentry::check())
+        {
+            // User is not logged in, or is not activated
+            return Redirect::route('index');
+        }
+        else
+        {
+            $user = Sentry::getUser();
+            $user->load('school.groups');
+            return Response::json($user)->setCallback(Input::get('callback'));
+            //return View::make('calendar.events');
+        }
+
+
     }
 
 

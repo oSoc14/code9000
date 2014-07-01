@@ -40,4 +40,9 @@ Route::group(array('prefix' => 'calendar'), function()
         'as'   => 'calendar.list',
         'uses' => 'CalendarController@listView'
     ]);
+
+    Route::get('/api/events', [
+        'as'   => 'calendar.events',
+        'uses' => 'CalendarController@events'
+    ]);
 });
