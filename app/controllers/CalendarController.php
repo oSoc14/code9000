@@ -215,7 +215,15 @@ class CalendarController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+        if ( ! Sentry::check())
+        {
+            // User is not logged in, or is not activated
+            return Redirect::route('index');
+        }else{
+            $event = Appointment::find($id);
+            $event->delete();
+            return Redirect::route('calendar.index');
+        }
 	}
 
 
