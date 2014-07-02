@@ -7,7 +7,7 @@
     {{ HTML::style("css/bootstrap.min.css") }}
     {{ HTML::style("css/bootstrap-theme.min.css") }}
     <!-- Bootstrap Datepicker -->
-    {{ HTML::style("css/datetimepicker.css") }}
+    {{ HTML::style("css/bootstrap-datetimepicker.css") }}
     <!-- Global styles for this template -->
     @yield('header')
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,8 +29,9 @@
 <body>
 @yield('content')
 {{ HTML::script("js/jquery-1.11.1.min.js") }}
+{{ HTML::script("js/moment.js") }}
 {{ HTML::script("js/bootstrap.min.js") }}
-{{ HTML::script("js/bootstrap-datetimepicker.js") }}
+{{ HTML::script("js/bootstrap-datetimepicker.min.js") }}
 @yield('footerScript')
 </body>
 </html>
