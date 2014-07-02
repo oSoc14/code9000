@@ -3,6 +3,6 @@ $(document).ready(function() {
     $('.row-offcanvas').toggleClass('active');
   });
 
-  $('#datetimepicker1').datepicker();
-  $('#datetimepicker2').datepicker();
+  $('#datetimepicker1').datetimepicker();
+  $('#datetimepicker2').datetimepicker();
 });

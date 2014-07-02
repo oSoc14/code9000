@@ -44,6 +44,10 @@ Route::group(['prefix' => 'user'], function () {
     ]);
 });
 
+
+/***
+ * Manages all the calendar/event routes
+ */
 Route::group(array('prefix' => 'calendar'), function()
 {
     // Home
@@ -74,6 +78,12 @@ Route::group(array('prefix' => 'calendar'), function()
     Route::post('/event/edit/{id}', [
         'as'   => 'event.update',
         'uses' => 'CalendarController@update'
+    ]);
+
+    //Deletes the event with the given ID
+    Route::get('/event/delete/{id}', [
+        'as'   => 'event.delete',
+        'uses' => 'CalendarController@destroy'
     ]);
 
     //Shows the selected day's events
