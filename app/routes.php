@@ -16,6 +16,11 @@ Route::get('/', [
     'uses' => 'UserController@index'
 ]);
 
+Route::get('/{school}/{class}/ical.ics', [
+    'as'   => 'icalIcs',
+    'uses' => 'IcalCalendarController@index'
+]);
+
 Route::get('/schools', function(){
    return View::make('schools');
 });
