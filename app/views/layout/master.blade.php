@@ -7,7 +7,7 @@
     {{ HTML::style("css/bootstrap.min.css") }}
     {{ HTML::style("css/bootstrap-theme.min.css") }}
     <!-- Bootstrap Datepicker -->
-    {{ HTML::style("css/datepicker.css") }}
+    {{ HTML::style("css/bootstrap-datetimepicker.css") }}
     <!-- jQuery UI -->
     {{ HTML::style("css/jquery-ui.min.css") }}
   {{ HTML::style("css/jquery-ui.structure.min.css") }}
@@ -73,8 +73,9 @@
 </div><!--/.page-container-->
 
 {{ HTML::script("js/jquery-1.11.1.min.js") }}
+{{ HTML::script("js/moment.js") }}
 {{ HTML::script("js/bootstrap.min.js") }}
-{{ HTML::script("js/bootstrap-datepicker.js") }}
+{{ HTML::script("js/bootstrap-datetimepicker.min.js") }}
 @yield('footerScript')
 </body>
 </html>
