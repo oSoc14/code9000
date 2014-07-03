@@ -78,6 +78,11 @@ Route::group(['prefix' => 'user'], function () {
         'as'   => 'user.logout',
         'uses' => 'UserController@logout'
     ]);
+
+    Route::post('/group/add/{group_id}', [
+        'as'   => 'user.addToGroup',
+        'uses' => 'UserController@addToGroup'
+    ]);
 });
 
 
