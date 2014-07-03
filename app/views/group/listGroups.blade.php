@@ -5,67 +5,35 @@
 @stop
 
 @section('content')
-<?
-    print_r($groups);
-?>
-<table id="example" class="display" cellspacing="0" width="100%">
-<thead>
-<tr>
-    <th>Name</th>
-    <th>Last Name</th>
-    <th>E-mail</th>
-    <th>Edit</th>
-    <th>Delete</th>
-</tr>
-</thead>
+<h1>
+    {{ $schoolName }}
+</h1>
+<table id="groupTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
 
-<tfoot>
-<tr>
-    <th>Name</th>
-    <th>Last Name</th>
-    <th>E-mail</th>
-    <th>Edit</th>
-    <th>Delete</th>
-</tr>
-</tfoot>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </tfoot>
 
-<tbody>
-<tr>
-    <td>Tiger Nixon</td>
-    <td>System Architect</td>
-    <td>Edinburgh</td>
-    <td></td>
-    <td>2011/04/25</td>
-</tr>
-<tr>
-    <td>Garrett Winters</td>
-    <td>Accountant</td>
-    <td>Tokyo</td>
-    <td>63</td>
-    <td>2011/07/25</td>
-</tr>
-<tr>
-    <td>Ashton Cox</td>
-    <td>Junior Technical Author</td>
-    <td>San Francisco</td>
-    <td>66</td>
-    <td>2009/01/12</td>
-</tr>
-<tr>
-    <td>Cedric Kelly</td>
-    <td>Senior Javascript Developer</td>
-    <td>Edinburgh</td>
-    <td>22</td>
-    <td>2012/03/29</td>
-</tr>
-<tr>
-    <td>Airi Satou</td>
-    <td>Accountant</td>
-    <td>Tokyo</td>
-    <td>33</td>
-    <td>2008/11/28</td>
-</tr>
-</tbody>
+    <tbody>
+        @foreach($groups as $group)
+            <tr>
+                <td>{{ $group->name }}</td>
+                <td><a href="{{route('group.edit',$group->id)}}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a href="#"><span class="glyphicon glyphicon-remove-sign"></span></a></td>
+            </tr>
+        @endforeach
+    </tbody>
 </table>
 @stop
 
@@ -75,7 +43,7 @@
 {{ HTML::style('packages/datatables/css/jquery.dataTables.min.css') }}
 <script>
     $(document).ready(function() {
-        $('#example').dataTable();
+        $('#groupTable').dataTable();
     } );
 </script>
 @stop
