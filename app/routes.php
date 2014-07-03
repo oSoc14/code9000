@@ -98,3 +98,21 @@ Route::group(array('prefix' => 'calendar'), function()
         'uses' => 'CalendarController@events'
     ]);
 });
+
+/***
+ * Manages all the group routes
+ */
+Route::group(array('prefix' => 'group'), function()
+{
+    // Index, lists all groups
+    Route::get('/', [
+        'as'   => 'group.index',
+        'uses' => 'GroupController@index'
+    ]);
+
+    // Home
+    Route::get('/{id}', [
+        'as'   => 'group.edit',
+        'uses' => 'GroupController@edit'
+    ]);
+});
