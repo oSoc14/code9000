@@ -100,7 +100,18 @@ class UserController extends \BaseController {
         if (Sentry::check()) {
             Sentry::logout();
             // Redirect to root
-            return Redirect::to('/');
+            return Redirect::route('index');
         }
+    }
+
+    public function addToGroup($group_id) {
+        $user = Sentry::findUserById(Input::get('user'));
+
+        // Find the group using the group id
+        $group = Sentry::findGroupById($group_id);
+
+        $user->addGroup($group);
+
+        return Redirect::back();
     }
 }

@@ -6,9 +6,9 @@
 
 @section('content')
 <h1>
-    {{ $groupName }}
+    {{ $group->name }}
 </h1>
-{{Form::open(array('route' => array('event.update')))}}
+{{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
 
 <h2>Add User</h2>
 <div class="form-group">
