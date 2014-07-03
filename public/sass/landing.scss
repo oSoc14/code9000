@@ -1,0 +1,88 @@
+@import "compass";
+
+// General elements
+// ----------------------
+body{
+  background: #fff;
+}
+a{
+  color: #f21666;
+  &:hover{
+    color: #f24c81;
+  }
+}
+img{
+  max-width: 100%;
+}
+
+// Introduction
+// ----------------------
+.introduction-container {
+  background: url('images/introduction_bg.jpg') center center no-repeat #39acb0;
+  background-size: cover;
+  //background: #39ACB0;
+  color: #fff;
+  height: 400px;
+}
+
+.introduction-content {
+  text-align: center;
+  display: table-cell;
+  padding: 20px 0;
+
+  h1{
+    margin-bottom: 20px;
+  }
+
+  .lead{
+    margin: 30px auto 0;
+    //width: 600px;
+    max-width: 600px;
+  }
+}
+
+.button-container{
+  margin: 15px 0;
+}
+
+@mixin btn-educal($bgcolor, $bordercolor, $color, $bghover, $borderhover){
+  background: $bgcolor;
+  border: 1px solid $bordercolor;
+  color: $color;
+  text-shadow: none;
+  &:hover{
+    background: $bghover;
+    border: 1px solid $borderhover;
+    color: $color;
+  }
+}
+
+.btn-educal-primary{
+  @include btn-educal(#F21666, #a6104a, #fff, #ec3b76, #F21666);
+}
+
+.btn-educal-secondary{
+  @include btn-educal(#EAE415, #c9c315, #8c8610, #fbfd4f, #EAE415);
+}
+
+// Content
+// ----------------------
+.content-container{
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+
+// Footer
+// ----------------------
+.footer-container{
+  background: #333;
+  color: #ddd;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: 200px;
+}
+
+footer{
+  text-align: center;
+}
