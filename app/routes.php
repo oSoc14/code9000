@@ -42,6 +42,21 @@ Route::group(['prefix' => 'school'], function () {
         'as'   => 'school.index',
         'uses' => 'SchoolController@index'
     ]);
+
+    Route::get('/{id}', [
+        'as'   => 'school.detail',
+        'uses' => 'SchoolController@show'
+    ])->where('id', '[0-9]+');
+
+    Route::get('/edit/{id}', [
+        'as'   => 'school.edit',
+        'uses' => 'SchoolController@edit'
+    ])->where('id', '[0-9]+');
+
+    Route::post('/edit/{id}', [
+        'as'   => 'school.update',
+        'uses' => 'SchoolController@update'
+    ])->where('id', '[0-9]+');
 });
 
 
@@ -85,19 +100,19 @@ Route::group(array('prefix' => 'calendar'), function()
     Route::get('/event/edit/{id}', [
         'as'   => 'event.edit',
         'uses' => 'CalendarController@edit'
-    ]);
+    ])->where('id', '[0-9]+');
 
     //Stores events
     Route::post('/event/edit/{id}', [
         'as'   => 'event.update',
         'uses' => 'CalendarController@update'
-    ]);
+    ])->where('id', '[0-9]+');
 
     //Deletes the event with the given ID
     Route::get('/event/delete/{id}', [
         'as'   => 'event.delete',
         'uses' => 'CalendarController@destroy'
-    ]);
+    ])->where('id', '[0-9]+');
 
     //Shows the selected day's events
     Route::get('/events', [

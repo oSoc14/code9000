@@ -15,17 +15,21 @@
             Short name
         </th>
         <th>
+            # Groups
+        </th>
+        <th>
             Actions
         </th>
     </tr>
     @foreach($schools as $school)
     <tr>
-        <td>{{$school->name}}</td>
+        <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
         <td>{{$school->short}}</td>
+        <td>{{count($school->groups)}}</td>
         <td>
-            <span class="glyphicon glyphicon-eye-open"></span>
-            <span class="glyphicon glyphicon-pencil"></span>
-            <span class="glyphicon glyphicon-trash"></span>
+            <a href="{{route('school.detail',$school->id)}}"><span class="glyphicon glyphicon-eye-open"></span></a>
+            <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
         </td>
     </tr>
     @endforeach
