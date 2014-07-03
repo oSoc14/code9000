@@ -32,6 +32,19 @@ Route::get('/settings', function(){
   return View::make('settings');
 });
 
+Route::group(['prefix' => 'school'], function () {
+    Route::post('/register', [
+        'as' => 'school.store',
+        'uses' => 'SchoolController@store'
+    ]);
+
+    Route::get('/', [
+        'as'   => 'school.index',
+        'uses' => 'SchoolController@index'
+    ]);
+});
+
+
 Route::group(['prefix' => 'user'], function () {
     Route::post('/auth', [
         'as' => 'user.auth',

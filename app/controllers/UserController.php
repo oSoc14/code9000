@@ -67,7 +67,6 @@ class UserController extends \BaseController {
         {
             $errorMessage = 'User is not activated.';
         }
-
         // The following is only required if the throttling is enabled
         catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
         {
