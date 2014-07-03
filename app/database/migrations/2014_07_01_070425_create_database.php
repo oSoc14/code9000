@@ -17,8 +17,10 @@ class CreateDatabase extends Migration {
         {
             $table->increments('id');
             $table->string('name',255);
+            $table->string('short',20);
             $table->timestamps();
             $table->softDeletes();
+            $table->unique('short');
         });
 
         //CREATES USERS TABLE
