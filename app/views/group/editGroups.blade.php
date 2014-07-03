@@ -12,11 +12,15 @@
 
 <h2>Add User</h2>
 <div class="form-group">
-    <label for="user">User</label>
-    {{Form::select('user', $smartUsers, [], array('class'=>'form-control'));}}
+    @if(count($smartUsers) > 0)
+        <label for="user">User</label>
+        {{Form::select('user', $smartUsers, [], array('class'=>'form-control'));}}
+        <button type="submit" class="btn btn-primary">Add User</button>
+    @else
+        <p>Geen gebruikers die kunnen toegevoegd worden</p>
+    @endif
+    {{ Form::close(), PHP_EOL }}
 </div>
-<button type="submit" class="btn btn-primary">Add User</button>
-{{ Form::close(), PHP_EOL }}
 <table id="userTable" class="display" cellspacing="0" width="100%">
     <thead>
         <tr>
