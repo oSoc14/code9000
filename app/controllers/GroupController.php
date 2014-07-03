@@ -72,8 +72,22 @@ class GroupController extends \BaseController {
         $users = Sentry::findAllUsersInGroup($group);
         // Get the groupname (which will be used as title in the view)
         $groupName = $group->name;
+        // Find all possible users that aren't in the group yet
+        $possibleUsers = User::leftJoin('users_groups', 'users_groups.user_id', '=', 'id', 'outter')
+            ->where('school_id', $group->school_id)
+            ->where('users_groups.group_id', '!=', $id)
+            ->orWhere('users_groups.group_id', null)
+            ->get();
+        $smartUsers = [];
+        foreach($possibleUsers as $pus){
+            $smartUsers[$pus->id] = $pus->email;
+        }
+
         // Return view with selected parameters
-        return View::make('group.editGroups')->with('users',$users)->with('groupName', $groupName);
+        return View::make('group.editGroups')
+            ->with('users',$users)
+            ->with('groupName', $groupName)
+            ->with('smartUsers', $smartUsers);
 	}
 
 
