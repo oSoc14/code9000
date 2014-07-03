@@ -49,9 +49,20 @@ class CalendarController extends \BaseController {
         {
             //GETS THE APPOINTMENTS FROM THE SCHOOL
             $user = Sentry::getUser();
-            $user->load('school.groups.appointments');
-            //RETURNS JSON RESPONS OFF THE USER
-            return Response::json($user)->setCallback(Input::get('callback'));//return View::make('calendar.events');
+            if ($user->hasAccess('superadmin'))
+            {
+                $groups = Group::get();
+                $groups->load('appointments');;
+                //RETURNS JSON RESPONS OFF THE USER
+                return Response::json($groups)->setCallback(Input::get('callback'));//return View::make('calendar.events');
+            }
+            else
+            {
+                $user->load('school.groups.appointments');
+                //RETURNS JSON RESPONS OFF THE USER
+                return Response::json($user)->setCallback(Input::get('callback'));//return View::make('calendar.events');
+            }
+
         }
     }
 
