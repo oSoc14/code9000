@@ -15,7 +15,7 @@ class CalendarController extends \BaseController {
         if ( ! Sentry::check())
         {
             // User is not logged in, or is not activated
-            return Redirect::route('index');
+            return Redirect::route('landing');
         }
         else
         {

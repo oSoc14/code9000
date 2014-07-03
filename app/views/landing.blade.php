@@ -96,11 +96,11 @@
           ]), PHP_EOL }}
           <div class="form-group">
             <label for="login-email">Email address</label>
-            <input type="email" class="form-control" id="login-email" name="login-email" placeholder="What's your email address?">
+            <input type="email" class="form-control" id="login-email" name="email" placeholder="What's your email address?">
           </div>
           <div class="form-group">
             <label for="login-password">Password</label>
-            <input type="password" class="form-control" id="login-password" name="login-password" placeholder="Enter your password">
+            <input type="password" class="form-control" id="login-password" name="password" placeholder="Enter your password">
           </div>
           <div class="checkbox">
             <label>

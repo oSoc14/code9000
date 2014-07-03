@@ -12,13 +12,9 @@
 */
 
 Route::get('/', [
-    'as'   => 'index',
-    'uses' => 'UserController@index'
+    'as'   => 'landing',
+    'uses' => 'HomeController@showWelcome'
 ]);
-
-Route::get('/landing', function(){
-  return View::make('landing');
-});
 
 Route::get('/login', function(){
   return View::make('user.login');

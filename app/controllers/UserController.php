@@ -16,7 +16,7 @@ class UserController extends \BaseController {
             return Redirect::route('calendar.index');
         } else {
             // else, redirect to login page
-            $this->layout->content = View::make('user.login');
+            return View::make('user.login');
         }
     }
 
@@ -79,7 +79,7 @@ class UserController extends \BaseController {
         // If there is an errormessage, return to login page
         // With errorMessage
         if($errorMessage) {
-            return Redirect::route('index')
+            return Redirect::route('landing')
             ->withInput()
             ->with('errorMessage', $errorMessage);
         }
@@ -97,11 +97,9 @@ class UserController extends \BaseController {
     public function logout()
     {
         // If user is logged in, then log out the user
-        if (Sentry::check()) {
             Sentry::logout();
             // Redirect to root
-            return Redirect::route('index');
-        }
+            return Redirect::route('landing');
     }
 
     public function addToGroup($group_id) {
