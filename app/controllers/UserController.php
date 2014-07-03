@@ -101,7 +101,9 @@ class UserController extends \BaseController {
         if (Sentry::check()) {
             Sentry::logout();
             // Redirect to root
-            return Redirect::to('/');
+            return Redirect::route('index');
+        } else {
+            return Redirect::route('index');
         }
     }
 }
