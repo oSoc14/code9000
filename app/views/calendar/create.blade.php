@@ -25,15 +25,15 @@
                 <textarea  class="form-control" rows="3" name="description" id="description"></textarea>
             </div>
             <div class="form-group">
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' name="start" class="form-control" />
+                <div class='input-group date'>
+                    <input type='text' id='datetimepicker1' name="start" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="form-group">
-                <div class='input-group date' id='datetimepicker2'>
-                    <input type='text' name="end" class="form-control" />
+                <div class='input-group date'>
+                    <input type='text' id='datetimepicker2' name="end" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>

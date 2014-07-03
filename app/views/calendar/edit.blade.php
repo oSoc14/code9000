@@ -23,15 +23,15 @@
                 <textarea name="description" id="description" class="form-control" rows="3">{{$event->description}}</textarea>
             </div>
             <div class="form-group">
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' value="{{$event->start_date}}" name="start" class="form-control" />
+                <div class='input-group date'>
+                    <input type='text' id='datetimepicker1' value="{{$event->start_date}}" name="start" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="form-group">
-                <div class='input-group date' id='datetimepicker2'>
-                    <input type='text' value="{{$event->end_date}}" name="end" class="form-control" />
+                <div class='input-group date'>
+                    <input type='text' id='datetimepicker2' value="{{$event->end_date}}" name="end" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>

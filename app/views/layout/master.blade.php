@@ -7,11 +7,11 @@
     {{ HTML::style("css/bootstrap.min.css") }}
     {{ HTML::style("css/bootstrap-theme.min.css") }}
     <!-- Bootstrap Datepicker -->
-    {{ HTML::style("css/bootstrap-datetimepicker.css") }}
+    {{ HTML::style("css/jquery.datetimepicker.css") }}
     <!-- jQuery UI -->
     {{ HTML::style("css/jquery-ui.min.css") }}
-  {{ HTML::style("css/jquery-ui.structure.min.css") }}
-  {{ HTML::style("css/jquery-ui.theme.min.css") }}
+    {{ HTML::style("css/jquery-ui.structure.min.css") }}
+    {{ HTML::style("css/jquery-ui.theme.min.css") }}
     <!-- Global styles for this template -->
     @yield('header')
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
 {{ HTML::script("js/jquery-1.11.1.min.js") }}
 {{ HTML::script("js/moment.js") }}
 {{ HTML::script("js/bootstrap.min.js") }}
-{{ HTML::script("js/bootstrap-datetimepicker.min.js") }}
+{{ HTML::script("js/jquery.datetimepicker.js") }}
 @yield('footerScript')
 </body>
 </html>
