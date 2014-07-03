@@ -16,6 +16,14 @@ Route::get('/', [
     'uses' => 'UserController@index'
 ]);
 
+Route::get('/landing', function(){
+  return View::make('landing');
+});
+
+Route::get('/login', function(){
+  return View::make('user.login');
+});
+
 Route::get('/schools', function(){
    return View::make('schools');
 });

@@ -1,79 +1,122 @@
-/* Space out content a bit */
+/* line 5, ../sass/landing.scss */
+* {
+  box-sizing: border-box;
+}
+
+/* line 8, ../sass/landing.scss */
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
+  background: #fff;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-    padding-right: 15px;
-    padding-left: 15px;
+/* line 11, ../sass/landing.scss */
+a {
+  color: #f21666;
+}
+/* line 13, ../sass/landing.scss */
+a:hover {
+  color: #f24c81;
 }
 
-/* Custom page header */
-.header {
-    border-bottom: 1px solid #e5e5e5;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-    padding-bottom: 19px;
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
+/* line 17, ../sass/landing.scss */
+img {
+  max-width: 100%;
 }
 
-/* Custom page footer */
-.footer {
-    padding-top: 19px;
-    color: #777;
-    border-top: 1px solid #e5e5e5;
+/* line 23, ../sass/landing.scss */
+.introduction-container {
+  background: url("images/introduction_bg.jpg") center center no-repeat #39acb0;
+  background-size: cover;
+  color: #fff;
+  height: 400px;
 }
 
-/* Customize container */
-@media (min-width: 768px) {
-    .container {
-        max-width: 730px;
-    }
+/* line 30, ../sass/landing.scss */
+.introduction-content {
+  text-align: center;
+  display: table-cell;
+  padding: 70px 0 0 0;
 }
-.container-narrow > hr {
-    margin: 30px 0;
+/* line 35, ../sass/landing.scss */
+.introduction-content h1 {
+  margin-bottom: 20px;
 }
-
-/* Main marketing message and sign up button */
-.jumbotron {
-    text-align: center;
-    border-bottom: 1px solid #e5e5e5;
+/* line 38, ../sass/landing.scss */
+.introduction-content .lead {
+  margin: 30px auto 0;
+  max-width: 600px;
 }
-.jumbotron .btn {
-    padding: 14px 24px;
-    font-size: 21px;
+/* line 42, ../sass/landing.scss */
+.introduction-content .button-container {
+  margin: 32px 0;
 }
-
-/* Supporting marketing content */
-.marketing {
-    margin: 40px 0;
-}
-.marketing p + h4 {
-    margin-top: 28px;
+/* line 44, ../sass/landing.scss */
+.introduction-content .button-container .btn {
+  margin: 0 10px;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    /* Remove the padding we set earlier */
-    .header,
-    .marketing,
-    .footer {
-        padding-right: 0;
-        padding-left: 0;
-    }
-    /* Space out the masthead */
-    .header {
-        margin-bottom: 30px;
-    }
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-    }
+/* line 70, ../sass/landing.scss */
+.btn-educal-primary {
+  background: #f21666;
+  border: 1px solid #a6104a;
+  color: white;
+  text-shadow: none;
+}
+/* line 57, ../sass/landing.scss */
+.btn-educal-primary:hover {
+  background: #ec3b76;
+  border: 1px solid #f21666;
+  color: white;
+}
+/* line 62, ../sass/landing.scss */
+.btn-educal-primary:focus {
+  background: #ec3b76;
+  border: 1px solid #f21666;
+  color: white;
+  outline: none;
+}
+
+/* line 74, ../sass/landing.scss */
+.btn-educal-secondary {
+  background: #eae415;
+  border: 1px solid #c9c315;
+  color: #8c8610;
+  text-shadow: none;
+}
+/* line 57, ../sass/landing.scss */
+.btn-educal-secondary:hover {
+  background: #fbfd4f;
+  border: 1px solid #eae415;
+  color: #8c8610;
+}
+/* line 62, ../sass/landing.scss */
+.btn-educal-secondary:focus {
+  background: #fbfd4f;
+  border: 1px solid #eae415;
+  color: #8c8610;
+  outline: none;
+}
+
+/* line 80, ../sass/landing.scss */
+.content-container {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+/* line 85, ../sass/landing.scss */
+#registerUserModal .alert {
+  margin-bottom: 10px;
+}
+
+/* line 92, ../sass/landing.scss */
+.footer-container {
+  background: #333;
+  color: #ddd;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: 200px;
+}
+
+/* line 100, ../sass/landing.scss */
+footer {
+  text-align: center;
 }
