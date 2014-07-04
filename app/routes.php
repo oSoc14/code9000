@@ -179,7 +179,15 @@ Route::group(array('prefix' => 'group'), function()
  * iCal routes
  * returns iCal, .ics file
  */
-Route::get('/{school}/{class}/ical.ics', [
-    'as'   => 'icalIcs',
-    'uses' => 'IcalCalendarController@index'
-]);
+Route::group(array('prefix' => 'export'), function()
+{
+    Route::get('/{school}/{class}/ical.ics', [
+        'as'   => 'export.group',
+        'uses' => 'IcalCalendarController@index'
+    ])->where(['school' => '[a-z]+', 'class' => '[a-z]+']);
+
+    Route::get('/appointment/{id}/ical.ics', [
+        'as'   => 'export.single',
+        'uses' => 'IcalCalendarController@show'
+    ])->where('id', '[0-9]+');
+});
