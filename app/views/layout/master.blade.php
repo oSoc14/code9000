@@ -46,11 +46,9 @@
 </head>
 <body>
 
-<div class="page-container">
-
-  <!-- top navbar -->
+  <!-- Top navbar -->
   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
           <span class="icon-bar"></span>
@@ -62,29 +60,85 @@
     </div>
   </div>
 
-  <div class="container">
-    <div class="row row-offcanvas row-offcanvas-left">
-      <!-- sidebar -->
-      <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-        <ul class="nav">
-          <li><a href="{{route('calendar.index')}}"><span class="glyphicon glyphicon-calendar"></span> Calendar</a></li>
-          <li><a href="schools"><span class="glyphicon glyphicon-home"></span> Schools</a></li>
-          <li><a href="users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
-          <li><a href="groups"><span class="glyphicon glyphicon-th-large"></span> Groups</a></li>
-          <li><a href="events"><span class="glyphicon glyphicon-glass"></span> Events</a></li>
-          <li><a href="about"><span class="glyphicon glyphicon-question-sign"></span> About</a></li>
-          <li><a href="settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-          <li><a href="{{route('user.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
-        </ul>
-      </div>
-      <div class="col-xs-12 col-sm-9">
+  <div id="main-wrapper">
 
+    <!-- Navigation sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="panel-group accordions" id="accordion">
+        <li class="panel-heading">
+          <a href="{{ route('calendar.index') }}">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-calendar"></span>
+              Calendar
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="schools">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-home"></span>
+              Schools
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="users">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-user"></span>
+              Users
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="groups">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-th-large"></span>
+              Groups
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="events">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-glass"></span>
+              Events
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="about">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-question-sign"></span>
+              About
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="settings">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-cog"></span>
+              Settings
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="{{ route('user.logout') }}">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-log-out"></span>
+              Log out
+            </p>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Content -->
+    <div id="content-wrapper">
       @yield('content')
+    </div><!-- / #content-wrapper -->
 
-      </div><!-- /.col-xs-12 main -->
-    </div><!--/.row-->
-  </div><!--/.container-->
-</div><!--/.page-container-->
+  </div><!-- / #main-wrapper -->
+
 
 {{ HTML::script("js/jquery-1.11.1.min.js") }}
 {{ HTML::script("js/moment.js") }}

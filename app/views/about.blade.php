@@ -5,6 +5,9 @@
 @stop
 
 @section('content')
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
   <h1>About</h1>
   <p>EduCal is an application for schools to easily create and manage calendars that can be shared with parents.</p>
   <h3>What is this?</h3>
@@ -12,6 +15,9 @@
   <h3>Credit</h3>
   <p>Authors: Bjorn Van Acker, Sander Meert, Nick Denys<br>
     Copyright 2014 OKFN Belgium</p>
+      </div>
+    </div>
+  </div>
 @stop
 
 @section('footerScript')

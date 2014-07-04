@@ -20,145 +20,84 @@ img {
 
 /* SIDEBAR
 ---------------------- */
-/* line 21, ../sass/app.scss */
-.text-center {
-  padding-top: 20px;
-}
-
-/* line 24, ../sass/app.scss */
-.col-xs-12 {
-  background-color: #fff;
-}
-
-/* line 27, ../sass/app.scss */
-#sidebar {
+/* line 22, ../sass/app.scss */
+#sidebar-wrapper {
+  margin-left: -250px;
+  left: 250px;
+  width: 250px;
+  position: fixed;
   height: 100%;
-  padding-right: 0;
-  padding-top: 20px;
+  overflow-y: auto;
+  z-index: 1000;
 }
 
-/* line 32, ../sass/app.scss */
-#sidebar .nav {
-  width: 95%;
+/* line 33, ../sass/app.scss */
+#accordion {
+  -webkit-padding-start: 0px;
+  color: #FFF;
+  list-style: none;
+  padding: 0;
+  font-size: 12px;
 }
 
-/* line 35, ../sass/app.scss */
-#sidebar li {
-  border: 0 #f2f2f2 solid;
-  border-bottom-width: 1px;
+/* line 41, ../sass/app.scss */
+#sidebar-wrapper .panel-heading {
+  padding: 0;
+}
+/* line 43, ../sass/app.scss */
+#sidebar-wrapper .panel-heading:hover {
+  cursor: pointer;
+  background: #2d3340;
 }
 
-/* line 40, ../sass/app.scss */
-#sidebar .nav > li.active, #sidebar .nav > li:hover {
-  background: #f2f2f2;
+/* line 49, ../sass/app.scss */
+#sidebar-wrapper .panel-title {
+  padding: 15px 20px;
+  margin: 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(186, 186, 186, 0.7);
+  width: 100%;
+  font-weight: 500;
+  color: #aaabae;
 }
 
-/* collapsed sidebar styles */
-@media screen and (max-width: 767px) {
-  /* line 46, ../sass/app.scss */
-  .row-offcanvas {
-    position: relative;
-    -webkit-transition: all 0.25s ease-out;
-    -moz-transition: all 0.25s ease-out;
-    transition: all 0.25s ease-out;
+/* line 59, ../sass/app.scss */
+#sidebar-wrapper .panel-title:hover {
+  cursor: pointer;
+  background: rgba(69, 74, 84, 0.15);
+  color: #FFF;
+}
+
+@media screen and (max-width: 768px) {
+  /* line 70, ../sass/app.scss */
+  #sidebar-wrapper {
+    left: 0;
   }
 
-  /* line 53, ../sass/app.scss */
-  .row-offcanvas-right
-  .sidebar-offcanvas {
-    right: -41.6%;
-  }
-
-  /* line 58, ../sass/app.scss */
-  .row-offcanvas-left
-  .sidebar-offcanvas {
-    left: -41.6%;
-  }
-
-  /* line 61, ../sass/app.scss */
-  .row-offcanvas-right.active {
-    right: 41.6%;
-  }
-
-  /* line 64, ../sass/app.scss */
-  .row-offcanvas-left.active {
-    left: 41.6%;
-  }
-
-  /* line 67, ../sass/app.scss */
-  .sidebar-offcanvas {
-    position: absolute;
-    top: 0;
-    width: 41.6%;
-  }
-
-  /* line 72, ../sass/app.scss */
-  #sidebar {
-    background-color: #3b3b3b;
-    padding-top: 0;
-  }
-
-  /* line 76, ../sass/app.scss */
-  #sidebar .nav > li {
-    color: #ddd;
-    background: linear-gradient(#3e3e3e, #383838);
-    border-top: 1px solid #484848;
-    border-bottom: 1px solid #2E2E2E;
-  }
-
-  /* line 83, ../sass/app.scss */
-  #sidebar .nav > li:first-child {
-    border-top: 0;
-  }
-
-  /* line 86, ../sass/app.scss */
-  #sidebar .nav > li > a {
-    color: #ddd;
-  }
-
-  /* line 89, ../sass/app.scss */
-  #sidebar .nav > li.active, #sidebar .nav > li:hover {
-    background: linear-gradient(#383838, #3e3e3e);
-  }
-
-  /* line 92, ../sass/app.scss */
-  #sidebar .nav > li > a > img {
-    max-width: 14px;
-  }
-
-  /* line 95, ../sass/app.scss */
-  #sidebar .nav > li > a:hover, #sidebar .nav > li > a:focus {
-    text-decoration: none;
-    background: linear-gradient(#373737, #323232);
-    color: #fff;
-  }
-
-  /* line 101, ../sass/app.scss */
-  #sidebar .nav .caret {
-    border-top-color: #fff;
-    border-bottom-color: #fff;
-  }
-
-  /* line 105, ../sass/app.scss */
-  #sidebar .nav a:hover .caret {
-    border-top-color: #fff;
-    border-bottom-color: #fff;
+  /* line 73, ../sass/app.scss */
+  #content-wrapper {
+    margin-left: 0 !important;
   }
 }
 /* CONTENT
 ---------------------- */
-/* line 113, ../sass/app.scss */
+/* line 81, ../sass/app.scss */
+#content-wrapper {
+  margin-left: 265px;
+}
+
+/* line 84, ../sass/app.scss */
 .modules-overview {
   list-style: none;
   padding: 0;
 }
 
-/* line 118, ../sass/app.scss */
+/* line 89, ../sass/app.scss */
 .module {
   margin: 0 0 10px 0;
 }
 
-/* line 122, ../sass/app.scss */
+/* line 93, ../sass/app.scss */
 .module-detail-container {
   background: #ccc;
   height: 50px;
@@ -168,7 +107,7 @@ img {
 
 /* CALENDAR
 ---------------------- */
-/* line 131, ../sass/app.scss */
+/* line 102, ../sass/app.scss */
 #calendar {
   margin-top: 31px;
 }
