@@ -13,12 +13,9 @@ class IcalCalendarController extends \BaseController {
      * TODO: Implement $school functionality, meaning we have to find all general events for a school that overlaps every class.
 	 */
 	public function index($school, $group)
-	{
-        // Find school
-        //$selSchool = School::where('short', $school)->first();
-        //$selSchool->load('groups.appointments');
+    {
 
-        // Find group
+        // Load appointments based on
         $selGroup = Group::where('name', $school.'_'.$group)->first();
         $selGroup->load('appointments');
 
@@ -27,7 +24,6 @@ class IcalCalendarController extends \BaseController {
             array_push($appointments, $appointment);
         }
 
-        //var_dump($appointments);
         $calendar = self::composeIcal($appointments);
         return $calendar->render();
 

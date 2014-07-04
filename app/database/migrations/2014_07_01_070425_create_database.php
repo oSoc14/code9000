@@ -107,6 +107,7 @@ class CreateDatabase extends Migration {
             $table->increments('id');
             $table->string('title');
             $table->text('description');
+            $table->boolean('allday');
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
             $table->timestamps();
