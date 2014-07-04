@@ -182,7 +182,19 @@ class UserController extends \BaseController {
      */
     public function activateUser($id)
     {
-
+        // Find the user using the user id
+        $user = Sentry::findUserById($id);
+        $activationCode = $user->getActivationCode();
+        // Attempt to activate the user
+        if($user->activated == 0) {
+            $user->attemptActivation($activationCode);
+            return true;
+        } else {
+            // Deactivate user
+            $user->activated = 0;
+            $user->save();
+            return false;
+        }
     }
 
     // Log out function
