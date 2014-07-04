@@ -124,6 +124,14 @@
           <h4 class="modal-title">Register as a user</h4>
         </div>
         <div class="modal-body">
+            @foreach ($errors->all() as $message)
+            {{$message}}
+            @endforeach
+
+            {{ Form::open([
+            'route' => 'school.store',
+            'data-ajax' => 'true',
+            ]), PHP_EOL }}
           <div class="alert alert-warning" role="alert">Warning! If you want to register as a school, click <a href="#" id="showSchoolRegisterModal">here</a>.</div>
           <div class="form-group">
             <label for="user-email">Email address</label>
@@ -138,13 +146,7 @@
           </div>
           <div class="form-group">
             <label>School</label>
-            <select class="form-control">
-              <option>School1</option>
-              <option>School2</option>
-              <option>School3</option>
-              <option>School4</option>
-              <option>School5</option>
-            </select>
+            {{ Form::select('school', $schools, null, array('class' => 'form-control')) }}
           </div>
           <div class="checkbox">
             <label>
@@ -152,7 +154,7 @@
             </label>
           </div>
           <button type="submit" class="btn btn-default btn-educal-primary">Register</button>
-
+            {{ Form::close(), PHP_EOL }}
         </div>
       </div>
     </div>

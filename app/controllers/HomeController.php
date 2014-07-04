@@ -17,7 +17,12 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-		return View::make('landing');
+        $schools = School::get();
+        $schoolsArray = [];
+        foreach ($schools as $school){
+            $schoolsArray[$school->id] = $school->name;
+        }
+		return View::make('landing')->with("schools",$schoolsArray);
 	}
 
 }
