@@ -12,16 +12,16 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>iCal</th>
+            <th>Actions</th>
         </tr>
     </thead>
 
     <tfoot>
         <tr>
             <th>Name</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>iCal</th>
+            <th>Actions</th>
         </tr>
     </tfoot>
 
@@ -29,8 +29,11 @@
         @foreach($groups as $group)
             <tr>
                 <td>{{ $group->name }}</td>
-                <td><a href="{{route('group.edit',$group->id)}}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="#"><span class="glyphicon glyphicon-remove-sign"></span></a></td>
+                <td><a href='./export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics'>/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics</a></td>
+                <td>
+                    <a href="#"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                    <a href="{{route('group.edit',$group->id)}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </td>
             </tr>
         @endforeach
     </tbody>

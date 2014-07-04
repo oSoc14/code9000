@@ -37,13 +37,6 @@
                 <textarea  class="form-control" rows="3" name="description" id="description"></textarea>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input name="day" type="checkbox"> All day
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
                 <div class='input-group date'>
                     <input type='text' id='datetimepicker1' name="start" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
