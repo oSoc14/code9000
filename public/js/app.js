@@ -43,7 +43,7 @@ jQuery(function(){
       defaultSelect:true
     });
     jQuery('#datetimepicker2').datetimepicker({
-      format:'Y/m/d  H:i',
+      format:'Y/m/d H:i',
       mask:true,
       onShow:function( ct ){
         if(jQuery('#datetimepicker1').val() != ''){
