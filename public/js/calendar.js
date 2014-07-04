@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
+  // Load events out of the database via the API
   var _events = [];
   getEvents();
   function getEvents()
   {
     $('#addEvent').hide();
-    var events = [];
     $.ajax({
       type:"GET",
       url: "calendar/api/events",
@@ -13,34 +13,28 @@ $(document).ready(function() {
       dataType: "json",
       contentType: "application/json",
       success:function(data){
-        setTimeout(function(){
-          events = data['school']['groups'];
-          parseEvents(events);
-          $('#preloader').hide();
-          $('#addEvent').show();
-        },800);
+        parseEvents(data);
+        $('#preloader').hide();
+        $('#addEvent').show();
       },
       error:function(xhr, status, errorThrown) {
         alert(status + ', ' + errorThrown);
       }
     });
   }
-
+  // Parse the events gotten from the database and push them to global variable
   function parseEvents(events)
   {
     $.each( events, function( index, value ){
-      $.each( value['appointments'], function( i, v ){
-        var newItem = {};
-        newItem['title'] = v['title'];
-        newItem['start'] = v['start_date'];
-        newItem['end']   = v['end_date'];
-        _events.push(newItem);
-      });
+      var newItem = {};
+      newItem['title'] = value['title'];
+      newItem['start'] = value['start_date'];
+      newItem['end']   = value['end_date'];
+      _events.push(newItem);
     });
-    console.log(_events);
     renderEvents();
   }
-
+  // Render the calendar and all events on it
   function renderEvents()
   {
     // Full calendar plugin
@@ -68,7 +62,7 @@ $(document).ready(function() {
        }
        }*/
       loading: function(bool) {
-        $('#loading').toggle(bool);
+        //$('#loading').toggle(bool);
       }
     });
   }

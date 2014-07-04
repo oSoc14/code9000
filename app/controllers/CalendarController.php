@@ -203,7 +203,6 @@ class CalendarController extends \BaseController {
                 array(
                     'group' => 'required',
                     'description' => 'required',
-                    'end' => 'required',
                     'start' => 'required',
                     'title' => 'required'
                 )
@@ -217,7 +216,12 @@ class CalendarController extends \BaseController {
                 $event->title = Input::get('title');
                 $event->description = Input::get('description');
                 $event->start_date = new DateTime(Input::get('start'));
-                $event->end_date = new DateTime(Input::get('end'));
+                if(Input::get('end') == '' || new DateTime(Input::get('end')) == new DateTime(Input::get('start'))){
+                    $event->end_date = new DateTime(Input::get('start'));
+                    $event->end_date->add(new DateInterval('PT1H'));
+                }else{
+                    $event->end_date = new DateTime(Input::get('end'));
+                }
                 $event->group_id = Input::get('group');
                 $event->save();
                 return Redirect::route('calendar.index');

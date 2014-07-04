@@ -24,14 +24,14 @@
             </div>
             <div class="form-group">
                 <div class='input-group date'>
-                    <input type='text' id='datetimepicker1' value="{{$event->start_date}}" name="start" class="form-control" />
+                    <input type='text' id='datetimepicker1' value="{{date_format(new DateTime($event->start_date), 'Y/m/d H:i')}}" name="start" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="form-group">
                 <div class='input-group date'>
-                    <input type='text' id='datetimepicker2' value="{{$event->end_date}}" name="end" class="form-control" />
+                    <input type='text' id='datetimepicker2' value="{{date_format(new DateTime($event->end_date), 'Y/m/d H:i')}}" name="end" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
