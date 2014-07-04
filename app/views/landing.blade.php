@@ -116,7 +116,11 @@
   </div>
 
   <!-- Register (user) Modal -->
-  <div class="modal fade" id="registerUserModal" tabindex="-1" role="dialog" aria-labelledby="registerUserModal" aria-hidden="true">
+  @if($errors->has())
+  <div class="modal fade" id="registerUserModal" tabindex="-1" data-errors="true" role="dialog" aria-labelledby="registerUserModal" aria-hidden="false">
+  @else
+  <div class="modal fade" id="registerUserModal" tabindex="-1" data-errors="false" role="dialog" aria-labelledby="registerUserModal" aria-hidden="false">
+  @endif
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -129,20 +133,28 @@
             @endforeach
 
             {{ Form::open([
-            'route' => 'school.store',
+            'route' => 'user.register',
             'data-ajax' => 'true',
             ]), PHP_EOL }}
           <div class="alert alert-warning" role="alert">Warning! If you want to register as a school, click <a href="#" id="showSchoolRegisterModal">here</a>.</div>
           <div class="form-group">
+              <label for="user-email">Name</label>
+              <input type="text" class="form-control" id="user-name" name="name" placeholder="What's your given name?">
+          </div>
+          <div class="form-group">
+              <label for="user-email">Surname</label>
+              <input type="text" class="form-control" id="user-surname" name="surname" placeholder="What's your surname?">
+          </div>
+          <div class="form-group">
             <label for="user-email">Email address</label>
-            <input type="email" class="form-control" id="user-email" name="user-email" placeholder="What's your email address?">
+            <input type="email" class="form-control" id="user-email" name="email" placeholder="What's your email address?">
           </div>
           <div class="form-group">
             <label for="user-password">Password</label>
-            <input type="password" class="form-control" id="user-password" name="user-password" placeholder="Choose a password">
+            <input type="password" class="form-control" id="user-password" name="password" placeholder="Choose a password">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" id="user-password-confirmation" name="user-password-confirmation" placeholder="Repeat that password here">
+            <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
           </div>
           <div class="form-group">
             <label>School</label>

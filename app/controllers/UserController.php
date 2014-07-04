@@ -112,10 +112,40 @@ class UserController extends \BaseController {
 
     public function store()
     {
-        Sentry::register(array(
-            'email'    => 'john.doe@example.com',
-            'password' => 'foobar',
-        ));
+        $validator = Validator::make(
+            array(
+                'name' => Input::get('name'),
+                'surname' => Input::get('surname'),
+                'email' => Input::get('email'),
+                'school' => Input::get('school'),
+                'password' => Input::get('password'),
+                'password_confirmation' => Input::get('password_confirmation'),
+                'tos' => Input::get('tos')
+            ),
+            array(
+                'name' => 'required',
+                'surname' => 'required',
+                'school' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:8|confirmed',
+                'tos' => 'required'
+            )
+        );
+        if ($validator->fails())
+        {
+            return Redirect::route('landing')->withInput()->withErrors($validator);
+        }
+        else{
+            Sentry::createUser(array(
+                'email'    => Input::get('email'),
+                'password' => Input::get('password'),
+                'activated' => false,
+                'school_id' => Input::get('school'),
+                'first_name' => Input::get('name'),
+                'last_name' => Input::get('surname'),
+            ));
+            return Redirect::route('landing');
+        }
     }
 
     /**
@@ -159,9 +189,11 @@ class UserController extends \BaseController {
     public function logout()
     {
         // If user is logged in, then log out the user
+        if(Sentry::check()) {
             Sentry::logout();
-            // Redirect to root
-            return Redirect::route('landing');
+        }
+        // Redirect to root
+        return Redirect::route('landing');
     }
 
     public function addToGroup($group_id) {

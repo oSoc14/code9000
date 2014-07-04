@@ -7,6 +7,11 @@ $(document).ready(function() {
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('show');
   }
+
+  if($("#registerUserModal").data("errors") == true){
+    $('#registerUserModal').modal('show');
+    $('#registerSchoolModal').modal('hide');
+  }
 });
 
 jQuery(function(){

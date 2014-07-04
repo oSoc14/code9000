@@ -73,11 +73,16 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}', [
         'as' => 'user.show',
         'uses' => 'UserController@show'
-    ]);
+    ])->where('id', '[0-9]+');
 
     Route::post('/auth', [
         'as' => 'user.auth',
         'uses' => 'UserController@auth'
+    ]);
+
+    Route::post('/register', [
+        'as' => 'user.register',
+        'uses' => 'UserController@store'
     ]);
 
     Route::get('/logout', [
@@ -88,7 +93,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/group/add/{group_id}', [
         'as'   => 'user.addToGroup',
         'uses' => 'UserController@addToGroup'
-    ]);
+    ])->where('id', '[0-9]+');
 });
 
 
