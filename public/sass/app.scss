@@ -2,18 +2,50 @@
 
 // General elements
 // ----------------------
+// Colors
+$green: #39acb0;
+$lightgreen: #9bd2db;
+$pink: #f21666;
+$lightpink: #f24c81;
+
+// Breakpoints
+$break-small: 320px;
+$break-medium: 768px;
+$break-large: 1200px;
+
 body{
   background: #fff;
-  padding-top: 51px;
+  padding-top: 50px;
 }
 a{
-  color: #f21666;
+  color: $pink;
   &:hover{
-    color: #f24c81;
+    color: $lightpink;
   }
 }
 img{
   max-width: 100%;
+}
+
+/* NAVBAR
+---------------------- */
+
+#navbar-educal{
+  background: $green;
+  color: #fff;
+  height: 50px;
+  box-shadow: none;
+  border: none;
+}
+
+#navbar-logo{
+  background: url("images/logo_educal.png") left top no-repeat;
+  width: 188px;
+  height: 45px;
+  margin: 6px 0 0 0;
+  @media screen and (max-width: $break-medium){
+    margin-left: 15px;
+  }
 }
 
 /* SIDEBAR
@@ -27,7 +59,9 @@ img{
   height: 100%;
   overflow-y: auto;
   z-index: 1000;
-  //border-right: 1px solid rgba(186, 186, 186, 0.70);
+  a{
+    text-decoration: none;
+  }
 }
 
 #accordion {
@@ -54,16 +88,15 @@ img{
   width: 100%;
   font-weight: 500;
   color: #aaabae;
-}
-
-#sidebar-wrapper .panel-title:hover {
-  cursor: pointer;
-  background: rgba(69, 74, 84, 0.15);
-  color: #FFF;
-}
-
-#sidebar-wrapper .panel-group li:first-of-type {
-  //border-top: 1px solid rgba(186, 186, 186, 0.70);
+  @include transition-property(padding);
+  @include transition-duration(0.1s);
+  @include transition-timing-function(ease-in);
+  &:hover{
+    cursor: pointer;
+    background: $lightgreen;
+    color: #FFF;
+    padding-left: 25px;
+  }
 }
 
 @media screen and (max-width: 768px){
@@ -73,6 +106,16 @@ img{
   #content-wrapper{
     margin-left: 0 !important;
   }
+}
+
+#userinfo-wrapper{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: $lightgreen;
+  width: 250px;
+  padding: 10px;
+
 }
 
 

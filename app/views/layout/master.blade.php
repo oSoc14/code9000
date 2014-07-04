@@ -47,7 +47,7 @@
 <body>
 
   <!-- Top navbar -->
-  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="navbar navbar-default navbar-fixed-top" id="navbar-educal" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
@@ -55,7 +55,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">EduCal</a>
+        <h1 id="navbar-logo"><span class="hidden">EduCal</span></h1>
       </div>
     </div>
   </div>
@@ -74,7 +74,7 @@
           </a>
         </li>
         <li class="panel-heading">
-          <a href="schools">
+          <a href="{{ route('school.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-home"></span>
               Schools
@@ -82,7 +82,7 @@
           </a>
         </li>
         <li class="panel-heading">
-          <a href="users">
+          <a href="{{ route('user.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-user"></span>
               Users
@@ -90,7 +90,7 @@
           </a>
         </li>
         <li class="panel-heading">
-          <a href="groups">
+          <a href="{{ route('group.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-th-large"></span>
               Groups
@@ -98,7 +98,7 @@
           </a>
         </li>
         <li class="panel-heading">
-          <a href="events">
+          <a href="#">
             <p class="panel-title">
               <span class="glyphicon glyphicon-glass"></span>
               Events
@@ -130,6 +130,11 @@
           </a>
         </li>
       </ul>
+      <div id="userinfo-wrapper">
+        <strong>Currently logged in as:</strong><br>
+        John Doe<br>
+        Arteveldehogeschool
+      </div>
     </div>
 
     <!-- Content -->

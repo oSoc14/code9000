@@ -1,26 +1,51 @@
-/* line 5, ../sass/app.scss */
+/* line 16, ../sass/app.scss */
 body {
   background: #fff;
-  padding-top: 51px;
+  padding-top: 50px;
 }
 
-/* line 9, ../sass/app.scss */
+/* line 20, ../sass/app.scss */
 a {
   color: #f21666;
 }
-/* line 11, ../sass/app.scss */
+/* line 22, ../sass/app.scss */
 a:hover {
   color: #f24c81;
 }
 
-/* line 15, ../sass/app.scss */
+/* line 26, ../sass/app.scss */
 img {
   max-width: 100%;
 }
 
+/* NAVBAR
+---------------------- */
+/* line 33, ../sass/app.scss */
+#navbar-educal {
+  background: #39acb0;
+  color: #fff;
+  height: 50px;
+  box-shadow: none;
+  border: none;
+}
+
+/* line 41, ../sass/app.scss */
+#navbar-logo {
+  background: url("images/logo_educal.png") left top no-repeat;
+  width: 188px;
+  height: 45px;
+  margin: 6px 0 0 0;
+}
+@media screen and (max-width: 768px) {
+  /* line 41, ../sass/app.scss */
+  #navbar-logo {
+    margin-left: 15px;
+  }
+}
+
 /* SIDEBAR
 ---------------------- */
-/* line 22, ../sass/app.scss */
+/* line 54, ../sass/app.scss */
 #sidebar-wrapper {
   margin-left: -250px;
   left: 250px;
@@ -30,8 +55,12 @@ img {
   overflow-y: auto;
   z-index: 1000;
 }
+/* line 62, ../sass/app.scss */
+#sidebar-wrapper a {
+  text-decoration: none;
+}
 
-/* line 33, ../sass/app.scss */
+/* line 67, ../sass/app.scss */
 #accordion {
   -webkit-padding-start: 0px;
   color: #FFF;
@@ -40,17 +69,17 @@ img {
   font-size: 12px;
 }
 
-/* line 41, ../sass/app.scss */
+/* line 75, ../sass/app.scss */
 #sidebar-wrapper .panel-heading {
   padding: 0;
 }
-/* line 43, ../sass/app.scss */
+/* line 77, ../sass/app.scss */
 #sidebar-wrapper .panel-heading:hover {
   cursor: pointer;
   background: #2d3340;
 }
 
-/* line 49, ../sass/app.scss */
+/* line 83, ../sass/app.scss */
 #sidebar-wrapper .panel-title {
   padding: 15px 20px;
   margin: 0;
@@ -59,45 +88,67 @@ img {
   width: 100%;
   font-weight: 500;
   color: #aaabae;
+  -webkit-transition-property: padding;
+  -moz-transition-property: padding;
+  -o-transition-property: padding;
+  transition-property: padding;
+  -webkit-transition-duration: 0.1s;
+  -moz-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
 }
-
-/* line 59, ../sass/app.scss */
+/* line 94, ../sass/app.scss */
 #sidebar-wrapper .panel-title:hover {
   cursor: pointer;
-  background: rgba(69, 74, 84, 0.15);
+  background: #9bd2db;
   color: #FFF;
+  padding-left: 25px;
 }
 
 @media screen and (max-width: 768px) {
-  /* line 70, ../sass/app.scss */
+  /* line 103, ../sass/app.scss */
   #sidebar-wrapper {
     left: 0;
   }
 
-  /* line 73, ../sass/app.scss */
+  /* line 106, ../sass/app.scss */
   #content-wrapper {
     margin-left: 0 !important;
   }
 }
+/* line 111, ../sass/app.scss */
+#userinfo-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #9bd2db;
+  width: 250px;
+  padding: 10px;
+}
+
 /* CONTENT
 ---------------------- */
-/* line 81, ../sass/app.scss */
+/* line 124, ../sass/app.scss */
 #content-wrapper {
   margin-left: 265px;
 }
 
-/* line 84, ../sass/app.scss */
+/* line 127, ../sass/app.scss */
 .modules-overview {
   list-style: none;
   padding: 0;
 }
 
-/* line 89, ../sass/app.scss */
+/* line 132, ../sass/app.scss */
 .module {
   margin: 0 0 10px 0;
 }
 
-/* line 93, ../sass/app.scss */
+/* line 136, ../sass/app.scss */
 .module-detail-container {
   background: #ccc;
   height: 50px;
@@ -107,7 +158,7 @@ img {
 
 /* CALENDAR
 ---------------------- */
-/* line 102, ../sass/app.scss */
+/* line 145, ../sass/app.scss */
 #calendar {
   margin-top: 31px;
 }
