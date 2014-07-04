@@ -167,13 +167,13 @@
           <h4 class="modal-title">Register as a school</h4>
         </div>
         <div class="modal-body">
-            @foreach ($messages->all() as $message)
-            {{$message}}
+            @foreach ($errors->all() as $message)
+            {{$messages}}
             @endforeach
 
             {{ Form::open([
             'route' => 'school.store',
-            'data-ajax' => 'false',
+            'data-ajax' => 'true',
             ]), PHP_EOL }}
           <div class="form-group">
             <label for="email">Email address</label>
