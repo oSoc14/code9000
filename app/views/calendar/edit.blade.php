@@ -8,8 +8,12 @@
         <!-- main area -->
         <div class="col-xs-12 col-sm-9">
             {{Form::open(array('route' => array('event.update',$event->id)))}}
-
             <h1>Create Event</h1>
+
+            @foreach ($errors->all() as $message)
+            {{$message}}
+            @endforeach
+
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="tex" class="form-control" id="title" name="title" value="{{$event->title}}" placeholder="{{$event->title}}">

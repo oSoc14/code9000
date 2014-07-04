@@ -110,13 +110,15 @@ class CalendarController extends \BaseController {
                     'group' => Input::get('group'),
                     'description' => Input::get('description'),
                     'start' => Input::get('start'),
+                    'start' => Input::get('end'),
                     'title' => Input::get('title')
                 ),
                 array(
                     'group' => 'required',
                     'description' => 'required',
                     'start' => 'required',
-                    'title' => 'required'
+                    'title' => 'required',
+                    'end'   => 'after:start'
                 )
             );
             if ($validator->fails())
@@ -206,12 +208,13 @@ class CalendarController extends \BaseController {
                     'group' => 'required',
                     'description' => 'required',
                     'start' => 'required',
-                    'title' => 'required'
+                    'title' => 'required',
+                    'end'   => 'after:start'
                 )
             );
             if ($validator->fails())
             {
-                return Redirect::route('event.edit')->withInput()->withErrors($validator);
+                return Redirect::route('event.edit',$id)->withInput()->withErrors($validator);
             }
             else{
                 $event = Appointment::find($id);

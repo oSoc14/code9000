@@ -12,6 +12,11 @@
             'data-ajax' => 'false',
             ]), PHP_EOL }}
             <h1>Create Event</h1>
+
+            @foreach ($messages->all() as $message)
+            {{$message}}
+            @endforeach
+
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="tex" class="form-control" id="title" name="title" placeholder="Event title">
