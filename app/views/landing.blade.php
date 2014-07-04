@@ -159,7 +159,11 @@
   </div>
 
   <!-- Register (school) Modal -->
-  <div class="modal fade" id="registerSchoolModal" tabindex="-1" role="dialog" aria-labelledby="registerSchoolModal" aria-hidden="true">
+  @if($errors->has())
+  <div class="modal fade" id="registerSchoolModal" tabindex="-1" data-errors="true" role="dialog" aria-labelledby="registerSchoolModal" aria-hidden="false">
+  @else
+  <div class="modal fade" id="registerSchoolModal" tabindex="-1" data-errors="false" role="dialog" aria-labelledby="registerSchoolModal" aria-hidden="false">
+  @endif
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -168,7 +172,7 @@
         </div>
         <div class="modal-body">
             @foreach ($errors->all() as $message)
-            {{$messages}}
+            {{$message}}
             @endforeach
 
             {{ Form::open([

@@ -52,6 +52,7 @@ class SchoolController extends \BaseController {
                 'name' => Input::get('name'),
                 'email' => Input::get('email'),
                 'password' => Input::get('password'),
+                'password_confirmation' => Input::get('password_confirmation'),
                 'tos' => Input::get('tos')
             ),
             array(
@@ -63,7 +64,7 @@ class SchoolController extends \BaseController {
         );
         if ($validator->fails())
         {
-            return Redirect::route('index')->withInput()->withErrors($validator);
+            return Redirect::route('landing')->withInput()->withErrors($validator);
         }
         else{
             $school = new School();
@@ -93,7 +94,7 @@ class SchoolController extends \BaseController {
             ));
 
             $user->addGroup($group);
-            return Redirect::route('index');
+            return Redirect::route('calendar.index');
         }
 	}
 

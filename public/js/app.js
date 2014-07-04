@@ -2,6 +2,11 @@ $(document).ready(function() {
   $('[data-toggle=offcanvas]').click(function() {
     $('.row-offcanvas').toggleClass('active');
   });
+
+  if($("#registerSchoolModal").data("errors") == true){
+    $('#registerUserModal').modal('hide');
+    $('#registerSchoolModal').modal('show');
+  }
 });
 
 jQuery(function(){
