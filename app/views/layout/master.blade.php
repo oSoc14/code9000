@@ -130,11 +130,17 @@
           </a>
         </li>
       </ul>
+      @if(Sentry::check())
       <div id="userinfo-wrapper">
         <strong>Currently logged in as:</strong><br>
-        John Doe<br>
-        Arteveldehogeschool
+        @if(Sentry::getUser()->first_name != "")
+        {{Sentry::getUser()->first_name}} {{Sentry::getUser()->last_name}}<br>
+        @else
+        {{Sentry::getUser()->email}}<br>
+        @endif
+        {{Sentry::getUser()->school->name}}
       </div>
+      @endif
     </div>
 
     <!-- Content -->

@@ -12,6 +12,8 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
             <th>Activate</th>
         </tr>
     </thead>
@@ -19,13 +21,17 @@
     <tfoot>
         <tr>
             <th>Name</th>
-            <th>Edit</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Activate</th>
         </tr>
     </tfoot>
 
     <tbody>
         @foreach($users as $user)
             <tr>
+                <td>{{ $user->first_name }}</td>
+                <td>{{ $user->last_name }}</td>
                 <td>{{ $user->email }}</td>
                 <td><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
