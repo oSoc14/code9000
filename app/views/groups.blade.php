@@ -5,7 +5,10 @@
 @stop
 
 @section('content')
-<h1>Schools</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+<h1>Groups</h1>
 
 <ul class="modules-overview">
   <li class="module row">
@@ -27,6 +30,9 @@
     </div>
   </li>
 </ul>
+      </div>
+    </div>
+  </div>
 @stop
 
 @section('footerScript')
