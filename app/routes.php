@@ -95,7 +95,7 @@ Route::group(['prefix' => 'user'], function () {
         'uses' => 'UserController@addToGroup'
     ])->where('id', '[0-9]+');
 
-    Route::post('/activate/{id}', [
+    Route::get('/activate/{id}', [
         'as'   => 'user.activate',
         'uses' => 'UserController@activateUser'
     ])->where('id', '[0-9]+');

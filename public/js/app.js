@@ -12,6 +12,35 @@ $(document).ready(function() {
     $('#registerUserModal').modal('show');
     $('#registerSchoolModal').modal('hide');
   }
+
+  $('.activateUser').on('click', function(ev){
+    ev.preventDefault;
+    var that = $(this);
+    var userid = that.data('userid');
+
+    $.ajax({
+      type:"GET",
+      url: "user/activate/"+userid,
+      cache: false,
+      dataType: "json",
+      contentType: "application/json",
+      beforeSend:function(){
+        that.find('span').hide();
+        that.parent().find('.loader').show();
+      },
+      success:function(data){
+        that.find('span').show();
+        that.parent().find('.loader').hide();
+        that.find('span').toggleClass('glyphicon-thumbs-up');
+        that.find('span').toggleClass('glyphicon-thumbs-down');
+      },
+      error:function(xhr, status, errorThrown) {
+        alert(status + ', ' + errorThrown);
+      }
+    });
+  });
+
+  $('.loader').hide();
 });
 
 jQuery(function(){

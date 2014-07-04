@@ -33,7 +33,17 @@
                 <td>{{ $user->first_name }}</td>
                 <td>{{ $user->last_name }}</td>
                 <td>{{ $user->email }}</td>
-                <td><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td>
+                    <a data-userid="{{$user->id}}" class="activateUser" href="#">
+                        <!-- TODO: fix colors -->
+                        @if($user->activated == 1)
+                            <span class="green glyphicon glyphicon-thumbs-up"></span>
+                        @else
+                            <span class="red glyphicon glyphicon-thumbs-down"></span>
+                        @endif
+                    </a>
+                    <span class="loader glyphicon glyphicon-cog"></span>
+                </td>
             </tr>
         @endforeach
     </tbody>

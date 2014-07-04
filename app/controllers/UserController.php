@@ -178,7 +178,7 @@ class UserController extends \BaseController {
     /**
      * Activate a user so that he gets access to the school (as a teacher for example)
      * @param $id = userID
-     * TODO: Activate user
+     * TODO: Try catch block
      */
     public function activateUser($id)
     {
@@ -188,12 +188,12 @@ class UserController extends \BaseController {
         // Attempt to activate the user
         if($user->activated == 0) {
             $user->attemptActivation($activationCode);
-            return true;
+            return $user;
         } else {
             // Deactivate user
             $user->activated = 0;
             $user->save();
-            return false;
+            return $user;
         }
     }
 
