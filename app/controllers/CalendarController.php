@@ -49,7 +49,7 @@ class CalendarController extends \BaseController {
         {
             //GETS THE APPOINTMENTS FROM THE SCHOOL
             $user = Sentry::getUser();
-            if ($user->hasAccess('superadmin'))
+            if ($user->hasAccess('school'))
             {
                 $appointments = Appointment::get()->toArray();
                 //RETURNS JSON RESPONS OFF THE USER
@@ -109,14 +109,12 @@ class CalendarController extends \BaseController {
                 array(
                     'group' => Input::get('group'),
                     'description' => Input::get('description'),
-                    'end' => Input::get('end'),
                     'start' => Input::get('start'),
                     'title' => Input::get('title')
                 ),
                 array(
                     'group' => 'required',
                     'description' => 'required',
-                    'end' => 'required',
                     'start' => 'required',
                     'title' => 'required'
                 )
@@ -130,7 +128,12 @@ class CalendarController extends \BaseController {
                 $event->title = Input::get('title');
                 $event->description = Input::get('description');
                 $event->start_date = new DateTime(Input::get('start'));
-                $event->end_date = new DateTime(Input::get('end'));
+                if(Input::get('end') == '' || Input::get('end') == Input::get('start')){
+                    $event->end_date = new DateTime(Input::get('start'));
+                    $event->end_date->add(new DateInterval('PT1H'));
+                }else{
+                    $event->end_date = new DateTime(Input::get('end'));
+                }
                 $event->group_id = Input::get('group');
                 $event->save();
                 return Redirect::route('calendar.index');
