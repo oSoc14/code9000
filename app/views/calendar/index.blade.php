@@ -1,8 +1,12 @@
 @extends('layout.master')
 
 @section('header')
+<!-- jQuery UI -->
+{{ HTML::style("css/jquery-ui.min.css") }}
+{{ HTML::style("css/jquery-ui.structure.min.css") }}
+{{ HTML::style("css/jquery-ui.theme.min.css") }}
+
 {{ HTML::style("/packages/fullcalendar/fullcalendar.css") }}
-{{ HTML::style("/css/calendar.css") }}
 {{ HTML::style("/css/app.css") }}
 @stop
 
@@ -10,12 +14,19 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12">
-      <a type="button" class="btn btn-default btn-lg" href="{{route('event.create')}}" id="addEvent">
-          <span class="glyphicon glyphicon-pencil"></span> Add Events
+      <ol class="breadcrumb">
+        <li><a href="../">Home</a></li>
+        <li class="active">Calendar</li>
+      </ol>
+    </div>
+    <div class="col-xs-12">
+      <a type="button" class="btn btn-default btn-lg btn-educal-primary" href="{{route('event.create')}}" id="addEvent">
+        <span class="glyphicon glyphicon-plus"></span> Add event
       </a>
-
-      <h1>Calendar</h1>
-
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
       <div id="calendar"></div>
       <div id="preloader">Loading...</div>
       <br>

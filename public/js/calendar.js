@@ -49,7 +49,7 @@ $(document).ready(function() {
       editable: true,
       events: _events,
       timeFormat: 'H(:mm)',
-      theme: true,
+      theme: false,
       themeButtonIcons: {
         prev: 'circle-triangle-w',
         next: 'circle-triangle-e',

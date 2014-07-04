@@ -6,6 +6,13 @@
 
         @section('content')
         <!-- main area -->
+<div class="col-xs-12">
+  <ol class="breadcrumb">
+    <li><a href="../">Home</a></li>
+    <li><a href="{{ route('calendar.index') }}">Calendar</a></li>
+    <li class="active">Create event</li>
+  </ol>
+</div>
         <div class="col-xs-12 col-sm-9">
             {{ Form::open([
             'route' => 'event.store',
@@ -50,7 +57,12 @@
                     </span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Add Event</button>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="day" id="day"> Full day
+            </label>
+          </div>
+            <button type="submit" class="btn btn-default btn-educal-primary">Add Event</button>
             {{ Form::close(), PHP_EOL }}
             {{ Session::get('errorMessage') }}
 

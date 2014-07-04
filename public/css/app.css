@@ -1,35 +1,93 @@
-/* line 16, ../sass/app.scss */
+/* General elements
+---------------------- */
+/* line 42, ../sass/app.scss */
+.btn-educal-primary {
+  background: #f21666;
+  border: 1px solid #a6104a;
+  color: white;
+  text-shadow: none;
+}
+/* line 29, ../sass/app.scss */
+.btn-educal-primary:hover {
+  background: #ec3b76;
+  border: 1px solid #f21666;
+  color: white;
+}
+/* line 34, ../sass/app.scss */
+.btn-educal-primary:focus {
+  background: #ec3b76;
+  border: 1px solid #f21666;
+  color: white;
+  outline: none;
+}
+
+/* line 46, ../sass/app.scss */
+.btn-educal-secondary {
+  background: #eae415;
+  border: 1px solid #c9c315;
+  color: #8c8610;
+  text-shadow: none;
+}
+/* line 29, ../sass/app.scss */
+.btn-educal-secondary:hover {
+  background: #fbfd4f;
+  border: 1px solid #eae415;
+  color: #8c8610;
+}
+/* line 34, ../sass/app.scss */
+.btn-educal-secondary:focus {
+  background: #fbfd4f;
+  border: 1px solid #eae415;
+  color: #8c8610;
+  outline: none;
+}
+
+/* line 51, ../sass/app.scss */
 body {
   background: #fff;
   padding-top: 50px;
+  font-family: "Open Sans", "Helvetica", sans-serif;
 }
 
-/* line 20, ../sass/app.scss */
+/* line 57, ../sass/app.scss */
 a {
   color: #f21666;
 }
-/* line 22, ../sass/app.scss */
+/* line 59, ../sass/app.scss */
 a:hover {
   color: #f24c81;
 }
 
-/* line 26, ../sass/app.scss */
+/* line 63, ../sass/app.scss */
 img {
   max-width: 100%;
 }
 
 /* NAVBAR
 ---------------------- */
-/* line 33, ../sass/app.scss */
+/* line 70, ../sass/app.scss */
 #navbar-educal {
   background: #39acb0;
   color: #fff;
   height: 50px;
   box-shadow: none;
-  border: none;
+  border: 0;
+}
+/* line 76, ../sass/app.scss */
+#navbar-educal .navbar-toggle {
+  border: 0;
+}
+/* line 78, ../sass/app.scss */
+#navbar-educal .navbar-toggle:hover, #navbar-educal .navbar-toggle:focus {
+  background-color: #9bd2db;
+  border: 0;
+}
+/* line 83, ../sass/app.scss */
+#navbar-educal .navbar-toggle .icon-bar {
+  background-color: #fff;
 }
 
-/* line 41, ../sass/app.scss */
+/* line 88, ../sass/app.scss */
 #navbar-logo {
   background: url("images/logo_educal.png") left top no-repeat;
   width: 188px;
@@ -37,7 +95,7 @@ img {
   margin: 6px 0 0 0;
 }
 @media screen and (max-width: 768px) {
-  /* line 41, ../sass/app.scss */
+  /* line 88, ../sass/app.scss */
   #navbar-logo {
     margin-left: 15px;
   }
@@ -45,7 +103,7 @@ img {
 
 /* SIDEBAR
 ---------------------- */
-/* line 54, ../sass/app.scss */
+/* line 101, ../sass/app.scss */
 #sidebar-wrapper {
   margin-left: -250px;
   left: 250px;
@@ -55,12 +113,12 @@ img {
   overflow-y: auto;
   z-index: 1000;
 }
-/* line 62, ../sass/app.scss */
+/* line 109, ../sass/app.scss */
 #sidebar-wrapper a {
   text-decoration: none;
 }
 
-/* line 67, ../sass/app.scss */
+/* line 114, ../sass/app.scss */
 #accordion {
   -webkit-padding-start: 0px;
   color: #FFF;
@@ -69,17 +127,17 @@ img {
   font-size: 12px;
 }
 
-/* line 75, ../sass/app.scss */
+/* line 122, ../sass/app.scss */
 #sidebar-wrapper .panel-heading {
   padding: 0;
 }
-/* line 77, ../sass/app.scss */
+/* line 124, ../sass/app.scss */
 #sidebar-wrapper .panel-heading:hover {
   cursor: pointer;
   background: #2d3340;
 }
 
-/* line 83, ../sass/app.scss */
+/* line 130, ../sass/app.scss */
 #sidebar-wrapper .panel-title {
   padding: 15px 20px;
   margin: 0;
@@ -101,7 +159,7 @@ img {
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
 }
-/* line 94, ../sass/app.scss */
+/* line 141, ../sass/app.scss */
 #sidebar-wrapper .panel-title:hover {
   cursor: pointer;
   background: #9bd2db;
@@ -110,45 +168,65 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-  /* line 103, ../sass/app.scss */
+  /* line 150, ../sass/app.scss */
   #sidebar-wrapper {
     left: 0;
   }
 
-  /* line 106, ../sass/app.scss */
+  /* line 153, ../sass/app.scss */
   #content-wrapper {
     margin-left: 0 !important;
   }
 }
-/* line 111, ../sass/app.scss */
+/* line 158, ../sass/app.scss */
 #userinfo-wrapper {
   position: fixed;
   bottom: 0;
-  left: 0;
-  background: #9bd2db;
+  left: 250px;
+  margin-left: -250px;
   width: 250px;
   padding: 10px;
+  color: #aaabae;
+}
+/* line 166, ../sass/app.scss */
+#userinfo-wrapper .username {
+  color: #333333;
+}
+@media screen and (max-width: 768px) {
+  /* line 158, ../sass/app.scss */
+  #userinfo-wrapper {
+    left: 0;
+  }
 }
 
 /* CONTENT
 ---------------------- */
-/* line 124, ../sass/app.scss */
+/* line 177, ../sass/app.scss */
 #content-wrapper {
   margin-left: 265px;
+  padding-top: 20px;
+}
+/* line 180, ../sass/app.scss */
+#content-wrapper p {
+  line-height: 1.75em;
+}
+/* line 183, ../sass/app.scss */
+#content-wrapper h1 {
+  margin: 0px 0 20px 0;
 }
 
-/* line 127, ../sass/app.scss */
+/* line 187, ../sass/app.scss */
 .modules-overview {
   list-style: none;
   padding: 0;
 }
 
-/* line 132, ../sass/app.scss */
+/* line 192, ../sass/app.scss */
 .module {
   margin: 0 0 10px 0;
 }
 
-/* line 136, ../sass/app.scss */
+/* line 196, ../sass/app.scss */
 .module-detail-container {
   background: #ccc;
   height: 50px;
@@ -158,7 +236,30 @@ img {
 
 /* CALENDAR
 ---------------------- */
-/* line 145, ../sass/app.scss */
+/* line 205, ../sass/app.scss */
 #calendar {
-  margin-top: 31px;
+  max-width: 900px;
+}
+/* line 207, ../sass/app.scss */
+#calendar a {
+  color: #fff;
+}
+/* line 209, ../sass/app.scss */
+#calendar a:hover {
+  color: #b6cdea;
+}
+/* line 213, ../sass/app.scss */
+#calendar .fc-event {
+  background: #39acb0;
+  border: 0;
+  padding: 5px;
+}
+/* line 217, ../sass/app.scss */
+#calendar .fc-event:hover {
+  color: #05302a;
+}
+
+/* line 223, ../sass/app.scss */
+#addEvent {
+  margin: 0 0 20px 0;
 }

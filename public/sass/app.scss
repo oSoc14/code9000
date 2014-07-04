@@ -1,22 +1,59 @@
 @import "compass";
 
-// General elements
-// ----------------------
+/* General elements
+---------------------- */
 // Colors
 $green: #39acb0;
 $lightgreen: #9bd2db;
 $pink: #f21666;
 $lightpink: #f24c81;
+$darkgrey: #333;
+$lightgrey: #aaabae;
 
 // Breakpoints
 $break-small: 320px;
 $break-medium: 768px;
 $break-large: 1200px;
 
+// Fonts
+$serif: 'Merriweather', serif;
+$sans-serif: 'Open Sans', 'Helvetica', sans-serif;
+$times: 'Times New Roman', serif;
+
+// Buttons
+@mixin btn-educal($bgcolor, $bordercolor, $color, $bghover, $borderhover){
+  background: $bgcolor;
+  border: 1px solid $bordercolor;
+  color: $color;
+  text-shadow: none;
+  &:hover{
+    background: $bghover;
+    border: 1px solid $borderhover;
+    color: $color;
+  }
+  &:focus{
+    background: $bghover;
+    border: 1px solid $borderhover;
+    color: $color;
+    outline: none;
+  }
+}
+
+.btn-educal-primary{
+  @include btn-educal(#F21666, #a6104a, #fff, #ec3b76, #F21666);
+}
+
+.btn-educal-secondary{
+  @include btn-educal(#EAE415, #c9c315, #8c8610, #fbfd4f, #EAE415);
+}
+
+// HTML
 body{
   background: #fff;
   padding-top: 50px;
+  font-family: $sans-serif;
 }
+
 a{
   color: $pink;
   &:hover{
@@ -35,7 +72,17 @@ img{
   color: #fff;
   height: 50px;
   box-shadow: none;
-  border: none;
+  border: 0;
+  .navbar-toggle{
+    border: 0;
+    &:hover, &:focus{
+      background-color: $lightgreen;
+      border: 0;
+    }
+  }
+  .navbar-toggle .icon-bar{
+    background-color: #fff;
+  }
 }
 
 #navbar-logo{
@@ -87,7 +134,7 @@ img{
   border-bottom: 1px solid rgba(186, 186, 186, 0.70);
   width: 100%;
   font-weight: 500;
-  color: #aaabae;
+  color: $lightgrey;
   @include transition-property(padding);
   @include transition-duration(0.1s);
   @include transition-timing-function(ease-in);
@@ -111,11 +158,17 @@ img{
 #userinfo-wrapper{
   position: fixed;
   bottom: 0;
-  left: 0;
-  background: $lightgreen;
+  left: 250px;
+  margin-left: -250px;
   width: 250px;
   padding: 10px;
-
+  color: $lightgrey;
+  .username{
+    color: $darkgrey;
+  }
+  @media screen and (max-width: $break-medium){
+    left: 0;
+  }
 }
 
 
@@ -123,6 +176,13 @@ img{
 ---------------------- */
 #content-wrapper{
   margin-left: 265px;
+  padding-top: 20px;
+  p{
+    line-height: 1.75em;
+  }
+  h1{
+    margin: 0px 0 20px 0;
+  }
 }
 .modules-overview{
   list-style: none;
@@ -143,5 +203,23 @@ img{
 /* CALENDAR
 ---------------------- */
 #calendar{
-  margin-top: 31px;
+  max-width: 900px;
+  a{
+    color: #fff;
+    &:hover{
+      color: #b6cdea;
+    }
+  }
+  .fc-event{
+    background: $green;
+    border: 0;
+    padding: 5px;
+    &:hover{
+      color: #05302a;
+    }
+  }
+}
+
+#addEvent {
+  margin: 0 0 20px 0;
 }
