@@ -1,9 +1,9 @@
 @extends('layout.master')
 
 @section('header')
-{{ HTML::style("../packages/fullcalendar/fullcalendar.css") }}
-{{ HTML::style("../css/calendar.css") }}
-{{ HTML::style("../css/app.css") }}
+{{ HTML::style("/packages/fullcalendar/fullcalendar.css") }}
+{{ HTML::style("/css/calendar.css") }}
+{{ HTML::style("/css/app.css") }}
 @stop
 
 @section('content')
