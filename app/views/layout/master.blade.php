@@ -1,26 +1,24 @@
 <!doctype html>
 <html lang="{{ Config::get('app.locale') }}" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ HTML::entities('EduCal') }}</title>
-    <!-- Bootstrap core CSS -->
-    {{ HTML::style("css/bootstrap.min.css") }}
-    {{ HTML::style("css/bootstrap-theme.min.css") }}
-    <!-- Bootstrap Datepicker -->
-    {{ HTML::style("css/jquery.datetimepicker.css") }}
-    <!-- jQuery UI -->
-    {{ HTML::style("css/jquery-ui.min.css") }}
-    {{ HTML::style("css/jquery-ui.structure.min.css") }}
-    {{ HTML::style("css/jquery-ui.theme.min.css") }}
-    <!-- Global styles for this template -->
-    @yield('header')
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta property="og:title" content="">
-    <meta property="og:site_name" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="{{ asset('') }}">
+  <meta charset="UTF-8">
+  <title>{{ HTML::entities('EduCal') }}</title>
+  <!-- Bootstrap core CSS -->
+  {{ HTML::style("css/bootstrap.min.css") }}
+  {{ HTML::style("css/bootstrap-theme.min.css") }}
+  <!-- Bootstrap Datepicker -->
+  {{ HTML::style("css/jquery.datetimepicker.css") }}
+  <!-- Google Webfont -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700italic,400' rel='stylesheet' type='text/css'>
+  <!-- Global styles for this template -->
+  @yield('header')
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta property="og:title" content="">
+  <meta property="og:site_name" content="">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="{{ asset('') }}">
   <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="114x114" href="favicons/apple-touch-icon-114x114.png">
   <link rel="apple-touch-icon" sizes="72x72" href="favicons/apple-touch-icon-72x72.png">
@@ -132,8 +130,8 @@
       </ul>
       <div id="userinfo-wrapper">
         <strong>Currently logged in as:</strong><br>
-        John Doe<br>
-        Arteveldehogeschool
+        <span class="username">John Doe<br>
+        Arteveldehogeschool</span>
       </div>
     </div>
 
