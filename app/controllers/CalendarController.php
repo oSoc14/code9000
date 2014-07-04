@@ -143,14 +143,16 @@ class CalendarController extends \BaseController {
 
 
 	/**
-	 * Display the specified resource.
+	 * Display and event by its ID
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
 	public function show($id)
 	{
-		//
+        $event = Appointment::find($id);
+        $event->load('group');
+        return View::make('calendar.eventDetail')->with('event',$event);
 	}
 
 

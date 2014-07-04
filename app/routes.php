@@ -123,6 +123,12 @@ Route::group(array('prefix' => 'calendar'), function()
         'uses' => 'CalendarController@destroy'
     ])->where('id', '[0-9]+');
 
+    //Returns detailsview for an event with given ID
+    Route::get('/event/{id}', [
+        'as'   => 'event.detail',
+        'uses' => 'CalendarController@show'
+    ])->where('id', '[0-9]+');
+
     //Shows the selected day's events
     Route::get('/events', [
         'as'   => 'calendar.list',

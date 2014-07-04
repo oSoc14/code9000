@@ -30,6 +30,7 @@ $(document).ready(function() {
       newItem['title'] = value['title'];
       newItem['start'] = value['start_date'];
       newItem['end']   = value['end_date'];
+      newItem['url']    = 'calendar/event/' + value['id'];
       _events.push(newItem);
     });
     renderEvents();

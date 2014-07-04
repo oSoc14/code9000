@@ -18,6 +18,6 @@ class Appointment extends Eloquent  {
     //returns the group the appointment belongs to
     public function group()
     {
-        return $this->hasOne('Group');
+        return $this->belongsTo('Group');
     }
 }
