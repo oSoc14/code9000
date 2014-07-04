@@ -51,12 +51,14 @@ class SchoolController extends \BaseController {
             array(
                 'name' => Input::get('name'),
                 'email' => Input::get('email'),
-                'password' => Input::get('password')
+                'password' => Input::get('password'),
+                'tos' => Input::get('tos')
             ),
             array(
                 'name' => 'required|unique:schools,name',
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required|min:8|confirmed'
+                'password' => 'required|min:8|confirmed',
+                'tos' => 'required'
             )
         );
         if ($validator->fails())

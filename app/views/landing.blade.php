@@ -167,14 +167,21 @@
           <h4 class="modal-title">Register as a school</h4>
         </div>
         <div class="modal-body">
+            @foreach ($messages->all() as $message)
+            {{$message}}
+            @endforeach
 
+            {{ Form::open([
+            'route' => 'school.store',
+            'data-ajax' => 'false',
+            ]), PHP_EOL }}
           <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="form-control" id="school-email" name="school-email" placeholder="What's your school's email address?">
+            <input type="email" class="form-control" id="school-email" name="email" placeholder="What's your school's email address?">
           </div>
           <div class="form-group">
             <label for="school-name">Name</label>
-            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="What'the name of the school?">
+            <input type="text" class="form-control" id="school-name" name="name" placeholder="What'the name of the school?">
           </div>
           <div class="form-group">
             <label for="school-location">City</label>
@@ -182,10 +189,10 @@
           </div>
           <div class="form-group">
             <label for="school-password">Password</label>
-            <input type="password" class="form-control" id="school-password" name="school-password" placeholder="Choose a password">
+            <input type="password" class="form-control" id="school-password" name="password" placeholder="Choose a password">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" id="school-password-confirmation" name="school-password-confirmation" placeholder="Repeat that password here">
+            <input type="password" class="form-control" id="school-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
           </div>
           <div class="checkbox">
             <label>
@@ -193,7 +200,7 @@
             </label>
           </div>
           <button type="submit" class="btn btn-default btn-educal-primary">Register</button>
-
+            {{ Form::close(), PHP_EOL }}
         </div>
       </div>
     </div>

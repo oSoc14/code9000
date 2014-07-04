@@ -13,7 +13,7 @@
             ]), PHP_EOL }}
             <h1>Create Event</h1>
 
-            @foreach ($messages->all() as $message)
+            @foreach ($errors->all() as $message)
             {{$message}}
             @endforeach
 
