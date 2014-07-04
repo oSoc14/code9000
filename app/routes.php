@@ -169,3 +169,12 @@ Route::group(array('prefix' => 'group'), function()
         'uses' => 'GroupController@edit'
     ]);
 });
+
+/**
+ * iCal routes
+ * returns iCal, .ics file
+ */
+Route::get('/{school}/{class}/ical.ics', [
+    'as'   => 'icalIcs',
+    'uses' => 'IcalCalendarController@index'
+]);
