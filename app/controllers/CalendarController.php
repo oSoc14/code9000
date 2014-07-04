@@ -110,15 +110,15 @@ class CalendarController extends \BaseController {
                     'group' => Input::get('group'),
                     'description' => Input::get('description'),
                     'start' => Input::get('start'),
-                    'start' => Input::get('end'),
-                    'title' => Input::get('title')
+                    'end' => Input::get('end'),
+                    'title' => Input::get('title'),
+                    'day' => Input::get('day')
                 ),
                 array(
                     'group' => 'required',
                     'description' => 'required',
                     'start' => 'required',
-                    'title' => 'required',
-                    'end'   => 'after:start'
+                    'title' => 'required'
                 )
             );
             if ($validator->fails())
@@ -130,11 +130,21 @@ class CalendarController extends \BaseController {
                 $event->title = Input::get('title');
                 $event->description = Input::get('description');
                 $event->start_date = new DateTime(Input::get('start'));
-                if(Input::get('end') == '' || Input::get('end') == Input::get('start')){
-                    $event->end_date = new DateTime(Input::get('start'));
-                    $event->end_date->add(new DateInterval('PT1H'));
+                if(Input::get('day')){
+                   $event->allday = true;
                 }else{
-                    $event->end_date = new DateTime(Input::get('end'));
+                    $event->allday = false;
+                    if((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start')) ){
+                        $event->end_date = new DateTime(Input::get('start'));
+                        $event->end_date->add(new DateInterval('PT1H'));
+                    }elseif(new DateTime(Input::get('start'))>=new DateTime(Input::get('end'))){
+                        // Add an error message in the message collection (MessageBag instance)
+                        $validator->getMessageBag()->add('end', Lang::get('validation.after', array('attribute ' => 'end ', 'date' => Input::get('start'))));
+                        // redirect back with inputs and validator instance
+                        return Redirect::back()->withErrors($validator)->withInput();
+                    }else{
+                        $event->end_date = new DateTime(Input::get('end'));
+                    }
                 }
                 $event->group_id = Input::get('group');
                 $event->save();
@@ -208,8 +218,7 @@ class CalendarController extends \BaseController {
                     'group' => 'required',
                     'description' => 'required',
                     'start' => 'required',
-                    'title' => 'required',
-                    'end'   => 'after:start'
+                    'title' => 'required'
                 )
             );
             if ($validator->fails())
@@ -221,11 +230,21 @@ class CalendarController extends \BaseController {
                 $event->title = Input::get('title');
                 $event->description = Input::get('description');
                 $event->start_date = new DateTime(Input::get('start'));
-                if(Input::get('end') == '' || new DateTime(Input::get('end')) == new DateTime(Input::get('start'))){
-                    $event->end_date = new DateTime(Input::get('start'));
-                    $event->end_date->add(new DateInterval('PT1H'));
+                if(Input::get('day')){
+                    $event->allday = true;
                 }else{
-                    $event->end_date = new DateTime(Input::get('end'));
+                    $event->allday = false;
+                    if((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start')) ){
+                        $event->end_date = new DateTime(Input::get('start'));
+                        $event->end_date->add(new DateInterval('PT1H'));
+                    }elseif(new DateTime(Input::get('start'))>=new DateTime(Input::get('end'))){
+                        // Add an error message in the message collection (MessageBag instance)
+                        $validator->getMessageBag()->add('end', Lang::get('validation.after', array('attribute ' => 'end ', 'date' => Input::get('start'))));
+                        // redirect back with inputs and validator instance
+                        return Redirect::back()->withErrors($validator)->withInput();
+                    }else{
+                        $event->end_date = new DateTime(Input::get('end'));
+                    }
                 }
                 $event->group_id = Input::get('group');
                 $event->save();

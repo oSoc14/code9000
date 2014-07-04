@@ -113,49 +113,49 @@ Route::group(array('prefix' => 'calendar'), function()
         'uses' => 'CalendarController@index'
     ]);
 
-    //Shows creation form for events
+    // Shows creation form for events
     Route::get('/event/create', [
         'as'   => 'event.create',
         'uses' => 'CalendarController@create'
     ]);
 
-    //Stores events
+    // Stores events
     Route::post('/event/create', [
         'as'   => 'event.store',
         'uses' => 'CalendarController@store'
     ]);
 
-    //Shows creation form for events
+    // Shows creation form for events
     Route::get('/event/edit/{id}', [
         'as'   => 'event.edit',
         'uses' => 'CalendarController@edit'
     ])->where('id', '[0-9]+');
 
-    //Stores events
+    // Stores events
     Route::post('/event/edit/{id}', [
         'as'   => 'event.update',
         'uses' => 'CalendarController@update'
     ])->where('id', '[0-9]+');
 
-    //Deletes the event with the given ID
+    // Deletes the event with the given ID
     Route::get('/event/delete/{id}', [
         'as'   => 'event.delete',
         'uses' => 'CalendarController@destroy'
     ])->where('id', '[0-9]+');
 
-    //Returns detailsview for an event with given ID
+    // Returns detailsview for an event with given ID
     Route::get('/event/{id}', [
         'as'   => 'event.detail',
         'uses' => 'CalendarController@show'
     ])->where('id', '[0-9]+');
 
-    //Shows the selected day's events
+    // Shows the selected day's events
     Route::get('/events', [
         'as'   => 'calendar.list',
         'uses' => 'CalendarController@listView'
     ]);
 
-    //Returns all events for the users school
+    // Returns all events for the users school
     Route::get('/api/events', [
         'as'   => 'calendar.events',
         'uses' => 'CalendarController@events'

@@ -5,33 +5,41 @@
 @stop
 
 @section('content')
-<!-- main area -->
-<div class="col-xs-12 col-sm-9">
-    <h1>{{$event->title}}</h1>
-    <span>Group: {{$event->group->name}}</span>
-    <br>
-    <div class="form-group">
-        <label for="description">Description</label>
-        <p>{{$event->description}}</p>
-    </div>
-    <div class="form-group">
-        <div class='input-group date'>
-            <p>{{date_format(new DateTime($event->start_date), 'Y/m/d H:i')}}</p>
+<div class="col-xs-12">
+  <ol class="breadcrumb">
+    <li><a href="../../">Home</a></li>
+    <li><a href="{{ route('calendar.index') }}">Calendar</a></li>
+    <li class="active">Event</li>
+  </ol>
+</div>
 
-        </div>
-    </div>
-    <div class="form-group">
-        <div class='input-group date'>
-            <p>{{date_format(new DateTime($event->end_date), 'Y/m/d H:i')}}</p>
+<div class="col-xs-12">
+  <h1>{{$event->title}}</h1>
+  <strong>Group:</strong>
+  <p>{{$event->group->name}}</p>
+</div>
 
-        </div>
-    </div>
-    <!-- TODO: check if user has rights for edit, then display button -->
-    <a type="button" class="btn btn-default btn-lg" href="{{route('event.edit',$event->id)}}" id="editEvent">
-        <span class="glyphicon glyphicon-pencil"></span> Edit Event
-    </a>
-</div><!-- /.col-xs-12 main -->
+<div class="col-xs-12">
+  <strong>Description</strong>
+  <p>{{$event->description}}</p>
+</div>
 
+<div class="col-xs-12">
+  <strong>Starts:</strong>
+      <p>{{date_format(new DateTime($event->start_date), 'Y/m/d - H:i')}}</p>
+</div>
+
+<div class="col-xs-12">
+  <strong>Ends:</strong>
+    <p>{{date_format(new DateTime($event->end_date), 'Y/m/d - H:i')}}</p>
+</div>
+
+<div class="col-xs-12">
+  <!-- TODO: check if user has rights for edit, then display button -->
+  <a type="button" class="btn btn-default btn-educal-primary" href="{{route('event.edit',$event->id)}}" id="editEvent">
+      <span class="glyphicon glyphicon-pencil"></span> Edit Event
+  </a>
+</div>
 @stop
 
 @section('footerScript')

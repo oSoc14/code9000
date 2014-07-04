@@ -27,6 +27,13 @@
                 <textarea name="description" id="description" class="form-control" rows="3">{{$event->description}}</textarea>
             </div>
             <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input name="day" type="checkbox"> All day
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class='input-group date'>
                     <input type='text' id='datetimepicker1' value="{{date_format(new DateTime($event->start_date), 'Y/m/d H:i')}}" name="start" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>

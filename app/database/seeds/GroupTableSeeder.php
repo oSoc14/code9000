@@ -33,6 +33,18 @@ class GroupTableSeeder extends Seeder {
             ),
             'school_id'     => 1,
         ));
+
+        Sentry::createGroup(array(
+            'name'        => 'hettrappenhuis_global',
+            'permissions' => array(
+                'school'    => 0,
+                'admin'     => 0,
+                'user'      => 0,
+                'groups'    => 0,
+                'events'    => 0,
+            ),
+            'school_id'     => 1,
+        ));
     }
 
 }

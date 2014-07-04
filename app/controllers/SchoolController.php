@@ -86,6 +86,18 @@ class SchoolController extends \BaseController {
                 'school_id'     => $school->id,
             ));
 
+            $group = Sentry::createGroup(array(
+                'name'        => $short.'_global',
+                'permissions' => array(
+                    'school'    => 0,
+                    'admin'     => 0,
+                    'user'      => 0,
+                    'groups'    => 0,
+                    'events'    => 0,
+                ),
+                'school_id'     => $school->id,
+            ));
+
             $user = Sentry::createUser(array(
                 'email'    => Input::get("email"),
                 'password' => Input::get("password"),
