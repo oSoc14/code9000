@@ -65,6 +65,16 @@ Route::group(['prefix' => 'school'], function () {
 
 
 Route::group(['prefix' => 'user'], function () {
+    Route::get('/', [
+        'as' => 'user.index',
+        'uses' => 'UserController@index'
+    ]);
+
+    Route::get('/{id}', [
+        'as' => 'user.show',
+        'uses' => 'UserController@show'
+    ]);
+
     Route::post('/auth', [
         'as' => 'user.auth',
         'uses' => 'UserController@auth'
