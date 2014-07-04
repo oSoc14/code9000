@@ -5,19 +5,44 @@ class UserController extends \BaseController {
     protected $layout = 'layout.master';
 
     /**
-     * Display a Loginform
-     *
-     * @return Response
+     * Get all users for a school, where they can be activated as well by the administration
+     * Show these on view
+     * TODO: PERMISSIONS List users by school
      */
     public function index()
     {
-        // If user is logged in, redirect to calendar index
+        $user = Sentry::getUser();
+        // If user is logged in, get school_id, find respective users
         if(Sentry::check()) {
-            return Redirect::route('calendar.index');
-        } else {
-            // else, redirect to login page
-            return View::make('user.login');
+            $schoolId = $user->school_id;
+            // Get all users with this school_id, except for the logged in user
+            $users = User::where('school_id', $schoolId)
+                ->where('id','<>',$user->id)
+                ->get();
+            $school = School::where('id', $schoolId)->first();
+            $schoolName = $school->name;
+
+            return View::make('user.index')
+                ->with('users', $users)
+                ->with('schoolName', $schoolName);
         }
+        // If no permissions, redirect to calendar index
+        return Redirect::route('calendar.index');
+    }
+
+    /**
+     * Get a single user based on his ID, the admin can edit certain settings in this view
+     * TODO: PERMISSIONS List users by schoolsingle user
+     * TODO: Activate user possibility
+     */
+    public function show($id)
+    {
+        $user = Sentry::findUserByID($id);
+        $user->load('school');
+        $user->load('groups');
+
+        return View::make('user.show')
+            ->with('user', $user);
     }
 
     public function auth()
@@ -91,6 +116,43 @@ class UserController extends \BaseController {
             'email'    => 'john.doe@example.com',
             'password' => 'foobar',
         ));
+    }
+
+    /**
+     * Remove a user from a school
+     * @param $id = userID
+     * TODO: PERMISSIONS remove user from school
+     */
+    public function removeUserFromSchool($id)
+    {
+        try
+        {
+            // Find the user using the user id
+            $user = Sentry::findUserById($id);
+
+            // Delete the user
+            $user->delete();
+
+            // Return to the previous page
+            return Redirect::back();
+        }
+        catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+        {
+            $error = 'User was not found.';
+            // Return to the previous page
+            return Redirect::back()->with('error', $error);
+        }
+
+    }
+
+    /**
+     * Activate a user so that he gets access to the school (as a teacher for example)
+     * @param $id = userID
+     * TODO: Activate user
+     */
+    public function activateUser($id)
+    {
+
     }
 
     // Log out function
