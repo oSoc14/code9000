@@ -5,6 +5,15 @@
 @stop
 
 @section('content')
+<div class="row">
+  <div class="col-xs-12">
+    <ol class="breadcrumb">
+      <li><a href="{{ route('landing') }}">Home</a></li>
+      <li><a href="{{ route('school.index') }}">Schools</a></li>
+      <li class="active">Detail</li>
+    </ol>
+  </div>
+</div>
 <h1>{{$school->name}}</h1>
 <table class="table table-striped">
     <tr>
@@ -19,8 +28,8 @@
     <tr>
         <td>{{ HTML::linkRoute('group.edit', $group->name, ['id' => $group->id], []) }}</td>
         <td>
-            <span class="glyphicon glyphicon-eye-open"></span>
-            <span class="glyphicon glyphicon-pencil"></span>
+            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
             <span class="glyphicon glyphicon-trash"></span>
         </td>
     </tr>

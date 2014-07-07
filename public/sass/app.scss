@@ -197,8 +197,10 @@ img{
 /* CONTENT
 ---------------------- */
 #content-wrapper{
-  margin-left: 265px;
+  margin-left: 250px;
   padding-top: 20px;
+  padding-right: 15px;
+  padding-left: 15px;
   p{
     line-height: 1.75em;
   }
@@ -248,3 +250,7 @@ img{
 #addEvent {
   margin: 0 0 20px 0;
 }
+
+/* TABLE VIEWS (USERS, SCHOOLS, ...
+---------------------- */
+

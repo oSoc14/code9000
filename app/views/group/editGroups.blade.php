@@ -5,62 +5,80 @@
 @stop
 
 @section('content')
-<h1>
-    {{ $group->name }}
-</h1>
-{{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
-
-<h2>Add User</h2>
-<div class="form-group">
-    @if(count($smartUsers) > 0)
-        <label for="user">User</label>
-        {{Form::select('user', $smartUsers, [], array('class'=>'form-control'));}}
-        <button type="submit" class="btn btn-primary">Add User</button>
-    @else
-        <p>Geen gebruikers die kunnen toegevoegd worden</p>
-    @endif
+<div class="row">
+  <div class="col-xs-12">
+    <ol class="breadcrumb">
+      <li><a href="{{ route('landing') }}">Home</a></li>
+      <li><a href="{{ route('group.index') }}">Groups</a></li>
+      <li>Group</li>
+      <li class="active">Edit</li>
+    </ol>
+  </div>
 </div>
-{{ Form::close(), PHP_EOL }}
-<table id="userTable" class="display" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th>E-mail</th>
-            <th>Name</th>
-            <th>Permissions</th>
-        </tr>
-    </thead>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Edit Group <small><span class="label label-primary">{{ $group->name }}</span></small></h1>
+    {{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
+    <h2><small>Add user</small></h2>
+    <div class="row">
 
-    <tfoot>
-        <tr>
-            <th>E-mail</th>
-            <th>Name</th>
-            <th>Permissions</th>
-        </tr>
-    </tfoot>
+      <div class="col-xs-7">
+      @if(count($smartUsers) > 0)
+      {{Form::select('user', $smartUsers, [], array('class'=>'form-control'));}}
+      </div>
+      <div class="col-xs-3">
+      <button type="submit" class="btn btn-default btn-educal-primary">Add user</button>
+      @else
+      <p>Geen gebruikers die kunnen toegevoegd worden</p>
+      @endif
+      {{ Form::close(), PHP_EOL }}
+      </div>
+    </div>
+    </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-xs-12 table-responsive">
+    <h2><small>Users in this group</small></h2>
+    <table id="userTable" class="table table-striped" cellspacing="0" width="100%">
+      <thead>
+      <tr>
+        <th>E-mail</th>
+        <th>Name</th>
+        <th>Permissions</th>
+      </tr>
+      </thead>
 
-    <tbody>
-        @foreach($users as $user)
-        <tr>
-            <td>{{ $user->email }}</td>
-            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-            <td>
-                <a class="editUser" href="{{ route('user.edit',$user->id) }}">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-                <a data-userid="{{$user->id}}" data-url="{{ route('user.removeFromGroup',array('userId' => $user->id,'groupId' => $group->id)) }}" class="removeUserFromGroup" href="#">
-                    <span class="glyphicon glyphicon-remove-sign"></span>
-                </a>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+      <tbody>
+      @foreach($users as $user)
+      <tr>
+        <td>{{ $user->email }}</td>
+        <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+        <td>
+          <a class="editUser" href="{{ route('user.edit',$user->id) }}">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+          <a data-userid="{{$user->id}}" data-url="{{ route('user.removeFromGroup',array('userId' => $user->id,'groupId' => $group->id)) }}" class="removeUserFromGroup" href="#">
+            <span class="glyphicon glyphicon-remove-sign"></span>
+          </a>
+        </td>
+      </tr>
+      @endforeach
+      </tbody>
+    </table>
+  </div>
+</div>
+
 @stop
 
 @section('footerScript')
-{{ HTML::script('js/app.js') }}
+
 {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
-{{ HTML::style('packages/datatables/css/jquery.dataTables.min.css') }}
+
+{{ HTML::script('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.js') }}
+{{ HTML::style('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.css') }}
+
+{{ HTML::script('js/app.js') }}
 <script>
     $(document).ready(function() {
         $('#userTable').dataTable();
