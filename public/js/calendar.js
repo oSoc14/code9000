@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+  $(window).resize(function(){
+    getCalendarView();
+  });
+
   // Load events out of the database via the API
   var _events = [];
   getEvents();
@@ -16,6 +20,7 @@ $(document).ready(function() {
         parseEvents(data);
         $('#preloader').hide();
         $('#addEvent').show();
+        getCalendarView();
       },
       error:function(xhr, status, errorThrown) {
         alert(status + ', ' + errorThrown);
@@ -35,6 +40,39 @@ $(document).ready(function() {
     });
     renderEvents();
   }
+
+  // Get the current date in the correct format
+  function getDate(){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+      dd='0'+dd
+    }
+
+    if(mm<10) {
+      mm='0'+mm
+    }
+
+    today = yyyy+'-'+mm+'-'+dd;
+    return today;
+  }
+
+  function getCalendarView(){
+    if ($(window).width() < 768){
+      $('#calendar').fullCalendar('changeView', 'agendaDay');
+      $('#calendar').fullCalendar('option', 'contentHeight', 5000);
+    } else if ($(window).width() > 768 && $(window).width() < 960) {
+      $('#calendar').fullCalendar('changeView', 'agendaWeek');
+      $('#calendar').fullCalendar('option', 'contentHeight', null);
+    } else {
+      $('#calendar').fullCalendar('changeView', 'month');
+      $('#calendar').fullCalendar('option', 'contentHeight', null);
+    };
+  }
+
   // Render the calendar and all events on it
   function renderEvents()
   {
@@ -45,7 +83,7 @@ $(document).ready(function() {
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
-      defaultDate: '2014-06-12',
+      defaultDate: getDate(),
       editable: true,
       events: _events,
       timeFormat: 'H(:mm)',

@@ -1,19 +1,19 @@
 /* General elements
 ---------------------- */
-/* line 42, ../sass/app.scss */
+/* line 43, ../sass/app.scss */
 .btn-educal-primary {
   background: #f21666;
   border: 1px solid #a6104a;
   color: white;
   text-shadow: none;
 }
-/* line 29, ../sass/app.scss */
+/* line 30, ../sass/app.scss */
 .btn-educal-primary:hover {
   background: #ec3b76;
   border: 1px solid #f21666;
   color: white;
 }
-/* line 34, ../sass/app.scss */
+/* line 35, ../sass/app.scss */
 .btn-educal-primary:focus {
   background: #ec3b76;
   border: 1px solid #f21666;
@@ -21,20 +21,20 @@
   outline: none;
 }
 
-/* line 46, ../sass/app.scss */
+/* line 47, ../sass/app.scss */
 .btn-educal-secondary {
   background: #eae415;
   border: 1px solid #c9c315;
   color: #8c8610;
   text-shadow: none;
 }
-/* line 29, ../sass/app.scss */
+/* line 30, ../sass/app.scss */
 .btn-educal-secondary:hover {
   background: #fbfd4f;
   border: 1px solid #eae415;
   color: #8c8610;
 }
-/* line 34, ../sass/app.scss */
+/* line 35, ../sass/app.scss */
 .btn-educal-secondary:focus {
   background: #fbfd4f;
   border: 1px solid #eae415;
@@ -42,52 +42,53 @@
   outline: none;
 }
 
-/* line 51, ../sass/app.scss */
+/* line 52, ../sass/app.scss */
 body {
   background: #fff;
   padding-top: 50px;
   font-family: "Open Sans", "Helvetica", sans-serif;
 }
 
-/* line 57, ../sass/app.scss */
+/* line 58, ../sass/app.scss */
 a {
   color: #f21666;
 }
-/* line 59, ../sass/app.scss */
+/* line 60, ../sass/app.scss */
 a:hover {
   color: #f24c81;
 }
 
-/* line 63, ../sass/app.scss */
+/* line 64, ../sass/app.scss */
 img {
   max-width: 100%;
 }
 
 /* NAVBAR
 ---------------------- */
-/* line 70, ../sass/app.scss */
+/* line 71, ../sass/app.scss */
 #navbar-educal {
   background: #39acb0;
   color: #fff;
   height: 50px;
   box-shadow: none;
   border: 0;
+  z-index: 1060;
 }
-/* line 76, ../sass/app.scss */
+/* line 78, ../sass/app.scss */
 #navbar-educal .navbar-toggle {
   border: 0;
 }
-/* line 78, ../sass/app.scss */
+/* line 80, ../sass/app.scss */
 #navbar-educal .navbar-toggle:hover, #navbar-educal .navbar-toggle:focus {
   background-color: #9bd2db;
   border: 0;
 }
-/* line 83, ../sass/app.scss */
+/* line 85, ../sass/app.scss */
 #navbar-educal .navbar-toggle .icon-bar {
   background-color: #fff;
 }
 
-/* line 88, ../sass/app.scss */
+/* line 90, ../sass/app.scss */
 #navbar-logo {
   background: url("images/logo_educal.png") left top no-repeat;
   width: 188px;
@@ -95,7 +96,7 @@ img {
   margin: 6px 0 0 0;
 }
 @media screen and (max-width: 768px) {
-  /* line 88, ../sass/app.scss */
+  /* line 90, ../sass/app.scss */
   #navbar-logo {
     margin-left: 15px;
   }
@@ -103,22 +104,23 @@ img {
 
 /* SIDEBAR
 ---------------------- */
-/* line 101, ../sass/app.scss */
-#sidebar-wrapper {
+/* line 103, ../sass/app.scss */
+.sidebar-wrapper {
   margin-left: -250px;
   left: 250px;
   width: 250px;
   position: fixed;
   height: 100%;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 1050;
+  background: #9bd2db;
 }
-/* line 109, ../sass/app.scss */
-#sidebar-wrapper a {
+/* line 111, ../sass/app.scss */
+.sidebar-wrapper a {
   text-decoration: none;
 }
 
-/* line 114, ../sass/app.scss */
+/* line 117, ../sass/app.scss */
 #accordion {
   -webkit-padding-start: 0px;
   color: #FFF;
@@ -127,25 +129,25 @@ img {
   font-size: 12px;
 }
 
-/* line 122, ../sass/app.scss */
-#sidebar-wrapper .panel-heading {
+/* line 125, ../sass/app.scss */
+.sidebar-wrapper .panel-heading {
   padding: 0;
 }
-/* line 124, ../sass/app.scss */
-#sidebar-wrapper .panel-heading:hover {
+/* line 127, ../sass/app.scss */
+.sidebar-wrapper .panel-heading:hover {
   cursor: pointer;
   background: #2d3340;
 }
 
-/* line 130, ../sass/app.scss */
-#sidebar-wrapper .panel-title {
+/* line 133, ../sass/app.scss */
+.sidebar-wrapper .panel-title {
   padding: 15px 20px;
   margin: 0;
   font-size: 12px;
-  border-bottom: 1px solid rgba(186, 186, 186, 0.7);
+  border-bottom: 1px solid #91bcc2;
   width: 100%;
   font-weight: 500;
-  color: #aaabae;
+  color: #fff;
   -webkit-transition-property: padding;
   -moz-transition-property: padding;
   -o-transition-property: padding;
@@ -159,26 +161,57 @@ img {
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
 }
-/* line 141, ../sass/app.scss */
-#sidebar-wrapper .panel-title:hover {
+/* line 144, ../sass/app.scss */
+.sidebar-wrapper .panel-title:hover {
   cursor: pointer;
-  background: #9bd2db;
+  background: #91bcc2;
   color: #FFF;
   padding-left: 25px;
 }
 
 @media screen and (max-width: 768px) {
-  /* line 150, ../sass/app.scss */
-  #sidebar-wrapper {
+  /* line 153, ../sass/app.scss */
+  .sidebar-wrapper {
     left: 0;
+    background: #9bd2db;
+    -webkit-transition-property: left;
+    -moz-transition-property: left;
+    -o-transition-property: left;
+    transition-property: left;
+    -webkit-transition-duration: 0.15s;
+    -moz-transition-duration: 0.15s;
+    -o-transition-duration: 0.15s;
+    transition-duration: 0.15s;
+    -webkit-transition-timing-function: ease-in;
+    -moz-transition-timing-function: ease-in;
+    -o-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
   }
 
-  /* line 153, ../sass/app.scss */
+  /* line 160, ../sass/app.scss */
+  .sidebar-active {
+    left: 250px;
+  }
+
+  /* line 163, ../sass/app.scss */
   #content-wrapper {
     margin-left: 0 !important;
   }
 }
-/* line 158, ../sass/app.scss */
+/* line 168, ../sass/app.scss */
+#backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1040;
+  background-color: #000;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
+/* line 180, ../sass/app.scss */
 #userinfo-wrapper {
   position: fixed;
   bottom: 0;
@@ -186,14 +219,14 @@ img {
   margin-left: -250px;
   width: 250px;
   padding: 10px;
-  color: #aaabae;
+  color: #fff;
 }
-/* line 166, ../sass/app.scss */
+/* line 188, ../sass/app.scss */
 #userinfo-wrapper .username {
-  color: #333333;
+  color: #fff;
 }
 @media screen and (max-width: 768px) {
-  /* line 158, ../sass/app.scss */
+  /* line 180, ../sass/app.scss */
   #userinfo-wrapper {
     left: 0;
   }
@@ -201,32 +234,32 @@ img {
 
 /* CONTENT
 ---------------------- */
-/* line 177, ../sass/app.scss */
+/* line 199, ../sass/app.scss */
 #content-wrapper {
   margin-left: 265px;
   padding-top: 20px;
 }
-/* line 180, ../sass/app.scss */
+/* line 202, ../sass/app.scss */
 #content-wrapper p {
   line-height: 1.75em;
 }
-/* line 183, ../sass/app.scss */
+/* line 205, ../sass/app.scss */
 #content-wrapper h1 {
   margin: 0px 0 20px 0;
 }
 
-/* line 187, ../sass/app.scss */
+/* line 209, ../sass/app.scss */
 .modules-overview {
   list-style: none;
   padding: 0;
 }
 
-/* line 192, ../sass/app.scss */
+/* line 214, ../sass/app.scss */
 .module {
   margin: 0 0 10px 0;
 }
 
-/* line 196, ../sass/app.scss */
+/* line 218, ../sass/app.scss */
 .module-detail-container {
   background: #ccc;
   height: 50px;
@@ -236,30 +269,34 @@ img {
 
 /* CALENDAR
 ---------------------- */
-/* line 205, ../sass/app.scss */
+/* line 227, ../sass/app.scss */
 #calendar {
   max-width: 900px;
 }
-/* line 207, ../sass/app.scss */
+/* line 229, ../sass/app.scss */
 #calendar a {
   color: #fff;
 }
-/* line 209, ../sass/app.scss */
+/* line 231, ../sass/app.scss */
 #calendar a:hover {
   color: #b6cdea;
 }
-/* line 213, ../sass/app.scss */
+/* line 235, ../sass/app.scss */
 #calendar .fc-event {
   background: #39acb0;
   border: 0;
   padding: 5px;
 }
-/* line 217, ../sass/app.scss */
+/* line 239, ../sass/app.scss */
 #calendar .fc-event:hover {
-  color: #05302a;
+  color: #1d5456;
+}
+/* line 243, ../sass/app.scss */
+#calendar .fc-state-highlight {
+  background: #daf2ef;
 }
 
-/* line 223, ../sass/app.scss */
+/* line 248, ../sass/app.scss */
 #addEvent {
   margin: 0 0 20px 0;
 }

@@ -12,6 +12,8 @@
     {{ HTML::style("css/jquery-ui.min.css") }}
     {{ HTML::style("css/jquery-ui.structure.min.css") }}
     {{ HTML::style("css/jquery-ui.theme.min.css") }}
+    <!-- Google Webfont -->
+    {{ HTML::style("http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700") }}
     <!-- Global styles for this template -->
     @yield('header')
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,7 +52,7 @@
   <div class="navbar navbar-default navbar-fixed-top" id="navbar-educal" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#sidebar-wrapper">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -63,7 +65,7 @@
   <div id="main-wrapper">
 
     <!-- Navigation sidebar -->
-    <div id="sidebar-wrapper">
+    <div id="sidebar" class="sidebar-wrapper">
       <ul class="panel-group accordions" id="accordion">
         <li class="panel-heading">
           <a href="{{ route('calendar.index') }}">
@@ -149,6 +151,7 @@
     </div><!-- / #content-wrapper -->
 
   </div><!-- / #main-wrapper -->
+  <div id="backdrop" class="hidden"></div>
 
 
 {{ HTML::script("js/jquery-1.11.1.min.js") }}
