@@ -208,7 +208,6 @@ class CalendarController extends \BaseController {
                         $groups = $user->school->groups;
                     }
                     $smartgroup = [];
-
                     foreach($groups as $group){
                         $smartgroup[$group->id] = $group->name;
                     }
