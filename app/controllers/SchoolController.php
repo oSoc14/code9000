@@ -62,6 +62,18 @@ class SchoolController extends \BaseController {
             $school->short = $short;
             $school->save();
 
+            Sentry::createGroup(array(
+                'name'        => $short.'_global',
+                'permissions' => array(
+                    'school'    => 0,
+                    'admin'     => 0,
+                    'user'      => 0,
+                    'groups'    => 0,
+                    'events'    => 0,
+                ),
+                'school_id'     => $school->id,
+            ));
+
             $group = Sentry::createGroup(array(
                 'name'        => $short.'_schooladmin',
                 'permissions' => array(
@@ -70,18 +82,6 @@ class SchoolController extends \BaseController {
                     'user'      => 1,
                     'groups'    => 1,
                     'events'    => 1,
-                ),
-                'school_id'     => $school->id,
-            ));
-
-            $group = Sentry::createGroup(array(
-                'name'        => $short.'_global',
-                'permissions' => array(
-                    'school'    => 0,
-                    'admin'     => 0,
-                    'user'      => 0,
-                    'groups'    => 0,
-                    'events'    => 0,
                 ),
                 'school_id'     => $school->id,
             ));
