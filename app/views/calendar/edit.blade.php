@@ -8,7 +8,7 @@
         <!-- main area -->
         <div class="col-xs-12 col-sm-9">
             {{Form::open(array('route' => array('event.update',$event->id)))}}
-            <h1>Create Event</h1>
+            <h1>Edit Event</h1>
 
             @foreach ($errors->all() as $message)
             {{$message}}

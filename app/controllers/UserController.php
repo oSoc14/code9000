@@ -14,17 +14,25 @@ class UserController extends \BaseController {
         $user = Sentry::getUser();
         // If user is logged in, get school_id, find respective users
         if(Sentry::check()) {
-            $schoolId = $user->school_id;
-            // Get all users with this school_id, except for the logged in user
-            $users = User::where('school_id', $schoolId)
-                ->where('id','<>',$user->id)
-                ->get();
-            $school = School::where('id', $schoolId)->first();
-            $schoolName = $school->name;
-
+            $users = null;
+            $schoolName = null;
+            if ($user->hasAccess('school'))
+            {
+                $users = User::get();
+                $schoolName = 'Userlist';
+            }else{
+                $schoolId = $user->school_id;
+                // Get all users with this school_id, except for the logged in user
+                $users = User::where('school_id', $schoolId)
+                    ->where('id','<>',$user->id)
+                    ->get();
+                $school = School::where('id', $schoolId)->first();
+                $schoolName = $school->name;
+            }
             return View::make('user.index')
                 ->with('users', $users)
                 ->with('schoolName', $schoolName);
+
         }
         // If no permissions, redirect to calendar index
         return Redirect::route('calendar.index');
@@ -194,6 +202,108 @@ class UserController extends \BaseController {
             $user->activated = 0;
             $user->save();
             return $user;
+        }
+    }
+
+    /**
+     * Edit user settings for a given ID (if permissions allow it), otherwise edit own user settings
+     * @param $id = userID
+     * TODO: Try catch block
+     */
+    public function editUser($id = null)
+    {
+        if($id != null) {
+            $user = Sentry::findUserById($id);
+        } else {
+            $user = Sentry::getUser();
+        }
+        return View::make('user.edit')
+            ->with('user', $user);
+    }
+
+    /**
+     * Update userSettings
+     * TODO: Permissions
+     */
+    public function updateUser($id)
+    {
+        $user = Sentry::findUserById($id);
+
+        $validator = Validator::make(
+            array(
+                'name' => Input::get('name'),
+                'surname' => Input::get('surname'),
+                'email' => Input::get('email'),
+                'password' => Input::get('password'),
+                'password_confirmation' => Input::get('password_confirmation'),
+            ),
+            array(
+                'name' => 'required',
+                'surname' => 'required',
+                'email' => 'required|email',
+                'password' => 'min:8|confirmed',
+            )
+        );
+
+        if($user->email != Input::get('email')) {
+            try
+            {
+                $user2 = Sentry::findUserByCredentials(array(
+                    'email' => Input::get('email')
+                ));
+
+                // Add an error message in the message collection (MessageBag instance)
+                $validator->getMessageBag()->add('email', Lang::get('validation.unique', array('attribute ' => 'email ')));
+
+            }
+            catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+            {
+                $user->email = Input::get('email');
+            }
+        }
+
+        if ($validator->fails()) {
+            return Redirect::back()->withInput()->withErrors($validator);
+        } else{
+            if(Input::get('password'))
+                $user->password     = Input::get('password');
+                $user->first_name   = Input::get('name');
+                $user->last_name    = Input::get('surname');
+
+                $user->save();
+
+            return Redirect::back();
+        }
+
+        return Redirect::back();
+    }
+
+    /**
+     * Remove a user from selected group
+     * @param $id = userID
+     * TODO: Re-render dropdown menu to show users
+     */
+    public function removeFromGroup($id, $groupId)
+    {
+        try
+        {
+            // Find the user using the user id
+            $user = Sentry::findUserById($id);
+
+            // Find the group using the group id
+            $group = Sentry::findGroupById($groupId);
+
+            // Assign the group to the user
+            $user->removeGroup($group);
+
+        }
+        catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+        {
+            echo 'User was not found.';
+        }
+        catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+        {
+            echo 'Group was not found.';
         }
     }
 

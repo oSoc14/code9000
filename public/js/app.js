@@ -42,6 +42,31 @@ $(document).ready(function() {
   });
 
   $('.loader').hide();
+
+  $('.removeUserFromGroup').on('click', function(ev){
+    ev.preventDefault;
+    var that = $(this);
+    var userid = that.data('userid');
+    var apiLink = that.data('url');
+
+    $.ajax({
+      type:"GET",
+      url: apiLink,
+      cache: false,
+      dataType: "html",
+      contentType: "application/json",
+      beforeSend:function(){
+
+      },
+      success:function(data){
+        that.parent().parent().hide();
+      },
+      error:function(xhr, status, errorThrown) {
+        alert(status + ', ' + errorThrown);
+      }
+
+    });
+  });
 });
 
 jQuery(function(){

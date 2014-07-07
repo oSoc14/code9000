@@ -15,7 +15,6 @@ class GroupTableSeeder extends Seeder {
             'name'        => 'superadmin',
             'permissions' => array(
                 'school'    => 1,
-                'admin'     => 1,
                 'user'      => 1,
                 'groups'    => 1,
                 'events'    => 1,
@@ -26,7 +25,6 @@ class GroupTableSeeder extends Seeder {
             'name'        => 'hettrappenhuis_schooladmin',
             'permissions' => array(
                 'school'    => 0,
-                'admin'     => 1,
                 'user'      => 1,
                 'groups'    => 1,
                 'events'    => 1,
@@ -38,10 +36,9 @@ class GroupTableSeeder extends Seeder {
             'name'        => 'hettrappenhuis_global',
             'permissions' => array(
                 'school'    => 0,
-                'admin'     => 0,
                 'user'      => 0,
                 'groups'    => 0,
-                'events'    => 0,
+                'events'    => 1,
             ),
             'school_id'     => 1,
         ));

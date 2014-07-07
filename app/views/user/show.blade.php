@@ -5,7 +5,11 @@
 @stop
 
 @section('content')
+@if($user->school)
 <h1>{{$user->school->name}}</h1>
+@else
+<h1>Super admin</h1>
+@endif
 <table class="table table-striped">
     <tr>
         <th>

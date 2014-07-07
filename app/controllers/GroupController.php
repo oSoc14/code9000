@@ -9,17 +9,28 @@ class GroupController extends \BaseController {
 	 */
 	public function index()
 	{
-        // Find active user
-        $user = Sentry::getUser();
-        // Get school_id, by which we will search for related groups
-        $schoolId = $user->school_id;
-        // Find all groups with certain school_id
-        $groups = Group::where('school_id', '=', $schoolId)->get();
-        // Find selected school and get the name (which will be used as title on the view)
-        $school = School::where('id', '=', $schoolId)->first();
-        $schoolName = $school->name;
-        // Return view with selected parameters
-        return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            $groups = null;
+            $schoolName = null;
+            if ($user->hasAccess('school'))            {
+                $groups = Group::get();
+                $schoolName = 'Grouplist';
+            }else{
+
+                // Get school_id, by which we will search for related groups
+                $schoolId = $user->school_id;
+                // Find all groups with certain school_id
+                $groups = Group::where('school_id', '=', $schoolId)->get();
+                // Find selected school and get the name (which will be used as title on the view)
+                $school = School::where('id', '=', $schoolId)->first();
+                $schoolName = $school->name;
+            }
+            // Return view with selected parameters
+            return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
+        }
+
 	}
 
 
@@ -30,7 +41,15 @@ class GroupController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+        $schools = null;
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            if ($user->hasAccess('school'))            {
+                $schools = School::lists('name','id');
+            }
+            return View::make('group.createGroup')->with('schools',$schools);
+        }
 	}
 
 
@@ -41,7 +60,46 @@ class GroupController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            $validator = Validator::make(
+                array(
+                    'name' => Input::get('name'),
+                    'school' => Input::get('school')
+                ),
+                array(
+                    'name' => 'required',
+                    'school' => 'integer'
+                )
+            );
+            if ($validator->fails())
+            {
+                return Redirect::route('group.createGroup')->withInput()->withErrors($validator);
+            }
+            else{
+                $school=null;
+                $prefix = '';
+                if ($user->hasAccess('school')){
+                    $school = School::find(Input::get('school'));
+                    $prefix = $school->short.'_';
+                }else{
+                    $school = $user->school;
+                }
+                // Create the group
+                $group = Sentry::createGroup(array(
+                    'name'        => $prefix.strtolower(Input::get('name')),
+                    'permissions' => array(
+                        'school' => 0,
+                        'group' => 0,
+                        'users' => 0,
+                        'event' => 1,
+                    ),
+                    'school_id' => $school->id
+                ));
+                return Redirect::route('group.index');
+            }
+        }
 	}
 
 

@@ -29,7 +29,11 @@
         @foreach($groups as $group)
             <tr>
                 <td>{{ $group->name }}</td>
+                @if($group->school)
                 <td><a href='./export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics'>/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics</a></td>
+                @else
+                <td>NO EXPORT</td>
+                @endif
                 <td>
                     <a href="#"><span class="glyphicon glyphicon-remove-sign"></span></a>
                     <a href="{{route('group.edit',$group->id)}}"><span class="glyphicon glyphicon-pencil"></span></a>

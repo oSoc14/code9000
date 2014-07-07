@@ -6,8 +6,9 @@
   "license": "MIT",
   "require": {
     "laravel/framework": "4.2.*",
-    "cartalyst/sentry": "dev-master",
-    "eluceo/ical": "*"
+    "cartalyst/sentry": "2.1.*",
+    "eluceo/ical": "*",
+    "willdurand/negotiation": "@stable"
   },
   "autoload": {
     "classmap": [
