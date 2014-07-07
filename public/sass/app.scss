@@ -3,8 +3,10 @@
 /* General elements
 ---------------------- */
 // Colors
+$darkgreen: #1d5456;
 $green: #39acb0;
 $lightgreen: #9bd2db;
+$hovergreen: #91bcc2;
 $pink: #f21666;
 $lightpink: #f24c81;
 $darkgrey: #333;
@@ -16,7 +18,6 @@ $break-medium: 768px;
 $break-large: 1200px;
 
 // Fonts
-$serif: 'Merriweather', serif;
 $sans-serif: 'Open Sans', 'Helvetica', sans-serif;
 $times: 'Times New Roman', serif;
 
@@ -73,6 +74,7 @@ img{
   height: 50px;
   box-shadow: none;
   border: 0;
+  z-index: 1060;
   .navbar-toggle{
     border: 0;
     &:hover, &:focus{
@@ -98,17 +100,18 @@ img{
 /* SIDEBAR
 ---------------------- */
 
-#sidebar-wrapper {
+.sidebar-wrapper {
   margin-left: -250px;
   left: 250px;
   width: 250px;
   position: fixed;
   height: 100%;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 1050;
   a{
     text-decoration: none;
   }
+  background: $lightgreen;
 }
 
 #accordion {
@@ -119,7 +122,7 @@ img{
   font-size: 12px;
 }
 
-#sidebar-wrapper .panel-heading {
+.sidebar-wrapper .panel-heading {
   padding: 0;
   &:hover{
     cursor: pointer;
@@ -127,32 +130,51 @@ img{
   }
 }
 
-#sidebar-wrapper .panel-title {
+.sidebar-wrapper .panel-title {
   padding: 15px 20px;
   margin: 0;
   font-size: 12px;
-  border-bottom: 1px solid rgba(186, 186, 186, 0.70);
+  border-bottom: 1px solid $hovergreen;
   width: 100%;
   font-weight: 500;
-  color: $lightgrey;
+  color: #fff;
   @include transition-property(padding);
   @include transition-duration(0.1s);
   @include transition-timing-function(ease-in);
   &:hover{
     cursor: pointer;
-    background: $lightgreen;
+    background: $hovergreen;
     color: #FFF;
     padding-left: 25px;
   }
 }
 
 @media screen and (max-width: 768px){
-  #sidebar-wrapper{
+  .sidebar-wrapper{
     left: 0;
+    background: $lightgreen;
+    @include transition-property(left);
+    @include transition-duration(0.15s);
+    @include transition-timing-function(ease-in);
+  }
+  .sidebar-active{
+    left: 250px;
   }
   #content-wrapper{
     margin-left: 0 !important;
   }
+}
+
+#backdrop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1040;
+  background-color: #000;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
 }
 
 #userinfo-wrapper{
@@ -162,9 +184,9 @@ img{
   margin-left: -250px;
   width: 250px;
   padding: 10px;
-  color: $lightgrey;
+  color: #fff;
   .username{
-    color: $darkgrey;
+    color: #fff;
   }
   @media screen and (max-width: $break-medium){
     left: 0;
@@ -215,8 +237,11 @@ img{
     border: 0;
     padding: 5px;
     &:hover{
-      color: #05302a;
+      color: $darkgreen;
     }
+  }
+  .fc-state-highlight{
+    background: #daf2ef;
   }
 }
 

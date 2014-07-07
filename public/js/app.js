@@ -1,6 +1,7 @@
 $(document).ready(function() {
   $('[data-toggle=offcanvas]').click(function() {
-    $('.row-offcanvas').toggleClass('active');
+    $('#backdrop').toggleClass('hidden');
+    $('.sidebar-wrapper').toggleClass('sidebar-active');
   });
 
   if($("#registerSchoolModal").data("errors") == true){

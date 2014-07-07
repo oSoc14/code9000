@@ -15,7 +15,7 @@
   <div class="row">
     <div class="col-xs-12">
       <ol class="breadcrumb">
-        <li><a href="../">Home</a></li>
+        <li><a href="{{ route('landing') }}">Home</a></li>
         <li class="active">Calendar</li>
       </ol>
     </div>
