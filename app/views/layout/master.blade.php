@@ -138,7 +138,9 @@
         @else
         {{Sentry::getUser()->email}}<br>
         @endif
+        @if(Sentry::getUser()->school != null)
         {{Sentry::getUser()->school->name}}
+        @endif
       </div>
       @endif
     </div>
