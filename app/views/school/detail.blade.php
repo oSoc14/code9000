@@ -17,7 +17,7 @@
     </tr>
     @foreach($school->groups as $group)
     <tr>
-        <td>{{ HTML::linkRoute('school.detail', $group->name, ['id' => $group->id], []) }}</td>
+        <td>{{ HTML::linkRoute('group.edit', $group->name, ['id' => $group->id], []) }}</td>
         <td>
             <span class="glyphicon glyphicon-eye-open"></span>
             <span class="glyphicon glyphicon-pencil"></span>

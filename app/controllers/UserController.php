@@ -14,17 +14,25 @@ class UserController extends \BaseController {
         $user = Sentry::getUser();
         // If user is logged in, get school_id, find respective users
         if(Sentry::check()) {
-            $schoolId = $user->school_id;
-            // Get all users with this school_id, except for the logged in user
-            $users = User::where('school_id', $schoolId)
-                ->where('id','<>',$user->id)
-                ->get();
-            $school = School::where('id', $schoolId)->first();
-            $schoolName = $school->name;
-
+            $users = null;
+            $schoolName = null;
+            if ($user->hasAccess('school'))
+            {
+                $users = User::get();
+                $schoolName = 'Userlist';
+            }else{
+                $schoolId = $user->school_id;
+                // Get all users with this school_id, except for the logged in user
+                $users = User::where('school_id', $schoolId)
+                    ->where('id','<>',$user->id)
+                    ->get();
+                $school = School::where('id', $schoolId)->first();
+                $schoolName = $school->name;
+            }
             return View::make('user.index')
                 ->with('users', $users)
                 ->with('schoolName', $schoolName);
+
         }
         // If no permissions, redirect to calendar index
         return Redirect::route('calendar.index');

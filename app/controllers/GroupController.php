@@ -9,17 +9,28 @@ class GroupController extends \BaseController {
 	 */
 	public function index()
 	{
-        // Find active user
-        $user = Sentry::getUser();
-        // Get school_id, by which we will search for related groups
-        $schoolId = $user->school_id;
-        // Find all groups with certain school_id
-        $groups = Group::where('school_id', '=', $schoolId)->get();
-        // Find selected school and get the name (which will be used as title on the view)
-        $school = School::where('id', '=', $schoolId)->first();
-        $schoolName = $school->name;
-        // Return view with selected parameters
-        return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            $groups = null;
+            $schoolName = null;
+            if ($user->hasAccess('school'))            {
+                $groups = Group::get();
+                $schoolName = 'Grouplist';
+            }else{
+
+                // Get school_id, by which we will search for related groups
+                $schoolId = $user->school_id;
+                // Find all groups with certain school_id
+                $groups = Group::where('school_id', '=', $schoolId)->get();
+                // Find selected school and get the name (which will be used as title on the view)
+                $school = School::where('id', '=', $schoolId)->first();
+                $schoolName = $school->name;
+            }
+            // Return view with selected parameters
+            return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
+        }
+
 	}
 
 
