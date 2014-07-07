@@ -99,6 +99,16 @@ Route::group(['prefix' => 'user'], function () {
         'as'   => 'user.activate',
         'uses' => 'UserController@activateUser'
     ])->where('id', '[0-9]+');
+
+    Route::get('/edit/{id?}', [
+        'as'   => 'user.edit',
+        'uses' => 'UserController@editUser'
+    ])->where('id', '[0-9]+');
+
+    Route::post('/update/{id}', [
+        'as'   => 'user.update',
+        'uses' => 'UserController@updateUser'
+    ])->where('id', '[0-9]+');
 });
 
 

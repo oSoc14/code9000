@@ -205,6 +205,79 @@ class UserController extends \BaseController {
         }
     }
 
+    /**
+     * Edit user settings for a given ID (if permissions allow it), otherwise edit own user settings
+     * @param $id = userID
+     * TODO: Try catch block
+     */
+    public function editUser($id = null)
+    {
+        if($id != null) {
+            $user = Sentry::findUserById($id);
+        } else {
+            $user = Sentry::getUser();
+        }
+        return View::make('user.edit')
+            ->with('user', $user);
+    }
+
+    /**
+     * Update userSettings
+     * TODO: Permissions
+     */
+    public function updateUser($id)
+    {
+        $user = Sentry::findUserById($id);
+
+        $validator = Validator::make(
+            array(
+                'name' => Input::get('name'),
+                'surname' => Input::get('surname'),
+                'email' => Input::get('email'),
+                'password' => Input::get('password'),
+                'password_confirmation' => Input::get('password_confirmation'),
+            ),
+            array(
+                'name' => 'required',
+                'surname' => 'required',
+                'email' => 'required|email',
+                'password' => 'min:8|confirmed',
+            )
+        );
+
+        if($user->email != Input::get('email')) {
+            try
+            {
+                $user2 = Sentry::findUserByCredentials(array(
+                    'email' => Input::get('email')
+                ));
+
+                // Add an error message in the message collection (MessageBag instance)
+                $validator->getMessageBag()->add('email', Lang::get('validation.unique', array('attribute ' => 'email ')));
+
+            }
+            catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+            {
+                $user->email = Input::get('email');
+            }
+        }
+
+        if ($validator->fails()) {
+            return Redirect::back()->withInput()->withErrors($validator);
+        } else{
+            if(Input::get('password'))
+                $user->password     = Input::get('password');
+                $user->first_name   = Input::get('name');
+                $user->last_name    = Input::get('surname');
+
+                $user->save();
+
+            return Redirect::back();
+        }
+
+        return Redirect::back();
+    }
+
     // Log out function
     public function logout()
     {
