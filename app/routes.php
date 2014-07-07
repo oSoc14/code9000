@@ -177,6 +177,18 @@ Route::group(array('prefix' => 'group'), function()
     Route::get('/{id}', [
         'as'   => 'group.edit',
         'uses' => 'GroupController@edit'
+    ])->where('id', '[0-9]+');
+
+    // Create a new group
+    Route::get('/create', [
+        'as'   => 'group.create',
+        'uses' => 'GroupController@create'
+    ]);
+
+    // Store a new group
+    Route::post('/create', [
+        'as'   => 'group.store',
+        'uses' => 'GroupController@store'
     ]);
 });
 

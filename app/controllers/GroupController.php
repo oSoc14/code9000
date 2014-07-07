@@ -41,7 +41,15 @@ class GroupController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+        $schools = null;
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            if ($user->hasAccess('school'))            {
+                $schools = School::lists('name','id');
+            }
+            return View::make('group.createGroup')->with('schools',$schools);
+        }
 	}
 
 
@@ -52,7 +60,44 @@ class GroupController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            $validator = Validator::make(
+                array(
+                    'name' => Input::get('name'),
+                    'school' => Input::get('school')
+                ),
+                array(
+                    'name' => 'required',
+                    'school' => 'integer'
+                )
+            );
+            if ($validator->fails())
+            {
+                return Redirect::route('group.createGroup')->withInput()->withErrors($validator);
+            }
+            else{
+                $school=null;
+                $prefix = '';
+                if ($user->hasAccess('school')){
+                    $school = School::find(Input::get('school'));
+                    $prefix = $school->short.'_';
+                }else{
+                    $school = $user->school;
+                }
+                // Create the group
+                $group = Sentry::createGroup(array(
+                    'name'        => $prefix.strtolower(Input::get('name')),
+                    'permissions' => array(
+                        'admin' => 1,
+                        'users' => 1,
+                    ),
+                    'school_id' => $school->id
+                ));
+                return Redirect::route('group.index');
+            }
+        }
 	}
 
 
