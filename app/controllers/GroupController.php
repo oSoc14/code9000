@@ -50,7 +50,7 @@ class GroupController extends \BaseController {
             $schools = null;
             // Find active user
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user')))            {
+            if ($user->hasAnyAccess(array('school','user'))){
                 $schools = School::lists('name','id');
                 return View::make('group.createGroup')->with('schools',$schools);
             }else{

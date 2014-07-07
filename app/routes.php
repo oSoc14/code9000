@@ -165,12 +165,6 @@ Route::group(array('prefix' => 'calendar'), function()
         'uses' => 'CalendarController@show'
     ])->where('id', '[0-9]+');
 
-    // Shows the selected day's events
-    Route::get('/events', [
-        'as'   => 'calendar.list',
-        'uses' => 'CalendarController@listView'
-    ]);
-
     // Returns all events for the users school
     Route::get('/api/events', [
         'as'   => 'calendar.events',
