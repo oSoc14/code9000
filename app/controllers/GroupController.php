@@ -17,8 +17,9 @@ class GroupController extends \BaseController {
             if ($user->hasAccess('school')){
                 $groups = Group::get();
                 $schoolName = 'Grouplist';
-            }else{
-
+                // Return view with selected parameters
+                return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
+            }elseif($user->hasAccess('group')){
                 // Get school_id, by which we will search for related groups
                 $schoolId = $user->school_id;
                 // Find all groups with certain school_id
@@ -26,9 +27,13 @@ class GroupController extends \BaseController {
                 // Find selected school and get the name (which will be used as title on the view)
                 $school = School::where('id', '=', $schoolId)->first();
                 $schoolName = $school->name;
+                // Return view with selected parameters
+                return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
+            }else{
+                return Redirect::route('calendar.index');
             }
-            // Return view with selected parameters
-            return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
+        }else{
+            return Redirect::route('landing');
         }
 
 	}
