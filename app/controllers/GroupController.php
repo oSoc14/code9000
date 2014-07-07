@@ -90,8 +90,10 @@ class GroupController extends \BaseController {
                 $group = Sentry::createGroup(array(
                     'name'        => $prefix.strtolower(Input::get('name')),
                     'permissions' => array(
-                        'admin' => 1,
-                        'users' => 1,
+                        'school' => 0,
+                        'group' => 0,
+                        'users' => 0,
+                        'event' => 1,
                     ),
                     'school_id' => $school->id
                 ));
