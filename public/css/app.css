@@ -236,30 +236,32 @@ img {
 ---------------------- */
 /* line 199, ../sass/app.scss */
 #content-wrapper {
-  margin-left: 265px;
+  margin-left: 250px;
   padding-top: 20px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
-/* line 202, ../sass/app.scss */
+/* line 204, ../sass/app.scss */
 #content-wrapper p {
   line-height: 1.75em;
 }
-/* line 205, ../sass/app.scss */
+/* line 207, ../sass/app.scss */
 #content-wrapper h1 {
   margin: 0px 0 20px 0;
 }
 
-/* line 209, ../sass/app.scss */
+/* line 211, ../sass/app.scss */
 .modules-overview {
   list-style: none;
   padding: 0;
 }
 
-/* line 214, ../sass/app.scss */
+/* line 216, ../sass/app.scss */
 .module {
   margin: 0 0 10px 0;
 }
 
-/* line 218, ../sass/app.scss */
+/* line 220, ../sass/app.scss */
 .module-detail-container {
   background: #ccc;
   height: 50px;
@@ -269,34 +271,37 @@ img {
 
 /* CALENDAR
 ---------------------- */
-/* line 227, ../sass/app.scss */
+/* line 229, ../sass/app.scss */
 #calendar {
   max-width: 900px;
 }
-/* line 229, ../sass/app.scss */
+/* line 231, ../sass/app.scss */
 #calendar a {
   color: #fff;
 }
-/* line 231, ../sass/app.scss */
+/* line 233, ../sass/app.scss */
 #calendar a:hover {
   color: #b6cdea;
 }
-/* line 235, ../sass/app.scss */
+/* line 237, ../sass/app.scss */
 #calendar .fc-event {
   background: #39acb0;
   border: 0;
   padding: 5px;
 }
-/* line 239, ../sass/app.scss */
+/* line 241, ../sass/app.scss */
 #calendar .fc-event:hover {
   color: #1d5456;
 }
-/* line 243, ../sass/app.scss */
+/* line 245, ../sass/app.scss */
 #calendar .fc-state-highlight {
   background: #daf2ef;
 }
 
-/* line 248, ../sass/app.scss */
+/* line 250, ../sass/app.scss */
 #addEvent {
   margin: 0 0 20px 0;
 }
+
+/* TABLE VIEWS (USERS, SCHOOLS, ...
+---------------------- */
