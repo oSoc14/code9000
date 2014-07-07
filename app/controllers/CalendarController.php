@@ -74,9 +74,13 @@ class CalendarController extends \BaseController {
             $groups = null;
             $schoolName = null;
             if ($user->hasAnyAccess(array('school','event'))){
-                $user = Sentry::getUser();
-                $user->load('school.groups.appointments');
-                $groups = $user->school->groups;
+                if($user->hasAccess(array('school'))){
+                    $groups = Group::where('school_id','<>','')->get();
+                }else{
+                    $user->load('school.groups.appointments');
+                    $groups = $user->school->groups;
+                }
+
                 $smartgroup = [];
                 foreach($groups as $group){
                     $smartgroup[$group->id] = $group->name;
@@ -197,8 +201,12 @@ class CalendarController extends \BaseController {
                 // Find active user
                 $user = Sentry::getUser();
                 if ($user->hasAnyAccess(array('school','event'))){
-                    $user->load('school.groups.appointments');
-                    $groups = $user->school->groups;
+                    if($user->hasAccess(array('school'))){
+                        $groups = Group::where('school_id','<>','')->get();
+                    }else{
+                        $user->load('school.groups.appointments');
+                        $groups = $user->school->groups;
+                    }
                     $smartgroup = [];
 
                     foreach($groups as $group){
