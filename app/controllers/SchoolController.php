@@ -28,18 +28,6 @@ class SchoolController extends \BaseController {
         }
 	}
 
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -148,7 +136,7 @@ class SchoolController extends \BaseController {
 	{
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','school.edit')))
+            if ($user->hasAccess(array('school')))
             {
                 $school = School::find($id);
                 $this->layout->content = View::make('school.detail')->with('school',$school);
@@ -173,7 +161,7 @@ class SchoolController extends \BaseController {
 	{
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','school.edit')))
+            if ($user->hasAccess(array('school')))
             {
                 $school = School::find($id);
                 $school->name = Input::get("name");
@@ -198,7 +186,21 @@ class SchoolController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+        if(Sentry::check()) {
+            $user = Sentry::getUser();
+            if ($user->hasAccess(array('school')))
+            {
+                $school = School::find($id);
+                $school->delete();
+                return Redirect::route('school.index');
+            }
+            else
+            {
+                return Redirect::route('calendar.index');
+            }
+        } else {
+            return Redirect::route('index');
+        }
 	}
 
 

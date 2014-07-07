@@ -16,8 +16,8 @@ class GroupTableSeeder extends Seeder {
             'permissions' => array(
                 'school'    => 1,
                 'user'      => 1,
-                'groups'    => 1,
-                'events'    => 1,
+                'group'    => 1,
+                'event'    => 1,
             ),
         ));
 
@@ -26,8 +26,8 @@ class GroupTableSeeder extends Seeder {
             'permissions' => array(
                 'school'    => 0,
                 'user'      => 1,
-                'groups'    => 1,
-                'events'    => 1,
+                'group'    => 1,
+                'event'    => 1,
             ),
             'school_id'     => 1,
         ));
@@ -37,8 +37,8 @@ class GroupTableSeeder extends Seeder {
             'permissions' => array(
                 'school'    => 0,
                 'user'      => 0,
-                'groups'    => 0,
-                'events'    => 1,
+                'group'    => 0,
+                'event'    => 1,
             ),
             'school_id'     => 1,
         ));
