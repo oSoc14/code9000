@@ -18,7 +18,7 @@ class UserController extends \BaseController {
             $schoolName = null;
             if ($user->hasAccess('school'))
             {
-                $users = User::get();
+                $users = User::where('id','<>',$user->id)->get();
                 $schoolName = 'Userlist';
             }else{
                 $schoolId = $user->school_id;

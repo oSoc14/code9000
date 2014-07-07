@@ -15,7 +15,7 @@ class GroupController extends \BaseController {
             $groups = null;
             $schoolName = null;
             if ($user->hasAccess('school')){
-                $groups = Group::get();
+                $groups = Group::where('school_id','<>','')->get();
                 $schoolName = 'Grouplist';
                 // Return view with selected parameters
                 return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
