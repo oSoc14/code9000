@@ -44,12 +44,12 @@
             <td>{{ $user->email }}</td>
             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
             <td>
-                <span class="glyphicon glyphicon-plus-sign"></span>
-                <input type="checkbox" name="create" value="create">
-                <span class="glyphicon glyphicon-pencil"></span>
-                <input type="checkbox" name="edit" value="edit">
-                <span class="glyphicon glyphicon-remove-sign"></span>
-                <input type="checkbox" name="delete" value="delete">
+                <a class="editUser" href="{{ route('user.edit',$user->id) }}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a data-userid="{{$user->id}}" data-url="{{ route('user.removeFromGroup',array('userId' => $user->id,'groupId' => $group->id)) }}" class="removeUserFromGroup" href="#">
+                    <span class="glyphicon glyphicon-remove-sign"></span>
+                </a>
             </td>
         </tr>
         @endforeach

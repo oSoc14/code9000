@@ -278,6 +278,35 @@ class UserController extends \BaseController {
         return Redirect::back();
     }
 
+    /**
+     * Remove a user from selected group
+     * @param $id = userID
+     * TODO: Re-render dropdown menu to show users
+     */
+    public function removeFromGroup($id, $groupId)
+    {
+        try
+        {
+            // Find the user using the user id
+            $user = Sentry::findUserById($id);
+
+            // Find the group using the group id
+            $group = Sentry::findGroupById($groupId);
+
+            // Assign the group to the user
+            $user->removeGroup($group);
+
+        }
+        catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+        {
+            echo 'User was not found.';
+        }
+        catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+        {
+            echo 'Group was not found.';
+        }
+    }
+
     // Log out function
     public function logout()
     {
