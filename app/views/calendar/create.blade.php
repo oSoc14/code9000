@@ -58,6 +58,7 @@
             <button type="submit" class="btn btn-default btn-educal-primary">Add Event</button>
             {{ Form::close(), PHP_EOL }}
             {{ Session::get('errorMessage') }}
+            <!-- TODO: Frequency, interval, count velden -->
 
         </div><!-- /.col-xs-12 main -->
     </div><!--/.row-->

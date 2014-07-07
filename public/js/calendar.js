@@ -17,6 +17,7 @@ $(document).ready(function() {
       dataType: "json",
       contentType: "application/json",
       success:function(data){
+        console.log(data);
         parseEvents(data);
         $('#preloader').hide();
         $('#addEvent').show();
@@ -31,12 +32,23 @@ $(document).ready(function() {
   function parseEvents(events)
   {
     $.each( events, function( index, value ){
-      var newItem = {};
-      newItem['title'] = value['title'];
-      newItem['start'] = value['start_date'];
-      newItem['end']   = value['end_date'];
-      newItem['url']    = 'calendar/event/' + value['id'];
-      _events.push(newItem);
+      if(value['repeat_type']) {
+        for(i=0; i<value['nr_repeat']; i++) {
+          var newItem = {};
+          newItem['title'] = value['title'];
+          newItem['start'] = moment(value['start_date']).add(value['repeat_type'], i*value['repeat_freq']);
+          newItem['end']   = moment(value['end_date']).add(value['repeat_type'], i*value['repeat_freq']);
+          newItem['url']    = 'calendar/event/' + value['id'];
+          _events.push(newItem);
+        }
+      } else {
+        var newItem = {};
+        newItem['title'] = value['title'];
+        newItem['start'] = value['start_date'];
+        newItem['end']   = value['end_date'];
+        newItem['url']    = 'calendar/event/' + value['id'];
+        _events.push(newItem);
+      }
     });
     renderEvents();
   }
@@ -84,7 +96,7 @@ $(document).ready(function() {
         right: 'month,agendaWeek,agendaDay'
       },
       defaultDate: getDate(),
-      editable: true,
+      editable: false,
       events: _events,
       timeFormat: 'H(:mm)',
       theme: false,

@@ -110,6 +110,14 @@ class CreateDatabase extends Migration {
             $table->boolean('allday');
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
+            // Repeat_type = day=>'d', week=>'w', month=>'M', year=>'y'
+            $table->string('repeat_type')->nullbale();
+            // Repeat_freq = every x days, weeks,...
+            $table->integer('repeat_freq')->nullable();
+            // Nr_repeat = number of times this event will be repeated
+            $table->integer('nr_repeat')->nullable();
+
+
             $table->timestamps();
 
             //Defines the school a user belongs to
