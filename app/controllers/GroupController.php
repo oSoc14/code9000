@@ -19,7 +19,7 @@ class GroupController extends \BaseController {
                 $schoolName = 'Grouplist';
                 // Return view with selected parameters
                 return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
-            }elseif($user->hasAccess('group')){
+            } elseif($user->hasAccess('group')){
                 // Get school_id, by which we will search for related groups
                 $schoolId = $user->school_id;
                 // Find all groups with certain school_id
@@ -29,10 +29,10 @@ class GroupController extends \BaseController {
                 $schoolName = $school->name;
                 // Return view with selected parameters
                 return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
-            }else{
+            } else {
                 return Redirect::route('calendar.index');
             }
-        }else{
+        } else {
             return Redirect::route('landing');
         }
 
@@ -81,22 +81,35 @@ class GroupController extends \BaseController {
                 }else{
                     $school = $user->school;
                 }
+                $groupFullName = $school->short.'_'.strtolower(Input::get('name'));
+
                 $validator = Validator::make(
                     array(
-                        'name' => $school->short.'_'.Input::get('name'),
+                        'name' => Input::get('name'),
                         'school' => Input::get('school'),
                         'permissions' => Input::get('permissions')
                     ),
                     array(
-                        'name' => 'required|unique:groups,name',
+                        'name' => 'required',
                         'school' => 'integer'
                     )
                 );
-                if ($validator->fails())
-                {
+
+                $validator2 = Validator::make(
+                    array(
+                        'name' => $groupFullName,
+                    ),
+                    array(
+                        'name' => 'unique:groups,name',
+                    )
+                );
+
+                if ($validator->fails() || $validator2->fails()) {
+                    if($validator2->fails())
+                        $validator->getMessageBag()->add('name', Lang::get('validation.unique', array('attribute ' => 'name ')));
+
                     return Redirect::route('group.create')->withInput()->withErrors($validator);
-                }
-                else{
+                } else {
                     $prefix = '';
                     $prefix = $school->short.'_';
 
@@ -111,13 +124,13 @@ class GroupController extends \BaseController {
                     }
                     // Create the group
                     $group = Sentry::createGroup(array(
-                        'name'        => $prefix.strtolower(Input::get('name')),
+                        'name'        => $groupFullName,
                         'permissions' => $permissions,
                         'school_id' => $school->id
                     ));
                     return Redirect::route('group.index');
                 }
-            }else{
+            } else {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
@@ -191,6 +204,7 @@ class GroupController extends \BaseController {
 	 */
 	public function update($id)
 	{
+
         if(Sentry::check()) {
             // Find active user
             $user = Sentry::getUser();
@@ -202,31 +216,27 @@ class GroupController extends \BaseController {
                 $groupFullName = strtolower($school->short.'_'.Input::get('name'));
                 $validator = Validator::make(
                     array(
-                        'name' => $groupFullName,
+                        'name' => Input::get('name'),
                         'permissions' => Input::get('permissions')
                     ),
                     array(
                         'name' => 'required'
                     )
                 );
+                $validator2 = Validator::make([],[]);
                 if($group->name != $groupFullName) {
-                    try
-                    {
-                        $grp = Sentry::findGroupByName($groupFullName);
-                        // Add an error message in the message collection (MessageBag instance)
-                        $validator->getMessageBag()->add('name', Lang::get('validation.unique', array('attribute ' => 'name ')));
-
-                    }
-                    catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
-                    {
-                        $group->name = $groupFullName;
-                    }
+                    $validator2 = Validator::make(
+                        [ 'name' => $groupFullName ],
+                        [ 'name' => 'unique:groups,name']
+                    );
                 }
-                if ($validator->fails())
-                {
+                if ($validator->fails() || $validator2->fails()) {
+                    if(isset($validator2)) {
+                        if($validator2->fails())
+                            $validator->getMessageBag()->add('name', Lang::get('validation.unique', array('attribute ' => 'name ')));
+                    }
                     return Redirect::route('group.edit',$id)->withInput()->withErrors($validator);
-                }
-                else{
+                } else{
                     // Set default permissions
                     $permissions = ["event"=>0,"user"=>0,"group"=>0,"school"=>0];
                     $permissionlist = Input::get('permissions');
@@ -239,6 +249,7 @@ class GroupController extends \BaseController {
                         }
                         $group->permissions = $permissions;
                     }
+                    $group->name = $groupFullName;
                     $group->save();
 
                     return Redirect::route('group.edit',$id);

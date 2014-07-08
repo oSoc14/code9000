@@ -10,8 +10,7 @@ class IcalCalendarController extends \BaseController {
      * @param  string  $group
 	 * @return Cal.ics download file
      *
-     * TODO: Implement $school functionality, meaning we have to find all general events for a school that overlaps every class.
-	 */
+     */
 	public function index($school, $group)
     {
         $appointments = [];
@@ -42,7 +41,7 @@ class IcalCalendarController extends \BaseController {
         date_default_timezone_set('Europe/Berlin');
 
         // 1. Create new calendar
-        $calendar = new \Eluceo\iCal\Component\Calendar('www.example.com');
+        $calendar = new \Eluceo\iCal\Component\Calendar('EduCal');
 
         // Loop through appointments and add them to the calendar.
         foreach($appointments as $appointment) {

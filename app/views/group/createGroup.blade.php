@@ -9,6 +9,12 @@
     Add Group
 </h1>
 {{Form::open(array('route' => array('group.store')))}}
+
+<!-- ERROR MESSAGES -->
+@foreach ($errors->all() as $message)
+    {{$message}}
+@endforeach
+
 @if($schools)
 <div class="form-group">
     <label for="school">School</label>

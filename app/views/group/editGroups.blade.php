@@ -25,8 +25,14 @@ $group->name) }}</span></small></h1>
 
       <div class="form-group">
           <label for="user">Group name</label>
+          @if(str_replace($group->school->short.'_','',$group->name) == 'global')
+          <label class="alert-warning">This name can not be changed</label>
           <input  type="text" name="name" class="form-control" value="{{ str_replace($group->school->short.'_','',
-$group->name) }}"/>
+$group->name) }}" disabled />
+          @else
+          <input  type="text" name="name" class="form-control" value="{{ str_replace($group->school->short.'_','',
+$group->name) }}" />
+          @endif
       </div>
       <div class="checkbox">
           <label>
@@ -53,6 +59,12 @@ $group->name) }}"/>
       </div>
       <button type="submit" class="btn btn-primary">Update Group</button>
       {{ Form::close(), PHP_EOL }}
+
+      <!-- ERROR MESSAGES -->
+      @foreach ($errors->all() as $message)
+      {{$message}}
+      @endforeach
+
 
       {{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
     <h2><small>Add user</small></h2>

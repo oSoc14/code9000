@@ -217,16 +217,20 @@ class UserController extends \BaseController {
      * Activate a user so that he gets access to the school (as a teacher for example)
      * @param $id = userID
      * @return mixed
-     * TODO: Try catch block
      */
     public function activateUser($id)
     {
         // If user is logged in, get school_id, find respective users
         if(Sentry::check()) {
-            $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
+            $loggedInUser = Sentry::getUser();
+            if ($loggedInUser->hasAnyAccess(array('school','user'))){
                 // Find the user using the user id
-                $user = Sentry::findUserById($id);
+                try {
+                    $user = Sentry::findUserById($id);
+                } catch(Cartalyst\Sentry\Users\UserNotFoundException $e) {
+                    return Response::make("You're not supposed to be here, friend.", 403);
+                }
+
                 $activationCode = $user->getActivationCode();
                 // Attempt to activate the user
                 if($user->activated == 0) {
@@ -238,15 +242,16 @@ class UserController extends \BaseController {
                     $user->save();
                     return $user;
                 }
-            }else{
+            } else {
                 // If no permissions, redirect to calendar index
-                return false;
+                return Response::make("You're not supposed to be here, friend.", 403);
             }
         }   else{
             // If not logged in, redirect to the login screen
-            return false;
+            return Response::make("You're not supposed to be here, friend.", 403);
         }
     }
+
 
     /**
      * Edit user settings for a given ID (if permissions allow it), otherwise edit own user settings

@@ -37,13 +37,16 @@
         <td>{{ $user->last_name }}</td>
         <td>{{ $user->email }}</td>
         <td>
-          <a data-userid="{{$user->id}}" class="activateUser" href="#">
+
             <!-- TODO: fix colors -->
-            @if($user->activated == 1)
-            <span class="green glyphicon glyphicon-ok"></span>
-            @else
-            <span class="glyphicon glyphicon-remove"></span>
-            @endif
+          <label for="activateUser">
+              @if($user->activated == 1)
+              <input type="checkbox" data-userid="{{$user->id}}" class="activateUser checkbox" checked>
+              @else
+              <input type="checkbox" data-userid="{{$user->id}}" class="activateUser checkbox">
+              @endif
+          </label>
+
           </a>
           <span class="loader glyphicon glyphicon-cog"></span>
         </td>
