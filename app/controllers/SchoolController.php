@@ -71,8 +71,8 @@ class SchoolController extends \BaseController {
                     'school'    => 0,
                     'admin'     => 0,
                     'user'      => 0,
-                    'groups'    => 0,
-                    'events'    => 0,
+                    'group'    => 0,
+                    'event'    => 0,
                 ),
                 'school_id'     => $school->id,
             ));
@@ -83,8 +83,8 @@ class SchoolController extends \BaseController {
                     'school'    => 0,
                     'admin'     => 1,
                     'user'      => 1,
-                    'groups'    => 1,
-                    'events'    => 1,
+                    'group'    => 1,
+                    'event'    => 1,
                 ),
                 'school_id'     => $school->id,
             ));

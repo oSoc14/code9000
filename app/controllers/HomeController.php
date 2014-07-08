@@ -17,13 +17,17 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-        $schools = School::get();
-        $schoolsArray = [];
-        foreach ($schools as $school){
-            $schoolsArray[$school->id] = $school->name;
+        if(Sentry::check()) {
+            return Redirect::route('calendar.index');
+        }else{
+            $schools = School::get();
+            $schoolsArray = [];
+            foreach ($schools as $school){
+                $schoolsArray[$school->id] = $school->name;
+            }
+            return View::make('landing')
+                ->with("schools",$schoolsArray);
         }
-		return View::make('landing')
-            ->with("schools",$schoolsArray);
 	}
 
 }
