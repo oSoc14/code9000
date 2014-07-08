@@ -16,25 +16,15 @@ Route::get('/', [
     'uses' => 'HomeController@showWelcome'
 ]);
 
-Route::get('/login', function(){
-  return View::make('user.login');
-});
+Route::get('about', array('as' => 'about', function()
+{
+    return View::make('about');
+}));
 
-Route::get('/schools', function(){
-   return View::make('schools');
-});
-Route::get('/users', function(){
-  return View::make('users');
-});
-Route::get('/groups', function(){
-  return View::make('groups');
-});
-Route::get('/about', function(){
-  return View::make('about');
-});
-Route::get('/settings', function(){
+Route::get('settings', array('as' => 'settings', function()
+{
   return View::make('settings');
-});
+}));
 
 Route::group(['prefix' => 'school'], function () {
     Route::post('/register', [

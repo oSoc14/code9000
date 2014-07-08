@@ -100,15 +100,7 @@
           </a>
         </li>
         <li class="panel-heading">
-          <a href="#">
-            <p class="panel-title">
-              <span class="glyphicon glyphicon-glass"></span>
-              Events
-            </p>
-          </a>
-        </li>
-        <li class="panel-heading">
-          <a href="about">
+          <a href="{{ route('about') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-question-sign"></span>
               About
@@ -116,7 +108,7 @@
           </a>
         </li>
         <li class="panel-heading">
-          <a href="settings">
+          <a href="{{ route('settings') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-cog"></span>
               Settings
