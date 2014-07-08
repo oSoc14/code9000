@@ -69,7 +69,11 @@
 {{ HTML::script('js/app.js') }}
 <script>
     $(document).ready(function() {
-        $('#groupTable').dataTable();
+        $('#groupTable').dataTable({
+            "aoColumnDefs": [
+                {"bSortable": false, "aTargets": [4]}
+            ]
+        });
     } );
 </script>
 @stop

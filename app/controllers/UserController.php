@@ -227,6 +227,12 @@ class UserController extends \BaseController {
                 // Find the user using the user id
                 try {
                     $user = Sentry::findUserById($id);
+
+                    if(($loggedInUser->school_id == $user->school_id || $loggedInUser->hasAccess('school')) && $user->id != $loggedInUser->id) {
+
+                    } else {
+                        return Response::make("You're not supposed to be here, friend.", 403);
+                    }
                 } catch(Cartalyst\Sentry\Users\UserNotFoundException $e) {
                     return Response::make("You're not supposed to be here, friend.", 403);
                 }
