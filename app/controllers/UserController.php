@@ -20,7 +20,7 @@ class UserController extends \BaseController {
             {
                 $users = User::where('id','<>',$user->id)->get();
                 $schoolName = 'Userlist';
-            }else{
+            } elseif ($user->hasAccess('user')) {
                 $schoolId = $user->school_id;
                 // Get all users with this school_id, except for the logged in user
                 $users = User::where('school_id', $schoolId)
@@ -28,6 +28,8 @@ class UserController extends \BaseController {
                     ->get();
                 $school = School::where('id', $schoolId)->first();
                 $schoolName = $school->name;
+            } else {
+                return Redirect::route('calendar.index');
             }
             return View::make('user.index')
                 ->with('users', $users)
@@ -159,8 +161,7 @@ class UserController extends \BaseController {
                 ->withInput()
                 ->withErrors($validator);
 
-        }
-        else{
+        } else {
             Sentry::createUser(array(
                 'email'    => Input::get('email'),
                 'password' => Input::get('password'),
@@ -171,9 +172,52 @@ class UserController extends \BaseController {
             ));
             return Redirect::route('landing');
         }
-
-
     }
+
+    /**
+     * Creates a new user from the back-office side
+     * @return mixed
+     */
+    public function create()
+    {
+        $validator = Validator::make(
+            array(
+                'name' => Input::get('name'),
+                'surname' => Input::get('surname'),
+                'email' => Input::get('email'),
+                'school' => Input::get('school'),
+                'password' => Input::get('password'),
+                'password_confirmation' => Input::get('password_confirmation'),
+            ),
+            array(
+                'name' => 'required',
+                'surname' => 'required',
+                'school' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:8|confirmed',
+            )
+        );
+        if ($validator->fails())
+        {
+            $validator->getMessageBag()->add('usererror', 'Failed to make a user');
+            return Redirect::back()
+                ->withInput()
+                ->withErrors($validator);
+
+        }
+        else{
+            Sentry::createUser(array(
+                'email'    => Input::get('email'),
+                'password' => Input::get('password'),
+                'activated' => true,
+                'school_id' => Input::get('school'),
+                'first_name' => Input::get('name'),
+                'last_name' => Input::get('surname'),
+            ));
+            return Redirect::back();
+        }
+    }
+
 
     /**
      * Remove a user from a school

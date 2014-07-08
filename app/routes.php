@@ -75,6 +75,11 @@ Route::group(['prefix' => 'user'], function () {
         'uses' => 'UserController@store'
     ]);
 
+    Route::post('/create', [
+        'as' => 'user.create',
+        'uses' => 'UserController@create'
+    ]);
+
     Route::get('/logout', [
         'as'   => 'user.logout',
         'uses' => 'UserController@logout'
