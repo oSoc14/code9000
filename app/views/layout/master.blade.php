@@ -75,6 +75,7 @@
             </p>
           </a>
         </li>
+        @if(Sentry::getUser()->hasAccess('school'))
         <li class="panel-heading">
           <a href="{{ route('school.index') }}">
             <p class="panel-title">
@@ -83,6 +84,8 @@
             </p>
           </a>
         </li>
+        @endif
+        @if(Sentry::getUser()->hasAnyAccess(array('school','user')))
         <li class="panel-heading">
           <a href="{{ route('user.index') }}">
             <p class="panel-title">
@@ -91,6 +94,8 @@
             </p>
           </a>
         </li>
+        @endif
+        @if(Sentry::getUser()->hasAnyAccess(array('school','group')))
         <li class="panel-heading">
           <a href="{{ route('group.index') }}">
             <p class="panel-title">
@@ -99,6 +104,7 @@
             </p>
           </a>
         </li>
+        @endif
         <li class="panel-heading">
           <a href="{{ route('about') }}">
             <p class="panel-title">
