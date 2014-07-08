@@ -2,6 +2,15 @@
 
 // General elements
 // ----------------------
+
+// Colors
+$pink: #f50064;
+$lightpink: #f95a93;
+$blue: #00cde1;
+$lightblue: #46ddea;
+$yellow: #e9e34b;
+$lightyellow: #f0eb72;
+
 *{
   box-sizing: border-box;
 }
@@ -9,9 +18,9 @@ body{
   background: #fff;
 }
 a{
-  color: #f21666;
+  color: $pink;
   &:hover{
-    color: #f24c81;
+    color: $lightpink;
   }
 }
 img{
@@ -24,7 +33,7 @@ img{
   background: url('images/introduction_bg.jpg') center center no-repeat #39acb0;
   background-size: cover;
   color: #fff;
-  height: 400px;
+  height: 450px;
 }
 
 .introduction-content {
@@ -47,8 +56,6 @@ img{
   }
 }
 
-
-
 @mixin btn-educal($bgcolor, $bordercolor, $color, $bghover, $borderhover){
   background: $bgcolor;
   border: 1px solid $bordercolor;
@@ -68,11 +75,11 @@ img{
 }
 
 .btn-educal-primary{
-  @include btn-educal(#F21666, #a6104a, #fff, #ec3b76, #F21666);
+  @include btn-educal($pink, #a6104a, #fff, $lightpink, $pink);
 }
 
 .btn-educal-secondary{
-  @include btn-educal(#EAE415, #c9c315, #8c8610, #fbfd4f, #EAE415);
+  @include btn-educal($yellow, #c9c315, #8c8610, $lightyellow, $yellow);
 }
 
 // Content
@@ -92,9 +99,9 @@ img{
 .footer-container{
   background: #333;
   color: #ddd;
-  padding-top: 20px;
+  padding-top: 30px;
   padding-bottom: 20px;
-  min-height: 200px;
+  height: 100px;
 }
 
 footer{

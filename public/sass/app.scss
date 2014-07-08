@@ -3,14 +3,21 @@
 /* General elements
 ---------------------- */
 // Colors
-$darkgreen: #1d5456;
-$green: #39acb0;
-$lightgreen: #9bd2db;
-$hovergreen: #91bcc2;
-$pink: #f21666;
-$lightpink: #f24c81;
+
+
+$pink: #f50064;
+$darkpink: #ab0046;
+$lightpink: #f95a93;
+$darkblue: #108a98;
+$blue: #00cde1;
+$lightblue: #46ddea;
+$lighterblue: #9bd2db;
+$hoverblue: #b3e9f0;
+$yellow: #e9e34b;
+$lightyellow: #f0eb72;
 $darkgrey: #333;
-$lightgrey: #aaabae;
+$grey: #aaabae;
+$lightgrey: #f5f5f5;
 
 // Breakpoints
 $break-small: 320px;
@@ -41,7 +48,7 @@ $times: 'Times New Roman', serif;
 }
 
 .btn-educal-primary{
-  @include btn-educal(#F21666, #a6104a, #fff, #ec3b76, #F21666);
+  @include btn-educal($pink, $darkpink, #fff, $lightpink, $pink);
 }
 
 .btn-educal-secondary{
@@ -51,8 +58,10 @@ $times: 'Times New Roman', serif;
 // HTML
 body{
   background: #fff;
-  padding-top: 50px;
   font-family: $sans-serif;
+  @media screen and (max-width: $break-medium){
+    padding-top: 50px;
+  }
 }
 
 a{
@@ -69,21 +78,29 @@ img{
 ---------------------- */
 
 #navbar-educal{
-  background: $green;
+  background: $lightgrey;
   color: #fff;
   height: 50px;
   box-shadow: none;
   border: 0;
   z-index: 1060;
+  display: none;
   .navbar-toggle{
     border: 0;
     &:hover, &:focus{
-      background-color: $lightgreen;
+      background-color: $blue;
       border: 0;
+      .icon-bar{
+        background-color: #fff;
+      }
     }
   }
   .navbar-toggle .icon-bar{
-    background-color: #fff;
+    background-color: $blue;
+  }
+
+  @media screen and (max-width: $break-medium){
+    display: block;
   }
 }
 
@@ -91,7 +108,7 @@ img{
   background: url("images/logo_educal.png") left top no-repeat;
   width: 188px;
   height: 45px;
-  margin: 6px 0 0 0;
+  margin: 2px 0 0 0;
   @media screen and (max-width: $break-medium){
     margin-left: 15px;
   }
@@ -108,60 +125,94 @@ img{
   height: 100%;
   overflow-y: auto;
   z-index: 1050;
+  background: #fff;
+  //border-right: 1px solid #ddd;
+  @include box-shadow(rgba(0, 0, 0, 0.3) 0px 0px 5px);
   a{
     text-decoration: none;
   }
-  background: $lightgreen;
 }
 
+// <ul>...</ul>
 #accordion {
-  -webkit-padding-start: 0px;
-  color: #FFF;
+  color: $blue;
   list-style: none;
-  padding: 0;
   font-size: 12px;
+  padding: 0 0 0 33px;
+  margin: 0 auto;
+  .active{
+
+  }
+  .bottom-options{
+    margin-top: 10px;
+    .panel-title{
+      color: $grey;
+    }
+  }
+}
+
+.breadcrumb{
+  display: block;
+}
+
+#navbar-logo-sidebar{
+  display: block;
+  background: url("images/logo_educal_sidebar.png") center center no-repeat;
+  width: 250px;
+  height: 230px;
+  @media screen and (max-width: $break-medium){
+    margin-left: 15px;
+  }
 }
 
 .sidebar-wrapper .panel-heading {
   padding: 0;
-  &:hover{
-    cursor: pointer;
-    background: #2d3340;
-  }
 }
 
 .sidebar-wrapper .panel-title {
-  padding: 15px 20px;
+  padding: 12px 20px;
   margin: 0;
-  font-size: 12px;
-  border-bottom: 1px solid $hovergreen;
+  font-size: 13px;
   width: 100%;
   font-weight: 500;
-  color: #fff;
+  color: $blue;
   @include transition-property(padding);
   @include transition-duration(0.1s);
   @include transition-timing-function(ease-in);
+  text-align: left;
   &:hover{
     cursor: pointer;
-    background: $hovergreen;
-    color: #FFF;
+    color: $lightblue;
     padding-left: 25px;
+  }
+  .glyphicon{
+    margin-right: 10px;
   }
 }
 
 @media screen and (max-width: 768px){
   .sidebar-wrapper{
     left: 0;
-    background: $lightgreen;
+    background: #fff;
+    padding-top: 10px;
     @include transition-property(left);
     @include transition-duration(0.15s);
     @include transition-timing-function(ease-in);
+  }
+  #navbar-logo-sidebar{
+    display: none;
+  }
+  .breadcrumb{
+    display: none;
   }
   .sidebar-active{
     left: 250px;
   }
   #content-wrapper{
     margin-left: 0 !important;
+  }
+  .fc-header-center{
+    display: none;
   }
 }
 
@@ -182,9 +233,10 @@ img{
   bottom: 0;
   left: 250px;
   margin-left: -250px;
+  font-size: 12px;
   width: 250px;
   padding: 10px;
-  color: #fff;
+  color: $darkgrey;
   .username{
     color: #fff;
   }
@@ -198,7 +250,7 @@ img{
 ---------------------- */
 #content-wrapper{
   margin-left: 250px;
-  padding-top: 20px;
+  padding-top: 49px;
   padding-right: 15px;
   padding-left: 15px;
   p{
@@ -228,6 +280,7 @@ img{
 ---------------------- */
 #calendar{
   max-width: 900px;
+  margin-right: 0 !important;
   a{
     color: #fff;
     &:hover{
@@ -235,20 +288,60 @@ img{
     }
   }
   .fc-event{
-    background: $green;
+    background: $blue;
     border: 0;
     padding: 5px;
+    border-radius: 10px;
     &:hover{
-      color: $darkgreen;
+      color: $darkblue;
     }
   }
   .fc-state-highlight{
     background: #daf2ef;
   }
+  .fc-button{
+    background: none;
+    border: none;
+    &:hover{
+      background: #eee;
+    }
+  }
+  .fc-state-active{
+    @include box-shadow(none);
+    font-weight: 700;
+  }
+  .fc-header-title h2{
+    font-weight: 700;
+    font-size: 30px;
+    position: relative;
+    bottom: 10px;
+  }
+  .fc-widget-content{
+    border: none;
+  }
+  thead tr.fc-first{
+    color: #fff;
+    text-transform: uppercase;
+    height: 40px;
+    @include text-shadow(rgba(0, 0, 0, 0.75) 0px 0px 5px);
+    th{
+      vertical-align: middle;
+    }
+    .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri{
+      background: $darkgrey;
+      border: none;
+      border-right: 1px solid #fff
+    }
+    .fc-sat, .fc-sun{
+      background: $grey;
+      border: none;
+      border-right: 1px solid #fff
+    }
+  }
 }
 
 #addEvent {
-  margin: 0 0 20px 0;
+  margin: 0 0 40px 0;
 }
 
 /* TABLE VIEWS (USERS, SCHOOLS, ...

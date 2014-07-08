@@ -80,12 +80,13 @@ $(document).ready(function() {
     $('#calendar').fullCalendar({
       header: {
         left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
+        center: 'month,agendaWeek,agendaDay',
+        right: 'title'
       },
       defaultDate: getDate(),
       editable: true,
       events: _events,
+      firstDay: 1,
       timeFormat: 'H(:mm)',
       theme: false,
       themeButtonIcons: {

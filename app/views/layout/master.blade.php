@@ -23,6 +23,7 @@
     <meta property="og:site_name" content="">
     <meta property="og:description" content="">
     <meta property="og:image" content="{{ asset('') }}">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
   <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="114x114" href="favicons/apple-touch-icon-114x114.png">
   <link rel="apple-touch-icon" sizes="72x72" href="favicons/apple-touch-icon-72x72.png">
@@ -36,8 +37,9 @@
   <link rel="icon" type="image/png" href="favicons/favicon-96x96.png" sizes="96x96">
   <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
-  <meta name="msapplication-TileColor" content="#39acb0">
+  <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="favicons/mstile-144x144.png">
+  <meta name="msapplication-config" content="favicons/browserconfig.xml">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     {{ HTML::script("js/html5shiv.js") }}
@@ -66,10 +68,13 @@
 
     <!-- Navigation sidebar -->
     <div id="sidebar" class="sidebar-wrapper">
+      <div class="logo-container">
+        <h1 id="navbar-logo-sidebar"><span class="hidden">EduCal</span></h1>
+      </div>
       <ul class="panel-group accordions" id="accordion">
         <li class="panel-heading">
           <a href="{{ route('calendar.index') }}">
-            <p class="panel-title">
+            <p class="panel-title active">
               <span class="glyphicon glyphicon-calendar"></span>
               Calendar
             </p>
@@ -107,30 +112,32 @@
             </p>
           </a>
         </li>
-        <li class="panel-heading">
-          <a href="about">
-            <p class="panel-title">
-              <span class="glyphicon glyphicon-question-sign"></span>
-              About
-            </p>
-          </a>
-        </li>
-        <li class="panel-heading">
-          <a href="settings">
-            <p class="panel-title">
-              <span class="glyphicon glyphicon-cog"></span>
-              Settings
-            </p>
-          </a>
-        </li>
-        <li class="panel-heading">
-          <a href="{{ route('user.logout') }}">
-            <p class="panel-title">
-              <span class="glyphicon glyphicon-log-out"></span>
-              Log out
-            </p>
-          </a>
-        </li>
+        <div class="bottom-options">
+          <li class="panel-heading">
+            <a href="about">
+              <p class="panel-title">
+                <span class="glyphicon glyphicon-question-sign"></span>
+                About
+              </p>
+            </a>
+          </li>
+          <li class="panel-heading">
+            <a href="settings">
+              <p class="panel-title">
+                <span class="glyphicon glyphicon-cog"></span>
+                Settings
+              </p>
+            </a>
+          </li>
+          <li class="panel-heading">
+            <a href="{{ route('user.logout') }}">
+              <p class="panel-title">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Log out
+              </p>
+            </a>
+          </li>
+        </div>
       </ul>
       @if(Sentry::check())
       <div id="userinfo-wrapper">
