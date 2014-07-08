@@ -17,8 +17,56 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <h1>Edit Group <small><span class="label label-primary">{{ $group->name }}</span></small></h1>
-    {{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
+    <h1>Edit Group <small><span class="label label-primary">{{ str_replace($group->school->short.'_','',
+$group->name) }}</span></small></h1>
+      <!-- TODO: Check checkboxes, global function for str_replace -->
+      <h2>Group info</h2>
+      {{Form::open(array('route' => array('group.update', $group->id)))}}
+
+      <div class="form-group">
+          <label for="user">Group name</label>
+          @if(str_replace($group->school->short.'_','',$group->name) == 'global')
+          <label class="alert-warning">This name can not be changed</label>
+          <input  type="text" name="name" class="form-control" value="{{ str_replace($group->school->short.'_','',
+$group->name) }}" disabled />
+          @else
+          <input  type="text" name="name" class="form-control" value="{{ str_replace($group->school->short.'_','',
+$group->name) }}" />
+          @endif
+      </div>
+      <div class="checkbox">
+          <label>
+              @if(isset($group->permissions['group']))
+              <input type="checkbox" name="permissions[group]" checked> Group
+              @else
+              <input type="checkbox" name="permissions[group]"> Group
+              @endif
+          </label>
+          <label>
+              @if(isset($group->permissions['user']))
+              <input type="checkbox" name="permissions[user]" checked> User
+              @else
+              <input type="checkbox" name="permissions[user]"> User
+              @endif
+          </label>
+          <label>
+              @if(isset($group->permissions['event']))
+              <input type="checkbox" name="permissions[event]" checked> Event
+              @else
+              <input type="checkbox" name="permissions[event]"> Event
+              @endif
+          </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Update Group</button>
+      {{ Form::close(), PHP_EOL }}
+
+      <!-- ERROR MESSAGES -->
+      @foreach ($errors->all() as $message)
+      {{$message}}
+      @endforeach
+
+
+      {{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
     <h2><small>Add user</small></h2>
     <div class="row">
 

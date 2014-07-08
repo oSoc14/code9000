@@ -18,7 +18,6 @@ $(document).ready(function() {
     ev.preventDefault;
     var that = $(this);
     var userid = that.data('userid');
-
     $.ajax({
       type:"GET",
       url: "user/activate/"+userid,
@@ -26,17 +25,16 @@ $(document).ready(function() {
       dataType: "json",
       contentType: "application/json",
       beforeSend:function(){
-        that.find('span').hide();
         that.parent().find('.loader').show();
+        that.prop('disabled', true);
       },
       success:function(data){
-        that.find('span').show();
         that.parent().find('.loader').hide();
-        that.find('span').toggleClass('glyphicon-thumbs-up');
-        that.find('span').toggleClass('glyphicon-thumbs-down');
+        that.prop('disabled', false);
       },
       error:function(xhr, status, errorThrown) {
         alert(status + ', ' + errorThrown);
+        that.prop('disabled', false);
       }
     });
   });
@@ -75,7 +73,7 @@ jQuery(function(){
       format:'Y/m/d H:i',
       mask:true,
       onShow:function( ct ){
-        if(jQuery('#datetimepicker2').val() != ''){
+        if(jQuery('#datetimepicker2').val() != '' && jQuery('#datetimepicker2').val() != '____/__/__ __:__'){
           this.setOptions({
             maxDate:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD'),
             maxTime:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('HH:mm')

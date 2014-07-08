@@ -15,11 +15,11 @@ class GroupController extends \BaseController {
             $groups = null;
             $schoolName = null;
             if ($user->hasAccess('school')){
-                $groups = Group::get();
+                $groups = Group::where('school_id','<>','')->get();
                 $schoolName = 'Grouplist';
                 // Return view with selected parameters
                 return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
-            }elseif($user->hasAccess('group')){
+            } elseif($user->hasAccess('group')){
                 // Get school_id, by which we will search for related groups
                 $schoolId = $user->school_id;
                 // Find all groups with certain school_id
@@ -29,10 +29,10 @@ class GroupController extends \BaseController {
                 $schoolName = $school->name;
                 // Return view with selected parameters
                 return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
-            }else{
+            } else {
                 return Redirect::route('calendar.index');
             }
-        }else{
+        } else {
             return Redirect::route('landing');
         }
 
@@ -50,7 +50,7 @@ class GroupController extends \BaseController {
             $schools = null;
             // Find active user
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user')))            {
+            if ($user->hasAnyAccess(array('school','user'))){
                 $schools = School::lists('name','id');
                 return View::make('group.createGroup')->with('schools',$schools);
             }else{
@@ -75,43 +75,62 @@ class GroupController extends \BaseController {
             // Find active user
             $user = Sentry::getUser();
             if ($user->hasAnyAccess(array('school','user'))){
+                $school = null;
+                if ($user->hasAccess('school')){
+                    $school = School::find(Input::get('school'));
+                }else{
+                    $school = $user->school;
+                }
+                $groupFullName = $school->short.'_'.strtolower(Input::get('name'));
+
                 $validator = Validator::make(
                     array(
                         'name' => Input::get('name'),
-                        'school' => Input::get('school')
+                        'school' => Input::get('school'),
+                        'permissions' => Input::get('permissions')
                     ),
                     array(
                         'name' => 'required',
                         'school' => 'integer'
                     )
                 );
-                if ($validator->fails())
-                {
-                    return Redirect::route('group.createGroup')->withInput()->withErrors($validator);
-                }
-                else{
-                    $school=null;
+
+                $validator2 = Validator::make(
+                    array(
+                        'name' => $groupFullName,
+                    ),
+                    array(
+                        'name' => 'unique:groups,name',
+                    )
+                );
+
+                if ($validator->fails() || $validator2->fails()) {
+                    if($validator2->fails())
+                        $validator->getMessageBag()->add('name', Lang::get('validation.unique', array('attribute ' => 'name ')));
+
+                    return Redirect::route('group.create')->withInput()->withErrors($validator);
+                } else {
                     $prefix = '';
-                    if ($user->hasAccess('school')){
-                        $school = School::find(Input::get('school'));
-                        $prefix = $school->short.'_';
-                    }else{
-                        $school = $user->school;
+                    $prefix = $school->short.'_';
+
+                    $permissions = [];
+                    $permissionlist = Input::get('permissions');
+                    if(isset($permissionlist)) {
+                        foreach($permissionlist as $key => $value){
+                            if($key != "school"){
+                                $permissions[$key] = 1;
+                            }
+                        }
                     }
                     // Create the group
                     $group = Sentry::createGroup(array(
-                        'name'        => $prefix.strtolower(Input::get('name')),
-                        'permissions' => array(
-                            'school' => 0,
-                            'group' => 0,
-                            'users' => 0,
-                            'event' => 1,
-                        ),
+                        'name'        => $groupFullName,
+                        'permissions' => $permissions,
                         'school_id' => $school->id
                     ));
                     return Redirect::route('group.index');
                 }
-            }else{
+            } else {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
@@ -185,7 +204,64 @@ class GroupController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            if ($user->hasAnyAccess(array('school','user'))){
+                $group = Sentry::findGroupById($id);
+
+                $school = $group->school;
+
+                $groupFullName = strtolower($school->short.'_'.Input::get('name'));
+                $validator = Validator::make(
+                    array(
+                        'name' => Input::get('name'),
+                        'permissions' => Input::get('permissions')
+                    ),
+                    array(
+                        'name' => 'required'
+                    )
+                );
+                $validator2 = Validator::make([],[]);
+                if($group->name != $groupFullName) {
+                    $validator2 = Validator::make(
+                        [ 'name' => $groupFullName ],
+                        [ 'name' => 'unique:groups,name']
+                    );
+                }
+                if ($validator->fails() || $validator2->fails()) {
+                    if(isset($validator2)) {
+                        if($validator2->fails())
+                            $validator->getMessageBag()->add('name', Lang::get('validation.unique', array('attribute ' => 'name ')));
+                    }
+                    return Redirect::route('group.edit',$id)->withInput()->withErrors($validator);
+                } else{
+                    // Set default permissions
+                    $permissions = ["event"=>0,"user"=>0,"group"=>0,"school"=>0];
+                    $permissionlist = Input::get('permissions');
+
+                    if(isset($permissionlist)) {
+                        foreach($permissionlist as $key => $value){
+                            if($key != "school"){
+                                $permissions[$key] = 1;
+                            }
+                        }
+                        $group->permissions = $permissions;
+                    }
+                    $group->name = $groupFullName;
+                    $group->save();
+
+                    return Redirect::route('group.edit',$id);
+                }
+            }else{
+                // If no permissions, redirect to calendar index
+                return Redirect::route('calendar.index');
+            }
+        }else{
+            // If no permissions, redirect to calendar index
+            return Redirect::route('landing');
+        }
 	}
 
 

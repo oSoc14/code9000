@@ -10,23 +10,29 @@ class IcalCalendarController extends \BaseController {
      * @param  string  $group
 	 * @return Cal.ics download file
      *
-     * TODO: Implement $school functionality, meaning we have to find all general events for a school that overlaps every class.
-	 */
+     */
 	public function index($school, $group)
     {
-
-        // Load appointments based on
+        $appointments = [];
+        // Load appointments based on group
         $selGroup = Group::where('name', $school.'_'.$group)->first();
         $selGroup->load('appointments');
+        // Add global appointments, unless only global appointments are requested
+        if($group != 'global') {
+            $globalGroup = Group::where('name', $school.'_global')->first();
+            $globalGroup->load('appointments');
 
-        $appointments = [];
+            foreach($globalGroup->appointments as $appointment) {
+                array_push($appointments, $appointment);
+            }
+        }
+        // Push to array
         foreach($selGroup->appointments as $appointment) {
             array_push($appointments, $appointment);
         }
 
         $calendar = self::composeIcal($appointments);
         return $calendar->render();
-
 	}
 
     public function composeIcal($appointments)
@@ -35,7 +41,7 @@ class IcalCalendarController extends \BaseController {
         date_default_timezone_set('Europe/Berlin');
 
         // 1. Create new calendar
-        $calendar = new \Eluceo\iCal\Component\Calendar('www.example.com');
+        $calendar = new \Eluceo\iCal\Component\Calendar('EduCal');
 
         // Loop through appointments and add them to the calendar.
         foreach($appointments as $appointment) {
@@ -46,17 +52,33 @@ class IcalCalendarController extends \BaseController {
             $event->setDescription($appointment['attributes']['description']);
             $event->setDtStart(new \DateTime($appointment['attributes']['start_date']));
             $event->setDtEnd(new \DateTime($appointment['attributes']['end_date']));
-            $event->setNoTime(true);
+            $event->setNoTime($appointment['attributes']['allday']);
             $event->setStatus('TENTATIVE');
 
             // Recurence option (e.g. New Year happens every year)
-            /*
             // Set recurrence rule
-            $recurrenceRule = new \Eluceo\iCal\Property\Event\RecurrenceRule();
-            $recurrenceRule->setFreq(\Eluceo\iCal\Property\Event\RecurrenceRule::FREQ_YEARLY);
-            $recurrenceRule->setInterval(1);
-            $vEvent->setRecurrenceRule($recurrenceRule);
-            */
+            if($appointment['attributes']['repeat_type']) {
+
+                $recurrenceRule = new \Eluceo\iCal\Property\Event\RecurrenceRule();
+                switch($appointment['attributes']['repeat_type']) {
+                    case 'd':
+                        $recurrenceRule->setFreq(\Eluceo\iCal\Property\Event\RecurrenceRule::FREQ_DAILY);
+                        break;
+                    case 'w':
+                        $recurrenceRule->setFreq(\Eluceo\iCal\Property\Event\RecurrenceRule::FREQ_WEEKLY);
+                        break;
+                    case 'M':
+                        $recurrenceRule->setFreq(\Eluceo\iCal\Property\Event\RecurrenceRule::FREQ_MONTHLY);
+                        break;
+                    case 'y':
+                        $recurrenceRule->setFreq(\Eluceo\iCal\Property\Event\RecurrenceRule::FREQ_YEARLY);
+                        break;
+                }
+                $recurrenceRule->setInterval($appointment['attributes']['repeat_freq']);
+                $recurrenceRule->setCount($appointment['attributes']['nr_repeat']);
+
+                $event->setRecurrenceRule($recurrenceRule);
+            }
 
             // Adding Timezone (optional)
             $event->setUseTimezone(true);

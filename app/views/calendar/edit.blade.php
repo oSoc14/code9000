@@ -52,6 +52,7 @@
             {{ Session::get('errorMessage') }}
 
         </div><!-- /.col-xs-12 main -->
+<!-- TODO: Frequency, interval, count velden -->
 
 @stop
 

@@ -105,6 +105,7 @@
           </a>
         </li>
         <li class="panel-heading">
+<<<<<<< HEAD
           <a href="#">
             <p class="panel-title">
               <span class="glyphicon glyphicon-glass"></span>
@@ -138,6 +139,31 @@
             </a>
           </li>
         </div>
+=======
+          <a href="{{ route('about') }}">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-question-sign"></span>
+              About
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="{{ route('settings') }}">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-cog"></span>
+              Settings
+            </p>
+          </a>
+        </li>
+        <li class="panel-heading">
+          <a href="{{ route('user.logout') }}">
+            <p class="panel-title">
+              <span class="glyphicon glyphicon-log-out"></span>
+              Log out
+            </p>
+          </a>
+        </li>
+>>>>>>> Development
       </ul>
       @if(Sentry::check())
       <div id="userinfo-wrapper">

@@ -22,7 +22,8 @@ class HomeController extends BaseController {
         foreach ($schools as $school){
             $schoolsArray[$school->id] = $school->name;
         }
-		return View::make('landing')->with("schools",$schoolsArray);
+		return View::make('landing')
+            ->with("schools",$schoolsArray);
 	}
 
 }
