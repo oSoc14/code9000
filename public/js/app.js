@@ -75,7 +75,7 @@ jQuery(function(){
       format:'Y/m/d H:i',
       mask:true,
       onShow:function( ct ){
-        if(jQuery('#datetimepicker2').val() != ''){
+        if(jQuery('#datetimepicker2').val() != '' && jQuery('#datetimepicker2').val() != '____/__/__ __:__'){
           this.setOptions({
             maxDate:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD'),
             maxTime:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
