@@ -154,7 +154,11 @@ class UserController extends \BaseController {
         );
         if ($validator->fails())
         {
-            return Redirect::route('landing')->withInput()->withErrors($validator);
+            $validator->getMessageBag()->add('usererror', 'Failed to make a user');
+            return Redirect::route('landing')
+                ->withInput()
+                ->withErrors($validator);
+
         }
         else{
             Sentry::createUser(array(

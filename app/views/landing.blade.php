@@ -116,7 +116,7 @@
   </div>
 
   <!-- Register (user) Modal -->
-  @if($errors->has())
+  @if($errors->has('usererror'))
   <div class="modal fade" id="registerUserModal" tabindex="-1" data-errors="true" role="dialog" aria-labelledby="registerUserModal" aria-hidden="false">
   @else
   <div class="modal fade" id="registerUserModal" tabindex="-1" data-errors="false" role="dialog" aria-labelledby="registerUserModal" aria-hidden="false">
@@ -128,9 +128,11 @@
           <h4 class="modal-title">Register as a user</h4>
         </div>
         <div class="modal-body">
-            @foreach ($errors->all() as $message)
-            {{$message}}
-            @endforeach
+            @if($errors->has('usererror'))
+                @foreach ($errors->all() as $message)
+                {{$message}}
+                @endforeach
+            @endif
 
             {{ Form::open([
             'route' => 'user.register',
@@ -173,7 +175,7 @@
   </div>
 
   <!-- Register (school) Modal -->
-  @if($errors->has())
+  @if($errors->has('schoolerror'))
   <div class="modal fade" id="registerSchoolModal" tabindex="-1" data-errors="true" role="dialog" aria-labelledby="registerSchoolModal" aria-hidden="false">
   @else
   <div class="modal fade" id="registerSchoolModal" tabindex="-1" data-errors="false" role="dialog" aria-labelledby="registerSchoolModal" aria-hidden="false">
@@ -185,9 +187,11 @@
           <h4 class="modal-title">Register as a school</h4>
         </div>
         <div class="modal-body">
-            @foreach ($errors->all() as $message)
-            {{$message}}
-            @endforeach
+            @if($errors->has('schoolerror'))
+                @foreach ($errors->all() as $message)
+                {{$message}}
+                @endforeach
+            @endif
 
             {{ Form::open([
             'route' => 'school.store',

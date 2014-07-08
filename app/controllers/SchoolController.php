@@ -52,7 +52,10 @@ class SchoolController extends \BaseController {
         );
         if ($validator->fails())
         {
-            return Redirect::route('landing')->withInput()->withErrors($validator);
+            $validator->getMessageBag()->add('schoolerror', 'Failed to make a school');
+            return Redirect::route('landing')->withInput()
+                ->withErrors($validator);
+
         }
         else{
             $school = new School();
