@@ -38,7 +38,8 @@ $(document).ready(function() {
           newItem['title'] = value['title'];
           newItem['start'] = moment(value['start_date']).add(value['repeat_type'], i*value['repeat_freq']);
           newItem['end']   = moment(value['end_date']).add(value['repeat_type'], i*value['repeat_freq']);
-          newItem['url']    = 'calendar/event/' + value['id'];
+          newItem['url']   = 'calendar/event/' + value['id'];
+          newItem['allDay']= (value['allday'] == 1 ? true : false);
           _events.push(newItem);
         }
       } else {
@@ -46,7 +47,8 @@ $(document).ready(function() {
         newItem['title'] = value['title'];
         newItem['start'] = value['start_date'];
         newItem['end']   = value['end_date'];
-        newItem['url']    = 'calendar/event/' + value['id'];
+        newItem['url']   = 'calendar/event/' + value['id'];
+        newItem['allDay']= (value['allday'] == 1 ? true : false);
         _events.push(newItem);
       }
     });

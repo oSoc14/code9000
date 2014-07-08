@@ -27,16 +27,13 @@ class IcalCalendarController extends \BaseController {
                 array_push($appointments, $appointment);
             }
         }
-
-        // Push
+        // Push to array
         foreach($selGroup->appointments as $appointment) {
             array_push($appointments, $appointment);
         }
 
-
         $calendar = self::composeIcal($appointments);
         return $calendar->render();
-
 	}
 
     public function composeIcal($appointments)
@@ -56,11 +53,10 @@ class IcalCalendarController extends \BaseController {
             $event->setDescription($appointment['attributes']['description']);
             $event->setDtStart(new \DateTime($appointment['attributes']['start_date']));
             $event->setDtEnd(new \DateTime($appointment['attributes']['end_date']));
-            $event->setNoTime(true);
+            $event->setNoTime($appointment['attributes']['allday']);
             $event->setStatus('TENTATIVE');
 
             // Recurence option (e.g. New Year happens every year)
-
             // Set recurrence rule
             if($appointment['attributes']['repeat_type']) {
 
@@ -84,7 +80,6 @@ class IcalCalendarController extends \BaseController {
 
                 $event->setRecurrenceRule($recurrenceRule);
             }
-
 
             // Adding Timezone (optional)
             $event->setUseTimezone(true);

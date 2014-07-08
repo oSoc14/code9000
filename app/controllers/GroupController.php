@@ -102,9 +102,11 @@ class GroupController extends \BaseController {
 
                     $permissions = [];
                     $permissionlist = Input::get('permissions');
-                    foreach($permissionlist as $key => $value){
-                        if($key != "school"){
-                            $permissions[$key] = 1;
+                    if(isset($permissionlist)) {
+                        foreach($permissionlist as $key => $value){
+                            if($key != "school"){
+                                $permissions[$key] = 1;
+                            }
                         }
                     }
                     // Create the group
@@ -193,35 +195,50 @@ class GroupController extends \BaseController {
             // Find active user
             $user = Sentry::getUser();
             if ($user->hasAnyAccess(array('school','user'))){
-                $group = Group::findGroupById($id);
+                $group = Sentry::findGroupById($id);
+
                 $school = $group->school;
+
+                $groupFullName = strtolower($school->short.'_'.Input::get('name'));
                 $validator = Validator::make(
                     array(
-                        'name' => $school->short.'_'.Input::get('name'),
+                        'name' => $groupFullName,
                         'permissions' => Input::get('permissions')
                     ),
                     array(
-                        'name' => 'required|unique:groups,name'
+                        'name' => 'required'
                     )
                 );
+                if($group->name != $groupFullName) {
+                    try
+                    {
+                        $grp = Sentry::findGroupByName($groupFullName);
+                        // Add an error message in the message collection (MessageBag instance)
+                        $validator->getMessageBag()->add('name', Lang::get('validation.unique', array('attribute ' => 'name ')));
+
+                    }
+                    catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+                    {
+                        $group->name = $groupFullName;
+                    }
+                }
                 if ($validator->fails())
                 {
-                    return Redirect::route('group.create')->withInput()->withErrors($validator);
+                    return Redirect::route('group.edit',$id)->withInput()->withErrors($validator);
                 }
                 else{
-                    $prefix = '';
-                    $prefix = $school->short.'_';
-
-                    $permissions = [];
+                    // Set default permissions
+                    $permissions = ["event"=>0,"user"=>0,"group"=>0,"school"=>0];
                     $permissionlist = Input::get('permissions');
-                    foreach($permissionlist as $key => $value){
-                        if($key != "school"){
-                            $permissions[$key] = 1;
-                        }
-                    }
 
-                    $group->name = $prefix.strtolower(Input::get('name'));
-                    $group->permissions = $permissions;
+                    if(isset($permissionlist)) {
+                        foreach($permissionlist as $key => $value){
+                            if($key != "school"){
+                                $permissions[$key] = 1;
+                            }
+                        }
+                        $group->permissions = $permissions;
+                    }
                     $group->save();
 
                     return Redirect::route('group.edit',$id);

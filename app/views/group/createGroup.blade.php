@@ -21,13 +21,13 @@
 </div>
 <div class="checkbox">
     <label>
-        <input type="checkbox" name="permissions['group']"> Group
+        <input type="checkbox" name="permissions[group]"> Group
     </label>
     <label>
-        <input type="checkbox" name="permissions['user']"> User
+        <input type="checkbox" name="permissions[user]"> User
     </label>
     <label>
-        <input type="checkbox" name="permissions['event']" checked> Event
+        <input type="checkbox" name="permissions[event]" checked> Event
     </label>
 </div>
 <button type="submit" class="btn btn-primary">Add Group</button>

@@ -200,6 +200,12 @@ Route::group(array('prefix' => 'group'), function()
         'as'   => 'group.store',
         'uses' => 'GroupController@store'
     ]);
+
+    // Update a group
+    Route::post('/edit/{id}', [
+        'as'   => 'group.update',
+        'uses' => 'GroupController@update'
+    ])->where('id', '[0-9]+');
 });
 
 /**

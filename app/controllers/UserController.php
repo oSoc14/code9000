@@ -321,6 +321,7 @@ class UserController extends \BaseController {
                 } else{
                     if(Input::get('password'))
                         $user->password     = Input::get('password');
+
                     $user->first_name   = Input::get('name');
                     $user->last_name    = Input::get('surname');
 
