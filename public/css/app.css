@@ -234,31 +234,36 @@ img {
   }
 
   /* line 202, ../sass/app.scss */
+  #accordion {
+    padding: 0 0 0 4px;
+  }
+
+  /* line 205, ../sass/app.scss */
   #navbar-logo-sidebar {
     display: none;
   }
 
-  /* line 205, ../sass/app.scss */
+  /* line 208, ../sass/app.scss */
   .breadcrumb {
     display: none;
   }
 
-  /* line 208, ../sass/app.scss */
+  /* line 211, ../sass/app.scss */
   .sidebar-active {
     left: 250px;
   }
 
-  /* line 211, ../sass/app.scss */
+  /* line 214, ../sass/app.scss */
   #content-wrapper {
     margin-left: 0 !important;
   }
 
-  /* line 214, ../sass/app.scss */
+  /* line 217, ../sass/app.scss */
   .fc-header-center {
     display: none;
   }
 }
-/* line 219, ../sass/app.scss */
+/* line 222, ../sass/app.scss */
 #backdrop {
   position: fixed;
   top: 0;
@@ -271,7 +276,7 @@ img {
   opacity: 0.5;
 }
 
-/* line 231, ../sass/app.scss */
+/* line 234, ../sass/app.scss */
 #userinfo-wrapper {
   position: fixed;
   bottom: 0;
@@ -282,12 +287,12 @@ img {
   padding: 10px;
   color: #333333;
 }
-/* line 240, ../sass/app.scss */
+/* line 243, ../sass/app.scss */
 #userinfo-wrapper .username {
   color: #fff;
 }
 @media screen and (max-width: 768px) {
-  /* line 231, ../sass/app.scss */
+  /* line 234, ../sass/app.scss */
   #userinfo-wrapper {
     left: 0;
   }
@@ -295,34 +300,34 @@ img {
 
 /* CONTENT
 ---------------------- */
-/* line 251, ../sass/app.scss */
+/* line 254, ../sass/app.scss */
 #content-wrapper {
   margin-left: 250px;
   padding-top: 49px;
   padding-right: 15px;
   padding-left: 15px;
 }
-/* line 256, ../sass/app.scss */
+/* line 259, ../sass/app.scss */
 #content-wrapper p {
   line-height: 1.75em;
 }
-/* line 259, ../sass/app.scss */
+/* line 262, ../sass/app.scss */
 #content-wrapper h1 {
   margin: 0px 0 20px 0;
 }
 
-/* line 263, ../sass/app.scss */
+/* line 266, ../sass/app.scss */
 .modules-overview {
   list-style: none;
   padding: 0;
 }
 
-/* line 268, ../sass/app.scss */
+/* line 271, ../sass/app.scss */
 .module {
   margin: 0 0 10px 0;
 }
 
-/* line 272, ../sass/app.scss */
+/* line 275, ../sass/app.scss */
 .module-detail-container {
   background: #ccc;
   height: 50px;
@@ -332,86 +337,81 @@ img {
 
 /* CALENDAR
 ---------------------- */
-/* line 281, ../sass/app.scss */
-#calendar {
-  max-width: 900px;
-  margin-right: 0 !important;
-}
-/* line 284, ../sass/app.scss */
+/* line 285, ../sass/app.scss */
 #calendar a {
   color: #fff;
 }
-/* line 286, ../sass/app.scss */
+/* line 287, ../sass/app.scss */
 #calendar a:hover {
   color: #b6cdea;
 }
-/* line 290, ../sass/app.scss */
+/* line 291, ../sass/app.scss */
 #calendar .fc-event {
   background: #00cde1;
   border: 0;
   padding: 5px;
   border-radius: 10px;
 }
-/* line 295, ../sass/app.scss */
+/* line 296, ../sass/app.scss */
 #calendar .fc-event:hover {
   color: #108a98;
 }
-/* line 299, ../sass/app.scss */
+/* line 300, ../sass/app.scss */
 #calendar .fc-state-highlight {
   background: #daf2ef;
 }
-/* line 302, ../sass/app.scss */
+/* line 303, ../sass/app.scss */
 #calendar .fc-button {
   background: none;
   border: none;
 }
-/* line 305, ../sass/app.scss */
+/* line 306, ../sass/app.scss */
 #calendar .fc-button:hover {
   background: #eee;
 }
-/* line 309, ../sass/app.scss */
+/* line 310, ../sass/app.scss */
 #calendar .fc-state-active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   font-weight: 700;
 }
-/* line 313, ../sass/app.scss */
+/* line 314, ../sass/app.scss */
 #calendar .fc-header-title h2 {
   font-weight: 700;
   font-size: 30px;
   position: relative;
   bottom: 10px;
 }
-/* line 319, ../sass/app.scss */
+/* line 320, ../sass/app.scss */
 #calendar .fc-widget-content {
   border: none;
 }
-/* line 322, ../sass/app.scss */
+/* line 323, ../sass/app.scss */
 #calendar thead tr.fc-first {
   color: #fff;
   text-transform: uppercase;
   height: 40px;
   text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 5px;
 }
-/* line 327, ../sass/app.scss */
+/* line 328, ../sass/app.scss */
 #calendar thead tr.fc-first th {
   vertical-align: middle;
 }
-/* line 330, ../sass/app.scss */
+/* line 331, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-mon, #calendar thead tr.fc-first .fc-tue, #calendar thead tr.fc-first .fc-wed, #calendar thead tr.fc-first .fc-thu, #calendar thead tr.fc-first .fc-fri {
   background: #333333;
   border: none;
   border-right: 1px solid white;
 }
-/* line 335, ../sass/app.scss */
+/* line 336, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-sat, #calendar thead tr.fc-first .fc-sun {
   background: #aaabae;
   border: none;
   border-right: 1px solid white;
 }
 
-/* line 343, ../sass/app.scss */
+/* line 344, ../sass/app.scss */
 #addEvent {
   margin: 0 0 40px 0;
 }

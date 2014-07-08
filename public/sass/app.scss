@@ -199,6 +199,9 @@ img{
     @include transition-duration(0.15s);
     @include transition-timing-function(ease-in);
   }
+  #accordion{
+    padding: 0 0 0 4px;
+  }
   #navbar-logo-sidebar{
     display: none;
   }
@@ -279,8 +282,6 @@ img{
 /* CALENDAR
 ---------------------- */
 #calendar{
-  max-width: 900px;
-  margin-right: 0 !important;
   a{
     color: #fff;
     &:hover{

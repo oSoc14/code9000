@@ -13,23 +13,23 @@
 @section('content')
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-12 col-md-10">
+    <div class="col-xs-12 col-md-12 col-lg-10">
       <ol class="breadcrumb">
         <li><a href="{{ route('landing') }}">Home</a></li>
         <li class="active">Calendar</li>
       </ol>
     </div>
-    <div class="col-xs-12 col-sm-5">
+    <div class="col-xs-6 col-sm-6 col-lg-5">
       <h1>Calendar</h1>
     </div>
-    <div class="col-xs-12 col-sm-5">
+    <div class="col-xs-6 col-sm-6 col-lg-5">
       <a type="button" class="btn btn-default btn-lg btn-educal-primary pull-right" href="{{route('event.create')}}" id="addEvent">
         <span class="glyphicon glyphicon-plus"></span> Add event
       </a>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-10">
+    <div class="col-sm-12 col-md-12 col-lg-10">
       <div id="calendar"></div>
       <div id="preloader">Loading...</div>
       <br>
