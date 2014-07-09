@@ -13,7 +13,16 @@
     </ol>
   </div>
 </div>
-<h1>Groups</h1>
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-lg-6">
+        <h1>Groups</h1>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-lg-6">
+        <a type="button" class="btn btn-default btn-lg btn-educal-primary pull-right" href="{{route('group.create')}}" id="addEvent">
+            <span class="glyphicon glyphicon-plus"></span> Add group
+        </a>
+    </div>
+</div>
 <div class="row">
   <div class="col-xs-12 table-responsive">
     <table id="groupTable" class="table table-striped" cellspacing="0" width="100%">
