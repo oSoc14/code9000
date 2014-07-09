@@ -13,7 +13,8 @@ class SchoolTableSeeder extends Seeder {
 
         School::create(array(
             'name'        => 'Het Trappenhuis',
-            'short'       => 'hettrappenhuis'
+            'short'       => 'hettrappenhuis',
+            'city'        => 'Gent'
         ));
     }
 

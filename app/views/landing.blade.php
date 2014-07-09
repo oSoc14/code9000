@@ -208,7 +208,7 @@
           </div>
           <div class="form-group">
             <label for="school-location">City</label>
-            <input type="text" class="form-control" id="school-location" name="school-location" placeholder="Where is the school located? (e.g. 'Chicago')">
+            <input type="text" class="form-control" id="school-location" name="city" placeholder="Where is the school located? (e.g. 'Chicago')">
           </div>
           <div class="form-group">
             <label for="school-password">Password</label>

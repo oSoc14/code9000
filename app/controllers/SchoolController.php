@@ -39,12 +39,14 @@ class SchoolController extends \BaseController {
             array(
                 'name' => Input::get('name'),
                 'email' => Input::get('email'),
+                'city' => Input::get('city'),
                 'password' => Input::get('password'),
                 'password_confirmation' => Input::get('password_confirmation'),
                 'tos' => Input::get('tos')
             ),
             array(
                 'name' => 'required|unique:schools,name',
+                'city' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:8|confirmed',
                 'tos' => 'required'
@@ -63,6 +65,7 @@ class SchoolController extends \BaseController {
             $short = strtolower(Input::get("name"));
             $short = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
             $school->short = $short;
+            $school->city = Input::get("city");
             $school->save();
 
             Sentry::createGroup(array(
@@ -97,6 +100,8 @@ class SchoolController extends \BaseController {
             ));
 
             $user->addGroup($group);
+            Sentry::login($user, false);
+
             return Redirect::route('calendar.index');
         }
 	}

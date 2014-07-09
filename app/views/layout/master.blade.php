@@ -128,7 +128,7 @@
             </a>
           </li>
           <li class="panel-heading">
-            <a href="settings">
+            <a href="{{ route('settings') }}">
               <p class="panel-title">
                 <span class="glyphicon glyphicon-cog"></span>
                 Settings

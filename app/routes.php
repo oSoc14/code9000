@@ -11,6 +11,11 @@
 |
 */
 
+if(Session::has('lang')){
+    //Set the language
+    App::setLocale(Session::get('lang'));
+}
+
 Route::get('/', [
     'as'   => 'landing',
     'uses' => 'HomeController@showWelcome'
@@ -20,11 +25,15 @@ Route::get('about', array('as' => 'about', function()
 {
     return View::make('about');
 }));
+Route::get('settings', [
+    'as' => 'settings',
+    'uses' => 'HomeController@settings'
+]);
 
-Route::get('settings', array('as' => 'settings', function()
-{
-  return View::make('settings');
-}));
+Route::post('settings', [
+    'as' => 'settings.update',
+    'uses' => 'HomeController@settingsUpdate'
+]);
 
 Route::group(['prefix' => 'school'], function () {
     Route::post('/register', [
@@ -109,7 +118,7 @@ Route::group(['prefix' => 'user'], function () {
         'as'   => 'user.removeFromGroup',
         'uses' => 'UserController@removeFromGroup'
     ])->where('id', '[0-9]+')
-      ->where('groupId', '[0-9]+');
+        ->where('groupId', '[0-9]+');
 });
 
 
@@ -219,3 +228,5 @@ Route::group(array('prefix' => 'export'), function()
         'uses' => 'IcalCalendarController@show'
     ])->where('id', '[0-9]+');
 });
+
+
