@@ -15,44 +15,48 @@ $lighterblue: #9bd2db;
 $hoverblue: #b3e9f0;
 $yellow: #e9e34b;
 $lightyellow: #f0eb72;
+$darkyellow: #c9c315;
 $darkgrey: #333;
-$grey: #aaabae;
+$grey: #556066;
 $lightgrey: #f5f5f5;
 
 // Breakpoints
 $break-small: 320px;
 $break-medium: 768px;
-$break-large: 1200px;
+$break-large: 1024px;
+$break-xlarge: 1200px;
 
 // Fonts
 $sans-serif: 'Open Sans', 'Helvetica', sans-serif;
 $times: 'Times New Roman', serif;
 
 // Buttons
-@mixin btn-educal($bgcolor, $bordercolor, $color, $bghover, $borderhover){
+@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor){
   background: $bgcolor;
-  border: 1px solid $bordercolor;
+  border: none;
+  border-bottom: 3px solid $bordercolor;
   color: $color;
-  text-shadow: none;
-  &:hover{
+  @include text-shadow(none);
+  //@include box-shadow(rgba(0, 0, 0, 0.45) 0px 0px 5px);
+  &:hover, &:focus{
     background: $bghover;
-    border: 1px solid $borderhover;
     color: $color;
+    border-bottom: 3px solid $bordercolor;
   }
-  &:focus{
-    background: $bghover;
-    border: 1px solid $borderhover;
-    color: $color;
-    outline: none;
+  &:active{
+    border: none;
+    position: relative;
+    top: 3px;
+    margin-bottom: 3px !important;
   }
 }
 
 .btn-educal-primary{
-  @include btn-educal($pink, $darkpink, #fff, $lightpink, $pink);
+  @include btn-educal($pink, #fff, $lightpink, $darkpink);
 }
 
 .btn-educal-secondary{
-  @include btn-educal(#EAE415, #c9c315, #8c8610, #fbfd4f, #EAE415);
+  @include btn-educal($yellow, #8c8610, $lightyellow, $darkyellow);
 }
 
 // HTML
@@ -78,10 +82,9 @@ img{
 ---------------------- */
 
 #navbar-educal{
-  background: $lightgrey;
+  background: #fff;
   color: #fff;
   height: 50px;
-  box-shadow: none;
   border: 0;
   z-index: 1060;
   display: none;
@@ -93,6 +96,9 @@ img{
       .icon-bar{
         background-color: #fff;
       }
+    }
+    &:target{
+      background: none;
     }
   }
   .navbar-toggle .icon-bar{
@@ -147,6 +153,9 @@ img{
     margin-top: 10px;
     .panel-title{
       color: $grey;
+      &:hover{
+        color: #aaa;
+      }
     }
   }
 }
@@ -160,6 +169,7 @@ img{
   background: url("images/logo_educal_sidebar.png") center center no-repeat;
   width: 250px;
   height: 230px;
+  margin-top: 15px;
   @media screen and (max-width: $break-medium){
     margin-left: 15px;
   }
@@ -190,7 +200,7 @@ img{
   }
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: $break-medium){
   .sidebar-wrapper{
     left: 0;
     background: #fff;
@@ -213,6 +223,7 @@ img{
   }
   #content-wrapper{
     margin-left: 0 !important;
+    padding-top: 20px !important;
   }
   .fc-header-center{
     display: none;
@@ -239,7 +250,7 @@ img{
   font-size: 12px;
   width: 250px;
   padding: 10px;
-  color: $darkgrey;
+  color: $grey;
   .username{
     color: #fff;
   }
@@ -253,7 +264,7 @@ img{
 ---------------------- */
 #content-wrapper{
   margin-left: 250px;
-  padding-top: 49px;
+  padding-top: 40px;
   padding-right: 15px;
   padding-left: 15px;
   p{
@@ -261,6 +272,7 @@ img{
   }
   h1{
     margin: 0px 0 20px 0;
+    font-weight: 700;
   }
 }
 .modules-overview{
@@ -301,24 +313,35 @@ img{
     background: #daf2ef;
   }
   .fc-button{
-    background: none;
-    border: none;
+    //background: $grey;
+    //border: none;
+    //color: #fff;
+    //@include box-shadow(none);
+    @include text-shadow(none);
     &:hover{
-      background: #eee;
+      background: $blue;
     }
+    @include btn-educal($grey, #fff, $blue, $darkgrey);
+  }
+  .fc-state-disabled{
+    color: #fff;
+    //background: $lightblue;
   }
   .fc-state-active{
     @include box-shadow(none);
-    font-weight: 700;
+    //font-weight: 700;
+    background: $lightblue;
   }
   .fc-header-title h2{
-    font-weight: 700;
-    font-size: 30px;
+    font-size: 25px;
     position: relative;
-    bottom: 10px;
+    bottom: 4px;
   }
   .fc-widget-content{
-    border: none;
+    border-width: 0;
+    @media screen and (max-width: $break-large){
+      border-width: 1px 0 0 1px;
+    }
   }
   thead tr.fc-first{
     color: #fff;
@@ -329,20 +352,54 @@ img{
       vertical-align: middle;
     }
     .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri{
-      background: $darkgrey;
       border: none;
-      border-right: 1px solid #fff
     }
     .fc-sat, .fc-sun{
-      background: $grey;
+      //background: $darkgrey;
       border: none;
-      border-right: 1px solid #fff
+    }
+    .fc-widget-header{
+      border: none;
     }
   }
 }
 
+// Firefox
+#calendar-bg{
+  width: 100%;
+  background: url('images/calendar-bg.jpg') repeat top left $grey;
+  position: absolute;
+  z-index: 1010;
+  height: 207px;
+  border-bottom: 40px solid $grey;
+  top: 0;
+  left: 0;
+  @media screen and (max-width: $break-medium){
+    height: 237px;
+  }
+  // Chrome
+  @media screen and (-webkit-min-device-pixel-ratio:0){
+    height: 205px;
+    @media screen and (max-width: $break-medium){
+      height: 235px;
+    }
+  }
+  // Chrome non-mobile hack
+  /*@media screen and (-webkit-min-device-pixel-ratio:0){
+    height: 205px;
+  }*/
+}
+
+#calendar-content{
+  position: relative;
+  z-index: 1020;
+}
+
 #addEvent {
   margin: 0 0 40px 0;
+  &:active{
+    margin: 0 0 43px 0 !important;
+  }
 }
 
 /* TABLE VIEWS (USERS, SCHOOLS, ...

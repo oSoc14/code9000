@@ -11,14 +11,8 @@
 @stop
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" id="calendar-content">
   <div class="row">
-    <div class="col-xs-12 col-md-12 col-lg-10">
-      <ol class="breadcrumb">
-        <li><a href="{{ route('landing') }}">Home</a></li>
-        <li class="active">Calendar</li>
-      </ol>
-    </div>
     <div class="col-xs-6 col-sm-6 col-lg-5">
       <h1>Calendar</h1>
     </div>
@@ -36,6 +30,7 @@
     </div>
   </div>
 </div>
+<div id="calendar-bg"></div>
 
 @stop
 
