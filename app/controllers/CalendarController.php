@@ -146,6 +146,7 @@ class CalendarController extends \BaseController {
                             $event->end_date = new DateTime(Input::get('end'));
                         }
                     }
+                    // Recurring events handling
                     if(Input::get('repeat') && Input::get('nr_repeat')) {
                         $event->nr_repeat = Input::get('nr_repeat');
                         $event->repeat_type = Input::get('repeat_type');
@@ -283,6 +284,7 @@ class CalendarController extends \BaseController {
                             $event->end_date = new DateTime(Input::get('end'));
                         }
                     }
+                    // Recurring events handling
                     if(Input::get('repeat') && Input::get('nr_repeat')) {
                         $event->nr_repeat = Input::get('nr_repeat');
                         $event->repeat_type = Input::get('repeat_type');
