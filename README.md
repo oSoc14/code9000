@@ -16,7 +16,7 @@ Make sure you have composer installed
 
 Begin by installing the required packages through Composer.
 
-    composer update
+    composer install
     
 Next run the migrations to create your database.
 
