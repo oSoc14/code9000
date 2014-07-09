@@ -75,10 +75,10 @@ $(document).ready(function() {
   }
 
   function getCalendarView(){
-    if ($(window).width() < 768){
+    if ($(window).width() < 850){
       $('#calendar').fullCalendar('changeView', 'agendaDay');
       $('#calendar').fullCalendar('option', 'contentHeight', 5000);
-    } else if ($(window).width() > 768 && $(window).width() < 960) {
+    } else if ($(window).width() > 850 && $(window).width() < 1080) {
       $('#calendar').fullCalendar('changeView', 'agendaWeek');
       $('#calendar').fullCalendar('option', 'contentHeight', null);
     } else {
