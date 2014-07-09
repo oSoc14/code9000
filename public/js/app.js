@@ -65,6 +65,21 @@ $(document).ready(function() {
 
     });
   });
+
+
+  $('#repeat_type').change(function(ev){
+    calculateRepeats();
+  });
+
+  $('#repeat_freq').change(function(ev){
+    calculateRepeats();
+  });
+
+
+  $('#datetimepicker1').change(function(ev){
+    calculateRepeats();
+  });
+
 });
 
 jQuery(function(){
@@ -142,6 +157,49 @@ jQuery(function(){
       timepicker:true,
       defaultSelect:true
     });
+
+    // Edit event form: get value for dateTimePicker3 when applicable (recurring events)
+    var calcDate = null;
+    if($('#repeat').prop('checked')) {
+      var type = $('#repeat_type').val();
+      var startDate = moment($('#datetimepicker1').val(),'YYYY/MM/DD HH:mm');
+      var freq = $('#repeat_freq').val();
+
+      for(i=1;i<$('#nr_repeat').val();i++) {
+        startDate = startDate.add(type,freq);
+      }
+      calcDate = moment(startDate,'YYYY/MM/DD').format('YYYY/MM/DD');
+    }
+
+    jQuery('#datetimepicker3').datetimepicker({
+      format:'Y/m/d',
+      mask:true,
+      onShow:function( ct ){
+        if(jQuery('#datetimepicker2').val() != '' && jQuery('#datetimepicker2').val() != '____/__/__ __:__'){
+          this.setOptions({
+            minDate:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')
+          })
+        } else {
+          if(jQuery('#datetimepicker1').val() != '' && jQuery('#datetimepicker1').val() != '____/__/__ __:__') {
+            this.setOptions({
+              minDate:moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')
+            })
+          } else {
+            this.setOptions({
+              minDate:false
+            });
+          }
+        }
+      },
+      onSelectDate:function(){
+        // calculate stuff
+        calculateRepeats();
+      },
+      timepicker:false,
+      defaultSelect:true,
+      value:calcDate,
+      format:'Y/m/d'
+    });
   }
   // When the "register as school" button is clicked, hide the "register as user" modal
   $('#showSchoolRegisterModal').click(function(){
@@ -149,3 +207,25 @@ jQuery(function(){
     $('#registerSchoolModal').modal('show');
   });
 });
+
+function calculateRepeats(){
+  console.log("calculating");
+  var freq = $('#repeat_freq').val();
+  var endDate = $('#datetimepicker3').val();
+
+  if(freq && endDate != '____/__/__') {
+    var startDate = $('#datetimepicker1').val();
+    var type = $('#repeat_type').val();
+
+    if(startDate != '' && startDate != '____/__/__ __:__') {
+      var i = 1;
+      while(moment(startDate, "YYYY/MM/DD HH:mm").isBefore(moment(endDate, "YYYY/MM/DD"))) {
+        startDate = moment(startDate).add(type,freq);
+        i++;
+      }
+      $('#nr_repeat').val(i);
+      console.log(i);
+    }
+  }
+
+}

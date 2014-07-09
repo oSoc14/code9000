@@ -28,7 +28,6 @@
       </thead>
 
       <tbody>
-      <?php $i = 0; ?>
       @foreach($users as $user)
       <?php $i++; ?>
       <tr>
@@ -97,7 +96,7 @@
                           <div class="form-group">
                               <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
                           </div>
-                          <input type="hidden" name="school" value="{{ $user->school_id }}">
+                          <input type="hidden" name="school" value="{{ Sentry::getUser()->school_id }}">
                           <button type="submit" class="btn btn-default btn-educal-primary">Register</button>
                           {{ Form::close(), PHP_EOL }}
                       </div>

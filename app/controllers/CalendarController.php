@@ -95,7 +95,7 @@ class CalendarController extends \BaseController {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created appointment in storage.
      *
      * @return Response
      */
@@ -118,15 +118,14 @@ class CalendarController extends \BaseController {
                     array(
                         'group' => 'required',
                         'description' => 'required',
-                        'start' => 'required',
+                        'start' => 'required|date',
                         'title' => 'required'
                     )
                 );
-                if ($validator->fails())
-                {
+
+                if ($validator->fails()) {
                     return Redirect::route('event.create')->withInput()->withErrors($validator);
-                }
-                else{
+                } else {
                     $event = new Appointment();
                     $event->title = Input::get('title');
                     $event->description = Input::get('description');
@@ -147,6 +146,11 @@ class CalendarController extends \BaseController {
                             $event->end_date = new DateTime(Input::get('end'));
                         }
                     }
+                    if(Input::get('repeat') && Input::get('nr_repeat')) {
+                        $event->nr_repeat = Input::get('nr_repeat');
+                        $event->repeat_type = Input::get('repeat_type');
+                        $event->repeat_freq = Input::get('repeat_freq');
+                    }
                     $event->group_id = Input::get('group');
                     $event->save();
                     return Redirect::route('calendar.index');
@@ -161,7 +165,7 @@ class CalendarController extends \BaseController {
 
 
     /**
-     * Display and event by its ID
+     * Display an event by its ID
      *
      * @param  int  $id
      * @return Response
@@ -172,21 +176,21 @@ class CalendarController extends \BaseController {
             $schools = null;
             // Find active user
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','event'))){
+            if ($user->hasAnyAccess(array('school','event'))) {
                 $event = Appointment::find($id);
                 $event->load('group');
                 return View::make('calendar.eventDetail')->with('event',$event);
-            }else{
+            } else {
                 return Redirect::route('calendar.index');
             }
-        }else{
+        } else {
             return Redirect::route('landing');
         }
     }
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified appointment.
      *
      * @param  int  $id
      * @return Response
@@ -228,7 +232,7 @@ class CalendarController extends \BaseController {
 
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified appointment in storage.
      *
      * @param  int  $id
      * @return Response
@@ -278,6 +282,15 @@ class CalendarController extends \BaseController {
                         }else{
                             $event->end_date = new DateTime(Input::get('end'));
                         }
+                    }
+                    if(Input::get('repeat') && Input::get('nr_repeat')) {
+                        $event->nr_repeat = Input::get('nr_repeat');
+                        $event->repeat_type = Input::get('repeat_type');
+                        $event->repeat_freq = Input::get('repeat_freq');
+                    } else {
+                        $event->nr_repeat = null;
+                        $event->repeat_type = null;
+                        $event->repeat_freq = null;
                     }
                     $event->group_id = Input::get('group');
                     $event->save();

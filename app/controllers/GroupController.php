@@ -50,12 +50,17 @@ class GroupController extends \BaseController {
             $schools = null;
             // Find active user
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
+            if ($user->hasAccess('school')){
                 $schools = School::lists('name','id');
                 return View::make('group.createGroup')->with('schools',$schools);
             }else{
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
+                if($user->hasAccess('group')) {
+                    return View::make('group.createGroup')->with('schools',null);
+                } else {
+                    // If no permissions, redirect to calendar index
+                    return Redirect::route('calendar.index');
+                }
+
             }
         }else{
             // If no permissions, redirect to calendar index

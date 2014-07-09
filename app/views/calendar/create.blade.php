@@ -47,14 +47,48 @@
                 <div class='input-group date'>
                     <input type='text' id='datetimepicker2' name="end" class="form-control" />
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                    </span>
                 </div>
             </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" name="day" id="day"> Full day
-            </label>
-          </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="day" id="day"> Full day
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="repeat" id="repeat"> Repeating event
+                </label>
+            </div>
+            <label>Recurrence (every x period until date)</label>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" id="repeat_freq" name="repeat_freq" class="form-control" value="1"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-cog"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <select id="repeat_type" name="repeat_type" class="form-control">
+                            <option value="d">Day</option>
+                            <option value="w">Week</option>
+                            <option value="M">Month</option>
+                            <option value="y">Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input type='text' id='datetimepicker3' name="recurrence_end" class="form-control" />
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="nr_repeat" name="nr_repeat" />
             <button type="submit" class="btn btn-default btn-educal-primary">Add Event</button>
             {{ Form::close(), PHP_EOL }}
             {{ Session::get('errorMessage') }}
