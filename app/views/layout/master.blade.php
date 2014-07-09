@@ -143,6 +143,14 @@
               </p>
             </a>
           </li>
+          <li class="panel-heading">
+              <a href="https://docs.google.com/forms/d/1-DBq0c2lmOEmJAJZ89hgCPSf4RjObr4XffMBajPEPtI/viewform?usp=send_form">
+                  <p class="panel-title">
+                      <span class="glyphicon glyphicon-bullhorn"></span>
+                      Feedback
+                  </p>
+              </a>
+          </li>
         </div>
         </li>
       </ul>
@@ -175,5 +183,17 @@
 {{ HTML::script("js/bootstrap.min.js") }}
 {{ HTML::script("js/jquery.datetimepicker.js") }}
 @yield('footerScript')
+
 </body>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-42559847-18', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
 </html>
