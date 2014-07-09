@@ -409,55 +409,63 @@ img {
 /* line 332, ../sass/app.scss */
 #calendar .fc-state-disabled {
   color: #fff;
+  top: 1px;
+  margin-bottom: 2px !important;
+  border-bottom: 1px solid #333333 !important;
 }
-/* line 336, ../sass/app.scss */
+/* line 337, ../sass/app.scss */
+#calendar .fc-state-disabled:active {
+  top: 1px;
+  border-bottom: 1px solid #333333 !important;
+}
+/* line 342, ../sass/app.scss */
 #calendar .fc-state-active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   background: #46ddea;
 }
-/* line 341, ../sass/app.scss */
+/* line 347, ../sass/app.scss */
 #calendar .fc-header-title h2 {
   font-size: 25px;
   position: relative;
   bottom: 4px;
 }
-/* line 346, ../sass/app.scss */
+/* line 352, ../sass/app.scss */
 #calendar .fc-widget-content {
   border-width: 0;
 }
 @media screen and (max-width: 1024px) {
-  /* line 346, ../sass/app.scss */
+  /* line 352, ../sass/app.scss */
   #calendar .fc-widget-content {
     border-width: 1px 0 0 1px;
   }
 }
-/* line 352, ../sass/app.scss */
+/* line 358, ../sass/app.scss */
 #calendar thead tr.fc-first {
   color: #fff;
   text-transform: uppercase;
   height: 40px;
   text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 5px;
 }
-/* line 357, ../sass/app.scss */
+/* line 363, ../sass/app.scss */
 #calendar thead tr.fc-first th {
   vertical-align: middle;
 }
-/* line 360, ../sass/app.scss */
+/* line 366, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-mon, #calendar thead tr.fc-first .fc-tue, #calendar thead tr.fc-first .fc-wed, #calendar thead tr.fc-first .fc-thu, #calendar thead tr.fc-first .fc-fri {
   border: none;
 }
-/* line 363, ../sass/app.scss */
+/* line 369, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-sat, #calendar thead tr.fc-first .fc-sun {
   border: none;
 }
-/* line 367, ../sass/app.scss */
+/* line 373, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-widget-header {
   border: none;
 }
 
-/* line 374, ../sass/app.scss */
+/* line 380, ../sass/app.scss */
 #calendar-bg {
   width: 100%;
   background: url("images/calendar-bg.jpg") repeat top left #556066;
@@ -472,35 +480,35 @@ img {
   }*/
 }
 @media screen and (max-width: 768px) {
-  /* line 374, ../sass/app.scss */
+  /* line 380, ../sass/app.scss */
   #calendar-bg {
     height: 237px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 374, ../sass/app.scss */
+  /* line 380, ../sass/app.scss */
   #calendar-bg {
     height: 205px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-  /* line 374, ../sass/app.scss */
+  /* line 380, ../sass/app.scss */
   #calendar-bg {
     height: 235px;
   }
 }
 
-/* line 399, ../sass/app.scss */
+/* line 405, ../sass/app.scss */
 #calendar-content {
   position: relative;
   z-index: 1020;
 }
 
-/* line 404, ../sass/app.scss */
+/* line 410, ../sass/app.scss */
 #addEvent {
   margin: 0 0 40px 0;
 }
-/* line 406, ../sass/app.scss */
+/* line 412, ../sass/app.scss */
 #addEvent:active {
   margin: 0 0 43px 0 !important;
 }

@@ -28,6 +28,7 @@
       </thead>
 
       <tbody>
+      <?php $i = 0; ?>
       @foreach($users as $user)
       <?php $i++; ?>
       <tr>

@@ -331,7 +331,13 @@ img{
   }
   .fc-state-disabled{
     color: #fff;
-    //background: $lightblue;
+    top: 1px;
+    margin-bottom: 2px !important;
+    border-bottom: 1px solid $darkgrey !important;
+    &:active{
+      top: 1px;
+      border-bottom: 1px solid $darkgrey !important;
+    }
   }
   .fc-state-active{
     @include box-shadow(none);
