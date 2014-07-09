@@ -76,7 +76,7 @@
           <a href="{{ route('calendar.index') }}">
             <p class="panel-title active">
               <span class="glyphicon glyphicon-calendar"></span>
-              Calendar
+              {{ucfirst(trans('educal.calendar'))}}
             </p>
           </a>
         </li>
@@ -85,7 +85,7 @@
           <a href="{{ route('school.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-home"></span>
-              Schools
+              {{ucfirst(trans('educal.schools'))}}
             </p>
           </a>
         </li>
@@ -95,7 +95,7 @@
           <a href="{{ route('user.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-user"></span>
-              Users
+              {{ucfirst(trans('educal.users'))}}
             </p>
           </a>
         </li>
@@ -105,25 +105,17 @@
           <a href="{{ route('group.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-th-large"></span>
-              Groups
+              {{ucfirst(trans('educal.groups'))}}
             </p>
           </a>
         </li>
         @endif
-        <li class="panel-heading">
-          <a href="#">
-            <p class="panel-title">
-              <span class="glyphicon glyphicon-glass"></span>
-              Events
-            </p>
-          </a>
-        </li>
         <div class="bottom-options">
           <li class="panel-heading">
             <a href="about">
               <p class="panel-title">
                 <span class="glyphicon glyphicon-question-sign"></span>
-                About
+                {{ucfirst(trans('educal.about'))}}
               </p>
             </a>
           </li>
@@ -131,7 +123,7 @@
             <a href="{{ route('settings') }}">
               <p class="panel-title">
                 <span class="glyphicon glyphicon-cog"></span>
-                Settings
+                {{ucfirst(trans('educal.settings'))}}
               </p>
             </a>
           </li>
@@ -139,7 +131,7 @@
             <a href="{{ route('user.logout') }}">
               <p class="panel-title">
                 <span class="glyphicon glyphicon-log-out"></span>
-                Log out
+                {{ucfirst(trans('educal.logout'))}}
               </p>
             </a>
           </li>

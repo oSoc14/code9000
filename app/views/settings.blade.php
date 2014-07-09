@@ -15,7 +15,6 @@
         ]), PHP_EOL }}
         <div class="form-group">
             <label>Language</label>
-            {{Session::get('lang')}}
             {{ Form::select('lang', ['nl' => 'nl','fr' => 'fr','en' => 'en','de' => 'de'], Session::get('lang'), array('class' => 'form-control')) }}
         </div>
         <button type="submit" class="btn btn-default btn-educal-primary">Save</button>
