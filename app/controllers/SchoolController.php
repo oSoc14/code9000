@@ -24,7 +24,7 @@ class SchoolController extends \BaseController {
                 return Redirect::route('calendar.index');
             }
         } else {
-            return Redirect::route('index');
+            return Redirect::route('landing');
         }
 	}
 
@@ -124,7 +124,7 @@ class SchoolController extends \BaseController {
                 return Redirect::route('calendar.index');
             }
         } else {
-            return Redirect::route('index');
+            return Redirect::route('landing');
         }
 	}
 
@@ -149,7 +149,7 @@ class SchoolController extends \BaseController {
                 return Redirect::route('calendar.index');
             }
         } else {
-            return Redirect::route('index');
+            return Redirect::route('landing');
         }
 	}
 
@@ -176,7 +176,7 @@ class SchoolController extends \BaseController {
                 return Redirect::route('calendar.index');
             }
         } else {
-            return Redirect::route('index');
+            return Redirect::route('landing');
         }
 	}
 
@@ -202,7 +202,7 @@ class SchoolController extends \BaseController {
                 return Redirect::route('calendar.index');
             }
         } else {
-            return Redirect::route('index');
+            return Redirect::route('landing');
         }
 	}
 
