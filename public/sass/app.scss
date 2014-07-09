@@ -37,7 +37,6 @@ $times: 'Times New Roman', serif;
   border-bottom: 3px solid $bordercolor;
   color: $color;
   @include text-shadow(none);
-  //@include box-shadow(rgba(0, 0, 0, 0.45) 0px 0px 5px);
   &:hover, &:focus{
     background: $bghover;
     color: $color;
@@ -318,8 +317,15 @@ img{
     //color: #fff;
     //@include box-shadow(none);
     @include text-shadow(none);
+    z-index: 1020;
     &:hover{
       background: $blue;
+    }
+    &:active{
+      border-bottom: 2px solid $grey !important;
+      top: 1px !important;
+      margin-bottom: 1px !important;
+      z-index: 1010;
     }
     @include btn-educal($grey, #fff, $blue, $darkgrey);
   }
