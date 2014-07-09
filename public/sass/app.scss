@@ -312,19 +312,16 @@ img{
     background: #daf2ef;
   }
   .fc-button{
-    //background: $grey;
-    //border: none;
-    //color: #fff;
-    //@include box-shadow(none);
     @include text-shadow(none);
     z-index: 1020;
+    @include box-sizing(content-box);
     &:hover{
       background: $blue;
+      border-color: $darkblue !important;
     }
     &:active{
-      border-bottom: 2px solid $grey !important;
+      border-bottom: 2px solid $darkblue !important;
       top: 1px !important;
-      margin-bottom: 1px !important;
       z-index: 1010;
     }
     @include btn-educal($grey, #fff, $blue, $darkgrey);
@@ -332,17 +329,19 @@ img{
   .fc-state-disabled{
     color: #fff;
     top: 1px;
-    margin-bottom: 2px !important;
     border-bottom: 1px solid $darkgrey !important;
     &:active{
       top: 1px;
-      border-bottom: 1px solid $darkgrey !important;
+      border-bottom: 1px solid $darkblue !important;
     }
   }
   .fc-state-active{
     @include box-shadow(none);
-    //font-weight: 700;
-    background: $lightblue;
+    background: $blue;
+    border-color: $darkblue !important;
+    &:active{
+      border-color: $darkblue !important;
+    }
   }
   .fc-header-title h2{
     font-size: 25px;
@@ -367,7 +366,7 @@ img{
       border: none;
     }
     .fc-sat, .fc-sun{
-      //background: $darkgrey;
+      background: $darkgrey;
       border: none;
     }
     .fc-widget-header{
@@ -382,18 +381,18 @@ img{
   background: url('images/calendar-bg.jpg') repeat top left $grey;
   position: absolute;
   z-index: 1010;
-  height: 207px;
+  height: 211px;
   border-bottom: 40px solid $grey;
   top: 0;
   left: 0;
   @media screen and (max-width: $break-medium){
-    height: 237px;
+    height: 241px;
   }
   // Chrome
   @media screen and (-webkit-min-device-pixel-ratio:0){
-    height: 205px;
+    height: 209px;
     @media screen and (max-width: $break-medium){
-      height: 235px;
+      height: 239px;
     }
   }
   // Chrome non-mobile hack

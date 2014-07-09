@@ -129,9 +129,14 @@
         </div>
         <div class="modal-body">
             @if($errors->has('usererror'))
+                <div class="alert alert-danger" role="alert">
+                  <strong>Errors</strong>
+                  <ul>
                 @foreach ($errors->all() as $message)
-                {{$message}}
+                    <li>{{$message}}</li>
                 @endforeach
+                  </ul>
+                </div>
             @endif
 
             {{ Form::open([
@@ -189,9 +194,14 @@
         </div>
         <div class="modal-body">
             @if($errors->has('schoolerror'))
-                @foreach ($errors->all() as $message)
-                {{$message}}
-                @endforeach
+              <div class="alert alert-danger" role="alert">
+                <strong>Errors</strong>
+                <ul>
+                  @foreach ($errors->all() as $message)
+                  <li>{{$message}}</li>
+                  @endforeach
+                </ul>
+              </div>
             @endif
 
             {{ Form::open([

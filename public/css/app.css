@@ -376,21 +376,24 @@ img {
 #calendar .fc-button {
   text-shadow: none;
   z-index: 1020;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   background: #556066;
   border: none;
   border-bottom: 3px solid #333333;
   color: white;
   text-shadow: none;
 }
-/* line 321, ../sass/app.scss */
+/* line 318, ../sass/app.scss */
 #calendar .fc-button:hover {
   background: #00cde1;
+  border-color: #108a98 !important;
 }
-/* line 324, ../sass/app.scss */
+/* line 322, ../sass/app.scss */
 #calendar .fc-button:active {
-  border-bottom: 2px solid #556066 !important;
+  border-bottom: 2px solid #108a98 !important;
   top: 1px !important;
-  margin-bottom: 1px !important;
   z-index: 1010;
 }
 /* line 40, ../sass/app.scss */
@@ -406,72 +409,77 @@ img {
   top: 3px;
   margin-bottom: 3px !important;
 }
-/* line 332, ../sass/app.scss */
+/* line 329, ../sass/app.scss */
 #calendar .fc-state-disabled {
   color: #fff;
   top: 1px;
-  margin-bottom: 2px !important;
   border-bottom: 1px solid #333333 !important;
 }
-/* line 337, ../sass/app.scss */
+/* line 333, ../sass/app.scss */
 #calendar .fc-state-disabled:active {
   top: 1px;
-  border-bottom: 1px solid #333333 !important;
+  border-bottom: 1px solid #108a98 !important;
 }
-/* line 342, ../sass/app.scss */
+/* line 338, ../sass/app.scss */
 #calendar .fc-state-active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  background: #46ddea;
+  background: #00cde1;
+  border-color: #108a98 !important;
 }
-/* line 347, ../sass/app.scss */
+/* line 342, ../sass/app.scss */
+#calendar .fc-state-active:active {
+  border-color: #108a98 !important;
+}
+/* line 346, ../sass/app.scss */
 #calendar .fc-header-title h2 {
   font-size: 25px;
   position: relative;
   bottom: 4px;
 }
-/* line 352, ../sass/app.scss */
+/* line 351, ../sass/app.scss */
 #calendar .fc-widget-content {
   border-width: 0;
 }
 @media screen and (max-width: 1024px) {
-  /* line 352, ../sass/app.scss */
+  /* line 351, ../sass/app.scss */
   #calendar .fc-widget-content {
     border-width: 1px 0 0 1px;
   }
 }
-/* line 358, ../sass/app.scss */
+/* line 357, ../sass/app.scss */
 #calendar thead tr.fc-first {
   color: #fff;
   text-transform: uppercase;
   height: 40px;
   text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 5px;
 }
-/* line 363, ../sass/app.scss */
+/* line 362, ../sass/app.scss */
 #calendar thead tr.fc-first th {
   vertical-align: middle;
 }
-/* line 366, ../sass/app.scss */
+/* line 365, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-mon, #calendar thead tr.fc-first .fc-tue, #calendar thead tr.fc-first .fc-wed, #calendar thead tr.fc-first .fc-thu, #calendar thead tr.fc-first .fc-fri {
   border: none;
 }
-/* line 369, ../sass/app.scss */
+/* line 368, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-sat, #calendar thead tr.fc-first .fc-sun {
+  background: #333333;
   border: none;
 }
-/* line 373, ../sass/app.scss */
+/* line 372, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-widget-header {
   border: none;
 }
 
-/* line 380, ../sass/app.scss */
+/* line 379, ../sass/app.scss */
 #calendar-bg {
   width: 100%;
   background: url("images/calendar-bg.jpg") repeat top left #556066;
   position: absolute;
   z-index: 1010;
-  height: 207px;
+  height: 211px;
   border-bottom: 40px solid #556066;
   top: 0;
   left: 0;
@@ -480,35 +488,35 @@ img {
   }*/
 }
 @media screen and (max-width: 768px) {
-  /* line 380, ../sass/app.scss */
+  /* line 379, ../sass/app.scss */
   #calendar-bg {
-    height: 237px;
+    height: 241px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 380, ../sass/app.scss */
+  /* line 379, ../sass/app.scss */
   #calendar-bg {
-    height: 205px;
+    height: 209px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-  /* line 380, ../sass/app.scss */
+  /* line 379, ../sass/app.scss */
   #calendar-bg {
-    height: 235px;
+    height: 239px;
   }
 }
 
-/* line 405, ../sass/app.scss */
+/* line 404, ../sass/app.scss */
 #calendar-content {
   position: relative;
   z-index: 1020;
 }
 
-/* line 410, ../sass/app.scss */
+/* line 409, ../sass/app.scss */
 #addEvent {
   margin: 0 0 40px 0;
 }
-/* line 412, ../sass/app.scss */
+/* line 411, ../sass/app.scss */
 #addEvent:active {
   margin: 0 0 43px 0 !important;
 }
