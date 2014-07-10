@@ -213,8 +213,8 @@ Route::group(array('prefix' => 'group'), function()
 });
 
 /**
- * iCal routes
- * returns iCal, .ics file
+ * iCal routes and pdf-routes
+ * returns iCal, .ics file or .pdf file
  */
 Route::group(array('prefix' => 'export'), function()
 {
@@ -238,16 +238,4 @@ Route::group(array('prefix' => 'export'), function()
         'as'   => 'export.singlepdf',
         'uses' => 'PdfCalendarController@show'
     ])->where('id', '[0-9]+');
-
-
 });
-
-Route::get('pdfTest', function()
-{
-    $html = '<html><body>'
-        . '<p>Put your html here, or generate it with your favourite '
-        . 'templating system.</p>'
-        . '</body></html>';
-    return PDF::load($html, 'A4', 'portrait')->show();
-});
-

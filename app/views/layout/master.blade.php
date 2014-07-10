@@ -51,7 +51,6 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
 </head>
 <body>
-
   <!-- Top navbar -->
   <div class="navbar navbar-default navbar-fixed-top" id="navbar-educal" role="navigation">
     <div class="container-fluid">
@@ -75,8 +74,8 @@
       </div>
       <ul class="panel-group accordions" id="accordion">
         <li class="panel-heading">
-          <a {{ Route::currentRouteName('calendar.index') ? 'class="active"' : '' }} href="{{ route('calendar.index') }}">
-            <p class="panel-title active">
+          <a href="{{ route('calendar.index') }}">
+            <p class="panel-title {{ Route::currentRouteName()=='calendar.index' ? 'active' : '' }}">
               <i class="fa fa-calendar fa-lg"></i>
               {{ucfirst(trans('educal.calendar'))}}
             </p>
@@ -84,8 +83,8 @@
         </li>
         @if(Sentry::getUser()->hasAccess('school'))
         <li class="panel-heading">
-          <a {{ Route::currentRouteName('school.index') ? 'class="active"' : '' }} href="{{ route('school.index') }}">
-            <p class="panel-title">
+          <a href="{{ route('school.index') }}">
+            <p class="panel-title {{ (Route::currentRouteName()=='school.index' ? 'active' : '') }}">
               <i class="fa fa-bank fa-lg"></i>
               {{ucfirst(trans('educal.schools'))}}
             </p>
@@ -94,8 +93,8 @@
         @endif
         @if(Sentry::getUser()->hasAnyAccess(array('school','user')))
         <li class="panel-heading">
-          <a {{ Route::currentRouteName('user.index') ? 'class="active"' : '' }} href="{{ route('user.index') }}">
-            <p class="panel-title">
+          <a href="{{ route('user.index') }}">
+            <p class="panel-title {{ (Route::currentRouteName()=='user.index' ? 'active' : '') }}">
               <i class="fa fa-users fa-lg"></i>
               {{ucfirst(trans('educal.users'))}}
             </p>
@@ -104,8 +103,8 @@
         @endif
         @if(Sentry::getUser()->hasAnyAccess(array('school','group')))
         <li class="panel-heading">
-          <a {{ Route::currentRouteName('group.index') ? 'class="active"' : '' }} href="{{ route('group.index') }}">
-            <p class="panel-title">
+          <a href="{{ route('group.index') }}">
+            <p class="panel-title  {{ Route::currentRouteName()=='group.index' ? 'active' : '' }}">
               <i class="fa fa-rocket fa-lg"></i>
               {{ucfirst(trans('educal.groups'))}}
             </p>
@@ -122,7 +121,7 @@
             </a>
           </li>
           <li class="panel-heading">
-            <a {{ Route::currentRouteName('settings') ? 'class="active"' : '' }} href="{{ route('settings') }}">
+            <a href="{{ route('settings') }}">
               <p class="panel-title">
                 <i class="fa fa-cogs fa-lg"></i>
                 {{ucfirst(trans('educal.settings'))}}
