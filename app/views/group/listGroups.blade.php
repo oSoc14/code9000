@@ -39,7 +39,7 @@
       <tr>
         <td>{{ $group->name }}</td>
         @if($group->school)
-        <td><a href='./export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics'>/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics</a></td>
+        <td><a href='./export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}'>/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}</a></td>
         @else
         <td>NO EXPORT</td>
         @endif

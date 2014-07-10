@@ -218,12 +218,12 @@ Route::group(array('prefix' => 'group'), function()
  */
 Route::group(array('prefix' => 'export'), function()
 {
-    Route::get('/{school}/{class}/ical.ics', [
+    Route::get('/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'IcalCalendarController@index'
     ])->where(['school' => '[a-z]+', 'class' => '[a-z]+']);
 
-    Route::get('/appointment/{id}/ical.ics', [
+    Route::get('/appointment/{id}', [
         'as'   => 'export.single',
         'uses' => 'IcalCalendarController@show'
     ])->where('id', '[0-9]+');
