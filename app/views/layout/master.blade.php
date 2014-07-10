@@ -75,7 +75,7 @@
       </div>
       <ul class="panel-group accordions" id="accordion">
         <li class="panel-heading">
-          <a href="{{ route('calendar.index') }}">
+          <a {{ Route::currentRouteName('calendar.index') ? 'class="active"' : '' }} href="{{ route('calendar.index') }}">
             <p class="panel-title active">
               <span class="glyphicon glyphicon-calendar"></span>
               {{ucfirst(trans('educal.calendar'))}}
@@ -84,7 +84,7 @@
         </li>
         @if(Sentry::getUser()->hasAccess('school'))
         <li class="panel-heading">
-          <a href="{{ route('school.index') }}">
+          <a {{ Route::currentRouteName('school.index') ? 'class="active"' : '' }} href="{{ route('school.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-home"></span>
               {{ucfirst(trans('educal.schools'))}}
@@ -94,7 +94,7 @@
         @endif
         @if(Sentry::getUser()->hasAnyAccess(array('school','user')))
         <li class="panel-heading">
-          <a href="{{ route('user.index') }}">
+          <a {{ Route::currentRouteName('user.index') ? 'class="active"' : '' }} href="{{ route('user.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-user"></span>
               {{ucfirst(trans('educal.users'))}}
@@ -104,7 +104,7 @@
         @endif
         @if(Sentry::getUser()->hasAnyAccess(array('school','group')))
         <li class="panel-heading">
-          <a href="{{ route('group.index') }}">
+          <a {{ Route::currentRouteName('group.index') ? 'class="active"' : '' }} href="{{ route('group.index') }}">
             <p class="panel-title">
               <span class="glyphicon glyphicon-th-large"></span>
               {{ucfirst(trans('educal.groups'))}}
@@ -122,7 +122,7 @@
             </a>
           </li>
           <li class="panel-heading">
-            <a href="{{ route('settings') }}">
+            <a {{ Route::currentRouteName('settings') ? 'class="active"' : '' }} href="{{ route('settings') }}">
               <p class="panel-title">
                 <span class="glyphicon glyphicon-cog"></span>
                 {{ucfirst(trans('educal.settings'))}}
