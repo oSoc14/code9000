@@ -35,7 +35,7 @@ class PdfCalendarController extends \BaseController {
         }
 
         $calendar = self::composePdf($appointments, $schoolName, $group);
-        return PDF::load($calendar, 'A4', 'portrait')->show();
+        return PDF::load($calendar, 'A4', 'portrait')->download($schoolName.' - calendar');
     }
 
     public function composePdf($appointments, $school, $group)
@@ -120,7 +120,7 @@ class PdfCalendarController extends \BaseController {
         array_push($appointments, $appointment);
 
         $calendar = self::composePdf($appointments, $school->group->school->name, $school->group->name);
-        return PDF::load($calendar, 'A4', 'portrait')->show();
+        return PDF::load($calendar, 'A4', 'portrait')->download($school->group->school->name.' - calendar');
     }
 
 }

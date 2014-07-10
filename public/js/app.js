@@ -95,6 +95,20 @@ $(document).ready(function() {
     calculateRepeats();
   });
 
+  $('.linkToPdf').on('click', function(){
+    var that = $(this);
+    that.siblings('.linkToText').val(that.data('link')).select();
+  });
+
+  $('.linkToIcal').on('click', function(){
+    var that = $(this);
+    that.siblings('.linkToText').val(that.data('link')).select();
+  });
+
+  $('.linkToText').on('click', function(){
+    $(this).select();
+  });
+
 });
 
 jQuery(function(){
