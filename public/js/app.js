@@ -41,7 +41,7 @@ $(document).ready(function() {
         that.prop('disabled', false);
       },
       error:function(xhr, status, errorThrown) {
-        console.log((status + ', ' + errorThrown);
+        console.log(status + ', ' + errorThrown);
         that.prop('disabled', false);
       }
     });

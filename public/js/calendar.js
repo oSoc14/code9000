@@ -24,7 +24,7 @@ $(document).ready(function() {
         getCalendarView();
       },
       error:function(xhr, status, errorThrown) {
-        alert(status + ', ' + errorThrown);
+        console.log(status + ', ' + errorThrown);
       }
     });
   }
@@ -37,17 +37,21 @@ $(document).ready(function() {
           var newItem = {};
           newItem['title'] = value['title'];
           newItem['start'] = moment(value['start_date']).add(value['repeat_type'], i*value['repeat_freq']);
-          newItem['end']   = moment(value['end_date']).add(value['repeat_type'], i*value['repeat_freq']);
-          newItem['url']   = 'calendar/event/' + value['id'];
+          if(moment(value['end_date']).isValid())
+            newItem['end']   = moment(value['end_date']).add(value['repeat_type'], i*value['repeat_freq']);
+          newItem['id']    = value['id'];
+          newItem['description'] = value['description'];
           newItem['allDay']= (value['allday'] == 1 ? true : false);
           _events.push(newItem);
         }
       } else {
         var newItem = {};
         newItem['title'] = value['title'];
-        newItem['start'] = value['start_date'];
-        newItem['end']   = value['end_date'];
-        newItem['url']   = 'calendar/event/' + value['id'];
+        newItem['start'] = moment(value['start_date']);
+        if(moment(value['end_date']).isValid())
+          newItem['end']   = moment(value['end_date']);
+        newItem['id']    = value['id'];
+        newItem['description'] = value['description'];
         newItem['allDay']= (value['allday'] == 1 ? true : false);
         _events.push(newItem);
       }
@@ -108,6 +112,25 @@ $(document).ready(function() {
         next: 'circle-triangle-e',
         prevYear: 'seek-prev',
         nextYear: 'seek-next'
+      },
+      eventClick: function(calEvent, jsEvent, view) {
+        $(this).attr('data-toggle','modal');
+        $(this).attr('data-target','#eventModal');
+        // calEvent.description
+        $('#eventTitle').text(calEvent.title);
+        $('#eventDescription').text(calEvent.description);
+        if(calEvent.allDay)
+          $('#eventStart').text((calEvent.start).format('YYYY/MM/DD') + ' (all day)');
+        else
+          $('#eventStart').text((calEvent.start).format('YYYY/MM/DD HH:mm'));
+        // If end-date is specified, show the part of the modal, otherwise hide it.
+        if(calEvent.end) {
+          $('#eventEnd').text((calEvent.end).format('YYYY/MM/DD HH:mm'));
+          $('#eventEnds').show();
+        } else {
+          $('#eventEnds').hide();
+        }
+        $('#editEvent').attr('href', 'calendar/event/edit/' + calEvent.id);
       },
       /*{
        url: 'php/get-events.php',
