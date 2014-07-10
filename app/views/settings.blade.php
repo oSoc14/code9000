@@ -17,7 +17,7 @@
             <label>Language</label>
             {{ Form::select('lang', ['nl' => 'nl','fr' => 'fr','en' => 'en','de' => 'de'], Session::get('lang'), array('class' => 'form-control')) }}
         </div>
-        <button type="submit" class="btn btn-default btn-educal-primary">Save</button>
+        <button type="submit" class="btn btn-default btn-educal-danger">Save</button>
         {{ Form::close(), PHP_EOL }}
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisi eu arcu tempus vehicula.
       Nulla faucibus cursus metus in sagittis. Nunc elit leo, imperdiet in ligula in, euismod varius est.

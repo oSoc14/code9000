@@ -50,8 +50,8 @@
         <img src="images/logo_educal.png" alt="Logo" />
         <p class="lead">EduCal is an application for schools to easily create and manage calendars that can be shared with parents.</p>
         <div class="button-container">
-          <a href="#" class="btn btn-lg btn-default btn-educal-secondary" data-toggle="modal" data-target="#loginModal">Log in <span class="glyphicon glyphicon-log-in"></span></a> or
-          <a href="#" class="btn btn-lg btn-default btn-educal-primary" data-toggle="modal" data-target="#registerUserModal">Register <span class="glyphicon glyphicon-link"></span></a>
+          <a href="#" class="btn btn-lg btn-default btn-educal-warning" data-toggle="modal" data-target="#loginModal">Log in <span class="glyphicon glyphicon-log-in"></span></a> or
+          <a href="#" class="btn btn-lg btn-default btn-educal-danger" data-toggle="modal" data-target="#registerUserModal">Register <span class="glyphicon glyphicon-link"></span></a>
         </div>
       </div>
     </div>
@@ -111,7 +111,7 @@
               <input type="checkbox" name="login-remember" id="login-remember"> Remember me
             </label>
           </div>
-          <button type="submit" class="btn btn-default btn-educal-primary">Log in</button>
+          <button type="submit" class="btn btn-default btn-educal-danger">Log in</button>
           {{ Form::close(), PHP_EOL }}
           {{ Session::get('errorMessage') }}
         </div>
@@ -175,7 +175,7 @@
               <input type="checkbox" name="tos" id="tos"> I agree to the <a href="#">terms of service</a>.
             </label>
           </div>
-          <button type="submit" class="btn btn-default btn-educal-primary">Register</button>
+          <button type="submit" class="btn btn-default btn-educal-danger">Register</button>
             {{ Form::close(), PHP_EOL }}
         </div>
       </div>
@@ -235,7 +235,7 @@
               <input type="checkbox" name="tos" id="tos"> I agree to the <a href="#">terms of service</a>
             </label>
           </div>
-          <button type="submit" class="btn btn-default btn-educal-primary">Register</button>
+          <button type="submit" class="btn btn-default btn-educal-danger">Register</button>
             {{ Form::close(), PHP_EOL }}
         </div>
       </div>

@@ -84,7 +84,7 @@
                 </div>
             </div>
             <input type="hidden" id="nr_repeat" name="nr_repeat" />
-            <button type="submit" class="btn btn-default btn-educal-primary">Add Event</button>
+            <button type="submit" class="btn btn-default btn-educal-danger">Add Event</button>
             {{ Form::close(), PHP_EOL }}
             {{ Session::get('errorMessage') }}
             <!-- TODO: Toggle visibility of repeat values -->

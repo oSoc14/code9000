@@ -11,7 +11,7 @@
 @stop
 
 @section('content')
-<div class="container-fluid" id="calendar-content">
+<div class="container-fluid" id="content-container">
     <div class="row">
         <div class="col-xs-6 col-lg-5">
             <h1>{{ucfirst(trans('educal.calendar'))}}</h1>
@@ -19,7 +19,7 @@
         <div class="col-xs-6 col-lg-5">
 
             @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
-            <a type="button" class="btn btn-default btn-lg btn-educal-primary pull-right" href="{{route
+            <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route
 ('event.create')}}" id="addEvent">
               <i class="fa fa-plus"></i> Add event
             </a>
@@ -35,33 +35,34 @@
     </div>
 </div>
 <div id="content-bg"></div>
+
 <!-- Event detail Modal -->
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModal" aria-
      hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-
-                                                                               hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Event details</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Details</h4>
             </div>
             <div class="modal-body">
                 <h1 id="eventTitle"></h1>
-                <p><strong>Starts:</strong> <span id="eventStart"></span></p>
-                <p id="eventEnds"><strong>Ends:</strong> <span id="eventEnd"></span></p>
-                <p id="eventDescription"></p>
+                <p id="eventDescription" class="lead"></p>
+                <p><strong>From:</strong> <span id="eventStart"></span></p>
+                <p id="eventEnds"><strong>Until:</strong> <span id="eventEnd"></span></p>
                 @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
-                <a type="button" class="btn btn-default btn-educal-primary" href="" id="editEvent">
-                    <span class="glyphicon glyphicon-pencil"></span> Edit Event
-                </a>
-                <a type="button" class="btn btn-default btn-educal-primary" href="" id="deleteEvent">
-                    <span class="glyphicon glyphicon-pencil"></span> Delete Event
+                <a type="button" class="btn btn-default btn-educal-warning" href="" id="editEvent">
+                  <i class="fa fa-edit"></i> Edit
                 </a>
                 @endif
                 <a type="button" class="btn btn-default btn-educal-primary" href="" id="icalEvent">
-                    <span class="glyphicon glyphicon-pencil"></span> Export to calendar
+                  <i class="fa fa-share"></i> Export to calendar
                 </a>
-                <div class="clearfix"></div>
+                @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
+                <a type="button" class="btn btn-default btn-educal-danger pull-right" href="" id="deleteEvent">
+                  <i class="fa fa-times-circle"></i> Delete
+                @endif
+              </a>
             </div>
         </div>
     </div>

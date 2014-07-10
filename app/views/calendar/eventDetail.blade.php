@@ -36,7 +36,7 @@
 
 <div class="col-xs-12">
   <!-- TODO: check if user has rights for edit, then display button -->
-  <a type="button" class="btn btn-default btn-educal-primary" href="{{route('event.edit',$event->id)}}" id="editEvent">
+  <a type="button" class="btn btn-default btn-educal-danger" href="{{route('event.edit',$event->id)}}" id="editEvent">
       <span class="glyphicon glyphicon-pencil"></span> Edit Event
   </a>
 </div>

@@ -27,16 +27,15 @@ $break-large: 1024px;
 $break-xlarge: 1200px;
 
 // Fonts
-$sans-serif: 'Open Sans', 'Helvetica', sans-serif;
-$times: 'Times New Roman', serif;
+$sans-serif: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
 
 // Buttons
-@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor){
+@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor, $txt-shadow-opacity: 0.35){
   background: $bgcolor;
   border: none;
   border-bottom: 3px solid $bordercolor;
   color: $color;
-  @include text-shadow(none);
+  @include text-shadow(rgba(0, 0, 0, $txt-shadow-opacity) 0px 0px 5px);
   &:hover, &:focus{
     background: $bghover;
     color: $color;
@@ -50,12 +49,14 @@ $times: 'Times New Roman', serif;
   }
 }
 
-.btn-educal-primary{
+.btn-educal-danger{
   @include btn-educal($pink, #fff, $lightpink, $darkpink);
 }
-
-.btn-educal-secondary{
-  @include btn-educal($yellow, #8c8610, $lightyellow, $darkyellow);
+.btn-educal-warning {
+  @include btn-educal($yellow, $darkgrey, $lightyellow, $darkyellow, 0);
+}
+.btn-educal-primary{
+  @include btn-educal($blue, #fff, $lightblue, $darkblue);
 }
 
 // HTML
@@ -177,6 +178,9 @@ img{
 
 .sidebar-wrapper .panel-heading {
   padding: 0;
+  .active{
+    color: $pink;
+  }
 }
 
 .sidebar-wrapper .panel-title {
@@ -273,8 +277,18 @@ img{
   h1{
     margin: 0px 0 20px 0;
     font-weight: 700;
-    margin-bottom: 49px;
     display: inline-block;
+  }
+  .form-horizontal label{
+    text-align: left;
+  }
+  .link-goback{
+    display: inline-block;
+    margin-bottom: 9px;
+    &:hover{
+      text-decoration: none;
+      color: $blue;
+    }
   }
   // DataTables
   .content-table{
@@ -296,12 +310,21 @@ img{
   .dataTables_wrapper{
     //margin-top: 49px;
   }
+
+  // Forms
+  .form-repeat-container{
+    display: none;
+  }
 }
 
 #content-container{
   position: relative;
   z-index: 1020;
+  h1{
+    margin-bottom: 49px;
+  }
 }
+
 
 
 /* CALENDAR
@@ -414,11 +437,6 @@ img{
   /*@media screen and (-webkit-min-device-pixel-ratio:0){
     height: 205px;
   }*/
-}
-
-#calendar-content{
-  position: relative;
-  z-index: 1020;
 }
 
 #addEvent {

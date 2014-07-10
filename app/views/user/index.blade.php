@@ -11,7 +11,7 @@
       <h1>{{ucfirst(trans('educal.users'))}}</h1>
     </div>
     <div class="col-xs-6">
-      <a href="#" class="btn btn-lg btn-default btn-educal-primary pull-right" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> Add user</a>
+      <a href="#" class="btn btn-lg btn-default btn-educal-danger pull-right" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> Add user</a>
     </div>
   </div>
   <div class="row">
@@ -97,7 +97,7 @@
                                 <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
                             </div>
                             <input type="hidden" name="school" value="{{ Sentry::getUser()->school_id }}">
-                            <button type="submit" class="btn btn-default btn-educal-primary">Register</button>
+                            <button type="submit" class="btn btn-default btn-educal-danger">Register</button>
                             {{ Form::close(), PHP_EOL }}
                         </div>
                     </div>

@@ -22,6 +22,13 @@ $(document).ready(function() {
     $('#loginModal').modal('show');
   }
 
+  if( $('.form-repeat-container').length != 0){
+    $('input#repeat').click(function(){
+      $('.form-repeat-container').slideToggle();
+    });
+
+  }
+
   $('.activateUser').on('click', function(ev){
     ev.preventDefault;
     var that = $(this);

@@ -73,7 +73,7 @@ $group->name) }}</span></small></h1>
       {{Form::select('user', $smartUsers, [], array('class'=>'form-control'));}}
       </div>
       <div class="col-xs-3">
-      <button type="submit" class="btn btn-default btn-educal-primary">Add user</button>
+      <button type="submit" class="btn btn-default btn-educal-danger">Add user</button>
       @else
       <p>Geen gebruikers die kunnen toegevoegd worden</p>
       @endif
