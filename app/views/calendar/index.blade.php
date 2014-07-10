@@ -21,7 +21,7 @@
             @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
             <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route
 ('event.create')}}" id="addEvent">
-              <i class="fa fa-plus"></i> Add event
+              <i class="fa fa-plus"></i> {{ucfirst(trans('educal.addevent'))}}
             </a>
             @endif
         </div>
@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-10">
             <div id="calendar"></div>
-            <div id="preloader">Loading...</div>
+            <div id="preloader">{{ucfirst(trans('educal.loading'))}}</div>
             <br>
         </div>
     </div>
@@ -43,20 +43,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Details</h4>
+                <h4 class="modal-title">{{ucfirst(trans('educal.eventdetails'))}}</h4>
             </div>
             <div class="modal-body">
                 <h1 id="eventTitle"></h1>
                 <p id="eventDescription" class="lead"></p>
-                <p><strong>From:</strong> <span id="eventStart"></span></p>
-                <p id="eventEnds"><strong>Until:</strong> <span id="eventEnd"></span></p>
+                <p><strong>{{ucfirst(trans('educal.starts'))}}:</strong> <span id="eventStart"></span></p>
+                <p id="eventEnds"><strong>{{ucfirst(trans('educal.ends'))}}:</strong> <span id="eventEnd"></span></p>
                 @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
                 <a type="button" class="btn btn-default btn-educal-warning" href="" id="editEvent">
-                  <i class="fa fa-edit"></i> Edit
+                  <i class="fa fa-edit"></i> {{ucfirst(trans('educal.editevent'))}}
                 </a>
                 @endif
                 <a type="button" class="btn btn-default btn-educal-primary" href="" id="icalEvent">
-                  <i class="fa fa-share"></i> Export to calendar
+                  <i class="fa fa-share"></i> {{ucfirst(trans('educal.deleteevent'))}}
                 </a>
                 @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
                 <a type="button" class="btn btn-default btn-educal-danger pull-right" href="" id="deleteEvent">

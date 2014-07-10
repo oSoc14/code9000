@@ -9,8 +9,8 @@
 <div class="col-xs-12">
   <ol class="breadcrumb">
     <li><a href="../">Home</a></li>
-    <li><a href="{{ route('calendar.index') }}">Calendar</a></li>
-    <li class="active">Create event</li>
+    <li><a href="{{ route('calendar.index') }}">{{ucfirst(trans('educal.calendar'))}}</a></li>
+    <li class="active">{{ucfirst(trans('educal.createevent'))}}</li>
   </ol>
 </div>
         <div class="col-xs-12 col-sm-9">
@@ -18,22 +18,22 @@
             'route' => 'event.store',
             'data-ajax' => 'false',
             ]), PHP_EOL }}
-            <h1>Create Event</h1>
+            <h1>{{ucfirst(trans('educal.createevent'))}}</h1>
 
             @foreach ($errors->all() as $message)
             {{$message}}
             @endforeach
 
             <div class="form-group">
-                {{Form::label('title', 'Title')}}
+                {{Form::label('title', ucfirst(trans('educal.title')))}}
                 {{Form::text('title', null , ['class'=>'form-control','placeholder'=>"Event title"])}}
             </div>
             <div class="form-group">
-                {{Form::label('group', 'Group')}}
+                {{Form::label('group', ucfirst(trans('educal.group')))}}
                 {{Form::select('group', $groups, [], array('class'=>'form-control'))}}
             </div>
             <div class="form-group">
-                {{Form::label('description', 'Description')}}
+                {{Form::label('description', ucfirst(trans('educal.description')))}}
                 {{Form::textarea('description', null , ['class'=>'form-control','placeholder'=>"Event description", 'rows'=>3])}}
             </div>
             <div class="form-group">
@@ -51,15 +51,15 @@
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="day" id="day"> Full day
+                    <input type="checkbox" name="day" id="day"> {{ucfirst(trans('educal.allday'))}}
                 </label>
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="repeat" id="repeat"> Repeating event
+                    <input type="checkbox" name="repeat" id="repeat"> {{ucfirst(trans('educal.repeatingevent'))}}
                 </label>
             </div>
-            <label>Recurrence (every x period until date)</label>
+            <label>{{ucfirst(trans('educal.recurrence'))}}</label>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        {{Form::select('repeat_type', ['d'=>'Day','w'=>'Week','M'=>'Month','y'=>'Year' ], [], array('class'=>'form-control'))}}
+                        {{Form::select('repeat_type', ['d'=>ucfirst(trans('educal.day')),'w'=>ucfirst(trans('educal.week')),'M'=>ucfirst(trans('educal.month')),'y'=>ucfirst(trans('educal.year')) ], [], array('class'=>'form-control'))}}
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <input type="hidden" id="nr_repeat" name="nr_repeat" />
-            <button type="submit" class="btn btn-default btn-educal-danger">Add Event</button>
+            <button type="submit" class="btn btn-default btn-educal-danger">{{ucfirst(trans('educal.addevent'))}}</button>
             {{ Form::close(), PHP_EOL }}
             {{ Session::get('errorMessage') }}
             <!-- TODO: Toggle visibility of repeat values -->
