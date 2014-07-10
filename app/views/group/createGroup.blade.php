@@ -22,8 +22,8 @@
 </div>
 @endif
 <div class="form-group">
-    <label for="user">Group name</label>
-    <input  type="text" name="name" class="form-control"/>
+    {{Form::label('name', 'Group name')}}
+    {{Form::text('name', null , ['class'=>'form-control'])}}
 </div>
 <div class="checkbox">
     <label>

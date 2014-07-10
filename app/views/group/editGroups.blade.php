@@ -27,11 +27,9 @@ $group->name) }}</span></small></h1>
           <label for="user">Group name</label>
           @if(str_replace($group->school->short.'_','',$group->name) == 'global')
           <label class="alert-warning">This name can not be changed</label>
-          <input  type="text" name="name" class="form-control" value="{{ str_replace($group->school->short.'_','',
-$group->name) }}" disabled />
+          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['class'=>'form-control', 'disabled'=>'disabled'])}}
           @else
-          <input  type="text" name="name" class="form-control" value="{{ str_replace($group->school->short.'_','',
-$group->name) }}" />
+          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['class'=>'form-control'])}}
           @endif
       </div>
       <div class="checkbox">
