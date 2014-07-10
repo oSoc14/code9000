@@ -62,6 +62,7 @@ $times: 'Times New Roman', serif;
 body{
   background: #fff;
   font-family: $sans-serif;
+  color: $grey;
   @media screen and (max-width: $break-medium){
     padding-top: 50px;
   }
@@ -272,23 +273,39 @@ img{
   h1{
     margin: 0px 0 20px 0;
     font-weight: 700;
+    margin-bottom: 47px;
+  }
+  // DataTables
+  .content-table{
+    th{
+      height: 40px;
+      color: #fff;
+      border-bottom: none;
+      @include text-shadow(rgba(0, 0, 0, 0.75) 0px 0px 5px);
+      @include box-sizing(border-box);
+      //background: $blue;
+    }
+  }
+  .dataTables_wrapper{
+    margin-top: 49px;
   }
 }
-.modules-overview{
-  list-style: none;
-  padding: 0;
+
+#content-container{
+  position: relative;
+  z-index: 1020;
+}
+.glyph-educal{
+  width: 24px;
+  height: 24px;
+}
+.glyph-edit{
+  background: url('images/icon-edit.png') no-repeat center center;
+}
+.glyph-remove{
+  background: url('images/icon-remove2.png') no-repeat center center;
 }
 
-.module{
-  margin: 0 0 10px 0;
-}
-
-.module-detail-container{
-  background: #ccc;
-  height: 50px;
-  max-height: 100px;
-  padding: 15px;
-}
 
 /* CALENDAR
 ---------------------- */
@@ -376,9 +393,9 @@ img{
 }
 
 // Firefox
-#calendar-bg{
+#content-bg{
   width: 100%;
-  background: url('images/calendar-bg.jpg') repeat top left $grey;
+  background: url('images/content-bg.jpg') repeat top left $grey;
   position: absolute;
   z-index: 1010;
   height: 211px;
@@ -407,7 +424,6 @@ img{
 }
 
 #addEvent {
-  margin: 0 0 40px 0;
   &:active{
     margin: 0 0 43px 0 !important;
   }
