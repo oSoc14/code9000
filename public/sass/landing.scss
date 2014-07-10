@@ -5,11 +5,19 @@
 
 // Colors
 $pink: #f50064;
+$darkpink: #ab0046;
 $lightpink: #f95a93;
+$darkblue: #108a98;
 $blue: #00cde1;
 $lightblue: #46ddea;
+$lighterblue: #9bd2db;
+$hoverblue: #b3e9f0;
 $yellow: #e9e34b;
-$lightyellow: #f0eb72;
+$lightyellow: #edf48f;
+$darkyellow: #c9c315;
+$darkgrey: #333;
+$grey: #556066;
+$lightgrey: #f5f5f5;
 
 *{
   box-sizing: border-box;
@@ -56,30 +64,33 @@ img{
   }
 }
 
-@mixin btn-educal($bgcolor, $bordercolor, $color, $bghover, $borderhover){
+@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor){
   background: $bgcolor;
-  border: 1px solid $bordercolor;
+  border: none;
+  border-bottom: 3px solid $bordercolor;
   color: $color;
-  text-shadow: none;
-  &:hover{
+  @include text-shadow(none);
+  &:hover, &:focus{
     background: $bghover;
-    border: 1px solid $borderhover;
     color: $color;
+    border-bottom: 3px solid $bordercolor;
+    outline: none;
   }
-  &:focus{
-    background: $bghover;
-    border: 1px solid $borderhover;
-    color: $color;
+  &:active{
+    border: none;
+    position: relative;
+    top: 3px;
+    margin-bottom: 3px !important;
     outline: none;
   }
 }
 
 .btn-educal-primary{
-  @include btn-educal($pink, #a6104a, #fff, $lightpink, $pink);
+  @include btn-educal($pink, #fff, $lightpink, $darkpink);
 }
 
 .btn-educal-secondary{
-  @include btn-educal($yellow, #c9c315, #8c8610, $lightyellow, $yellow);
+  @include btn-educal($yellow, #8c8610, $lightyellow, $darkyellow);
 }
 
 // Content

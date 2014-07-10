@@ -30,7 +30,7 @@
     </div>
   </div>
 </div>
-<div id="calendar-bg"></div>
+<div id="content-bg"></div>
 
 @stop
 

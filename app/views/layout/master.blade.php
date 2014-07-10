@@ -1,28 +1,30 @@
 <!doctype html>
 <html lang="{{ Config::get('app.locale') }}" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ HTML::entities('EduCal') }}</title>
-    <!-- Bootstrap core CSS -->
-    {{ HTML::style("css/bootstrap.min.css") }}
-    {{ HTML::style("css/bootstrap-theme.min.css") }}
-    <!-- Bootstrap Datepicker -->
-    {{ HTML::style("css/jquery.datetimepicker.css") }}
-    <!-- jQuery UI -->
-    {{ HTML::style("css/jquery-ui.min.css") }}
-    {{ HTML::style("css/jquery-ui.structure.min.css") }}
-    {{ HTML::style("css/jquery-ui.theme.min.css") }}
-    <!-- Google Webfont -->
-    {{ HTML::style("http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700") }}
-    <!-- Global styles for this template -->
-    @yield('header')
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta property="og:title" content="">
-    <meta property="og:site_name" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="{{ asset('') }}">
+  <meta charset="UTF-8">
+  <title>{{ HTML::entities('EduCal') }}</title>
+  <!-- Bootstrap core CSS -->
+  {{ HTML::style("css/bootstrap.min.css") }}
+  {{ HTML::style("css/bootstrap-theme.min.css") }}
+  <!-- Bootstrap Datepicker -->
+  {{ HTML::style("css/jquery.datetimepicker.css") }}
+  <!-- jQuery UI -->
+  {{ HTML::style("css/jquery-ui.min.css") }}
+  {{ HTML::style("css/jquery-ui.structure.min.css") }}
+  {{ HTML::style("css/jquery-ui.theme.min.css") }}
+  <!-- FontAwesome icons -->
+  {{ HTML::style("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css") }}
+  <!-- Google Webfont -->
+  {{ HTML::style("http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700") }}
+  <!-- Global styles for this template -->
+  @yield('header')
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta property="og:title" content="">
+  <meta property="og:site_name" content="">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="{{ asset('') }}">
   <link rel="shortcut icon" href="favicons/favicon.ico">
   <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="114x114" href="favicons/apple-touch-icon-114x114.png">

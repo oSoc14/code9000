@@ -48,6 +48,7 @@
 body {
   background: #fff;
   font-family: "Open Sans", "Helvetica", sans-serif;
+  color: #556066;
 }
 @media screen and (max-width: 768px) {
   /* line 62, ../sass/app.scss */
@@ -56,23 +57,23 @@ body {
   }
 }
 
-/* line 70, ../sass/app.scss */
+/* line 71, ../sass/app.scss */
 a {
   color: #f50064;
 }
-/* line 72, ../sass/app.scss */
+/* line 73, ../sass/app.scss */
 a:hover {
   color: #f95a93;
 }
 
-/* line 76, ../sass/app.scss */
+/* line 77, ../sass/app.scss */
 img {
   max-width: 100%;
 }
 
 /* NAVBAR
 ---------------------- */
-/* line 83, ../sass/app.scss */
+/* line 84, ../sass/app.scss */
 #navbar-educal {
   background: #fff;
   color: #fff;
@@ -81,35 +82,35 @@ img {
   z-index: 1060;
   display: none;
 }
-/* line 90, ../sass/app.scss */
+/* line 91, ../sass/app.scss */
 #navbar-educal .navbar-toggle {
   border: 0;
 }
-/* line 92, ../sass/app.scss */
+/* line 93, ../sass/app.scss */
 #navbar-educal .navbar-toggle:hover, #navbar-educal .navbar-toggle:focus {
   background-color: #00cde1;
   border: 0;
 }
-/* line 95, ../sass/app.scss */
+/* line 96, ../sass/app.scss */
 #navbar-educal .navbar-toggle:hover .icon-bar, #navbar-educal .navbar-toggle:focus .icon-bar {
   background-color: #fff;
 }
-/* line 99, ../sass/app.scss */
+/* line 100, ../sass/app.scss */
 #navbar-educal .navbar-toggle:target {
   background: none;
 }
-/* line 103, ../sass/app.scss */
+/* line 104, ../sass/app.scss */
 #navbar-educal .navbar-toggle .icon-bar {
   background-color: #00cde1;
 }
 @media screen and (max-width: 768px) {
-  /* line 83, ../sass/app.scss */
+  /* line 84, ../sass/app.scss */
   #navbar-educal {
     display: block;
   }
 }
 
-/* line 112, ../sass/app.scss */
+/* line 113, ../sass/app.scss */
 #navbar-logo {
   background: url("images/logo_educal.png") left top no-repeat;
   width: 188px;
@@ -117,7 +118,7 @@ img {
   margin: 2px 0 0 0;
 }
 @media screen and (max-width: 768px) {
-  /* line 112, ../sass/app.scss */
+  /* line 113, ../sass/app.scss */
   #navbar-logo {
     margin-left: 15px;
   }
@@ -125,7 +126,7 @@ img {
 
 /* SIDEBAR
 ---------------------- */
-/* line 125, ../sass/app.scss */
+/* line 126, ../sass/app.scss */
 .sidebar-wrapper {
   margin-left: -250px;
   left: 250px;
@@ -139,12 +140,12 @@ img {
   -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px;
 }
-/* line 136, ../sass/app.scss */
+/* line 137, ../sass/app.scss */
 .sidebar-wrapper a {
   text-decoration: none;
 }
 
-/* line 142, ../sass/app.scss */
+/* line 143, ../sass/app.scss */
 #accordion {
   color: #00cde1;
   list-style: none;
@@ -152,25 +153,25 @@ img {
   padding: 0 0 0 33px;
   margin: 0 auto;
 }
-/* line 151, ../sass/app.scss */
+/* line 152, ../sass/app.scss */
 #accordion .bottom-options {
   margin-top: 10px;
 }
-/* line 153, ../sass/app.scss */
+/* line 154, ../sass/app.scss */
 #accordion .bottom-options .panel-title {
   color: #556066;
 }
-/* line 155, ../sass/app.scss */
+/* line 156, ../sass/app.scss */
 #accordion .bottom-options .panel-title:hover {
   color: #aaa;
 }
 
-/* line 162, ../sass/app.scss */
+/* line 163, ../sass/app.scss */
 .breadcrumb {
   display: block;
 }
 
-/* line 166, ../sass/app.scss */
+/* line 167, ../sass/app.scss */
 #navbar-logo-sidebar {
   display: block;
   background: url("images/logo_educal_sidebar.png") center center no-repeat;
@@ -179,18 +180,18 @@ img {
   margin-top: 15px;
 }
 @media screen and (max-width: 768px) {
-  /* line 166, ../sass/app.scss */
+  /* line 167, ../sass/app.scss */
   #navbar-logo-sidebar {
     margin-left: 15px;
   }
 }
 
-/* line 177, ../sass/app.scss */
+/* line 178, ../sass/app.scss */
 .sidebar-wrapper .panel-heading {
   padding: 0;
 }
 
-/* line 181, ../sass/app.scss */
+/* line 182, ../sass/app.scss */
 .sidebar-wrapper .panel-title {
   padding: 12px 20px;
   margin: 0;
@@ -212,19 +213,19 @@ img {
   transition-timing-function: ease-in;
   text-align: left;
 }
-/* line 192, ../sass/app.scss */
+/* line 193, ../sass/app.scss */
 .sidebar-wrapper .panel-title:hover {
   cursor: pointer;
   color: #46ddea;
   padding-left: 25px;
 }
-/* line 197, ../sass/app.scss */
+/* line 198, ../sass/app.scss */
 .sidebar-wrapper .panel-title .glyphicon {
   margin-right: 10px;
 }
 
 @media screen and (max-width: 768px) {
-  /* line 203, ../sass/app.scss */
+  /* line 204, ../sass/app.scss */
   .sidebar-wrapper {
     left: 0;
     background: #fff;
@@ -243,38 +244,38 @@ img {
     transition-timing-function: ease-in;
   }
 
-  /* line 211, ../sass/app.scss */
+  /* line 212, ../sass/app.scss */
   #accordion {
     padding: 0 0 0 4px;
   }
 
-  /* line 214, ../sass/app.scss */
+  /* line 215, ../sass/app.scss */
   #navbar-logo-sidebar {
     display: none;
   }
 
-  /* line 217, ../sass/app.scss */
+  /* line 218, ../sass/app.scss */
   .breadcrumb {
     display: none;
   }
 
-  /* line 220, ../sass/app.scss */
+  /* line 221, ../sass/app.scss */
   .sidebar-active {
     left: 250px;
   }
 
-  /* line 223, ../sass/app.scss */
+  /* line 224, ../sass/app.scss */
   #content-wrapper {
     margin-left: 0 !important;
     padding-top: 20px !important;
   }
 
-  /* line 227, ../sass/app.scss */
+  /* line 228, ../sass/app.scss */
   .fc-header-center {
     display: none;
   }
 }
-/* line 232, ../sass/app.scss */
+/* line 233, ../sass/app.scss */
 #backdrop {
   position: fixed;
   top: 0;
@@ -287,7 +288,7 @@ img {
   opacity: 0.5;
 }
 
-/* line 244, ../sass/app.scss */
+/* line 245, ../sass/app.scss */
 #userinfo-wrapper {
   position: fixed;
   bottom: 0;
@@ -298,12 +299,12 @@ img {
   padding: 10px;
   color: #556066;
 }
-/* line 253, ../sass/app.scss */
+/* line 254, ../sass/app.scss */
 #userinfo-wrapper .username {
   color: #fff;
 }
 @media screen and (max-width: 768px) {
-  /* line 244, ../sass/app.scss */
+  /* line 245, ../sass/app.scss */
   #userinfo-wrapper {
     left: 0;
   }
@@ -311,86 +312,107 @@ img {
 
 /* CONTENT
 ---------------------- */
-/* line 264, ../sass/app.scss */
+/* line 265, ../sass/app.scss */
 #content-wrapper {
   margin-left: 250px;
   padding-top: 40px;
   padding-right: 15px;
   padding-left: 15px;
 }
-/* line 269, ../sass/app.scss */
+/* line 270, ../sass/app.scss */
 #content-wrapper p {
   line-height: 1.75em;
 }
-/* line 272, ../sass/app.scss */
+/* line 273, ../sass/app.scss */
 #content-wrapper h1 {
   margin: 0px 0 20px 0;
   font-weight: 700;
+  margin-bottom: 47px;
+}
+/* line 280, ../sass/app.scss */
+#content-wrapper .content-table th {
+  height: 40px;
+  color: #fff;
+  border-bottom: none;
+  text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 289, ../sass/app.scss */
+#content-wrapper .dataTables_wrapper {
+  margin-top: 49px;
 }
 
-/* line 277, ../sass/app.scss */
-.modules-overview {
-  list-style: none;
-  padding: 0;
+/* line 294, ../sass/app.scss */
+#content-container {
+  position: relative;
+  z-index: 1020;
 }
 
-/* line 282, ../sass/app.scss */
-.module {
-  margin: 0 0 10px 0;
+/* line 298, ../sass/app.scss */
+.glyph-educal {
+  width: 24px;
+  height: 24px;
 }
 
-/* line 286, ../sass/app.scss */
-.module-detail-container {
-  background: #ccc;
-  height: 50px;
-  max-height: 100px;
-  padding: 15px;
+/* line 302, ../sass/app.scss */
+.glyph-edit {
+  background: url("images/icon-edit.png") no-repeat center center;
+}
+
+/* line 305, ../sass/app.scss */
+.glyph-remove {
+  background: url("images/icon-remove2.png") no-repeat center center;
 }
 
 /* CALENDAR
 ---------------------- */
-/* line 296, ../sass/app.scss */
+/* line 313, ../sass/app.scss */
 #calendar a {
   color: #fff;
 }
-/* line 298, ../sass/app.scss */
+/* line 315, ../sass/app.scss */
 #calendar a:hover {
   color: #b6cdea;
 }
-/* line 302, ../sass/app.scss */
+/* line 319, ../sass/app.scss */
 #calendar .fc-event {
   background: #00cde1;
   border: 0;
   padding: 5px;
   border-radius: 10px;
 }
-/* line 307, ../sass/app.scss */
+/* line 324, ../sass/app.scss */
 #calendar .fc-event:hover {
   color: #108a98;
 }
-/* line 311, ../sass/app.scss */
+/* line 328, ../sass/app.scss */
 #calendar .fc-state-highlight {
   background: #daf2ef;
 }
-/* line 314, ../sass/app.scss */
+/* line 331, ../sass/app.scss */
 #calendar .fc-button {
   text-shadow: none;
   z-index: 1020;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   background: #556066;
   border: none;
   border-bottom: 3px solid #333333;
   color: white;
   text-shadow: none;
 }
-/* line 321, ../sass/app.scss */
+/* line 335, ../sass/app.scss */
 #calendar .fc-button:hover {
   background: #00cde1;
+  border-color: #108a98 !important;
 }
-/* line 324, ../sass/app.scss */
+/* line 339, ../sass/app.scss */
 #calendar .fc-button:active {
-  border-bottom: 2px solid #556066 !important;
+  border-bottom: 2px solid #108a98 !important;
   top: 1px !important;
-  margin-bottom: 1px !important;
   z-index: 1010;
 }
 /* line 40, ../sass/app.scss */
@@ -406,72 +428,77 @@ img {
   top: 3px;
   margin-bottom: 3px !important;
 }
-/* line 332, ../sass/app.scss */
+/* line 346, ../sass/app.scss */
 #calendar .fc-state-disabled {
   color: #fff;
   top: 1px;
-  margin-bottom: 2px !important;
   border-bottom: 1px solid #333333 !important;
 }
-/* line 337, ../sass/app.scss */
+/* line 350, ../sass/app.scss */
 #calendar .fc-state-disabled:active {
   top: 1px;
-  border-bottom: 1px solid #333333 !important;
+  border-bottom: 1px solid #108a98 !important;
 }
-/* line 342, ../sass/app.scss */
+/* line 355, ../sass/app.scss */
 #calendar .fc-state-active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  background: #46ddea;
+  background: #00cde1;
+  border-color: #108a98 !important;
 }
-/* line 347, ../sass/app.scss */
+/* line 359, ../sass/app.scss */
+#calendar .fc-state-active:active {
+  border-color: #108a98 !important;
+}
+/* line 363, ../sass/app.scss */
 #calendar .fc-header-title h2 {
   font-size: 25px;
   position: relative;
   bottom: 4px;
 }
-/* line 352, ../sass/app.scss */
+/* line 368, ../sass/app.scss */
 #calendar .fc-widget-content {
   border-width: 0;
 }
 @media screen and (max-width: 1024px) {
-  /* line 352, ../sass/app.scss */
+  /* line 368, ../sass/app.scss */
   #calendar .fc-widget-content {
     border-width: 1px 0 0 1px;
   }
 }
-/* line 358, ../sass/app.scss */
+/* line 374, ../sass/app.scss */
 #calendar thead tr.fc-first {
   color: #fff;
   text-transform: uppercase;
   height: 40px;
   text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 5px;
 }
-/* line 363, ../sass/app.scss */
+/* line 379, ../sass/app.scss */
 #calendar thead tr.fc-first th {
   vertical-align: middle;
 }
-/* line 366, ../sass/app.scss */
+/* line 382, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-mon, #calendar thead tr.fc-first .fc-tue, #calendar thead tr.fc-first .fc-wed, #calendar thead tr.fc-first .fc-thu, #calendar thead tr.fc-first .fc-fri {
   border: none;
 }
-/* line 369, ../sass/app.scss */
+/* line 385, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-sat, #calendar thead tr.fc-first .fc-sun {
+  background: #333333;
   border: none;
 }
-/* line 373, ../sass/app.scss */
+/* line 389, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-widget-header {
   border: none;
 }
 
-/* line 380, ../sass/app.scss */
-#calendar-bg {
+/* line 396, ../sass/app.scss */
+#content-bg {
   width: 100%;
-  background: url("images/calendar-bg.jpg") repeat top left #556066;
+  background: url("images/content-bg.jpg") repeat top left #556066;
   position: absolute;
   z-index: 1010;
-  height: 207px;
+  height: 211px;
   border-bottom: 40px solid #556066;
   top: 0;
   left: 0;
@@ -480,35 +507,31 @@ img {
   }*/
 }
 @media screen and (max-width: 768px) {
-  /* line 380, ../sass/app.scss */
-  #calendar-bg {
-    height: 237px;
+  /* line 396, ../sass/app.scss */
+  #content-bg {
+    height: 241px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 380, ../sass/app.scss */
-  #calendar-bg {
-    height: 205px;
+  /* line 396, ../sass/app.scss */
+  #content-bg {
+    height: 209px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-  /* line 380, ../sass/app.scss */
-  #calendar-bg {
-    height: 235px;
+  /* line 396, ../sass/app.scss */
+  #content-bg {
+    height: 239px;
   }
 }
 
-/* line 405, ../sass/app.scss */
+/* line 421, ../sass/app.scss */
 #calendar-content {
   position: relative;
   z-index: 1020;
 }
 
-/* line 410, ../sass/app.scss */
-#addEvent {
-  margin: 0 0 40px 0;
-}
-/* line 412, ../sass/app.scss */
+/* line 427, ../sass/app.scss */
 #addEvent:active {
   margin: 0 0 43px 0 !important;
 }

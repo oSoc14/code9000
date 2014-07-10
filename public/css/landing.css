@@ -1,28 +1,28 @@
-/* line 14, ../sass/landing.scss */
+/* line 22, ../sass/landing.scss */
 * {
   box-sizing: border-box;
 }
 
-/* line 17, ../sass/landing.scss */
+/* line 25, ../sass/landing.scss */
 body {
   background: #fff;
 }
 
-/* line 20, ../sass/landing.scss */
+/* line 28, ../sass/landing.scss */
 a {
   color: #f50064;
 }
-/* line 22, ../sass/landing.scss */
+/* line 30, ../sass/landing.scss */
 a:hover {
   color: #f95a93;
 }
 
-/* line 26, ../sass/landing.scss */
+/* line 34, ../sass/landing.scss */
 img {
   max-width: 100%;
 }
 
-/* line 32, ../sass/landing.scss */
+/* line 40, ../sass/landing.scss */
 .introduction-container {
   background: url("images/introduction_bg.jpg") center center no-repeat #39acb0;
   background-size: cover;
@@ -30,84 +30,90 @@ img {
   height: 450px;
 }
 
-/* line 39, ../sass/landing.scss */
+/* line 47, ../sass/landing.scss */
 .introduction-content {
   text-align: center;
   display: table-cell;
   padding: 70px 0 0 0;
 }
-/* line 44, ../sass/landing.scss */
+/* line 52, ../sass/landing.scss */
 .introduction-content h1 {
   margin-bottom: 20px;
 }
-/* line 47, ../sass/landing.scss */
+/* line 55, ../sass/landing.scss */
 .introduction-content .lead {
   margin: 30px auto 0;
   max-width: 600px;
 }
-/* line 51, ../sass/landing.scss */
+/* line 59, ../sass/landing.scss */
 .introduction-content .button-container {
   margin: 32px 0;
 }
-/* line 53, ../sass/landing.scss */
+/* line 61, ../sass/landing.scss */
 .introduction-content .button-container .btn {
   margin: 0 10px;
 }
 
-/* line 77, ../sass/landing.scss */
+/* line 88, ../sass/landing.scss */
 .btn-educal-primary {
   background: #f50064;
-  border: 1px solid #a6104a;
+  border: none;
+  border-bottom: 3px solid #ab0046;
   color: white;
   text-shadow: none;
 }
-/* line 64, ../sass/landing.scss */
-.btn-educal-primary:hover {
+/* line 73, ../sass/landing.scss */
+.btn-educal-primary:hover, .btn-educal-primary:focus {
   background: #f95a93;
-  border: 1px solid #f50064;
   color: white;
+  border-bottom: 3px solid #ab0046;
+  outline: none;
 }
-/* line 69, ../sass/landing.scss */
-.btn-educal-primary:focus {
-  background: #f95a93;
-  border: 1px solid #f50064;
-  color: white;
+/* line 79, ../sass/landing.scss */
+.btn-educal-primary:active {
+  border: none;
+  position: relative;
+  top: 3px;
+  margin-bottom: 3px !important;
   outline: none;
 }
 
-/* line 81, ../sass/landing.scss */
+/* line 92, ../sass/landing.scss */
 .btn-educal-secondary {
   background: #e9e34b;
-  border: 1px solid #c9c315;
+  border: none;
+  border-bottom: 3px solid #c9c315;
   color: #8c8610;
   text-shadow: none;
 }
-/* line 64, ../sass/landing.scss */
-.btn-educal-secondary:hover {
-  background: #f0eb72;
-  border: 1px solid #e9e34b;
+/* line 73, ../sass/landing.scss */
+.btn-educal-secondary:hover, .btn-educal-secondary:focus {
+  background: #edf48f;
   color: #8c8610;
+  border-bottom: 3px solid #c9c315;
+  outline: none;
 }
-/* line 69, ../sass/landing.scss */
-.btn-educal-secondary:focus {
-  background: #f0eb72;
-  border: 1px solid #e9e34b;
-  color: #8c8610;
+/* line 79, ../sass/landing.scss */
+.btn-educal-secondary:active {
+  border: none;
+  position: relative;
+  top: 3px;
+  margin-bottom: 3px !important;
   outline: none;
 }
 
-/* line 87, ../sass/landing.scss */
+/* line 98, ../sass/landing.scss */
 .content-container {
   margin-top: 20px;
   margin-bottom: 50px;
 }
 
-/* line 92, ../sass/landing.scss */
+/* line 103, ../sass/landing.scss */
 #registerUserModal .alert {
   margin-bottom: 10px;
 }
 
-/* line 99, ../sass/landing.scss */
+/* line 110, ../sass/landing.scss */
 .footer-container {
   background: #333;
   color: #ddd;
@@ -116,7 +122,7 @@ img {
   height: 100px;
 }
 
-/* line 107, ../sass/landing.scss */
+/* line 118, ../sass/landing.scss */
 footer {
   text-align: center;
 }

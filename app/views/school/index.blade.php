@@ -5,42 +5,37 @@
 @stop
 
 @section('content')
-<div class="row">
-  <div class="col-xs-12">
-    <ol class="breadcrumb">
-      <li><a href="{{ route('landing') }}">Home</a></li>
-      <li class="active">Schools</li>
-    </ol>
+<div class="container-fluid" id="content-container">
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <h1>Schools</h1>
+      <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Short Name</th>
+          <th># Groups</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($schools as $school)
+        <tr>
+          <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
+          <td>{{$school->short}}</td>
+          <td>{{count($school->groups)}}</td>
+          <td>
+            <a href="#" title="Edit"><i class="fa fa-edit fa-2x"></i></a>
+            <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
+          </td>
+        </tr>
+        @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12 table-responsive">
-    <h1>Schools</h1>
-    <table id="groupTable" class="table table-striped" cellspacing="0" width="100%">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Short Name</th>
-        <th># Groups</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      @foreach($schools as $school)
-      <tr>
-        <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
-        <td>{{$school->short}}</td>
-        <td>{{count($school->groups)}}</td>
-        <td>
-          <a href="#" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
-          <a href="#" title="Remove"><span class="glyphicon glyphicon-trash"></span></a>
-        </td>
-      </tr>
-      @endforeach
-      </tbody>
-    </table>
-  </div>
-</div>
+<div id="content-bg"></div>
 @stop
 
 @section('footerScript')

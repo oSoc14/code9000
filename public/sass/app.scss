@@ -62,6 +62,7 @@ $times: 'Times New Roman', serif;
 body{
   background: #fff;
   font-family: $sans-serif;
+  color: $grey;
   @media screen and (max-width: $break-medium){
     padding-top: 50px;
   }
@@ -272,23 +273,39 @@ img{
   h1{
     margin: 0px 0 20px 0;
     font-weight: 700;
+    margin-bottom: 47px;
+  }
+  // DataTables
+  .content-table{
+    th{
+      height: 40px;
+      color: #fff;
+      border-bottom: none;
+      @include text-shadow(rgba(0, 0, 0, 0.75) 0px 0px 5px);
+      @include box-sizing(border-box);
+      //background: $blue;
+    }
+  }
+  .dataTables_wrapper{
+    margin-top: 49px;
   }
 }
-.modules-overview{
-  list-style: none;
-  padding: 0;
+
+#content-container{
+  position: relative;
+  z-index: 1020;
+}
+.glyph-educal{
+  width: 24px;
+  height: 24px;
+}
+.glyph-edit{
+  background: url('images/icon-edit.png') no-repeat center center;
+}
+.glyph-remove{
+  background: url('images/icon-remove2.png') no-repeat center center;
 }
 
-.module{
-  margin: 0 0 10px 0;
-}
-
-.module-detail-container{
-  background: #ccc;
-  height: 50px;
-  max-height: 100px;
-  padding: 15px;
-}
 
 /* CALENDAR
 ---------------------- */
@@ -312,19 +329,16 @@ img{
     background: #daf2ef;
   }
   .fc-button{
-    //background: $grey;
-    //border: none;
-    //color: #fff;
-    //@include box-shadow(none);
     @include text-shadow(none);
     z-index: 1020;
+    @include box-sizing(content-box);
     &:hover{
       background: $blue;
+      border-color: $darkblue !important;
     }
     &:active{
-      border-bottom: 2px solid $grey !important;
+      border-bottom: 2px solid $darkblue !important;
       top: 1px !important;
-      margin-bottom: 1px !important;
       z-index: 1010;
     }
     @include btn-educal($grey, #fff, $blue, $darkgrey);
@@ -332,17 +346,19 @@ img{
   .fc-state-disabled{
     color: #fff;
     top: 1px;
-    margin-bottom: 2px !important;
     border-bottom: 1px solid $darkgrey !important;
     &:active{
       top: 1px;
-      border-bottom: 1px solid $darkgrey !important;
+      border-bottom: 1px solid $darkblue !important;
     }
   }
   .fc-state-active{
     @include box-shadow(none);
-    //font-weight: 700;
-    background: $lightblue;
+    background: $blue;
+    border-color: $darkblue !important;
+    &:active{
+      border-color: $darkblue !important;
+    }
   }
   .fc-header-title h2{
     font-size: 25px;
@@ -367,7 +383,7 @@ img{
       border: none;
     }
     .fc-sat, .fc-sun{
-      //background: $darkgrey;
+      background: $darkgrey;
       border: none;
     }
     .fc-widget-header{
@@ -377,23 +393,23 @@ img{
 }
 
 // Firefox
-#calendar-bg{
+#content-bg{
   width: 100%;
-  background: url('images/calendar-bg.jpg') repeat top left $grey;
+  background: url('images/content-bg.jpg') repeat top left $grey;
   position: absolute;
   z-index: 1010;
-  height: 207px;
+  height: 211px;
   border-bottom: 40px solid $grey;
   top: 0;
   left: 0;
   @media screen and (max-width: $break-medium){
-    height: 237px;
+    height: 241px;
   }
   // Chrome
   @media screen and (-webkit-min-device-pixel-ratio:0){
-    height: 205px;
+    height: 209px;
     @media screen and (max-width: $break-medium){
-      height: 235px;
+      height: 239px;
     }
   }
   // Chrome non-mobile hack
@@ -408,7 +424,6 @@ img{
 }
 
 #addEvent {
-  margin: 0 0 40px 0;
   &:active{
     margin: 0 0 43px 0 !important;
   }
