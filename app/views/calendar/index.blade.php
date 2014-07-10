@@ -51,14 +51,14 @@
                 <p id="eventEnds"><strong>Ends:</strong> <span id="eventEnd"></span></p>
                 <p id="eventDescription"></p>
                 @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
-                <a type="button" class="btn btn-default btn-educal-primary pull-right" href="" id="editEvent">
+                <a type="button" class="btn btn-default btn-educal-primary" href="" id="editEvent">
                     <span class="glyphicon glyphicon-pencil"></span> Edit Event
                 </a>
-                <a type="button" class="btn btn-default btn-educal-primary pull-right" href="" id="deleteEvent">
+                <a type="button" class="btn btn-default btn-educal-primary" href="" id="deleteEvent">
                     <span class="glyphicon glyphicon-pencil"></span> Delete Event
                 </a>
                 @endif
-                <a type="button" class="btn btn-default btn-educal-primary pull-right" href="" id="icalEvent">
+                <a type="button" class="btn btn-default btn-educal-primary" href="" id="icalEvent">
                     <span class="glyphicon glyphicon-pencil"></span> Export to calendar
                 </a>
                 <div class="clearfix"></div>

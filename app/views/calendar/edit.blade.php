@@ -77,7 +77,10 @@
                 </div>
             </div>
             <input type="hidden" id="nr_repeat" name="nr_repeat" value="{{ $event->nr_repeat }}"/>
-            <button type="submit" class="btn btn-primary">Edit Event</button>
+            <button type="submit" class="btn btn-educal-primary">Edit Event</button>
+            <a type="button" class="btn btn-default btn-educal-primary" href="{{route('event.delete',$event->id)}}" id="deleteEvent">
+                <span class="glyphicon glyphicon-pencil"></span> Delete Event
+            </a>
             {{ Form::close(), PHP_EOL }}
             {{ Session::get('errorMessage') }}
 
