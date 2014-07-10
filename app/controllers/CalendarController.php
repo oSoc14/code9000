@@ -119,6 +119,7 @@ class CalendarController extends \BaseController {
                         'group' => 'required',
                         'description' => 'required',
                         'start' => 'required|date',
+                        'end' => 'date',
                         'title' => 'required'
                     )
                 );
@@ -255,7 +256,8 @@ class CalendarController extends \BaseController {
                     array(
                         'group' => 'required',
                         'description' => 'required',
-                        'start' => 'required',
+                        'start' => 'required|date',
+                        'end' => 'date',
                         'title' => 'required'
                     )
                 );
