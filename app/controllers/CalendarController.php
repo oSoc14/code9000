@@ -127,8 +127,8 @@ class CalendarController extends \BaseController {
                     return Redirect::route('event.create')->withInput()->withErrors($validator);
                 } else {
                     $event = new Appointment();
-                    $event->title = Input::get('title');
-                    $event->description = Input::get('description');
+                    $event->title = e(Input::get('title'));
+                    $event->description = e(Input::get('description'));
                     $event->start_date = new DateTime(Input::get('start'));
                     if(Input::get('day')){
                         $event->allday = true;
@@ -149,7 +149,7 @@ class CalendarController extends \BaseController {
                     // Recurring events handling
                     if(Input::get('repeat') && Input::get('nr_repeat')) {
                         $event->nr_repeat = Input::get('nr_repeat');
-                        $event->repeat_type = Input::get('repeat_type');
+                        $event->repeat_type = e(Input::get('repeat_type'));
                         $event->repeat_freq = Input::get('repeat_freq');
                     }
                     $event->group_id = Input::get('group');
@@ -265,8 +265,8 @@ class CalendarController extends \BaseController {
                 }
                 else{
                     $event = Appointment::find($id);
-                    $event->title = Input::get('title');
-                    $event->description = Input::get('description');
+                    $event->title = e(Input::get('title'));
+                    $event->description = e(Input::get('description'));
                     $event->start_date = new DateTime(Input::get('start'));
                     if(Input::get('day')){
                         $event->allday = true;
@@ -287,7 +287,7 @@ class CalendarController extends \BaseController {
                     // Recurring events handling
                     if(Input::get('repeat') && Input::get('nr_repeat')) {
                         $event->nr_repeat = Input::get('nr_repeat');
-                        $event->repeat_type = Input::get('repeat_type');
+                        $event->repeat_type = e(Input::get('repeat_type'));
                         $event->repeat_freq = Input::get('repeat_freq');
                     } else {
                         $event->nr_repeat = null;

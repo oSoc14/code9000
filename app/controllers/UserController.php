@@ -180,8 +180,8 @@ class UserController extends \BaseController {
                 'password' => Input::get('password'),
                 'activated' => false,
                 'school_id' => Input::get('school'),
-                'first_name' => Input::get('name'),
-                'last_name' => Input::get('surname'),
+                'first_name' => e(Input::get('name')),
+                'last_name' => e(Input::get('surname')),
             ));
             return Redirect::route('landing');
         }
@@ -394,8 +394,8 @@ class UserController extends \BaseController {
                     if(Input::get('password'))
                         $user->password     = Input::get('password');
 
-                    $user->first_name   = Input::get('name');
-                    $user->last_name    = Input::get('surname');
+                    $user->first_name   = e(Input::get('name'));
+                    $user->last_name    = e(Input::get('surname'));
 
                     $user->save();
 
