@@ -195,7 +195,7 @@ img{
     color: $lightblue;
     padding-left: 25px;
   }
-  .glyphicon{
+  .fa{
     margin-right: 10px;
   }
 }
@@ -273,10 +273,12 @@ img{
   h1{
     margin: 0px 0 20px 0;
     font-weight: 700;
-    margin-bottom: 47px;
+    margin-bottom: 49px;
+    display: inline-block;
   }
   // DataTables
   .content-table{
+    margin-top: 8px !important;
     th{
       height: 40px;
       color: #fff;
@@ -285,25 +287,20 @@ img{
       @include box-sizing(border-box);
       //background: $blue;
     }
+    a{
+      &:hover{
+        color: $grey;
+      }
+    }
   }
   .dataTables_wrapper{
-    margin-top: 49px;
+    //margin-top: 49px;
   }
 }
 
 #content-container{
   position: relative;
   z-index: 1020;
-}
-.glyph-educal{
-  width: 24px;
-  height: 24px;
-}
-.glyph-edit{
-  background: url('images/icon-edit.png') no-repeat center center;
-}
-.glyph-remove{
-  background: url('images/icon-remove2.png') no-repeat center center;
 }
 
 
@@ -329,9 +326,10 @@ img{
     background: #daf2ef;
   }
   .fc-button{
-    @include text-shadow(none);
     z-index: 1020;
+    @include text-shadow(none);
     @include box-sizing(content-box);
+    @include btn-educal($grey, #fff, $blue, $darkgrey);
     &:hover{
       background: $blue;
       border-color: $darkblue !important;
@@ -341,7 +339,7 @@ img{
       top: 1px !important;
       z-index: 1010;
     }
-    @include btn-educal($grey, #fff, $blue, $darkgrey);
+
   }
   .fc-state-disabled{
     color: #fff;
@@ -398,7 +396,7 @@ img{
   background: url('images/content-bg.jpg') repeat top left $grey;
   position: absolute;
   z-index: 1010;
-  height: 211px;
+  height: 212px;
   border-bottom: 40px solid $grey;
   top: 0;
   left: 0;
@@ -407,9 +405,9 @@ img{
   }
   // Chrome
   @media screen and (-webkit-min-device-pixel-ratio:0){
-    height: 209px;
+    height: 211px;
     @media screen and (max-width: $break-medium){
-      height: 239px;
+      height: 240px;
     }
   }
   // Chrome non-mobile hack
