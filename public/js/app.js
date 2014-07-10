@@ -41,7 +41,7 @@ $(document).ready(function() {
         that.prop('disabled', false);
       },
       error:function(xhr, status, errorThrown) {
-        alert(status + ', ' + errorThrown);
+        console.log((status + ', ' + errorThrown);
         that.prop('disabled', false);
       }
     });
@@ -68,7 +68,7 @@ $(document).ready(function() {
         that.parent().parent().hide();
       },
       error:function(xhr, status, errorThrown) {
-        alert(status + ', ' + errorThrown);
+        console.log(status + ', ' + errorThrown);
       }
 
     });
