@@ -36,16 +36,20 @@
           <td>{{ $group->name }}</td>
           @if($group->school)
           <td>
-              <a data-link="{{ URL::to('/') }}/export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" class="linkToPdf"><i class="fa fa-file-pdf-o fa-2x"></i></a>
-              <a data-link="{{ URL::to('/') }}/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" class="linkToIcal"><i class="fa fa-calendar fa-2x"></i></a>
+              <div class="col-xs-2">
+              <a data-link="{{ URL::to('/') }}/export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to PDF link" class="linkToPdf"><i class="fa fa-file-pdf-o fa-2x"></i></a>
+              <a data-link="{{ URL::to('/') }}/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to iCal link" class="linkToIcal"><i class="fa fa-calendar fa-2x"></i></a>
+              </div>
+            <div class="col-xs-10">
               <input type="text" class="form-control linkToText" value="{{ URL::to('/') }}/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" />
+            </div>
           </td>
           @else
           <td>NO EXPORT</td>
           @endif
           <td>
-            <a href="{{route('group.edit',$group->id)}}"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
             <a href="export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Download Pdf"><i class="fa fa-download fa-2x"></i></a>&nbsp;
+            <a href="{{route('group.edit',$group->id)}}"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
             <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>

@@ -133,7 +133,6 @@ img{
   overflow-y: auto;
   z-index: 1050;
   background: #fff;
-  //border-right: 1px solid #ddd;
   @include box-shadow(rgba(0, 0, 0, 0.3) 0px 0px 5px);
   a{
     text-decoration: none;
@@ -147,9 +146,6 @@ img{
   font-size: 12px;
   padding: 0 0 0 33px;
   margin: 0 auto;
-  .active{
-
-  }
   .bottom-options{
     margin-top: 10px;
     .panel-title{
@@ -180,6 +176,9 @@ img{
   padding: 0;
   .active{
     color: $pink;
+    &:hover{
+      color: $darkpink;
+    }
   }
 }
 
@@ -315,6 +314,9 @@ img{
   .form-repeat-container{
     display: none;
   }
+  .linkToText{
+    width: 100%;
+  }
 }
 
 #content-container{
@@ -341,6 +343,9 @@ img{
     border: none;
     padding: 5px;
     @include box-shadow(rgba(0, 0, 0, 0.10) -1px -1px 2px);
+    @include transition-property(all);
+    @include transition-duration(0.1s);
+    @include transition-timing-function(ease-in);
     &:hover{
       color: $darkblue;
       @include box-shadow(rgba(0, 0, 0, 0.25) -1px -1px 3px);
@@ -355,6 +360,9 @@ img{
     @include text-shadow(none);
     @include box-sizing(content-box);
     @include btn-educal($grey, #fff, $blue, $darkgrey);
+    @include transition-property(all);
+    @include transition-duration(0.05s);
+    @include transition-timing-function(ease-in);
     &:hover{
       background: $blue;
       border-color: $darkblue !important;
