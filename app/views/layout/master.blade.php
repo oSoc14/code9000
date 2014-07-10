@@ -77,7 +77,7 @@
         <li class="panel-heading">
           <a href="{{ route('calendar.index') }}">
             <p class="panel-title active">
-              <span class="glyphicon glyphicon-calendar"></span>
+              <i class="fa fa-calendar fa-lg"></i>
               {{ucfirst(trans('educal.calendar'))}}
             </p>
           </a>
@@ -86,7 +86,7 @@
         <li class="panel-heading">
           <a href="{{ route('school.index') }}">
             <p class="panel-title">
-              <span class="glyphicon glyphicon-home"></span>
+              <i class="fa fa-bank fa-lg"></i>
               {{ucfirst(trans('educal.schools'))}}
             </p>
           </a>
@@ -96,7 +96,7 @@
         <li class="panel-heading">
           <a href="{{ route('user.index') }}">
             <p class="panel-title">
-              <span class="glyphicon glyphicon-user"></span>
+              <i class="fa fa-users fa-lg"></i>
               {{ucfirst(trans('educal.users'))}}
             </p>
           </a>
@@ -106,7 +106,7 @@
         <li class="panel-heading">
           <a href="{{ route('group.index') }}">
             <p class="panel-title">
-              <span class="glyphicon glyphicon-th-large"></span>
+              <i class="fa fa-rocket fa-lg"></i>
               {{ucfirst(trans('educal.groups'))}}
             </p>
           </a>
@@ -116,7 +116,7 @@
           <li class="panel-heading">
             <a href="about">
               <p class="panel-title">
-                <span class="glyphicon glyphicon-question-sign"></span>
+                <i class="fa fa-question-circle fa-lg"></i>
                 {{ucfirst(trans('educal.about'))}}
               </p>
             </a>
@@ -124,7 +124,7 @@
           <li class="panel-heading">
             <a href="{{ route('settings') }}">
               <p class="panel-title">
-                <span class="glyphicon glyphicon-cog"></span>
+                <i class="fa fa-cogs fa-lg"></i>
                 {{ucfirst(trans('educal.settings'))}}
               </p>
             </a>
@@ -132,7 +132,7 @@
           <li class="panel-heading">
             <a href="{{ route('user.logout') }}">
               <p class="panel-title">
-                <span class="glyphicon glyphicon-log-out"></span>
+                <i class="fa fa-sign-out fa-lg"></i>
                 {{ucfirst(trans('educal.logout'))}}
               </p>
             </a>
@@ -140,7 +140,7 @@
           <li class="panel-heading">
               <a href="https://docs.google.com/forms/d/1-DBq0c2lmOEmJAJZ89hgCPSf4RjObr4XffMBajPEPtI/viewform?usp=send_form">
                   <p class="panel-title">
-                      <span class="glyphicon glyphicon-bullhorn"></span>
+                    <i class="fa fa-send fa-lg"></i>
                       Feedback
                   </p>
               </a>

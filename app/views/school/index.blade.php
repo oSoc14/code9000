@@ -8,19 +8,23 @@
 <div class="container-fluid" id="content-container">
   <div class="row">
     <div class="col-xs-12 table-responsive">
-      <h1>Schools</h1>
+      <h1>{{ucfirst(trans('educal.schools'))}}</h1>
       <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
         <thead>
         <tr>
+          <th class="hidden-xs">#</th>
           <th>Name</th>
           <th>Short Name</th>
-          <th># Groups</th>
+          <th># of Groups</th>
           <th>Actions</th>
         </tr>
         </thead>
         <tbody>
+        <?php $i=0; ?>
         @foreach($schools as $school)
+        <?php $i++; ?>
         <tr>
+          <td class="hidden-xs">{{ $i }}</td>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
           <td>{{$school->short}}</td>
           <td>{{count($school->groups)}}</td>

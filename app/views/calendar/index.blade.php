@@ -13,12 +13,12 @@
 @section('content')
 <div class="container-fluid" id="calendar-content">
   <div class="row">
-    <div class="col-xs-6 col-sm-6 col-lg-5">
-      <h1>Calendar</h1>
+    <div class="col-xs-6 col-lg-5">
+      <h1>{{ucfirst(trans('educal.calendar'))}}</h1>
     </div>
-    <div class="col-xs-6 col-sm-6 col-lg-5">
+    <div class="col-xs-6 col-lg-5">
       <a type="button" class="btn btn-default btn-lg btn-educal-primary pull-right" href="{{route('event.create')}}" id="addEvent">
-        <span class="glyphicon glyphicon-plus"></span> Add event
+        <i class="fa fa-plus"></i> Add event
       </a>
     </div>
   </div>

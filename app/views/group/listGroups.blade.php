@@ -5,55 +5,53 @@
 @stop
 
 @section('content')
-<div class="row">
-  <div class="col-xs-12">
-    <ol class="breadcrumb">
-      <li><a href="{{ route('landing') }}">Home</a></li>
-      <li class="active">Groups</li>
-    </ol>
+<div class="container-fluid" id="content-container">
+  <div class="row">
+      <div class="col-xs-6">
+          <h1>{{ucfirst(trans('educal.groups'))}}</h1>
+      </div>
+      <div class="col-xs-6">
+          <a type="button" class="btn btn-default btn-lg btn-educal-primary pull-right" href="{{route('group.create')}}" id="addEvent">
+            <i class="fa fa-plus"></i> Add group
+          </a>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th class="hidden-xs">#</th>
+          <th>Name</th>
+          <th>iCal</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <?php $i=0; ?>
+        @foreach($groups as $group)
+        <?php $i++ ?>
+        <tr>
+          <td class="hidden-xs">{{ $i }}</td>
+          <td>{{ $group->name }}</td>
+          @if($group->school)
+          <td><a href='./export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics'>/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics</a></td>
+          @else
+          <td>NO EXPORT</td>
+          @endif
+          <td>
+            <a href="{{route('group.edit',$group->id)}}"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
+            <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
+          </td>
+        </tr>
+        @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-<div class="row">
-    <div class="col-xs-6 col-sm-6 col-lg-6">
-        <h1>Groups</h1>
-    </div>
-    <div class="col-xs-6 col-sm-6 col-lg-6">
-        <a type="button" class="btn btn-default btn-lg btn-educal-primary pull-right" href="{{route('group.create')}}" id="addEvent">
-            <span class="glyphicon glyphicon-plus"></span> Add group
-        </a>
-    </div>
-</div>
-<div class="row">
-  <div class="col-xs-12 table-responsive">
-    <table id="groupTable" class="table table-striped" cellspacing="0" width="100%">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>iCal</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      @foreach($groups as $group)
-      <tr>
-        <td>{{ $group->name }}</td>
-        @if($group->school)
-        <td><a href='./export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics'>/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}/ical.ics</a></td>
-        @else
-        <td>NO EXPORT</td>
-        @endif
-        <td>
-          <a href="{{route('group.edit',$group->id)}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
-          <a href="#"><span class="glyphicon glyphicon-remove-sign"></span></a>
-        </td>
-      </tr>
-      @endforeach
-      </tbody>
-    </table>
-  </div>
-</div>
-
+<div id="content-bg"></div>
 @stop
 
 @section('footerScript')
