@@ -15,27 +15,27 @@
             @endforeach
 
             <div class="form-group">
-                <label for="title">Title</label>
-                <input type="tex" class="form-control" id="title" name="title" value="{{$event->title}}" placeholder="{{$event->title}}">
+                {{Form::label('title', 'Title')}}
+                {{Form::text('title', $event->title , ['class'=>'form-control','placeholder'=>"Event title"])}}
             </div>
             <div class="form-group">
-                <label for="group">Group</label>
+                {{Form::label('group', 'Group')}}
                 {{Form::select('group', $groups, $event->group_id, array('class'=>'form-control'));}}
             </div>
             <div class="form-group">
-                <label for="description">Description</label>
-                <textarea name="description" id="description" class="form-control" rows="3">{{$event->description}}</textarea>
+                {{Form::label('description', 'Description')}}
+                {{Form::textarea('description', $event->description , ['class'=>'form-control','placeholder'=>"Event description", 'rows'=>3])}}
             </div>
             <div class="form-group">
                 <div class='input-group date'>
-                    <input type='text' id='datetimepicker1' value="{{date_format(new DateTime($event->start_date), 'Y/m/d H:i')}}" name="start" class="form-control" />
+                    {{Form::text('start', date_format(new DateTime($event->start_date), 'Y/m/d H:i') , ['class'=>'form-control','id'=>'datetimepicker1'])}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="form-group">
                 <div class='input-group date'>
-                    <input type='text' id='datetimepicker2' value="{{date_format(new DateTime($event->end_date), 'Y/m/d H:i')}}" name="end" class="form-control" />
+                    {{Form::text('end', date_format(new DateTime($event->end_date), 'Y/m/d H:i') , ['class'=>'form-control','id'=>'datetimepicker2'])}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input name="day" type="checkbox"> All day
+                        <input name="day" type="checkbox" {{ ($event->allday?'checked':'')}}> All day
                     </label>
                 </div>
             </div>
@@ -64,18 +64,13 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <select id="repeat_type" name="repeat_type" class="form-control">
-                            <option value="d" {{ ($event->repeat_type=='d'?'selected':'') }}>Day</option>
-                            <option value="w" {{ ($event->repeat_type=='w'?'selected':'') }}>Week</option>
-                            <option value="M" {{ ($event->repeat_type=='M'?'selected':'') }}>Month</option>
-                            <option value="y" {{ ($event->repeat_type=='y'?'selected':'') }}>Year</option>
-                        </select>
+                            {{Form::select('repeat_type', ['d'=>'Day','w'=>'Week','M'=>'Month','y'=>'Year' ], $event->repeat_type, array('class'=>'form-control'))}}
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <div class='input-group date'>
-                            <input type='text' id='datetimepicker3' name="recurrence_end" class="form-control" />
+                            {{Form::text('recurrence_end', null , ['class'=>'form-control','id'=>'datetimepicker3'])}}
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                         </div>
                     </div>
