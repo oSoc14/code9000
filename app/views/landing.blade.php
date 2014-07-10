@@ -82,7 +82,11 @@
   </div>
 
   <!-- Login Modal -->
-  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+  @if(Session::has('errorMessage'))
+  <div class="modal fade" id="loginModal" tabindex="-1" data-errors="true" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+  @else
+  <div class="modal fade" id="loginModal" tabindex="-1" data-errors="false" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+  @endif
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -95,8 +99,8 @@
           'data-ajax' => 'false',
           ]), PHP_EOL }}
           <div class="form-group">
-            <label for="login-email">Email address</label>
-            <input type="email" class="form-control" id="login-email" name="email" placeholder="What's your email address?">
+          {{Form::label('lemail', 'Email address')}}
+          {{Form::email('lemail', null , ['class'=>'form-control','placeholder'=>"What's your email address?"])}}
           </div>
           <div class="form-group">
             <label for="login-password">Password</label>
@@ -133,23 +137,22 @@
                 {{$message}}
                 @endforeach
             @endif
-
             {{ Form::open([
             'route' => 'user.register',
             'data-ajax' => 'true',
             ]), PHP_EOL }}
           <div class="alert alert-warning" role="alert">Warning! If you want to register as a school, click <a href="#" id="showSchoolRegisterModal">here</a>.</div>
           <div class="form-group">
-              <label for="user-email">Name</label>
-              <input type="text" class="form-control" id="user-name" name="name" placeholder="What's your given name?">
+              {{Form::label('name', 'Name')}}
+              {{Form::text('name', null , ['class'=>'form-control','placeholder'=>"What's your given name?"])}}
           </div>
           <div class="form-group">
-              <label for="user-email">Surname</label>
-              <input type="text" class="form-control" id="user-surname" name="surname" placeholder="What's your surname?">
+              {{Form::label('surname', 'Surname')}}
+              {{Form::text('surname', null , ['class'=>'form-control','placeholder'=>"What's your surname?"])}}
           </div>
           <div class="form-group">
-            <label for="user-email">Email address</label>
-            <input type="email" class="form-control" id="user-email" name="email" placeholder="What's your email address?">
+              {{Form::label('email', 'Email address')}}
+              {{Form::email('email', null , ['class'=>'form-control','placeholder'=>"What's your email address?"])}}
           </div>
           <div class="form-group">
             <label for="user-password">Password</label>
@@ -199,16 +202,16 @@
             'data-ajax' => 'true',
             ]), PHP_EOL }}
           <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" id="school-email" name="email" placeholder="What's your school's email address?">
+              {{Form::label('semail', 'Email address')}}
+              {{Form::email('semail', null , ['class'=>'form-control','placeholder'=>"What's your school's email address?"])}}
           </div>
           <div class="form-group">
-            <label for="school-name">Name</label>
-            <input type="text" class="form-control" id="school-name" name="name" placeholder="What'the name of the school?">
+              {{Form::label('sname', 'Name')}}
+              {{Form::text('sname', null , ['class'=>'form-control','placeholder'=>"What'the name of the school?"])}}
           </div>
           <div class="form-group">
-            <label for="school-location">City</label>
-            <input type="text" class="form-control" id="school-location" name="city" placeholder="Where is the school located? (e.g. 'Chicago')">
+              {{Form::label('city', 'City')}}
+              {{Form::text('city', null , ['class'=>'form-control','placeholder'=>"Where is the school located? (e.g. 'Chicago')"])}}
           </div>
           <div class="form-group">
             <label for="school-password">Password</label>

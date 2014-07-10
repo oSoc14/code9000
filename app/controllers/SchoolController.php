@@ -37,8 +37,8 @@ class SchoolController extends \BaseController {
 	{
         $validator = Validator::make(
             array(
-                'name' => Input::get('name'),
-                'email' => Input::get('email'),
+                'name' => Input::get('sname'),
+                'email' => Input::get('semail'),
                 'city' => Input::get('city'),
                 'password' => Input::get('password'),
                 'password_confirmation' => Input::get('password_confirmation'),
@@ -61,8 +61,8 @@ class SchoolController extends \BaseController {
         }
         else{
             $school = new School();
-            $school->name = Input::get("name");
-            $short = strtolower(Input::get("name"));
+            $school->name = Input::get("sname");
+            $short = strtolower(Input::get("sname"));
             $short = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
             $school->short = $short;
             $school->city = Input::get("city");
@@ -93,7 +93,7 @@ class SchoolController extends \BaseController {
             ));
 
             $user = Sentry::createUser(array(
-                'email'    => Input::get("email"),
+                'email'    => Input::get("semail"),
                 'password' => Input::get("password"),
                 'activated' => true,
                 'school_id' => $school->id,

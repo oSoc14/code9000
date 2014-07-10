@@ -7,11 +7,19 @@ $(document).ready(function() {
   if($("#registerSchoolModal").data("errors") == true){
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('show');
+    $('#loginModal').modal('hide');
   }
 
   if($("#registerUserModal").data("errors") == true){
     $('#registerUserModal').modal('show');
     $('#registerSchoolModal').modal('hide');
+    $('#loginModal').modal('hide');
+  }
+
+  if($("#loginModal").data("errors") == true){
+    $('#registerUserModal').modal('hide');
+    $('#registerSchoolModal').modal('hide');
+    $('#loginModal').modal('show');
   }
 
   $('.activateUser').on('click', function(ev){

@@ -73,7 +73,7 @@ class UserController extends \BaseController {
         {
             // Login credentials
             $credentials = array(
-                'email'    => Input::get('email'),
+                'email'    => Input::get('lemail'),
                 'password' => Input::get('password'),
             );
 

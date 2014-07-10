@@ -25,27 +25,27 @@
             @endforeach
 
             <div class="form-group">
-                <label for="title">Title</label>
-                <input type="tex" class="form-control" id="title" name="title" placeholder="Event title">
+                {{Form::label('title', 'Title')}}
+                {{Form::text('title', null , ['class'=>'form-control','placeholder'=>"Event title"])}}
             </div>
             <div class="form-group">
-                <label for="group">Group</label>
-                {{Form::select('group', $groups, [], array('class'=>'form-control'));}}
+                {{Form::label('group', 'Group')}}
+                {{Form::select('group', $groups, [], array('class'=>'form-control'))}}
             </div>
             <div class="form-group">
-                <label for="description">Description</label>
-                <textarea  class="form-control" rows="3" name="description" id="description"></textarea>
+                {{Form::label('description', 'Description')}}
+                {{Form::textarea('description', null , ['class'=>'form-control','placeholder'=>"Event description", 'rows'=>3])}}
             </div>
             <div class="form-group">
                 <div class='input-group date'>
-                    <input type='text' id='datetimepicker1' name="start" class="form-control" />
+                    {{Form::text('start', null , ['class'=>'form-control','id'=>'datetimepicker1'])}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="form-group">
                 <div class='input-group date'>
-                    <input type='text' id='datetimepicker2' name="end" class="form-control" />
+                    {{Form::text('end', null , ['class'=>'form-control','id'=>'datetimepicker2'])}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                 </div>
             </div>
@@ -64,25 +64,20 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="number" id="repeat_freq" name="repeat_freq" class="form-control" value="1"/>
+                            <input type="number" id="repeat_freq" name="repeat_freq" class="form-control" min="1" value="1"/>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-cog"></span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <select id="repeat_type" name="repeat_type" class="form-control">
-                            <option value="d">Day</option>
-                            <option value="w">Week</option>
-                            <option value="M">Month</option>
-                            <option value="y">Year</option>
-                        </select>
+                        {{Form::select('repeat_type', ['d'=>'Day','w'=>'Week','M'=>'Month','y'=>'Year' ], [], array('class'=>'form-control'))}}
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <div class='input-group date'>
-                            <input type='text' id='datetimepicker3' name="recurrence_end" class="form-control" />
+                            {{Form::text('recurrence_end', null , ['class'=>'form-control','id'=>'datetimepicker3'])}}
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                         </div>
                     </div>
@@ -92,8 +87,7 @@
             <button type="submit" class="btn btn-default btn-educal-primary">Add Event</button>
             {{ Form::close(), PHP_EOL }}
             {{ Session::get('errorMessage') }}
-            <!-- TODO: Frequency, interval, count velden -->
-
+            <!-- TODO: Toggle visibility of repeat values -->
         </div><!-- /.col-xs-12 main -->
     </div><!--/.row-->
 
