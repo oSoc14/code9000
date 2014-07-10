@@ -18,6 +18,8 @@ class CreateDatabase extends Migration {
             $table->increments('id');
             $table->string('name',255);
             $table->string('short',20);
+            $table->string('city');
+            $table->string('lang',5)->default('nl');
             $table->timestamps();
             $table->softDeletes();
             $table->unique('short');
@@ -29,6 +31,7 @@ class CreateDatabase extends Migration {
             $table->increments('id');
             $table->string('email');
             $table->string('password');
+            $table->string('lang',5)->nullable();
             $table->text('permissions')->nullable();
             $table->boolean('activated')->default(0);
             $table->string('activation_code')->nullable();

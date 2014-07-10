@@ -87,6 +87,19 @@ class UserController extends \BaseController {
                 Sentry::login($user);
             }
 
+            //Get the users prefered language
+            $user = Sentry::getUser();
+            if($user->lang != null && $user->lang != ''){
+                Session::put('lang', $user->lang);
+            }elseif($user->school != null){
+                Session::put('lang', $user->school->lang);
+            }else{
+                Session::put('lang', 'nl');
+            }
+
+            //Set the language
+            App::setLocale(Session::get('lang'));
+
             // Redirect to logged in page
             return Redirect::route('calendar.index');
         }

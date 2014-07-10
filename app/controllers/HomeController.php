@@ -30,4 +30,58 @@ class HomeController extends BaseController {
         }
 	}
 
+    public function settings()
+    {
+        if(Sentry::check()) {
+            return View::make('settings');
+        }else{
+            $schools = School::get();
+            $schoolsArray = [];
+            foreach ($schools as $school){
+                $schoolsArray[$school->id] = $school->name;
+            }
+            return View::make('landing')
+                ->with("schools",$schoolsArray);
+        }
+    }
+
+    public function settingsUpdate()
+    {
+        if(Sentry::check()) {
+            $validator = Validator::make(
+                array(
+                    'lang' => Input::get('lang')
+                ),
+                array(
+                    'lang' => 'required'
+                )
+            );
+            if ($validator->fails())
+            {
+                return View::make('settings')
+                    ->withInput()
+                    ->withErrors($validator);
+
+            }else{
+                $user = Sentry::getUser();
+                $user->lang = Input::get('lang');
+                $user->save();
+                Session::forget('lang');
+                Session::put('lang', Input::get('lang'));
+                //Set the language
+                App::setLocale(Session::get('lang'));
+
+                return View::make('settings');
+            }
+        }else{
+            $schools = School::get();
+            $schoolsArray = [];
+            foreach ($schools as $school){
+                $schoolsArray[$school->id] = $school->name;
+            }
+            return View::make('landing')
+                ->with("schools",$schoolsArray);
+        }
+    }
+
 }
