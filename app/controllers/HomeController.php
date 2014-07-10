@@ -64,7 +64,7 @@ class HomeController extends BaseController {
 
             }else{
                 $user = Sentry::getUser();
-                $user->lang = Input::get('lang');
+                $user->lang = e(Input::get('lang'));
                 $user->save();
                 Session::forget('lang');
                 Session::put('lang', Input::get('lang'));

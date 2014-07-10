@@ -61,11 +61,11 @@ class SchoolController extends \BaseController {
         }
         else{
             $school = new School();
-            $school->name = Input::get("sname");
-            $short = strtolower(Input::get("sname"));
+            $school->name = e(Input::get("sname"));
+            $short = e(strtolower(Input::get("sname")));
             $short = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
             $school->short = $short;
-            $school->city = Input::get("city");
+            $school->city = e(Input::get("city"));
             $school->save();
 
             Sentry::createGroup(array(
@@ -172,7 +172,7 @@ class SchoolController extends \BaseController {
             if ($user->hasAccess(array('school')))
             {
                 $school = School::find($id);
-                $school->name = Input::get("name");
+                $school->name = e(Input::get("name"));
                 $school->save();
                 return Redirect::route('school.detail',$id);
             }

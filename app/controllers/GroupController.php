@@ -86,7 +86,7 @@ class GroupController extends \BaseController {
                 }else{
                     $school = $user->school;
                 }
-                $groupFullName = $school->short.'_'.strtolower(Input::get('name'));
+                $groupFullName = $school->short.'_'.strtolower(e(Input::get('name')));
 
                 $validator = Validator::make(
                     array(
@@ -218,7 +218,7 @@ class GroupController extends \BaseController {
 
                 $school = $group->school;
 
-                $groupFullName = strtolower($school->short.'_'.Input::get('name'));
+                $groupFullName = strtolower($school->short.'_'.e(Input::get('name')));
                 $validator = Validator::make(
                     array(
                         'name' => Input::get('name'),
