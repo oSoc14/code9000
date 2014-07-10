@@ -35,6 +35,36 @@ img{
   max-width: 100%;
 }
 
+// Buttons
+@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor, $txt-shadow-opacity: 0.35){
+  background: $bgcolor;
+  border: none;
+  border-bottom: 3px solid $bordercolor;
+  color: $color;
+  @include text-shadow(rgba(0, 0, 0, $txt-shadow-opacity) 0px 0px 5px);
+  &:hover, &:focus{
+    background: $bghover;
+    color: $color;
+    border-bottom: 3px solid $bordercolor;
+  }
+  &:active{
+    border: none;
+    position: relative;
+    top: 3px;
+    margin-bottom: 3px !important;
+  }
+}
+
+.btn-educal-danger{
+  @include btn-educal($pink, #fff, $lightpink, $darkpink);
+}
+.btn-educal-warning {
+  @include btn-educal($yellow, $darkgrey, $lightyellow, $darkyellow, 0);
+}
+.btn-educal-primary{
+  @include btn-educal($blue, #fff, $lightblue, $darkblue);
+}
+
 // Introduction
 // ----------------------
 .introduction-container {
@@ -62,35 +92,6 @@ img{
       margin: 0 10px;
     }
   }
-}
-
-@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor){
-  background: $bgcolor;
-  border: none;
-  border-bottom: 3px solid $bordercolor;
-  color: $color;
-  @include text-shadow(none);
-  &:hover, &:focus{
-    background: $bghover;
-    color: $color;
-    border-bottom: 3px solid $bordercolor;
-    outline: none;
-  }
-  &:active{
-    border: none;
-    position: relative;
-    top: 3px;
-    margin-bottom: 3px !important;
-    outline: none;
-  }
-}
-
-.btn-educal-primary{
-  @include btn-educal($pink, #fff, $lightpink, $darkpink);
-}
-
-.btn-educal-secondary{
-  @include btn-educal($yellow, #8c8610, $lightyellow, $darkyellow);
 }
 
 // Content
