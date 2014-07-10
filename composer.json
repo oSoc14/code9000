@@ -8,7 +8,8 @@
     "laravel/framework": "4.2.*",
     "cartalyst/sentry": "2.1.*",
     "eluceo/ical": "*",
-    "willdurand/negotiation": "@stable"
+    "willdurand/negotiation": "@stable",
+    "thujohn/pdf": "dev-master"
   },
   "autoload": {
     "classmap": [

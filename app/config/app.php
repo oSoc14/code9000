@@ -122,8 +122,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
-
-
+        'Thujohn\Pdf\PdfServiceProvider',
 	),
 
 	/*
@@ -191,7 +190,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-
+        'PDF' => 'Thujohn\Pdf\PdfFacade',
 	),
 
 );
