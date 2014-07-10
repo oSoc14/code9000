@@ -113,7 +113,7 @@
         @endif
         <div class="bottom-options">
           <li class="panel-heading">
-            <a href="about">
+            <a href="{{ route('about') }}">
               <p class="panel-title">
                 <i class="fa fa-question-circle fa-lg"></i>
                 {{ucfirst(trans('educal.about'))}}
