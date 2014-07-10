@@ -415,19 +415,25 @@ img {
 /* line 339, ../sass/app.scss */
 #calendar .fc-event {
   background: #00cde1;
-  border: 0;
+  border: none;
   padding: 5px;
-  border-radius: 10px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.1) -1px -1px 2px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.1) -1px -1px 2px;
+  box-shadow: rgba(0, 0, 0, 0.1) -1px -1px 2px;
 }
 /* line 344, ../sass/app.scss */
 #calendar .fc-event:hover {
   color: #108a98;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.25) -1px -1px 3px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.25) -1px -1px 3px;
+  box-shadow: rgba(0, 0, 0, 0.25) -1px -1px 3px;
+  cursor: pointer;
 }
-/* line 348, ../sass/app.scss */
+/* line 350, ../sass/app.scss */
 #calendar .fc-state-highlight {
   background: #daf2ef;
 }
-/* line 351, ../sass/app.scss */
+/* line 353, ../sass/app.scss */
 #calendar .fc-button {
   z-index: 1020;
   text-shadow: none;
@@ -453,29 +459,29 @@ img {
   top: 3px;
   margin-bottom: 3px !important;
 }
-/* line 356, ../sass/app.scss */
+/* line 358, ../sass/app.scss */
 #calendar .fc-button:hover {
   background: #00cde1;
   border-color: #108a98 !important;
 }
-/* line 360, ../sass/app.scss */
+/* line 362, ../sass/app.scss */
 #calendar .fc-button:active {
   border-bottom: 2px solid #108a98 !important;
   top: 1px !important;
   z-index: 1010;
 }
-/* line 367, ../sass/app.scss */
+/* line 369, ../sass/app.scss */
 #calendar .fc-state-disabled {
   color: #fff;
   top: 1px;
   border-bottom: 1px solid #333333 !important;
 }
-/* line 371, ../sass/app.scss */
+/* line 373, ../sass/app.scss */
 #calendar .fc-state-disabled:active {
   top: 1px;
   border-bottom: 1px solid #108a98 !important;
 }
-/* line 376, ../sass/app.scss */
+/* line 378, ../sass/app.scss */
 #calendar .fc-state-active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -483,52 +489,52 @@ img {
   background: #00cde1;
   border-color: #108a98 !important;
 }
-/* line 380, ../sass/app.scss */
+/* line 382, ../sass/app.scss */
 #calendar .fc-state-active:active {
   border-color: #108a98 !important;
 }
-/* line 384, ../sass/app.scss */
+/* line 386, ../sass/app.scss */
 #calendar .fc-header-title h2 {
   font-size: 25px;
   position: relative;
   bottom: 4px;
 }
-/* line 389, ../sass/app.scss */
+/* line 391, ../sass/app.scss */
 #calendar .fc-widget-content {
   border-width: 0;
 }
 @media screen and (max-width: 1024px) {
-  /* line 389, ../sass/app.scss */
+  /* line 391, ../sass/app.scss */
   #calendar .fc-widget-content {
     border-width: 1px 0 0 1px;
   }
 }
-/* line 395, ../sass/app.scss */
+/* line 397, ../sass/app.scss */
 #calendar thead tr.fc-first {
   color: #fff;
   text-transform: uppercase;
   height: 40px;
   text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 5px;
 }
-/* line 400, ../sass/app.scss */
+/* line 402, ../sass/app.scss */
 #calendar thead tr.fc-first th {
   vertical-align: middle;
 }
-/* line 403, ../sass/app.scss */
+/* line 405, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-mon, #calendar thead tr.fc-first .fc-tue, #calendar thead tr.fc-first .fc-wed, #calendar thead tr.fc-first .fc-thu, #calendar thead tr.fc-first .fc-fri {
   border: none;
 }
-/* line 406, ../sass/app.scss */
+/* line 408, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-sat, #calendar thead tr.fc-first .fc-sun {
   background: #333333;
   border: none;
 }
-/* line 410, ../sass/app.scss */
+/* line 412, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-widget-header {
   border: none;
 }
 
-/* line 417, ../sass/app.scss */
+/* line 419, ../sass/app.scss */
 #content-bg {
   width: 100%;
   background: url("images/content-bg.jpg") repeat top left #556066;
@@ -543,25 +549,25 @@ img {
   }*/
 }
 @media screen and (max-width: 768px) {
-  /* line 417, ../sass/app.scss */
+  /* line 419, ../sass/app.scss */
   #content-bg {
     height: 241px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 417, ../sass/app.scss */
+  /* line 419, ../sass/app.scss */
   #content-bg {
     height: 211px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-  /* line 417, ../sass/app.scss */
+  /* line 419, ../sass/app.scss */
   #content-bg {
     height: 240px;
   }
 }
 
-/* line 443, ../sass/app.scss */
+/* line 445, ../sass/app.scss */
 #addEvent:active {
   margin: 0 0 43px 0 !important;
 }

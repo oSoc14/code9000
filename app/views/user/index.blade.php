@@ -11,7 +11,7 @@
       <h1>{{ucfirst(trans('educal.users'))}}</h1>
     </div>
     <div class="col-xs-6">
-      <a href="#" class="btn btn-lg btn-default btn-educal-danger pull-right" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> Add user</a>
+      <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> Add user</a>
     </div>
   </div>
   <div class="row">
