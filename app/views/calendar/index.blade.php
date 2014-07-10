@@ -21,7 +21,7 @@
             @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
             <a type="button" class="btn btn-default btn-lg btn-educal-primary pull-right" href="{{route
 ('event.create')}}" id="addEvent">
-              <i class="fa fa-plus"></i> Add event
+              <i class="fa fa-plus"></i> {{ucfirst(trans('educal.addevent'))}}
             </a>
             @endif
         </div>
@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-10">
             <div id="calendar"></div>
-            <div id="preloader">Loading...</div>
+            <div id="preloader">{{ucfirst(trans('educal.loading'))}}</div>
             <br>
         </div>
     </div>
@@ -43,23 +43,23 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-
                                                                                hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Event details</h4>
+                <h4 class="modal-title">{{ucfirst(trans('educal.eventdetails'))}}</h4>
             </div>
             <div class="modal-body">
                 <h1 id="eventTitle"></h1>
-                <p><strong>Starts:</strong> <span id="eventStart"></span></p>
-                <p id="eventEnds"><strong>Ends:</strong> <span id="eventEnd"></span></p>
+                <p><strong>{{ucfirst(trans('educal.starts'))}}:</strong> <span id="eventStart"></span></p>
+                <p id="eventEnds"><strong>{{ucfirst(trans('educal.ends'))}}:</strong> <span id="eventEnd"></span></p>
                 <p id="eventDescription"></p>
                 @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
                 <a type="button" class="btn btn-default btn-educal-primary" href="" id="editEvent">
-                    <span class="glyphicon glyphicon-pencil"></span> Edit Event
+                    <span class="glyphicon glyphicon-pencil"></span> {{ucfirst(trans('educal.editevent'))}}
                 </a>
                 <a type="button" class="btn btn-default btn-educal-primary" href="" id="deleteEvent">
-                    <span class="glyphicon glyphicon-pencil"></span> Delete Event
+                    <span class="glyphicon glyphicon-pencil"></span> {{ucfirst(trans('educal.deleteevent'))}}
                 </a>
                 @endif
                 <a type="button" class="btn btn-default btn-educal-primary" href="" id="icalEvent">
-                    <span class="glyphicon glyphicon-pencil"></span> Export to calendar
+                    <span class="glyphicon glyphicon-pencil"></span> {{ucfirst(trans('educal.export'))}}
                 </a>
                 <div class="clearfix"></div>
             </div>
