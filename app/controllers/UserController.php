@@ -251,25 +251,46 @@ class UserController extends \BaseController {
                 try
                 {
                     // Find the user using the user id
-                    $user = Sentry::findUserById($id);
-
-                    // Delete the user
-                    $user->delete();
-
-                    // Return to the previous page
-                    return Redirect::back();
+                    $selectedUser = Sentry::findUserById($id);
+                    /**
+                     * Check if the selected user is in the admins group,
+                     * ->true: check if he is the last person in that group
+                     *          -> true: don't allow user to be removed (school needs 1 admin at least)
+                     *          -> false: delete user from school
+                     * ->false: safe to remove user from school
+                     */
+                    if(($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id) || $user->school_id == null) {
+                        $school = School::find($selectedUser->school_id);
+                        $group = Sentry::findGroupByName($school->short.'_admin');
+                        $users = Sentry::findAllUsersInGroup($group);
+                        if(count($users)>1) {
+                            // Delete the user
+                            $selectedUser->delete();
+                            // Return to the previous page
+                            return Redirect::back();
+                        } else {
+                            $error = "You can't remove this user.";
+                            // Return to the previous page
+                            return Redirect::route('user.index')->with('error', $error);
+                        }
+                    } else {
+                        // Delete the user
+                        $selectedUser->delete();
+                        // Return to the previous page
+                        return Redirect::route('user.index');
+                    }
                 }
                 catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
                 {
                     $error = 'User was not found.';
                     // Return to the previous page
-                    return Redirect::back()->with('error', $error);
+                    return Redirect::route('user.index')->with('error', $error);
                 }
-            }else{
+            } else {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
-        }   else{
+        } else {
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }
@@ -293,10 +314,10 @@ class UserController extends \BaseController {
                     if(($loggedInUser->school_id == $user->school_id || $loggedInUser->hasAccess('school')) && $user->id != $loggedInUser->id) {
 
                     } else {
-                        return Response::make("You're not supposed to be here, friend.", 403);
+                        return Redirect::route('calendar.index');
                     }
                 } catch(Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                    return Response::make("You're not supposed to be here, friend.", 403);
+                    return Redirect::route('calendar.index');
                 }
 
                 $activationCode = $user->getActivationCode();
@@ -312,11 +333,11 @@ class UserController extends \BaseController {
                 }
             } else {
                 // If no permissions, redirect to calendar index
-                return Response::make("You're not supposed to be here, friend.", 403);
+                return Redirect::route('calendar.index');
             }
         }   else{
             // If not logged in, redirect to the login screen
-            return Response::make("You're not supposed to be here, friend.", 403);
+            return Redirect::route('calendar.index');
         }
     }
 
@@ -431,22 +452,58 @@ class UserController extends \BaseController {
                 try
                 {
                     // Find the user using the user id
+                    $selectedUser = Sentry::findUserById($id);
+                    /**
+                     * Check if the selected user is in the admins group,
+                     * ->true: check if he is the last person in that group
+                     *          -> true: don't allow user to be removed (school needs 1 admin at least)
+                     *          -> false: delete user from group
+                     * ->false: safe to remove user from group
+                     */
+                    $group = Sentry::findGroupById($groupId);
+                    if(($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id) || $user->school_id == null) {
+                        $school = School::find($selectedUser->school_id);
+
+                        if($group->name == $school->short.'_admin') {
+                            $users = Sentry::findAllUsersInGroup($group);
+                            if(count($users)>1) {
+                                // Delete the user
+                                $selectedUser->removeGroup($group);
+                                // Return to the previous page
+                                return Redirect::back();
+                            } else {
+                                $error = "You can't remove this user.";
+                                // Return to the previous page
+                                return Redirect::back()->with('error', $error);
+                            }
+                        }
+                    } else {
+                        // Remove the user from group
+                        $selectedUser->removeGroup($group);
+                        // Return to the previous page
+                        return Redirect::back();
+                    }
+                    /*// Find the user using the user id
                     $user = Sentry::findUserById($id);
 
                     // Find the group using the group id
                     $group = Sentry::findGroupById($groupId);
 
                     // Assign the group to the user
-                    $user->removeGroup($group);
+                    $user->removeGroup($group);*/
 
                 }
                 catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
                 {
-                    echo 'User was not found.';
+                    $error = 'User was not found.';
+                    // Return to the previous page
+                    return Redirect::back()->with('error', $error);
                 }
                 catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
                 {
-                    echo 'Group was not found.';
+                    $error = 'Group was not found.';
+                    // Return to the previous page
+                    return Redirect::back()->with('error', $error);
                 }
             }else{
                 // If no permissions, redirect to calendar index

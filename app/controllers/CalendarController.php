@@ -106,7 +106,7 @@ class CalendarController extends \BaseController {
             // Find active user
             $user = Sentry::getUser();
             if ($user->hasAnyAccess(array('school','event'))){
-                
+
                 $endDate = new DateTime();
                 // check if endDate isn't blank (____/__/__ __:__)
                 if(Input::get('end') == '____/__/__ __:__') {

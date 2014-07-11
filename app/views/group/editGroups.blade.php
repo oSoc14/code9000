@@ -107,7 +107,7 @@ $group->name) }}</span></small></h1>
           <a class="editUser" href="{{ route('user.edit',$user->id) }}">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
-          <a data-userid="{{$user->id}}" data-url="{{ route('user.removeFromGroup',array('userId' => $user->id,'groupId' => $group->id)) }}" class="removeUserFromGroup" href="#">
+          <a href="{{ route('user.removeFromGroup',[$user->id, $group->id]) }}">
             <span class="glyphicon glyphicon-remove-sign"></span>
           </a>
         </td>

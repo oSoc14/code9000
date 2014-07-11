@@ -119,6 +119,11 @@ Route::group(['prefix' => 'user'], function () {
         'uses' => 'UserController@removeFromGroup'
     ])->where('id', '[0-9]+')
         ->where('groupId', '[0-9]+');
+
+    Route::get('/delete/{id}', [
+        'as'   => 'user.removeUserFromSchool',
+        'uses' => 'UserController@removeUserFromSchool'
+    ])->where('id', '[0-9]+');
 });
 
 
