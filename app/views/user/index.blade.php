@@ -67,10 +67,15 @@
                             <h4 class="modal-title">Add a user</h4>
                         </div>
                         <div class="modal-body">
-                            @if($errors->has('usererror'))
-                            @foreach ($errors->all() as $message)
-                            {{$message}}
-                            @endforeach
+                            @if($errors->count())
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Errors</strong>
+                                <ul>
+                                    @foreach ($errors->all() as $message)
+                                    <li>{{$message}}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                             @endif
 
                             {{ Form::open([
