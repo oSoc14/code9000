@@ -36,7 +36,7 @@
           <td>{{count($school->groups)}}</td>
           <td>
             <a href="{{ route('school.edit', $school->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
-            <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
+            <a href="{{ route('school.delete', $school->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>
         @endforeach

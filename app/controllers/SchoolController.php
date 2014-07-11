@@ -228,7 +228,7 @@ class SchoolController extends \BaseController {
 	{
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAccess(array('school')))
+            if ($user->hasAccess('school'))
             {
                 $school = School::find($id);
                 $school->delete();

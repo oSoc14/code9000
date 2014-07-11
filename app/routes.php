@@ -60,6 +60,10 @@ Route::group(['prefix' => 'school'], function () {
         'as'   => 'school.update',
         'uses' => 'SchoolController@update'
     ])->where('id', '[0-9]+');
+    Route::get('/delete/{id}', [
+        'as'   => 'school.delete',
+        'uses' => 'SchoolController@destroy'
+    ])->where('id', '[0-9]+');
 });
 
 
