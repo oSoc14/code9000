@@ -4,6 +4,10 @@ $(document).ready(function() {
     $('.sidebar-wrapper').toggleClass('sidebar-active');
   });
 
+  $('#confirm-delete').on('show.bs.modal', function(e) {
+    $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
+  });
+  
   if($("#registerSchoolModal").data("errors") == true){
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('show');

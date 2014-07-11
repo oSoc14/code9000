@@ -45,7 +45,7 @@ class CreateDatabase extends Migration {
 
             //Defines the school a user belongs to
             $table->integer('school_id')->unsigned()->nullable();
-            $table->foreign('school_id')->references('id')->on('schools');
+            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
 
             // We'll need to ensure that MySQL uses the InnoDB engine to
             // support the indexes, other engines aren't affected.
@@ -65,7 +65,7 @@ class CreateDatabase extends Migration {
 
             //Defines the school a user belongs to
             $table->integer('school_id')->unsigned()->nullable();
-            $table->foreign('school_id')->references('id')->on('schools');
+            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
 
             // We'll need to ensure that MySQL uses the InnoDB engine to
             // support the indexes, other engines aren't affected.
@@ -125,7 +125,7 @@ class CreateDatabase extends Migration {
 
             //Defines the school a user belongs to
             $table->integer('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
 
 	}
