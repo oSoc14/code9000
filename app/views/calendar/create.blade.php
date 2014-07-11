@@ -86,7 +86,7 @@
         </div>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-3">
-        {{Form::select('repeat_type', ['d'=>'Days','w'=>'Weeks','M'=>'Months','y'=>'Years' ], [], array('class'=>'form-control'))}}
+        {{Form::select('repeat_type', ['d'=>'Days','w'=>'Weeks','M'=>'Months','y'=>'Years' ], [], array('class'=>'form-control', 'id'=>'repeat_type'))}}
       </div>
     </div>
 

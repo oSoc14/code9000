@@ -106,12 +106,19 @@ class CalendarController extends \BaseController {
             // Find active user
             $user = Sentry::getUser();
             if ($user->hasAnyAccess(array('school','event'))){
+                
+                $endDate = new DateTime();
+                // check if endDate isn't blank (____/__/__ __:__)
+                if(Input::get('end') == '____/__/__ __:__') {
+                    $endDate = null;
+                }
+
                 $validator = Validator::make(
                     array(
                         'group' => Input::get('group'),
                         'description' => Input::get('description'),
                         'start' => Input::get('start'),
-                        'end' => Input::get('end'),
+                        'end' => $endDate,
                         'title' => Input::get('title'),
                         'day' => Input::get('day')
                     ),
@@ -131,6 +138,7 @@ class CalendarController extends \BaseController {
                     $event->title = e(Input::get('title'));
                     $event->description = e(Input::get('description'));
                     $event->start_date = new DateTime(Input::get('start'));
+
                     if(Input::get('day')){
                         $event->allday = true;
                     }else{
@@ -206,6 +214,7 @@ class CalendarController extends \BaseController {
                 $schools = null;
                 // Find active user
                 $user = Sentry::getUser();
+
                 if ($user->hasAnyAccess(array('school','event'))){
                     if($user->hasAccess(array('school'))){
                         $groups = Group::where('school_id','<>','')->get();
@@ -245,11 +254,18 @@ class CalendarController extends \BaseController {
             // Find active user
             $user = Sentry::getUser();
             if ($user->hasAnyAccess(array('school','event'))){
+
+                $endDate = new DateTime();
+                // check if endDate isn't blank (____/__/__ __:__)
+                if(Input::get('end') == '____/__/__ __:__') {
+                    $endDate = null;
+                }
+
                 $validator = Validator::make(
                     array(
                         'group' => Input::get('group'),
                         'description' => Input::get('description'),
-                        'end' => Input::get('end'),
+                        'end' => $endDate,
                         'start' => Input::get('start'),
                         'title' => Input::get('title')
                     ),

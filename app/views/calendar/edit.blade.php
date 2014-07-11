@@ -68,7 +68,6 @@
           </div>
         </div>
       </div>
-
     <div class="form-repeat-container">
       <div class="form-group">
         <label for="repeat_freq" class="col-xs-12 col-sm-12 col-md-2 control-label">Every...</label>
@@ -79,7 +78,7 @@
           </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-3">
-            {{Form::select('repeat_type', ['d'=>'Days','w'=>'Weeks','M'=>'Months','y'=>'Years' ], $event->repeat_type, array('class'=>'form-control'))}}
+            {{Form::select('repeat_type', ['d'=>'Days','w'=>'Weeks','M'=>'Months','y'=>'Years' ], $event->repeat_type, array('class'=>'form-control', 'id'=>'repeat_type'))}}
         </div>
       </div>
 

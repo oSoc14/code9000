@@ -23,6 +23,10 @@ $(document).ready(function() {
   }
 
   if( $('.form-repeat-container').length != 0){
+    // If checkbox is already checked, show repeat-container on page load
+    if($('#repeat').prop('checked')) {
+      $('.form-repeat-container').show();
+    };
     $('input#repeat').click(function(){
       $('.form-repeat-container').slideToggle();
     });
@@ -237,24 +241,29 @@ jQuery(function(){
   });
 });
 
+/**
+ * Calculates the amount of times an event
+ */
 function calculateRepeats(){
-  console.log("calculating");
   var freq = $('#repeat_freq').val();
-  var endDate = $('#datetimepicker3').val();
+  var endDate = moment($('#datetimepicker3').val(), 'YYYY/MM/DD');
 
-  if(freq && endDate != '____/__/__') {
-    var startDate = $('#datetimepicker1').val();
+  if(freq>0 && endDate.isValid() && $('#repeat').prop('checked')) {
     var type = $('#repeat_type').val();
+    var startDate = $('#datetimepicker1').val();
+    startDate = moment(startDate, 'YYYY/MM/DD');
 
-    if(startDate != '' && startDate != '____/__/__ __:__') {
+    if(startDate.isValid() && startDate.isBefore(endDate) && type) {
+      $('#nr_repeat').removeAttr('value');
       var i = 1;
-      while(moment(startDate, "YYYY/MM/DD HH:mm").isBefore(moment(endDate, "YYYY/MM/DD"))) {
-        startDate = moment(startDate).add(type,freq);
+      while(startDate.isBefore(moment(endDate))) {
+        startDate = startDate.add(type,freq);
         i++;
       }
       $('#nr_repeat').val(i);
-      console.log(i);
+    } else {
+      $('#nr_repeat').removeAttr('value');
     }
-  }
 
+  }
 }
