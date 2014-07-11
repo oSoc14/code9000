@@ -72,7 +72,7 @@ body{
 a{
   color: $pink;
   &:hover{
-    color: $lightpink;
+    color: $grey;
   }
 }
 img{
@@ -276,7 +276,6 @@ img{
   h1{
     margin: 0px 0 20px 0;
     font-weight: 700;
-    display: inline-block;
   }
   .form-horizontal label{
     text-align: left;
@@ -284,10 +283,6 @@ img{
   .link-goback{
     display: inline-block;
     margin-bottom: 9px;
-    &:hover{
-      text-decoration: none;
-      color: $blue;
-    }
   }
   // DataTables
   .content-table{
@@ -306,9 +301,6 @@ img{
       }
     }
   }
-  .dataTables_wrapper{
-    //margin-top: 49px;
-  }
 
   // Forms
   .form-repeat-container{
@@ -319,11 +311,15 @@ img{
   }
 }
 
+.first-row{
+  height: 88px;
+}
+
 #content-container{
   position: relative;
   z-index: 1020;
   h1{
-    margin-bottom: 49px;
+    //margin-bottom: 49px;
   }
 }
 

@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="container-fluid" id="content-container">
-    <div class="row">
+    <div class="row first-row">
         <div class="col-xs-6 col-lg-5">
             <h1>{{ucfirst(trans('educal.calendar'))}}</h1>
         </div>
@@ -43,7 +43,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">{{ucfirst(trans('educal.eventdetails'))}}</h4>
+                <p class="modal-title">{{ucfirst(trans('educal.eventdetails'))}}</p>
             </div>
             <div class="modal-body">
                 <h1 id="eventTitle"></h1>
@@ -56,11 +56,11 @@
                 </a>
                 @endif
                 <a type="button" class="btn btn-default btn-educal-primary" href="" id="icalEvent">
-                  <i class="fa fa-share"></i> {{ucfirst(trans('educal.deleteevent'))}}
+                  <i class="fa fa-share"></i> {{ucfirst(trans('educal.export'))}}
                 </a>
                 @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
                 <a type="button" class="btn btn-default btn-educal-danger pull-right" href="" id="deleteEvent">
-                  <i class="fa fa-times-circle"></i> Delete
+                  <i class="fa fa-times-circle"></i> {{ucfirst(trans('educal.deleteevent'))}}
                 @endif
               </a>
             </div>

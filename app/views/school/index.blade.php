@@ -6,13 +6,18 @@
 
 @section('content')
 <div class="container-fluid" id="content-container">
+  <div class="first-row row">
+    <div class="col-xs-12">
+      <h1>{{ucfirst(trans('educal.schools'))}}</h1>
+    </div>
+  </div>
   <div class="row">
     <div class="col-xs-12 table-responsive">
-      <h1>{{ucfirst(trans('educal.schools'))}}</h1>
       <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
         <thead>
         <tr>
           <th class="hidden-xs">#</th>
+          <th>City</th>
           <th>Name</th>
           <th>Short Name</th>
           <th># of Groups</th>
@@ -25,12 +30,13 @@
         <?php $i++; ?>
         <tr>
           <td class="hidden-xs">{{ $i }}</td>
+          <td >{{ $school->city }}</td>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
           <td>{{$school->short}}</td>
           <td>{{count($school->groups)}}</td>
           <td>
-            <a href="#" title="Edit"><i class="fa fa-edit fa-2x"></i></a>
-            <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
+            <a href="{{ route('school.edit', $school->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
+            <a href="{{ route('school.delete', $school->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>
         @endforeach

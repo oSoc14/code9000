@@ -85,7 +85,7 @@ a {
 }
 /* line 74, ../sass/app.scss */
 a:hover {
-  color: #f95a93;
+  color: #556066;
 }
 
 /* line 78, ../sass/app.scss */
@@ -357,27 +357,21 @@ img {
 #content-wrapper h1 {
   margin: 0px 0 20px 0;
   font-weight: 700;
-  display: inline-block;
 }
-/* line 281, ../sass/app.scss */
+/* line 280, ../sass/app.scss */
 #content-wrapper .form-horizontal label {
   text-align: left;
 }
-/* line 284, ../sass/app.scss */
+/* line 283, ../sass/app.scss */
 #content-wrapper .link-goback {
   display: inline-block;
   margin-bottom: 9px;
 }
-/* line 287, ../sass/app.scss */
-#content-wrapper .link-goback:hover {
-  text-decoration: none;
-  color: #00cde1;
-}
-/* line 293, ../sass/app.scss */
+/* line 288, ../sass/app.scss */
 #content-wrapper .content-table {
   margin-top: 8px !important;
 }
-/* line 295, ../sass/app.scss */
+/* line 290, ../sass/app.scss */
 #content-wrapper .content-table th {
   height: 40px;
   color: #fff;
@@ -387,40 +381,41 @@ img {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 304, ../sass/app.scss */
+/* line 299, ../sass/app.scss */
 #content-wrapper .content-table a:hover {
   color: #556066;
 }
-/* line 314, ../sass/app.scss */
+/* line 306, ../sass/app.scss */
 #content-wrapper .form-repeat-container {
   display: none;
 }
-/* line 317, ../sass/app.scss */
+/* line 309, ../sass/app.scss */
 #content-wrapper .linkToText {
   width: 100%;
 }
 
-/* line 322, ../sass/app.scss */
+/* line 314, ../sass/app.scss */
+.first-row {
+  height: 88px;
+}
+
+/* line 318, ../sass/app.scss */
 #content-container {
   position: relative;
   z-index: 1020;
 }
-/* line 325, ../sass/app.scss */
-#content-container h1 {
-  margin-bottom: 49px;
-}
 
 /* CALENDAR
 ---------------------- */
-/* line 335, ../sass/app.scss */
+/* line 331, ../sass/app.scss */
 #calendar a {
   color: #fff;
 }
-/* line 337, ../sass/app.scss */
+/* line 333, ../sass/app.scss */
 #calendar a:hover {
   color: #b6cdea;
 }
-/* line 341, ../sass/app.scss */
+/* line 337, ../sass/app.scss */
 #calendar .fc-event {
   background: #00cde1;
   border: none;
@@ -441,7 +436,7 @@ img {
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
 }
-/* line 349, ../sass/app.scss */
+/* line 345, ../sass/app.scss */
 #calendar .fc-event:hover {
   color: #108a98;
   -webkit-box-shadow: rgba(0, 0, 0, 0.25) -1px -1px 3px;
@@ -449,11 +444,11 @@ img {
   box-shadow: rgba(0, 0, 0, 0.25) -1px -1px 3px;
   cursor: pointer;
 }
-/* line 355, ../sass/app.scss */
+/* line 351, ../sass/app.scss */
 #calendar .fc-state-highlight {
   background: #daf2ef;
 }
-/* line 358, ../sass/app.scss */
+/* line 354, ../sass/app.scss */
 #calendar .fc-button {
   z-index: 1020;
   text-shadow: none;
@@ -491,29 +486,29 @@ img {
   top: 3px;
   margin-bottom: 3px !important;
 }
-/* line 366, ../sass/app.scss */
+/* line 362, ../sass/app.scss */
 #calendar .fc-button:hover {
   background: #00cde1;
   border-color: #108a98 !important;
 }
-/* line 370, ../sass/app.scss */
+/* line 366, ../sass/app.scss */
 #calendar .fc-button:active {
   border-bottom: 2px solid #108a98 !important;
   top: 1px !important;
   z-index: 1010;
 }
-/* line 377, ../sass/app.scss */
+/* line 373, ../sass/app.scss */
 #calendar .fc-state-disabled {
   color: #fff;
   top: 1px;
   border-bottom: 1px solid #333333 !important;
 }
-/* line 381, ../sass/app.scss */
+/* line 377, ../sass/app.scss */
 #calendar .fc-state-disabled:active {
   top: 1px;
   border-bottom: 1px solid #108a98 !important;
 }
-/* line 386, ../sass/app.scss */
+/* line 382, ../sass/app.scss */
 #calendar .fc-state-active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -521,52 +516,52 @@ img {
   background: #00cde1;
   border-color: #108a98 !important;
 }
-/* line 390, ../sass/app.scss */
+/* line 386, ../sass/app.scss */
 #calendar .fc-state-active:active {
   border-color: #108a98 !important;
 }
-/* line 394, ../sass/app.scss */
+/* line 390, ../sass/app.scss */
 #calendar .fc-header-title h2 {
   font-size: 25px;
   position: relative;
   bottom: 4px;
 }
-/* line 399, ../sass/app.scss */
+/* line 395, ../sass/app.scss */
 #calendar .fc-widget-content {
   border-width: 0;
 }
 @media screen and (max-width: 1024px) {
-  /* line 399, ../sass/app.scss */
+  /* line 395, ../sass/app.scss */
   #calendar .fc-widget-content {
     border-width: 1px 0 0 1px;
   }
 }
-/* line 405, ../sass/app.scss */
+/* line 401, ../sass/app.scss */
 #calendar thead tr.fc-first {
   color: #fff;
   text-transform: uppercase;
   height: 40px;
   text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 5px;
 }
-/* line 410, ../sass/app.scss */
+/* line 406, ../sass/app.scss */
 #calendar thead tr.fc-first th {
   vertical-align: middle;
 }
-/* line 413, ../sass/app.scss */
+/* line 409, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-mon, #calendar thead tr.fc-first .fc-tue, #calendar thead tr.fc-first .fc-wed, #calendar thead tr.fc-first .fc-thu, #calendar thead tr.fc-first .fc-fri {
   border: none;
 }
-/* line 416, ../sass/app.scss */
+/* line 412, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-sat, #calendar thead tr.fc-first .fc-sun {
   background: #333333;
   border: none;
 }
-/* line 420, ../sass/app.scss */
+/* line 416, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-widget-header {
   border: none;
 }
 
-/* line 427, ../sass/app.scss */
+/* line 423, ../sass/app.scss */
 #content-bg {
   width: 100%;
   background: url("images/content-bg.jpg") repeat top left #556066;
@@ -581,25 +576,25 @@ img {
   }*/
 }
 @media screen and (max-width: 768px) {
-  /* line 427, ../sass/app.scss */
+  /* line 423, ../sass/app.scss */
   #content-bg {
     height: 241px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 427, ../sass/app.scss */
+  /* line 423, ../sass/app.scss */
   #content-bg {
     height: 211px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-  /* line 427, ../sass/app.scss */
+  /* line 423, ../sass/app.scss */
   #content-bg {
     height: 240px;
   }
 }
 
-/* line 453, ../sass/app.scss */
+/* line 449, ../sass/app.scss */
 #addEvent:active {
   margin: 0 0 43px 0 !important;
 }
