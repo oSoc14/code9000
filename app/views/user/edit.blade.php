@@ -9,10 +9,16 @@
 <div class="col-xs-12 col-sm-9">
     {{Form::open(array('route' => array('user.update',$user->id)))}}
     <h1>Edit information</h1>
-
-    @foreach ($errors->all() as $message)
-    {{$message}}
-    @endforeach
+    @if($errors->count())
+    <div class="alert alert-danger" role="alert">
+        <strong>Errors</strong>
+        <ul>
+            @foreach ($errors->all() as $message)
+            <li>{{$message}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <div class="form-group">
         {{Form::label('name', 'First name')}}

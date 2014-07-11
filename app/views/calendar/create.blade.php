@@ -13,10 +13,16 @@
   'class'=>'form-horizontal'
   ]), PHP_EOL }}
   <h1>Create Event</h1>
-
-  @foreach ($errors->all() as $message)
-  {{$message}}
-  @endforeach
+    @if($errors->count())
+    <div class="alert alert-danger" role="alert">
+        <strong>Errors</strong>
+        <ul>
+            @foreach ($errors->all() as $message)
+            <li>{{$message}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
   <div class="form-group">
     {{Form::label('title', 'Title', array('class'=>'col-sm-12 col-md-2 control-label'))}}
