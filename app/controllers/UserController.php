@@ -352,19 +352,25 @@ class UserController extends \BaseController {
         // If user is logged in, get school_id, find respective users
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
+            if ($user->hasAnyAccess(array('school','user')) || $user->id == $id){
+                $selectedUser = null;
                 if($id != null) {
-                    $user = Sentry::findUserById($id);
+                    $selectedUser = Sentry::findUserById($id);
                 } else {
-                    $user = Sentry::getUser();
+                    $selectedUser = Sentry::getUser();
                 }
-                return View::make('user.edit')
-                    ->with('user', $user);
-            }else{
+
+                if($user->school_id == $selectedUser->school_id) {
+                    return View::make('user.edit')
+                        ->with('user', $selectedUser);
+                } else {
+                    return Redirect::route('user.index');
+                }
+            } else {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
-        }   else{
+        } else{
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }
@@ -372,15 +378,13 @@ class UserController extends \BaseController {
 
     /**
      * Update userSettings
-     * TODO: Permissions
      */
     public function updateUser($id)
     {
         if(Sentry::check()) {
-            $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
-                $user = Sentry::findUserById($id);
-
+            $userLogged = Sentry::getUser();
+            $user = Sentry::findUserById($id);
+            if ($userLogged->hasAccess('school') || $userLogged->id == $id || ($userLogged->hasAccess('user') && $userLogged->school_id == $user->school_id)){
                 $validator = Validator::make(
                     array(
                         'name' => Input::get('name'),
@@ -388,12 +392,14 @@ class UserController extends \BaseController {
                         'email' => Input::get('email'),
                         'password' => Input::get('password'),
                         'password_confirmation' => Input::get('password_confirmation'),
+                        'lang' => Input::get('lang')
                     ),
                     array(
                         'name' => 'required',
                         'surname' => 'required',
                         'email' => 'required|email',
                         'password' => 'min:8|confirmed',
+                        'lang' => 'required'
                     )
                 );
 
@@ -422,6 +428,12 @@ class UserController extends \BaseController {
 
                     $user->first_name   = e(Input::get('name'));
                     $user->last_name    = e(Input::get('surname'));
+                    $user->lang = e(Input::get('lang'));
+
+                    Session::forget('lang');
+                    Session::put('lang', Input::get('lang'));
+                    //Set the language
+                    App::setLocale(Session::get('lang'));
 
                     $user->save();
 

@@ -34,11 +34,14 @@ $group->name) }}</span></small></h1>
       @endif
       <div class="form-group">
           <label for="user">Group name</label>
-          @if(str_replace($group->school->short.'_','',$group->name) == 'global')
+          <?php
+           $grp = str_replace($group->school->short.'_','',$group->name);
+            ?>
+          @if($grp == 'global' || $grp == 'admin')
           <label class="alert-warning">This name can not be changed</label>
-          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['class'=>'form-control', 'disabled'=>'disabled'])}}
+          {{Form::text('name', $grp, ['class'=>'form-control', 'disabled'=>'disabled'])}}
           @else
-          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['class'=>'form-control'])}}
+          {{Form::text('name', $grp, ['class'=>'form-control'])}}
           @endif
       </div>
       <div class="checkbox">

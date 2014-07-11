@@ -121,7 +121,7 @@
             </a>
           </li>
           <li class="panel-heading">
-            <a href="{{ route('settings') }}">
+            <a href="{{ route('user.edit') }}">
               <p class="panel-title">
                 <i class="fa fa-cogs fa-lg"></i>
                 {{ucfirst(trans('educal.settings'))}}

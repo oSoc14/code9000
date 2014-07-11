@@ -25,15 +25,6 @@ Route::get('about', array('as' => 'about', function()
 {
     return View::make('about');
 }));
-Route::get('settings', [
-    'as' => 'settings',
-    'uses' => 'HomeController@settings'
-]);
-
-Route::post('settings', [
-    'as' => 'settings.update',
-    'uses' => 'HomeController@settingsUpdate'
-]);
 
 Route::group(['prefix' => 'school'], function () {
     Route::post('/register', [

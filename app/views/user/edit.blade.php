@@ -33,6 +33,10 @@
         {{Form::email('email', $user->email , ['class'=>'form-control', 'placeholder'=>$user->email])}}
     </div>
     <div class="form-group">
+        <label>Language</label>
+        {{ Form::select('lang', ['nl' => 'nl','fr' => 'fr','en' => 'en','de' => 'de'], Session::get('lang'), array('class' => 'form-control')) }}
+    </div>
+    <div class="form-group">
         <label for="password">New Password</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="New password">
     </div>
