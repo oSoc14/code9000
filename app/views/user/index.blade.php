@@ -84,6 +84,14 @@
                     'route' => 'user.create',
                     'data-ajax' => 'true',
                     ]), PHP_EOL }}
+                    @if(Sentry::getUser()->hasAccess('school'))
+                    <div class="form-group">
+                        <label>School</label>
+                        {{ Form::select('school', $schools, null, array('class' => 'form-control')) }}
+                    </div>
+                    @else
+                    <input type="hidden" class="form-control" id="school" name="school" value="{{$school->id}}">
+                    @endif
                     <div class="form-group">
                         <label for="user-email">Name</label>
                         <input type="text" class="form-control" id="user-name" name="name" placeholder="What's your given name?">
@@ -103,7 +111,6 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
                     </div>
-                    <input type="hidden" name="school" value="{{ Sentry::getUser()->school_id }}">
                     <button type="submit" class="btn btn-default btn-educal-danger">Register</button>
                     {{ Form::close(), PHP_EOL }}
                 </div>

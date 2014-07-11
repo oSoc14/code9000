@@ -16,6 +16,11 @@ class UserController extends \BaseController {
             $user = Sentry::getUser();
             $users = null;
             $schoolName = null;
+            $schools = School::get();
+            $schoolsArray = [];
+            foreach ($schools as $school){
+                $schoolsArray[$school->id] = $school->name;
+            }
             if ($user->hasAccess('school'))
             {
                 $users = User::where('id','<>',$user->id)->get();
@@ -27,13 +32,13 @@ class UserController extends \BaseController {
                     ->where('id','<>',$user->id)
                     ->get();
                 $school = School::where('id', $schoolId)->first();
-                $schoolName = $school->name;
             } else {
                 return Redirect::route('calendar.index');
             }
             return View::make('user.index')
                 ->with('users', $users)
-                ->with('schoolName', $schoolName);
+                ->with('school', $school)
+                ->with('schools',$schoolsArray);
 
         }
         // If no permissions, redirect to calendar index
