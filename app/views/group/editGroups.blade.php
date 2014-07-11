@@ -5,23 +5,13 @@
 @stop
 
 @section('content')
+<div class="container-fluid">
 <div class="row">
   <div class="col-xs-12">
-    <ol class="breadcrumb">
-      <li><a href="{{ route('landing') }}">Home</a></li>
-      <li><a href="{{ route('group.index') }}">Groups</a></li>
-      <li>Group</li>
-      <li class="active">Edit</li>
-    </ol>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <h1>Edit Group <small><span class="label label-primary">{{ str_replace($group->school->short.'_','',
-$group->name) }}</span></small></h1>
+    <a href="{{ route('group.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> Back to groups</a>
+    <h1>Edit Group</h1>
       <!-- TODO: Check checkboxes, global function for str_replace -->
-      <h2>Group info</h2>
-      {{Form::open(array('route' => array('group.update', $group->id)))}}
+
       @if($errors->count())
       <div class="alert alert-danger" role="alert">
           <strong>Errors</strong>
@@ -32,92 +22,122 @@ $group->name) }}</span></small></h1>
           </ul>
       </div>
       @endif
+
+      {{ Form::open(array('route' => array('group.update', $group->id), 'class'=>'form form-horizontal')) }}
+
       <div class="form-group">
-          <label for="user">Group name</label>
+        <label for="name" class="col-md-2 control-label">Group name</label>
+        <div class="col-md-8">
           @if(str_replace($group->school->short.'_','',$group->name) == 'global')
           <label class="alert-warning">This name can not be changed</label>
-          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['class'=>'form-control', 'disabled'=>'disabled'])}}
+          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['id'=>'name', 'class'=>'form-control', 'disabled'=>'disabled'])}}
           @else
-          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['class'=>'form-control'])}}
+          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['id'=>'name', 'class'=>'form-control'])}}
           @endif
+        </div>
       </div>
-      <div class="checkbox">
-          <label>
-              @if(isset($group->permissions['group']))
-              <input type="checkbox" name="permissions[group]" checked> Group
-              @else
-              <input type="checkbox" name="permissions[group]"> Group
-              @endif
-          </label>
-          <label>
-              @if(isset($group->permissions['user']))
-              <input type="checkbox" name="permissions[user]" checked> User
-              @else
-              <input type="checkbox" name="permissions[user]"> User
-              @endif
-          </label>
-          <label>
-              @if(isset($group->permissions['event']))
-              <input type="checkbox" name="permissions[event]" checked> Event
-              @else
-              <input type="checkbox" name="permissions[event]"> Event
-              @endif
-          </label>
-      </div>
-      <button type="submit" class="btn btn-primary">Update Group</button>
-      {{ Form::close(), PHP_EOL }}
 
-      {{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
-    <h2><small>Add user</small></h2>
-    <div class="row">
+      <div class="form-group">
+        <label class="col-md-2 control-label">User permissions</label>
+        <div class="col-md-8">
+          <div class="checkbox">
+            <label>
+                @if(isset($group->permissions['group']))
+                <input type="checkbox" name="permissions[group]" checked> Can create groups
+                @else
+                <input type="checkbox" name="permissions[group]"> Can create groups
+                @endif
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+                @if(isset($group->permissions['user']))
+                <input type="checkbox" name="permissions[user]" checked> Can add users
+                @else
+                <input type="checkbox" name="permissions[user]"> Can add users
+                @endif
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+                @if(isset($group->permissions['event']))
+                <input type="checkbox" name="permissions[event]" checked> Can add, edit and remove events
+                @else
+                <input type="checkbox" name="permissions[event]"> Can add, edit and remove events
+                @endif
+            </label>
+          </div>
+        </div>
+      </div>
 
-      <div class="col-xs-7">
-      @if(count($smartUsers) > 0)
-      {{Form::select('user', $smartUsers, [], array('class'=>'form-control'));}}
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> Save changes</button>
+        </div>
       </div>
-      <div class="col-xs-3">
-      <button type="submit" class="btn btn-default btn-educal-danger">Add user</button>
-      @else
-      <p>Geen gebruikers die kunnen toegevoegd worden</p>
-      @endif
       {{ Form::close(), PHP_EOL }}
-      </div>
     </div>
-    </div>
-</div>
-<br>
+  </div>
+
 <div class="row">
-  <div class="col-xs-12 table-responsive">
-    <h2><small>Users in this group</small></h2>
-    <table id="userTable" class="table table-striped" cellspacing="0" width="100%">
-      <thead>
-      <tr>
-        <th>E-mail</th>
-        <th>Name</th>
-        <th>Permissions</th>
-      </tr>
-      </thead>
+  <div class="col-xs-12">
+    <div class="panel-group" id="accordionGroup">
 
-      <tbody>
-      @foreach($users as $user)
-      <tr>
-        <td>{{ $user->email }}</td>
-        <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-        <td>
-          <a class="editUser" href="{{ route('user.edit',$user->id) }}">
-            <span class="glyphicon glyphicon-pencil"></span>
-          </a>
-          <a data-userid="{{$user->id}}" data-url="{{ route('user.removeFromGroup',array('userId' => $user->id,'groupId' => $group->id)) }}" class="removeUserFromGroup" href="#">
-            <span class="glyphicon glyphicon-remove-sign"></span>
-          </a>
-        </td>
-      </tr>
-      @endforeach
-      </tbody>
-    </table>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordionGroup" href="#addUsersCollapse"><strong>Add user</strong></a></h2>
+      </div>
+      <div class="panel-body collapse out" id="addUsersCollapse">
+        {{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
+        <div class="col-xs-7">
+          @if(count($smartUsers) > 0)
+          {{Form::select('user', $smartUsers, [], array('class'=>'form-control'));}}
+        </div>
+        <div class="col-xs-3">
+          <button type="submit" class="btn btn-default btn-educal-primary">Add user</button>
+          @else
+          <p>Geen gebruikers die kunnen toegevoegd worden</p>
+          @endif
+          {{ Form::close(), PHP_EOL }}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordionGroup" href="#currentUsersCollapse"><strong>Users in this group</strong></a></h2>
+      </div>
+      <div class="panel-body collapse in" id="currentUsersCollapse">
+        <table id="userTable" class="table table-striped" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>E-mail</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          @foreach($users as $user)
+          <tr>
+            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>
+              <a class="editUser" href="{{ route('user.edit',$user->id) }}" title="Edit user details">
+                <i class="fa fa-pencil fa-2x"></i>
+              </a>
+              <a data-userid="{{$user->id}}" data-url="{{ route('user.removeFromGroup',array('userId' => $user->id,'groupId' => $group->id)) }}" class="removeUserFromGroup" href="#" title="Remove from group">
+                <i class="fa fa-times-circle fa-2x"></i>
+              </a>
+            </td>
+          </tr>
+          @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
-
 @stop
 
 @section('footerScript')

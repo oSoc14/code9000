@@ -33,12 +33,12 @@
         <?php $i++ ?>
         <tr>
           <td class="hidden-xs">{{ $i }}</td>
-          <td>{{ $group->name }}</td>
+          <td><a href="{{route('group.edit',$group->id)}}">{{ $group->name }}</a></td>
           @if($group->school)
           <td>
               <div class="col-xs-2">
-              <a data-link="{{ URL::to('/') }}/export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to PDF link" class="linkToPdf"><i class="fa fa-file-pdf-o fa-2x"></i></a>
-              <a data-link="{{ URL::to('/') }}/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to iCal link" class="linkToIcal"><i class="fa fa-calendar fa-2x"></i></a>
+                <a href="#" data-link="{{ URL::to('/') }}/export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to PDF link" class="linkToPdf"><i class="fa fa-file-pdf-o fa-2x"></i></a>
+                <a href="#" data-link="{{ URL::to('/') }}/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to iCal link" class="linkToIcal"><i class="fa fa-calendar fa-2x"></i></a>
               </div>
             <div class="col-xs-10">
               <input type="text" class="form-control linkToText" value="{{ URL::to('/') }}/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" />

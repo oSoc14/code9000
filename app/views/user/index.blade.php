@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container-fluid" id="content-container">
-  <div class="row">
+  <div class="row first-row">
     <div class="col-xs-6">
       <h1>{{ucfirst(trans('educal.users'))}}</h1>
     </div>
