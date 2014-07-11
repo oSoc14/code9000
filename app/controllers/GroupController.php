@@ -60,9 +60,8 @@ class GroupController extends \BaseController {
                     // If no permissions, redirect to calendar index
                     return Redirect::route('calendar.index');
                 }
-
             }
-        }else{
+        } else {
             // If no permissions, redirect to calendar index
             return Redirect::route('landing');
         }
@@ -115,9 +114,6 @@ class GroupController extends \BaseController {
 
                     return Redirect::route('group.create')->withInput()->withErrors($validator);
                 } else {
-                    $prefix = '';
-                    $prefix = $school->short.'_';
-
                     $permissions = [];
                     $permissionlist = Input::get('permissions');
                     if(isset($permissionlist)) {
@@ -131,7 +127,7 @@ class GroupController extends \BaseController {
                     $group = Sentry::createGroup(array(
                         'name'        => $groupFullName,
                         'permissions' => $permissions,
-                        'school_id' => $school->id
+                        'school_id'   => $school->id
                     ));
                     return Redirect::route('group.index');
                 }
@@ -157,44 +153,45 @@ class GroupController extends \BaseController {
             // Find active user
             $user = Sentry::getUser();
             if ($user->hasAnyAccess(array('school','user'))){
-                // TODO: Remove users from group
                 // Find selected group by $id
                 $group = Sentry::findGroupById($id);
-                // Find all users in the selected group
-                $users = Sentry::findAllUsersInGroup($group);
-                // Find all users by school
-                $schoolUsers = User::where('users.school_id', $group->school_id)->get();
-
-                // Find all possible users that aren't in the group yet
-                $possibleUsers = [];
-                foreach($schoolUsers as $su) {
-                    $found = false;
-                    foreach($users as $u ){
-                        if($u->id === $su->id)
-                        {
-                            $found = true;
-                            break;
+                if($user->school_id == $group->school_id || $user->hasAccess('school')) {
+                    // Find all users in the selected group
+                    $users = Sentry::findAllUsersInGroup($group);
+                    // Find all users by school
+                    $schoolUsers = User::where('users.school_id', $group->school_id)->get();
+                    // Find all possible users that aren't in the group yet
+                    $possibleUsers = [];
+                    foreach($schoolUsers as $su) {
+                        $found = false;
+                        foreach($users as $u ){
+                            if($u->id === $su->id) {
+                                $found = true;
+                                break;
+                            }
+                        }
+                        if(!$found) {
+                            array_push($possibleUsers, $su);
                         }
                     }
-                    if(!$found){
-                        array_push($possibleUsers, $su);
+                    // Transform array into usable list for dropdownmenu
+                    $smartUsers = [];
+                    foreach($possibleUsers as $pus){
+                        $smartUsers[$pus->id] = $pus->email;
                     }
+                    // Return view with selected parameters
+                    return View::make('group.editGroups')
+                        ->with('users',$users)
+                        ->with('group', $group)
+                        ->with('smartUsers', $smartUsers);
+                } else {
+                    return Redirect::route('calendar.index');
                 }
-                // Transform array into usable list for dropdownmenu
-                $smartUsers = [];
-                foreach($possibleUsers as $pus){
-                    $smartUsers[$pus->id] = $pus->email;
-                }
-                // Return view with selected parameters
-                return View::make('group.editGroups')
-                    ->with('users',$users)
-                    ->with('group', $group)
-                    ->with('smartUsers', $smartUsers);
-            }else{
+            } else {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
-        }else{
+        } else {
             // If no permissions, redirect to calendar index
             return Redirect::route('landing');
         }
@@ -212,8 +209,8 @@ class GroupController extends \BaseController {
         if(Sentry::check()) {
             // Find active user
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
-                $group = Sentry::findGroupById($id);
+            $group = Sentry::findGroupById($id);
+            if ($user->hasAccess('school') || ($user->hasAccess('group') && $user->school_id == $group->school_id)){
                 $school = $group->school;
                 $grp = str_replace($school->short.'_','',$group->name);
                 $groupFullName = strtolower($school->short.'_'.e(Input::get('name')));
@@ -278,10 +275,18 @@ class GroupController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            $group = Group::find($id);
+            // check if User belongs to group/school which the appointment is from
+            if ($user->hasAccess('school') || ($user->hasAccess('group') && $user->school_id == $group->school_id)){
+                $group->delete();
+            }
+            return Redirect::route('group.index');
+        } else {
+            return Redirect::route('landing');
+        }
 	}
-
-
-
 
 }

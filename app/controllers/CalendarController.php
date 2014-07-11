@@ -6,7 +6,6 @@ class CalendarController extends \BaseController {
 
     /**
      * Display a calendar view.
-     *
      * @return Response
      */
     public function index()
@@ -80,7 +79,7 @@ class CalendarController extends \BaseController {
                     $user->load('school.groups.appointments');
                     $groups = $user->school->groups;
                 }
-
+                // Transform recieved objectList (from database) into array to send with view
                 $smartgroup = [];
                 foreach($groups as $group){
                     $smartgroup[$group->id] = $group->name;
@@ -173,32 +172,6 @@ class CalendarController extends \BaseController {
         }
     }
 
-
-    /**
-     * Display an event by its ID
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        if(Sentry::check()) {
-            $schools = null;
-            // Find active user
-            $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','event'))) {
-                $event = Appointment::find($id);
-                $event->load('group');
-                return View::make('calendar.eventDetail')->with('event',$event);
-            } else {
-                return Redirect::route('calendar.index');
-            }
-        } else {
-            return Redirect::route('landing');
-        }
-    }
-
-
     /**
      * Show the form for editing the specified appointment.
      *
@@ -211,32 +184,29 @@ class CalendarController extends \BaseController {
             // Find active user
             $user = Sentry::getUser();
             if ($user->hasAnyAccess(array('school','event'))){
-                $schools = null;
-                // Find active user
-                $user = Sentry::getUser();
-
-                if ($user->hasAnyAccess(array('school','event'))){
-                    if($user->hasAccess(array('school'))){
-                        $groups = Group::where('school_id','<>','')->get();
-                    }else{
-                        $user->load('school.groups.appointments');
-                        $groups = $user->school->groups;
-                    }
-                    $smartgroup = [];
-                    foreach($groups as $group){
-                        $smartgroup[$group->id] = $group->name;
-                    }
-
-                    $event = Appointment::find($id);
-
-                    return View::make('calendar.edit')->with('groups',$smartgroup)->with('event',$event);
-                }else{
+                $event = Appointment::find($id);
+                // check if user is superAdmin
+                if($user->hasAccess(array('school'))){
+                    $groups = Group::where('school_id','<>','')->get();
+                } elseif($user->school_id == $event->group->school_id) {
+                    // check if User belongs to group/school which the appointment is from
+                    $user->load('school.groups.appointments');
+                    $groups = $user->school->groups;
+                } else {
                     return Redirect::route('calendar.index');
                 }
-            }else{
+                $smartgroup = [];
+                foreach($groups as $group){
+                    $smartgroup[$group->id] = $group->name;
+                }
+
+                $event = Appointment::find($id);
+
+                return View::make('calendar.edit')->with('groups',$smartgroup)->with('event',$event);
+            } else {
                 return Redirect::route('calendar.index');
             }
-        }else{
+        } else {
             return Redirect::route('landing');
         }
     }
@@ -253,8 +223,9 @@ class CalendarController extends \BaseController {
         if(Sentry::check()) {
             // Find active user
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','event'))){
-
+            $event = Appointment::find($id);
+            // check if User belongs to group/school which the appointment is from
+            if ($user->hasAccess('school') || ($user->hasAccess('event') && $user->school_id == $event->group->school_id)){
                 $endDate = new DateTime();
                 // check if endDate isn't blank (____/__/__ __:__)
                 if(Input::get('end') == '____/__/__ __:__') {
@@ -282,7 +253,6 @@ class CalendarController extends \BaseController {
                     return Redirect::route('event.edit',$id)->withInput()->withErrors($validator);
                 }
                 else{
-                    $event = Appointment::find($id);
                     $event->title = e(Input::get('title'));
                     $event->description = e(Input::get('description'));
                     $event->start_date = new DateTime(Input::get('start'));
@@ -336,14 +306,13 @@ class CalendarController extends \BaseController {
         if(Sentry::check()) {
             // Find active user
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','event'))){
-                $event = Appointment::find($id);
+            $event = Appointment::find($id);
+            // check if User belongs to group/school which the appointment is from
+            if ($user->hasAccess('school') || ($user->hasAccess('event') && $user->school_id == $event->group->school_id)){
                 $event->delete();
-                return Redirect::route('calendar.index');
-            }else{
-                return Redirect::route('calendar.index');
             }
-        }else{
+            return Redirect::route('calendar.index');
+        } else {
             return Redirect::route('landing');
         }
     }

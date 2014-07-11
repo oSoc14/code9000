@@ -64,11 +64,6 @@ Route::group(['prefix' => 'user'], function () {
         'uses' => 'UserController@index'
     ]);
 
-    Route::get('/{id}', [
-        'as' => 'user.show',
-        'uses' => 'UserController@show'
-    ])->where('id', '[0-9]+');
-
     Route::post('/auth', [
         'as' => 'user.auth',
         'uses' => 'UserController@auth'
@@ -163,12 +158,6 @@ Route::group(array('prefix' => 'calendar'), function()
         'uses' => 'CalendarController@destroy'
     ])->where('id', '[0-9]+');
 
-    // Returns detailsview for an event with given ID
-    Route::get('/event/{id}', [
-        'as'   => 'event.detail',
-        'uses' => 'CalendarController@show'
-    ])->where('id', '[0-9]+');
-
     // Returns all events for the users school
     Route::get('/api/events', [
         'as'   => 'calendar.events',
@@ -209,6 +198,12 @@ Route::group(array('prefix' => 'group'), function()
     Route::post('/edit/{id}', [
         'as'   => 'group.update',
         'uses' => 'GroupController@update'
+    ])->where('id', '[0-9]+');
+
+    // Destroy a group
+    Route::get('/delete/{id}', [
+        'as'   => 'group.delete',
+        'uses' => 'GroupController@destroy'
     ])->where('id', '[0-9]+');
 });
 
