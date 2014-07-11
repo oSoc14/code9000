@@ -44,11 +44,9 @@ $(document).ready(function() {
       dataType: "json",
       contentType: "application/json",
       beforeSend:function(){
-        that.parent().find('.loader').show();
         that.prop('disabled', true);
       },
       success:function(data){
-        that.parent().find('.loader').hide();
         that.prop('disabled', false);
       },
       error:function(xhr, status, errorThrown) {
@@ -57,8 +55,6 @@ $(document).ready(function() {
       }
     });
   });
-
-  $('.loader').hide();
 
   $('#repeat_type').change(function(ev){
     calculateRepeats();
@@ -73,14 +69,10 @@ $(document).ready(function() {
     calculateRepeats();
   });
 
-  $('.linkToPdf').on('click', function(){
+  $('.linkTo').on('click', function(){
     var that = $(this);
-    that.siblings('.linkToText').val(that.data('link')).select();
-  });
-
-  $('.linkToIcal').on('click', function(){
-    var that = $(this);
-    that.siblings('.linkToText').val(that.data('link')).select();
+    var id = that.data('group-id');
+    $('.linkToText_'+id).val(that.data('link')).select();
   });
 
   $('.linkToText').on('click', function(){
