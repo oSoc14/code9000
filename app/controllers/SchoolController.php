@@ -171,28 +171,41 @@ class SchoolController extends \BaseController {
             $user = Sentry::getUser();
             if ($user->hasAccess('school'))
             {
-                $validator = Validator::make(
-                    array(
-                        'name' => Input::get('name'),
-                        'city' => Input::get('city'),
-                    ),
-                    array(
-                        'name' => 'required|unique:schools,name',
-                        'city' => 'required',
-                    )
-                );
-                if ($validator->fails())
-                {
-                    return Redirect::route('school.detail',$id)
-                        ->withInput()
-                        ->withErrors($validator);
-
+                $school = School::find($id);
+                if(Input::get('name') != $school->name){
+                    $validator = Validator::make(
+                        array(
+                            'name' => Input::get('name'),
+                            'city' => Input::get('city'),
+                        ),
+                        array(
+                            'name' => 'required|unique:schools,name',
+                            'city' => 'required',
+                        )
+                    );
+                    if ($validator->fails())
+                    {
+                        return Redirect::route('school.edit',$id)
+                            ->withInput()
+                            ->withErrors($validator);
+                    }else{
+                        $short = e(strtolower(Input::get("name")));
+                        $short = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
+                        foreach($school->groups as $group){
+                            $group->name = str_replace($school->short, $short, $group->name);
+                            $group->save();
+                        }
+                        $school->short = $short;
+                        $school->name = e(Input::get("name"));
+                        $school->city = e(Input::get("city"));
+                        $school->save();
+                        return Redirect::route('school.index');
+                    }
                 }else{
-                    $school = School::find($id);
                     $school->name = e(Input::get("name"));
                     $school->city = e(Input::get("city"));
                     $school->save();
-                    return Redirect::route('school.detail',$id);
+                    return Redirect::route('school.index');
                 }
             }
             else
