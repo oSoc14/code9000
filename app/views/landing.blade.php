@@ -94,6 +94,14 @@
           <h4 class="modal-title">Log in to your account</h4>
         </div>
         <div class="modal-body">
+            @if(Session::has('errorMessage'))
+            <div class="alert alert-danger" role="alert">
+                <strong>Errors</strong>
+                <ul>
+                    <li>{{ Session::get('errorMessage') }}</li>
+                </ul>
+            </div>
+            @endif
           {{ Form::open([
           'route' => 'user.auth',
           'data-ajax' => 'false',
@@ -113,7 +121,6 @@
           </div>
           <button type="submit" class="btn btn-default btn-educal-danger">Log in</button>
           {{ Form::close(), PHP_EOL }}
-          {{ Session::get('errorMessage') }}
         </div>
       </div>
     </div>

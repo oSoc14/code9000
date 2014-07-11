@@ -22,7 +22,16 @@ $group->name) }}</span></small></h1>
       <!-- TODO: Check checkboxes, global function for str_replace -->
       <h2>Group info</h2>
       {{Form::open(array('route' => array('group.update', $group->id)))}}
-
+      @if($errors->count())
+      <div class="alert alert-danger" role="alert">
+          <strong>Errors</strong>
+          <ul>
+              @foreach ($errors->all() as $message)
+              <li>{{$message}}</li>
+              @endforeach
+          </ul>
+      </div>
+      @endif
       <div class="form-group">
           <label for="user">Group name</label>
           @if(str_replace($group->school->short.'_','',$group->name) == 'global')
@@ -57,12 +66,6 @@ $group->name) }}</span></small></h1>
       </div>
       <button type="submit" class="btn btn-primary">Update Group</button>
       {{ Form::close(), PHP_EOL }}
-
-      <!-- ERROR MESSAGES -->
-      @foreach ($errors->all() as $message)
-      {{$message}}
-      @endforeach
-
 
       {{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
     <h2><small>Add user</small></h2>

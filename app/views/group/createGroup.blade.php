@@ -11,9 +11,16 @@
 {{Form::open(array('route' => array('group.store')))}}
 
 <!-- ERROR MESSAGES -->
-@foreach ($errors->all() as $message)
-    {{$message}}
-@endforeach
+@if($errors->count())
+<div class="alert alert-danger" role="alert">
+    <strong>Errors</strong>
+    <ul>
+        @foreach ($errors->all() as $message)
+        <li>{{$message}}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
 @if($schools)
 <div class="form-group">

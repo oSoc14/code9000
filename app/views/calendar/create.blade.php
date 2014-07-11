@@ -8,15 +8,23 @@
 <div class="col-xs-12 col-sm-9">
   <a href="{{ route('calendar.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> Back to calendar</a>
   <h1>Create Event</h1>
+
+  @if($errors->count())
+  <div class="alert alert-danger" role="alert">
+      <strong>Errors</strong>
+      <ul>
+          @foreach ($errors->all() as $message)
+          <li>{{$message}}</li>
+          @endforeach
+      </ul>
+  </div>
+  @endif
+
   {{ Form::open([
   'route' => 'event.store',
   'data-ajax' => 'false',
   'class'=>'form-horizontal'
   ]), PHP_EOL }}
-
-  @foreach ($errors->all() as $message)
-  {{$message}}
-  @endforeach
 
   <div class="form-group">
     {{Form::label('title', 'Title', array('class'=>'col-sm-12 col-md-2 control-label'))}}
@@ -86,7 +94,7 @@
         </div>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-3">
-        {{Form::select('repeat_type', ['d'=>'Days','w'=>'Weeks','M'=>'Months','y'=>'Years' ], [], array('class'=>'form-control'))}}
+        {{Form::select('repeat_type', ['d'=>'Days','w'=>'Weeks','M'=>'Months','y'=>'Years' ], [], array('class'=>'form-control', 'id'=>'repeat_type'))}}
       </div>
     </div>
 
