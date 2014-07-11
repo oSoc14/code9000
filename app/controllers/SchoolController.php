@@ -72,16 +72,15 @@ class SchoolController extends \BaseController {
                 'name'        => $short.'_global',
                 'permissions' => array(
                     'school'    => 0,
-                    'admin'     => 0,
                     'user'      => 0,
                     'group'    => 0,
-                    'event'    => 0,
+                    'event'    => 1,
                 ),
                 'school_id'     => $school->id,
             ));
 
             $group = Sentry::createGroup(array(
-                'name'        => $short.'_schooladmin',
+                'name'        => $short.'_admin',
                 'permissions' => array(
                     'school'    => 0,
                     'admin'     => 1,
@@ -147,7 +146,7 @@ class SchoolController extends \BaseController {
             if ($user->hasAccess(array('school')))
             {
                 $school = School::find($id);
-                $this->layout->content = View::make('school.detail')->with('school',$school);
+                $this->layout->content = View::make('school.edit')->with('school',$school);
             }
             else
             {
@@ -169,12 +168,44 @@ class SchoolController extends \BaseController {
 	{
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAccess(array('school')))
+            if ($user->hasAccess('school'))
             {
                 $school = School::find($id);
-                $school->name = e(Input::get("name"));
-                $school->save();
-                return Redirect::route('school.detail',$id);
+                if(Input::get('name') != $school->name){
+                    $validator = Validator::make(
+                        array(
+                            'name' => Input::get('name'),
+                            'city' => Input::get('city'),
+                        ),
+                        array(
+                            'name' => 'required|unique:schools,name',
+                            'city' => 'required',
+                        )
+                    );
+                    if ($validator->fails())
+                    {
+                        return Redirect::route('school.edit',$id)
+                            ->withInput()
+                            ->withErrors($validator);
+                    }else{
+                        $short = e(strtolower(Input::get("name")));
+                        $short = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
+                        foreach($school->groups as $group){
+                            $group->name = str_replace($school->short, $short, $group->name);
+                            $group->save();
+                        }
+                        $school->short = $short;
+                        $school->name = e(Input::get("name"));
+                        $school->city = e(Input::get("city"));
+                        $school->save();
+                        return Redirect::route('school.index');
+                    }
+                }else{
+                    $school->name = e(Input::get("name"));
+                    $school->city = e(Input::get("city"));
+                    $school->save();
+                    return Redirect::route('school.index');
+                }
             }
             else
             {
@@ -196,7 +227,7 @@ class SchoolController extends \BaseController {
 	{
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAccess(array('school')))
+            if ($user->hasAccess('school'))
             {
                 $school = School::find($id);
                 $school->delete();

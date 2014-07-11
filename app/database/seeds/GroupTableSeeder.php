@@ -22,7 +22,7 @@ class GroupTableSeeder extends Seeder {
         ));
 
         Sentry::createGroup(array(
-            'name'        => 'hettrappenhuis_schooladmin',
+            'name'        => 'hettrappenhuis_admin',
             'permissions' => array(
                 'school'    => 0,
                 'user'      => 1,

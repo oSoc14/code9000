@@ -26,13 +26,16 @@
       {{ Form::open(array('route' => array('group.update', $group->id), 'class'=>'form form-horizontal')) }}
 
       <div class="form-group">
-        <label for="name" class="col-md-2 control-label">Group name</label>
-        <div class="col-md-8">
-          @if(str_replace($group->school->short.'_','',$group->name) == 'global')
+          <label for="user" class="col-md-2 control-label">Group name</label>
+          <div class="col-md-8">
+          <?php
+           $grp = str_replace($group->school->short.'_','',$group->name);
+            ?>
+          @if($grp == 'global' || $grp == 'admin')
           <label class="alert-warning">This name can not be changed</label>
-          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['id'=>'name', 'class'=>'form-control', 'disabled'=>'disabled'])}}
+          {{Form::text('name', $grp, ['class'=>'form-control', 'disabled'=>'disabled'])}}
           @else
-          {{Form::text('name', str_replace($group->school->short.'_','',$group->name) , ['id'=>'name', 'class'=>'form-control'])}}
+          {{Form::text('name', $grp, ['class'=>'form-control'])}}
           @endif
         </div>
       </div>
@@ -119,13 +122,13 @@
           <tbody>
           @foreach($users as $user)
           <tr>
-            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
             <td>{{ $user->email }}</td>
+            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
             <td>
               <a class="editUser" href="{{ route('user.edit',$user->id) }}" title="Edit user details">
                 <i class="fa fa-pencil fa-2x"></i>
               </a>
-              <a data-userid="{{$user->id}}" data-url="{{ route('user.removeFromGroup',array('userId' => $user->id,'groupId' => $group->id)) }}" class="removeUserFromGroup" href="#" title="Remove from group">
+              <a href="{{ route('user.removeFromGroup',[$user->id, $group->id]) }}" title="Remove user">
                 <i class="fa fa-times-circle fa-2x"></i>
               </a>
             </td>
@@ -135,7 +138,6 @@
         </table>
       </div>
     </div>
-
   </div>
 </div>
 @stop

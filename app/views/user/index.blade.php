@@ -48,7 +48,6 @@
             </label>
 
             </a>
-            <i class="loader fa fa-cog"></i>
           </td>
         </tr>
         @endforeach

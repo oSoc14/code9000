@@ -17,6 +17,7 @@
         <thead>
         <tr>
           <th class="hidden-xs">#</th>
+          <th>City</th>
           <th>Name</th>
           <th>Short Name</th>
           <th># of Groups</th>
@@ -29,12 +30,13 @@
         <?php $i++; ?>
         <tr>
           <td class="hidden-xs">{{ $i }}</td>
+          <td >{{ $school->city }}</td>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
           <td>{{$school->short}}</td>
           <td>{{count($school->groups)}}</td>
           <td>
-            <a href="#" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
-            <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
+            <a href="{{ route('school.edit', $school->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
+            <a data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{{ route('school.delete', $school->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>
         @endforeach
@@ -42,6 +44,22 @@
       </table>
     </div>
   </div>
+</div>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Confirmation
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger danger">Delete</a>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="content-bg"></div>
 @stop

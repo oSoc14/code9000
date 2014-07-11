@@ -4,6 +4,10 @@ $(document).ready(function() {
     $('.sidebar-wrapper').toggleClass('sidebar-active');
   });
 
+  $('#confirm-delete').on('show.bs.modal', function(e) {
+    $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
+  });
+  
   if($("#registerSchoolModal").data("errors") == true){
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('show');
@@ -44,11 +48,9 @@ $(document).ready(function() {
       dataType: "json",
       contentType: "application/json",
       beforeSend:function(){
-        that.parent().find('.loader').show();
         that.prop('disabled', true);
       },
       success:function(data){
-        that.parent().find('.loader').hide();
         that.prop('disabled', false);
       },
       error:function(xhr, status, errorThrown) {
@@ -57,34 +59,6 @@ $(document).ready(function() {
       }
     });
   });
-
-  $('.loader').hide();
-
-  $('.removeUserFromGroup').on('click', function(ev){
-    ev.preventDefault;
-    var that = $(this);
-    var userid = that.data('userid');
-    var apiLink = that.data('url');
-
-    $.ajax({
-      type:"GET",
-      url: apiLink,
-      cache: false,
-      dataType: "html",
-      contentType: "application/json",
-      beforeSend:function(){
-
-      },
-      success:function(data){
-        that.parent().parent().hide();
-      },
-      error:function(xhr, status, errorThrown) {
-        console.log(status + ', ' + errorThrown);
-      }
-
-    });
-  });
-
 
   $('#repeat_type').change(function(ev){
     calculateRepeats();
@@ -99,14 +73,10 @@ $(document).ready(function() {
     calculateRepeats();
   });
 
-  $('.linkToPdf').on('click', function(){
+  $('.linkTo').on('click', function(){
     var that = $(this);
-    that.siblings('.linkToText').val(that.data('link')).select();
-  });
-
-  $('.linkToIcal').on('click', function(){
-    var that = $(this);
-    that.siblings('.linkToText').val(that.data('link')).select();
+    var id = that.data('group-id');
+    $('.linkToText_'+id).val(that.data('link')).select();
   });
 
   $('.linkToText').on('click', function(){

@@ -25,15 +25,6 @@ Route::get('about', array('as' => 'about', function()
 {
     return View::make('about');
 }));
-Route::get('settings', [
-    'as' => 'settings',
-    'uses' => 'HomeController@settings'
-]);
-
-Route::post('settings', [
-    'as' => 'settings.update',
-    'uses' => 'HomeController@settingsUpdate'
-]);
 
 Route::group(['prefix' => 'school'], function () {
     Route::post('/register', [
@@ -59,6 +50,10 @@ Route::group(['prefix' => 'school'], function () {
     Route::post('/edit/{id}', [
         'as'   => 'school.update',
         'uses' => 'SchoolController@update'
+    ])->where('id', '[0-9]+');
+    Route::get('/delete/{id}', [
+        'as'   => 'school.delete',
+        'uses' => 'SchoolController@destroy'
     ])->where('id', '[0-9]+');
 });
 
@@ -119,6 +114,11 @@ Route::group(['prefix' => 'user'], function () {
         'uses' => 'UserController@removeFromGroup'
     ])->where('id', '[0-9]+')
         ->where('groupId', '[0-9]+');
+
+    Route::get('/delete/{id}', [
+        'as'   => 'user.removeUserFromSchool',
+        'uses' => 'UserController@removeUserFromSchool'
+    ])->where('id', '[0-9]+');
 });
 
 

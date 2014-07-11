@@ -8,7 +8,6 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12">
-
       <a href="{{ route('group.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> Back to groups</a>
       <h1>Edit information</h1>
 
@@ -44,7 +43,11 @@
       </div>
     </div>
     <div class="form-group">
-        <label for="password" class="col-md-2 control-label">New Password</label>
+      <label>Language</label>
+      {{ Form::select('lang', ['nl' => 'nl','fr' => 'fr','en' => 'en','de' => 'de'], Session::get('lang'), array('class' => 'form-control')) }}
+    </div>
+    <div class="form-group">
+      <label for="password" class="col-md-2 control-label">New Password</label>
       <div class="col-md-8">
         <input type="password" class="form-control" id="password" name="password" placeholder="Enter your new password here">
       </div>
@@ -55,11 +58,11 @@
         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Repeat your new password">
       </div>
     </div>
-      <div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-    <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> Save changes</button>
-        </div>
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-8">
+        <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> Save changes</button>
       </div>
+    </div>
     {{ Form::close(), PHP_EOL }}
     {{ Session::get('errorMessage') }}
 

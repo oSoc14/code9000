@@ -209,15 +209,13 @@ class GroupController extends \BaseController {
 	 */
 	public function update($id)
 	{
-
         if(Sentry::check()) {
             // Find active user
             $user = Sentry::getUser();
             if ($user->hasAnyAccess(array('school','user'))){
                 $group = Sentry::findGroupById($id);
-
                 $school = $group->school;
-
+                $grp = str_replace($school->short.'_','',$group->name);
                 $groupFullName = strtolower($school->short.'_'.e(Input::get('name')));
                 $validator = Validator::make(
                     array(
@@ -241,7 +239,9 @@ class GroupController extends \BaseController {
                             $validator->getMessageBag()->add('name', Lang::get('validation.unique', array('attribute ' => 'name ')));
                     }
                     return Redirect::route('group.edit',$id)->withInput()->withErrors($validator);
-                } else{
+                } elseif($grp == 'global' || $grp == 'admin') {
+                    return Redirect::route('group.edit',$id);
+                } else {
                     // Set default permissions
                     $permissions = ["event"=>0,"user"=>0,"group"=>0,"school"=>0];
                     $permissionlist = Input::get('permissions');
@@ -259,11 +259,11 @@ class GroupController extends \BaseController {
 
                     return Redirect::route('group.edit',$id);
                 }
-            }else{
+            } else {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
-        }else{
+        } else {
             // If no permissions, redirect to calendar index
             return Redirect::route('landing');
         }
