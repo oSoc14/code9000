@@ -7,8 +7,8 @@
 @section('content')
   <div class="col-xs-12 col-sm-9">
     <a href="{{ route('calendar.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> Back to calendar</a>
+    <h1>Edit Event</h1>
       {{Form::open(array('route' => array('event.update',$event->id), 'class'=>'form-horizontal')) }}
-      <h1>Edit Event</h1>
 
       @foreach ($errors->all() as $message)
       {{$message}}

@@ -7,12 +7,12 @@
 @section('content')
 <div class="col-xs-12 col-sm-9">
   <a href="{{ route('calendar.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> Back to calendar</a>
+  <h1>Create Event</h1>
   {{ Form::open([
   'route' => 'event.store',
   'data-ajax' => 'false',
   'class'=>'form-horizontal'
   ]), PHP_EOL }}
-  <h1>Create Event</h1>
 
   @foreach ($errors->all() as $message)
   {{$message}}

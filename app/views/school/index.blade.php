@@ -6,9 +6,13 @@
 
 @section('content')
 <div class="container-fluid" id="content-container">
+  <div class="first-row row">
+    <div class="col-xs-12">
+      <h1>{{ucfirst(trans('educal.schools'))}}</h1>
+    </div>
+  </div>
   <div class="row">
     <div class="col-xs-12 table-responsive">
-      <h1>{{ucfirst(trans('educal.schools'))}}</h1>
       <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
         <thead>
         <tr>
@@ -29,7 +33,7 @@
           <td>{{$school->short}}</td>
           <td>{{count($school->groups)}}</td>
           <td>
-            <a href="#" title="Edit"><i class="fa fa-edit fa-2x"></i></a>
+            <a href="#" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
             <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>

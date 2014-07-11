@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container-fluid" id="content-container">
-  <div class="row">
+  <div class="row first-row">
       <div class="col-xs-6">
           <h1>{{ucfirst(trans('educal.groups'))}}</h1>
       </div>
@@ -49,7 +49,7 @@
           @endif
           <td>
             <a href="export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Download Pdf"><i class="fa fa-download fa-2x"></i></a>&nbsp;
-            <a href="{{route('group.edit',$group->id)}}"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
+            <a href="{{route('group.edit',$group->id)}}"><i class="fa fa-pencil fa-2x"></i></a>&nbsp;
             <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>

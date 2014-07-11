@@ -30,13 +30,13 @@ return array(
     'day' => 'dag',
     'loading' => 'laden ...',
 
-    'eventdetails' => 'evenement details',
+    'eventdetails' => 'details',
     'createevent' => 'maak evenement',
-    'editevent' => 'pas event aan',
-    'deleteevent' => 'verwijder event',
+    'editevent' => 'wijzigen',
+    'deleteevent' => 'verwijderen',
     'export' => 'exporteer naar kalender',
-    'starts' => 'begin',
-    'ends' => 'einde',
+    'starts' => 'van',
+    'ends' => 'tot',
 
     'title' => 'titel',
     'description' => 'omschrijving',
