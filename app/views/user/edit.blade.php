@@ -43,8 +43,10 @@
       </div>
     </div>
     <div class="form-group">
-      <label>Language</label>
-      {{ Form::select('lang', ['nl' => 'nl','fr' => 'fr','en' => 'en','de' => 'de'], Session::get('lang'), array('class' => 'form-control')) }}
+        {{Form::label('lang', 'Language', array('class'=>'col-md-2 control-label'))}}
+        <div class="col-md-8">
+            {{ Form::select('lang', ['nl' => 'nl','fr' => 'fr','en' => 'en','de' => 'de'], Session::get('lang'), array('class' => 'form-control')) }}
+        </div>
     </div>
     <div class="form-group">
       <label for="password" class="col-md-2 control-label">New Password</label>

@@ -138,7 +138,6 @@ jQuery(function(){
             minTime:false
           })
         }
-
       },
       onSelectDate:function(){
         if(jQuery('#datetimepicker2').val() != ''){
