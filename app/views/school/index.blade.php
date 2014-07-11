@@ -17,6 +17,7 @@
         <thead>
         <tr>
           <th class="hidden-xs">#</th>
+          <th>City</th>
           <th>Name</th>
           <th>Short Name</th>
           <th># of Groups</th>
@@ -29,11 +30,12 @@
         <?php $i++; ?>
         <tr>
           <td class="hidden-xs">{{ $i }}</td>
+          <td >{{ $school->city }}</td>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
           <td>{{$school->short}}</td>
           <td>{{count($school->groups)}}</td>
           <td>
-            <a href="#" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
+            <a href="{{ route('school.edit', $school->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
             <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>

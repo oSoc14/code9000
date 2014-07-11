@@ -147,7 +147,7 @@ class SchoolController extends \BaseController {
             if ($user->hasAccess(array('school')))
             {
                 $school = School::find($id);
-                $this->layout->content = View::make('school.detail')->with('school',$school);
+                $this->layout->content = View::make('school.edit')->with('school',$school);
             }
             else
             {
@@ -169,12 +169,31 @@ class SchoolController extends \BaseController {
 	{
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAccess(array('school')))
+            if ($user->hasAccess('school'))
             {
-                $school = School::find($id);
-                $school->name = e(Input::get("name"));
-                $school->save();
-                return Redirect::route('school.detail',$id);
+                $validator = Validator::make(
+                    array(
+                        'name' => Input::get('name'),
+                        'city' => Input::get('city'),
+                    ),
+                    array(
+                        'name' => 'required|unique:schools,name',
+                        'city' => 'required',
+                    )
+                );
+                if ($validator->fails())
+                {
+                    return Redirect::route('school.detail',$id)
+                        ->withInput()
+                        ->withErrors($validator);
+
+                }else{
+                    $school = School::find($id);
+                    $school->name = e(Input::get("name"));
+                    $school->city = e(Input::get("city"));
+                    $school->save();
+                    return Redirect::route('school.detail',$id);
+                }
             }
             else
             {
