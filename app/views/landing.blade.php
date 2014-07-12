@@ -6,6 +6,10 @@
   <!-- Bootstrap core CSS -->
   {{ HTML::style("css/bootstrap.min.css") }}
   {{ HTML::style("css/bootstrap-theme.min.css") }}
+  <!-- FontAwesome icons -->
+  {{ HTML::style("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css") }}
+  <!-- Google Webfont -->
+  {{ HTML::style("http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700") }}
   <!-- Global styles for this template -->
   {{ HTML::style("css/landing.css") }}
   @yield('header')
@@ -16,21 +20,23 @@
   <meta property="og:site_name" content="">
   <meta property="og:description" content="">
   <meta property="og:image" content="{{ asset('') }}">
-  <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="favicons/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="favicons/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="favicons/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="favicons/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="favicons/apple-touch-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="favicons/apple-touch-icon-152x152.png">
-  <link rel="icon" type="image/png" href="favicons/favicon-196x196.png" sizes="196x196">
-  <link rel="icon" type="image/png" href="favicons/favicon-160x160.png" sizes="160x160">
-  <link rel="icon" type="image/png" href="favicons/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
-  <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
-  <meta name="msapplication-TileColor" content="#39acb0">
-  <meta name="msapplication-TileImage" content="favicons/mstile-144x144.png">
+  <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}">
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicons/apple-touch-icon-57x57.png') }}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicons/apple-touch-icon-114x114.png') }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicons/apple-touch-icon-72x72.png') }}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicons/apple-touch-icon-144x144.png') }}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicons/apple-touch-icon-60x60.png') }}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicons/apple-touch-icon-120x120.png') }}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicons/apple-touch-icon-76x76.png') }}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicons/apple-touch-icon-152x152.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('favicons/favicon-196x196.png') }}" sizes="196x196">
+  <link rel="icon" type="image/png" href="{{ asset('favicons/favicon-160x160.png') }}" sizes="160x160">
+  <link rel="icon" type="image/png" href="{{ asset('favicons/favicon-96x96.png') }}" sizes="96x96">
+  <link rel="icon" type="image/png" href="{{ asset('favicons/favicon-16x16.png') }}" sizes="16x16">
+  <link rel="icon" type="image/png" href="{{ asset('favicons/favicon-32x32.png') }}" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="{{ asset('favicons/mstile-144x144.png') }}">
+  <meta name="msapplication-config" content="{{ asset('favicons/browserconfig.xml') }}">
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   {{ HTML::script("js/html5shiv.js") }}
@@ -50,8 +56,8 @@
         <img src="images/logo_educal.png" alt="Logo" />
         <p class="lead">EduCal is an application for schools to easily create and manage calendars that can be shared with parents.</p>
         <div class="button-container">
-          <a href="#" class="btn btn-lg btn-default btn-educal-warning" data-toggle="modal" data-target="#loginModal">Log in <span class="glyphicon glyphicon-log-in"></span></a> or
-          <a href="#" class="btn btn-lg btn-default btn-educal-danger" data-toggle="modal" data-target="#registerUserModal">Register <span class="glyphicon glyphicon-link"></span></a>
+          <a href="#" class="btn btn-lg btn-default btn-educal-warning" data-toggle="modal" data-target="#loginModal">Log in <i class="fa fa-sign-in"></i></a> or
+          <a href="#" class="btn btn-lg btn-default btn-educal-danger" data-toggle="modal" data-target="#registerUserModal">Register <i class="fa fa-pencil-square-o"></i></a>
         </div>
       </div>
     </div>
@@ -59,28 +65,22 @@
 
   <div class="container content-container">
     <div class="row content-container">
-      <div class="col-xs-12 col-sm-12 col-md-4">
+      <div class="col-xs-12 col-md-4">
         <h2>About</h2>
         <p>Nowadays, parents have a lot of different calendars to keep track of for their children. <strong>EduCal</strong> is an interactive calendar management platform that allows schools (and others) to manage multiple calendars. These calendars can be downloaded by staff and parents as an iCal-file or pdf-file. This iCal-file can then be <strong>imported</strong> in their own agendas.</p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
         <h2>Getting started</h2>
-        <p>To get started with EduCal, you first need to make an account. You can do this as either a <strong>user</strong> or an <strong>organisation</strong>. As soon as you're registered, the account needs to be <strong>activated</strong> by the administrator of the school you applied to. This does not happen automatically. After that, the admin will also place you in your correct <strong>groups</strong> and you are ready to go!</p>
+        <p>To get started with EduCal, you first need to make an account. You can do this as either a <strong>user</strong> or a <strong>school</strong>. As soon as you're registered, the account needs to be <strong>activated</strong> by the administrator of the school you applied to. This does not happen automatically. After that, the admin will also place you in your correct <strong>groups</strong> and you are ready to go!</p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
         <h2>Contact</h2>
         <p>This platform is created by the Code9000 team as part of <a href="http://summerofcode.be">open Summer of Code 2014</a> by
           <a href="http://www.okfn.be">OKFN Belgium</a></p>
         <p>EduCal is sponsored by <a href="http://www.digipolis.be">Digipolis</a> and the <a href="http://www.gent.be">city of Ghent</a>.</p>
+        <p>&copy; OKFN Belgium</p>
       </div>
     </div>
-  </div>
-
-  <div class="container-fluid footer-container">
-    <footer>
-      &copy; OKFN Belgium<br>
-      Created by team Code9000 during <a href="http://summerofcode.be">open Summer of Code 2014</a>.
-    </footer>
   </div>
 
   <!-- Login Modal -->
@@ -226,7 +226,7 @@
           </div>
           <div class="form-group">
               {{Form::label('sname', 'Name')}}
-              {{Form::text('sname', null , ['class'=>'form-control','placeholder'=>"What'the name of the school?"])}}
+              {{Form::text('sname', null , ['class'=>'form-control','placeholder'=>"What's the name of the school?"])}}
           </div>
           <div class="form-group">
               {{Form::label('city', 'City')}}

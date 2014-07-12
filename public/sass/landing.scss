@@ -24,6 +24,8 @@ $lightgrey: #f5f5f5;
 }
 body{
   background: #fff;
+  font-family: 'Open Sans', 'Helvetica', 'Arial';
+  color: $grey;
 }
 a{
   color: $pink;
@@ -35,6 +37,10 @@ img{
   max-width: 100%;
 }
 
+h2{
+  font-weight: 700;
+}
+
 // Buttons
 @mixin btn-educal($bgcolor, $color, $bghover, $bordercolor, $txt-shadow-opacity: 0.35){
   background: $bgcolor;
@@ -42,10 +48,17 @@ img{
   border-bottom: 3px solid $bordercolor;
   color: $color;
   @include text-shadow(rgba(0, 0, 0, $txt-shadow-opacity) 0px 0px 5px);
-  &:hover, &:focus{
+  &:hover{
     background: $bghover;
     color: $color;
     border-bottom: 3px solid $bordercolor;
+    outline: none;
+  }
+  &:focus{
+    background: $bgcolor;
+    color: $color;
+    border-bottom: 3px solid $bordercolor;
+    outline: none;
   }
   &:active{
     border: none;
@@ -103,19 +116,4 @@ img{
 
 #registerUserModal .alert{
   margin-bottom: 10px;
-}
-
-
-// Footer
-// ----------------------
-.footer-container{
-  background: #333;
-  color: #ddd;
-  padding-top: 30px;
-  padding-bottom: 20px;
-  height: 100px;
-}
-
-footer{
-  text-align: center;
 }

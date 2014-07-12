@@ -36,10 +36,17 @@ $sans-serif: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
   border-bottom: 3px solid $bordercolor;
   color: $color;
   @include text-shadow(rgba(0, 0, 0, $txt-shadow-opacity) 0px 0px 5px);
-  &:hover, &:focus{
+  &:hover{
     background: $bghover;
     color: $color;
     border-bottom: 3px solid $bordercolor;
+    outline: none;
+  }
+  &:focus{
+    background: $bgcolor;
+    color: $color;
+    border-bottom: 3px solid $bordercolor;
+    outline: none;
   }
   &:active{
     border: none;
