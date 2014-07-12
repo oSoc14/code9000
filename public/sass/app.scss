@@ -301,6 +301,11 @@ img{
       }
     }
   }
+  @media screen and (max-width: $break-medium){
+    .table-responsive{
+      border: none;
+    }
+  }
 
   // Forms
   .form-repeat-container{

@@ -17,10 +17,10 @@
         <thead>
         <tr>
           <th class="hidden-xs">#</th>
-          <th>City</th>
           <th>Name</th>
-          <th>Short Name</th>
-          <th># of Groups</th>
+          <th>City</th>
+          <th class="hidden-xs hidden-sm">Short name</th>
+          <th class="hidden-xs"># of groups</th>
           <th>Actions</th>
         </tr>
         </thead>
@@ -30,10 +30,10 @@
         <?php $i++; ?>
         <tr>
           <td class="hidden-xs">{{ $i }}</td>
-          <td >{{ $school->city }}</td>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
-          <td>{{$school->short}}</td>
-          <td>{{count($school->groups)}}</td>
+          <td>{{ $school->city }}</td>
+          <td class="hidden-xs hidden-sm">{{$school->short}}</td>
+          <td class="hidden-xs">{{count($school->groups)}}</td>
           <td>
             <a href="{{ route('school.edit', $school->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
             <a data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{{ route('school.delete', $school->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
@@ -66,11 +66,9 @@
 
 @section('footerScript')
 
-
 {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
-
-{{ HTML::script('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.js') }}
-{{ HTML::style('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.css') }}
+{{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
+{{ HTML::style('packages/datatables/css/dataTables.bootstrap.css') }}
 
 {{ HTML::script('js/app.js') }}
 

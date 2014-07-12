@@ -64,12 +64,14 @@
         <p>Nowadays, parents have a lot of different calendars to keep track of for their children. <strong>EduCal</strong> is an interactive calendar management platform that allows schools (and others) to manage multiple calendars. These calendars can be downloaded by staff and parents as an iCal-file or pdf-file. This iCal-file can then be <strong>imported</strong> in their own agendas.</p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
-        <h2>Get started</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias asperiores, culpa distinctio doloremque earum eius ex illo laudantium nemo nihil odio praesentium quidem quos ratione rem tempore ullam ut. Amet.</p>
+        <h2>Getting started</h2>
+        <p>To get started with EduCal, you first need to make an account. You can do this as either a <strong>user</strong> or an <strong>organisation</strong>. As soon as you're registered, the account needs to be <strong>activated</strong> by the administrator of the school you applied to. This does not happen automatically. After that, the admin will also place you in your correct <strong>groups</strong> and you are ready to go!</p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
         <h2>Contact</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias asperiores, culpa distinctio doloremque earum eius ex illo laudantium nemo nihil odio praesentium quidem quos ratione rem tempore ullam ut. Amet.</p>
+        <p>This platform is created by the Code9000 team as part of <a href="http://summerofcode.be">open Summer of Code 2014</a> by
+          <a href="http://www.okfn.be">OKFN Belgium</a></p>
+        <p>EduCal is sponsored by <a href="http://www.digipolis.be">Digipolis</a> and the <a href="http://www.gent.be">city of Ghent</a>.</p>
       </div>
     </div>
   </div>
