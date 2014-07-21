@@ -20,6 +20,8 @@ return array(
     'contact' => 'contact',
     'errors' => 'Errors',
     'short' => 'shortcode',
+    'startdate' => 'startdate',
+    'enddate' => 'enddate',
 
     'delete' => 'verwijderen',
     'cancel' => 'annuleren',
@@ -55,6 +57,10 @@ return array(
     'month' => 'maand',
     'week' => 'week',
     'day' => 'dag',
+    'years' => 'jaren',
+    'months' => 'maanden',
+    'weeks' => 'weeken',
+    'days' => 'dagen',
     'loading' => 'laden ...',
 
     'addgroup' => 'voeg groep toe',
@@ -66,7 +72,7 @@ return array(
 
     'eventdetails' => 'details',
     'createevent' => 'maak evenement',
-    'editevent' => 'wijzigen',
+    'editevent' => 'evenement wijzigen',
     'deleteevent' => 'verwijderen',
     'export' => 'exporteer naar kalender',
     'starts' => 'van',
@@ -76,10 +82,13 @@ return array(
     'description' => 'omschrijving',
     'allday' => 'volledige dag',
     'repeatingevent' => 'herhalend evenement',
+    'every' => 'Elke',
+    'until' => 'Tot',
     'recurrence' => 'Herhalen (elke x periode tot eind datum)',
     'actions' => 'akties',
     'name' => 'naam',
     'surname' => 'familie naam',
+
 
     'editgroup' => 'edit group',
     'updategroup' => 'update group',
