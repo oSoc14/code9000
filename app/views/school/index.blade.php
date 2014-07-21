@@ -74,14 +74,47 @@
 
 {{ HTML::script('js/app.js') }}
 
+@if(Session::get('lang') == 'nl')
 <script>
-  $(document).ready(function() {
-    $('#groupTable').dataTable( {
-        "language": {
-            "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
-        }
+    $(document).ready(function() {
+        $('#groupTable').dataTable( {
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+            }
+        } );
     } );
-  } );
 </script>
+@elseif(Session::get('lang') == 'en')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/English.json"
+            }
+        });
+    } );
+</script>
+@elseif(Session::get('lang') == 'fr')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/French.json"
+            }
+        });
+    } );
+</script>
+@elseif(Session::get('lang') == 'de')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/German.json"
+            }
+        });
+    } );
+</script>
+@endif
+
 @stop
 

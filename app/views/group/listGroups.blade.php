@@ -70,13 +70,59 @@
 {{ HTML::style('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.css') }}
 
 {{ HTML::script('js/app.js') }}
+
+@if(Session::get('lang') == 'nl')
 <script>
     $(document).ready(function() {
         $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+            },
             "aoColumnDefs": [
                 {"bSortable": false, "aTargets": [2]}
             ]
         });
     } );
 </script>
+@elseif(Session::get('lang') == 'en')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/English.json"
+            },
+            "aoColumnDefs": [
+                {"bSortable": false, "aTargets": [2]}
+            ]
+        });
+    } );
+</script>
+@elseif(Session::get('lang') == 'fr')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/French.json"
+            },
+            "aoColumnDefs": [
+                {"bSortable": false, "aTargets": [2]}
+            ]
+        });
+    } );
+</script>
+@elseif(Session::get('lang') == 'de')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/German.json"
+            },
+            "aoColumnDefs": [
+                {"bSortable": false, "aTargets": [2]}
+            ]
+        });
+    } );
+</script>
+@endif
+
 @stop
