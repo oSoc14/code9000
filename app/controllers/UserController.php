@@ -230,14 +230,13 @@ class UserController extends \BaseController {
     /**
      * Remove a user from a school
      * @param $id = userID
-     * TODO: PERMISSIONS remove user from school
      */
     public function removeUserFromSchool($id)
     {
-        // If user is logged in, get school_id, find respective users
+        // If user is logged in, check for permissions
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
+            if ($user->hasAnyAccess(['school','user'])){
                 try
                 {
                     // Find the user using the user id
@@ -249,7 +248,7 @@ class UserController extends \BaseController {
                      *          -> false: delete user from school
                      * ->false: safe to remove user from school
                      */
-                    if(($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id) || $user->school_id == null) {
+                    if($selectedUser->hasAccess('admin') && ($selectedUser->school_id == $user->school_id || $user->school_id == null)) {
                         $school = School::find($selectedUser->school_id);
                         $group = Sentry::findGroupByName($school->short.'_admin');
                         $users = Sentry::findAllUsersInGroup($group);
@@ -352,7 +351,7 @@ class UserController extends \BaseController {
             }
             // Check permissions for the user
             if ($user->hasAnyAccess(['school','user']) || $user->id == $id){
-                if($user->school_id == $selectedUser->school_id) {
+                if($user->school_id == $selectedUser->school_id || $user->school_id == null) {
                     return View::make('user.edit')
                         ->with('user', $selectedUser);
                 } else {
@@ -526,6 +525,12 @@ class UserController extends \BaseController {
         return Redirect::route('landing');
     }
 
+    /**
+     * Method for adding users to a group
+     *
+     * @param $group_id
+     * @return mixed
+     */
     public function addToGroup($group_id) {
         if(Sentry::check()) {
             $user = Sentry::getUser();
