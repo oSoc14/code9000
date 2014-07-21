@@ -2,6 +2,8 @@
 
 @section('header')
 {{ HTML::style("css/app.css") }}
+{{ HTML::style('packages/datatables/css/dataTables.bootstrap.css') }}
+{{ HTML::style('packages/responsive-datatables/css/dataTables.responsive.css') }}
 @stop
 
 @section('content')
@@ -17,10 +19,10 @@
       <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Group</th>
-            <th># of users</th>
-            <th>Actions</th>
+            <th class="hidden-xs">#</th>
+            <th data-class="expand">Group</th>
+            <th data-hide="phone,tablet" data-name="Users">Users</th>
+            <th data-hide="phone" data-name="Actions">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -28,7 +30,7 @@
           @foreach($school->groups as $group)
           <?php $i++ ?>
           <tr>
-            <td>{{ $i }}</td>
+            <td class="hidden-xs">{{ $i }}</td>
             <td>{{ HTML::linkRoute('group.edit', $group->name, ['id' => $group->id], []) }}</td>
             <?php $group2 = Sentry::findGroupByName($group->name); ?>
             <td>{{ count(Sentry::findAllUsersInGroup($group2)) }}</td>
@@ -49,15 +51,9 @@
 @section('footerScript')
 
 {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
-
-{{ HTML::script('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.js') }}
-{{ HTML::style('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.css') }}
+{{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
+{{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
 
 {{ HTML::script('js/app.js') }}
 
-<script>
-  $(document).ready(function() {
-    $('#groupTable').dataTable();
-  } );
-</script>
 @stop

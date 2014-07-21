@@ -35,7 +35,7 @@ h2 {
   border: none;
   border-bottom: 3px solid #ab0046;
   color: white;
-  text-shadow: rgba(0, 0, 0, 0.35) 0px 0px 5px;
+  text-shadow: rgba(0, 0, 0, 0) 0px 0px 5px;
 }
 /* line 51, ../sass/landing.scss */
 .btn-educal-danger:hover {
@@ -95,7 +95,7 @@ h2 {
   border: none;
   border-bottom: 3px solid #108a98;
   color: white;
-  text-shadow: rgba(0, 0, 0, 0.35) 0px 0px 5px;
+  text-shadow: rgba(0, 0, 0, 0) 0px 0px 5px;
 }
 /* line 51, ../sass/landing.scss */
 .btn-educal-primary:hover {

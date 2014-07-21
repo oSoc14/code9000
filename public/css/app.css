@@ -426,7 +426,7 @@ img {
 
 /* line 326, ../sass/app.scss */
 .first-row {
-  height: 88px;
+  min-height: 88px;
 }
 
 /* line 330, ../sass/app.scss */
@@ -598,8 +598,14 @@ img {
 #calendar thead tr.fc-first .fc-widget-header {
   border: none;
 }
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
+  /* line 342, ../sass/app.scss */
+  #calendar {
+    margin-top: 21px;
+  }
+}
 
-/* line 435, ../sass/app.scss */
+/* line 441, ../sass/app.scss */
 #content-bg {
   width: 100%;
   background: url("images/content-bg.jpg") repeat top left #556066;
@@ -614,25 +620,25 @@ img {
   }*/
 }
 @media screen and (max-width: 768px) {
-  /* line 435, ../sass/app.scss */
+  /* line 441, ../sass/app.scss */
   #content-bg {
     height: 241px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 435, ../sass/app.scss */
+  /* line 441, ../sass/app.scss */
   #content-bg {
     height: 211px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-  /* line 435, ../sass/app.scss */
+  /* line 441, ../sass/app.scss */
   #content-bg {
-    height: 240px;
+    height: 261px;
   }
 }
 
-/* line 461, ../sass/app.scss */
+/* line 467, ../sass/app.scss */
 #addEvent:active {
   margin: 0 0 43px 0 !important;
 }

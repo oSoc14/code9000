@@ -2,6 +2,8 @@
 
 @section('header')
 {{ HTML::style("css/app.css") }}
+{{ HTML::style('packages/datatables/css/dataTables.bootstrap.css') }}
+{{ HTML::style('packages/responsive-datatables/css/dataTables.responsive.css') }}
 @stop
 
 @section('content')
@@ -15,14 +17,14 @@
     <div class="col-xs-12 table-responsive">
       <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
         <thead>
-        <tr>
-          <th class="hidden-xs">#</th>
-          <th>Name</th>
-          <th>City</th>
-          <th class="hidden-xs hidden-sm">Short name</th>
-          <th class="hidden-xs"># of groups</th>
-          <th>Actions</th>
-        </tr>
+          <tr>
+            <th class="hidden-xs">#</th>
+            <th data-class="expand">Name</th>
+            <th data-hide="phone" data-name="City">City</th>
+            <th data-hide="phone,tablet" data-name="Short name">Short name</th>
+            <th data-hide="phone,tablet" data-name="Groups"># of groups</th>
+            <th data-hide="phone" data-name="Actions">Actions</th>
+          </tr>
         </thead>
         <tbody>
         <?php $i=0; ?>
@@ -32,8 +34,8 @@
           <td class="hidden-xs">{{ $i }}</td>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
           <td>{{ $school->city }}</td>
-          <td class="hidden-xs hidden-sm">{{$school->short}}</td>
-          <td class="hidden-xs">{{count($school->groups)}}</td>
+          <td>{{$school->short}}</td>
+          <td>{{count($school->groups)}}</td>
           <td>
             <a href="{{ route('school.edit', $school->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
             <a data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{{ route('school.delete', $school->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
@@ -55,8 +57,8 @@
                 Are you sure you want to delete this item?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-danger danger">Delete</a>
+                <button type="button" class="btn btn-default btn-educal-warning" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-educal-danger">Delete</a>
             </div>
         </div>
     </div>
@@ -68,14 +70,9 @@
 
 {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
 {{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
-{{ HTML::style('packages/datatables/css/dataTables.bootstrap.css') }}
+{{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
 
 {{ HTML::script('js/app.js') }}
 
-<script>
-  $(document).ready(function() {
-    $('#groupTable').dataTable();
-  } );
-</script>
 @stop
 

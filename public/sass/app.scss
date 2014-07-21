@@ -324,7 +324,7 @@ img{
 }
 
 .first-row{
-  height: 88px;
+  min-height: 88px;
 }
 
 #content-container{
@@ -429,6 +429,12 @@ img{
       border: none;
     }
   }
+  // Chrome
+  @media screen and (-webkit-min-device-pixel-ratio:0){
+    @media screen and (max-width: $break-medium){
+      margin-top: 21px;
+    }
+  }
 }
 
 // Firefox
@@ -448,7 +454,7 @@ img{
   @media screen and (-webkit-min-device-pixel-ratio:0){
     height: 211px;
     @media screen and (max-width: $break-medium){
-      height: 240px;
+      height: 261px;
     }
   }
   // Chrome non-mobile hack
