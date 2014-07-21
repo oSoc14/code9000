@@ -40,13 +40,13 @@ class IcalCalendarController extends \BaseController {
         // Set default timezone (PHP 5.4)
         date_default_timezone_set('Europe/Berlin');
 
-        // 1. Create new calendar
+        // Create new calendar object
         $calendar = new \Eluceo\iCal\Component\Calendar('EduCal');
 
         // Loop through appointments and add them to the calendar.
         foreach($appointments as $appointment) {
 
-            // 2. Create an event
+            // Create an event
             $event = new \Eluceo\iCal\Component\Event();
             $event->setSummary($appointment['attributes']['title']);
             $event->setDescription($appointment['attributes']['description']);
@@ -84,15 +84,15 @@ class IcalCalendarController extends \BaseController {
             $event->setUseTimezone(true);
             $event->setTimeTransparency('TRANSPARENT');
 
-            // 3. Add event to calendar
+            // Add event to calendar
             $calendar->addEvent($event);
         }
 
-        // 4. Set headers
+        // Set headers
         header('Content-Type: text/calendar; charset=utf-8');
         header('Content-Disposition: attachment; filename="cal.ics"');
 
-        // 5. Output
+        // Output
         return $calendar;
     }
 
@@ -109,7 +109,6 @@ class IcalCalendarController extends \BaseController {
         $appointments = [];
         array_push($appointments, $appointment);
 
-        //var_dump($appointments);
         $calendar = self::composeIcal($appointments);
         return $calendar->render();
 	}
