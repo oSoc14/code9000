@@ -8,7 +8,7 @@
 <div class="container-fluid" id="content-container">
   <div class="row first-row">
     <div class="col-xs-12">
-      <a href="{{ route('school.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> Back to schools</a>
+      <a href="{{ route('school.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.schools')]))}}</a>
       <h1>{{$school->name}}</h1>
     </div>
   </div>
@@ -18,9 +18,9 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Group</th>
-            <th># of users</th>
-            <th>Actions</th>
+            <th>{{ucfirst(trans('educal.group'))}}</th>
+            <th>{{ucfirst(trans('educal.#ofusers'))}}</th>
+            <th>{{ucfirst(trans('educal.actions'))}}</th>
           </tr>
         </thead>
         <tbody>

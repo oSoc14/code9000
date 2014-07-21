@@ -19,6 +19,12 @@ return array(
     'getstarted' => 'get started',
     'contact' => 'contact',
     'errors' => 'Errors',
+    'short' => 'shortcode',
+
+    'delete' => 'verwijderen',
+    'cancel' => 'annuleren',
+    'confirmation' => 'bevestiging',
+    'confirmationmsg' => 'Bent u zeker dat u dit item wilt verwijderen?',
 
     'email' => 'Email address',
     'password' => 'Wachtwoord',
@@ -64,7 +70,7 @@ return array(
     'allday' => 'volledige dag',
     'repeatingevent' => 'herhalend evenement',
     'recurrence' => 'Herhalen (elke x periode tot eind datum)',
-    'actions' => 'actions',
+    'actions' => 'akties',
     'name' => 'naam',
     'surname' => 'familie naam',
 
@@ -75,9 +81,14 @@ return array(
     'nousers' => 'There are no users to be added',
     'usersingroup' => 'Users in this group',
 
+    'editschool' => 'edit school',
+
     'editinformation' => 'pas informatie aan',
     'backto' => 'terug naar :page',
-    'savechanges' => 'save changes',
+    'savechanges' => 'aanpassingen opslaan',
     'activated' => 'geactiveerd',
+
+    '#ofusers' => 'aantal gebruikers',
+    '#ofgroups' => 'aantal groepen',
 
 );
