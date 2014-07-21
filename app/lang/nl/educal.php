@@ -22,6 +22,8 @@ return array(
 
     'email' => 'Email address',
     'password' => 'Wachtwoord',
+    'newpassword' => 'nieuw wachtwoord',
+    'repeatpassword' => 'herhaal wachtwoord',
     'remember' => 'Remember me',
     'registeruser' => 'Register as a user',
     'registerschool' => 'Warning! If you want to register as a school, click <a href="#" id="showSchoolRegisterModal">here</a>.',
@@ -37,6 +39,7 @@ return array(
     'groups' => 'groepen',
     'group' => 'groep',
     'about' => 'over',
+    'language' => 'taal',
     'settings' => 'instellingen',
     'logout' => 'uitloggen',
 
@@ -62,14 +65,19 @@ return array(
     'repeatingevent' => 'herhalend evenement',
     'recurrence' => 'Herhalen (elke x periode tot eind datum)',
     'actions' => 'actions',
-    'name' => 'name',
-    'surname' => 'surname',
+    'name' => 'naam',
+    'surname' => 'familie naam',
 
     'editgroup' => 'edit group',
     'updategroup' => 'update group',
     'groupinfo' => 'group info',
-    'adduser' => 'add user',
+    'adduser' => 'voeg gebruiker toe',
     'nousers' => 'There are no users to be added',
-    'usersingroup' => 'Users in this group'
+    'usersingroup' => 'Users in this group',
+
+    'editinformation' => 'pas informatie aan',
+    'backto' => 'terug naar :page',
+    'savechanges' => 'save changes',
+    'activated' => 'geactiveerd',
 
 );
