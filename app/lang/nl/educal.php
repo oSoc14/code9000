@@ -25,7 +25,7 @@ return array(
 
     'delete' => 'verwijderen',
     'cancel' => 'annuleren',
-    'confirmation' => 'bevestiging',
+    'confirmation' => 'bevestig',
     'confirmationmsg' => 'Bent u zeker dat u dit item wilt verwijderen?',
 
     'email' => 'Email adres',
@@ -71,8 +71,8 @@ return array(
     'manageevents' => 'kan evenementen beheren',
 
     'eventdetails' => 'details',
-    'createevent' => 'maak evenement',
-    'editevent' => 'evenement wijzigen',
+    'createevent' => 'voeg toe',
+    'editevent' => 'wijzigen',
     'deleteevent' => 'verwijderen',
     'export' => 'exporteren',
     'starts' => 'van',
