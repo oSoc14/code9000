@@ -20,15 +20,15 @@ return array(
     'contact' => 'contact',
     'errors' => 'fouten',
     'short' => 'shortcode',
-    'startdate' => 'start datum',
-    'enddate' => 'eind datum',
+    'startdate' => 'startdatum',
+    'enddate' => 'einddatum',
 
     'delete' => 'verwijderen',
     'cancel' => 'annuleren',
     'confirmation' => 'bevestiging',
     'confirmationmsg' => 'Bent u zeker dat u dit item wilt verwijderen?',
 
-    'email' => 'Email address',
+    'email' => 'Email adres',
     'password' => 'Wachtwoord',
     'newpassword' => 'nieuw wachtwoord',
     'repeatpassword' => 'herhaal wachtwoord',
@@ -51,7 +51,7 @@ return array(
     'settings' => 'instellingen',
     'logout' => 'uitloggen',
 
-    'addevent' => 'voeg evenement toe',
+    'addevent' => 'evenement toevoegen',
     'today' => 'today',
     'year' => 'jaar',
     'month' => 'maand',
@@ -63,7 +63,7 @@ return array(
     'days' => 'dagen',
     'loading' => 'laden ...',
 
-    'addgroup' => 'voeg groep toe',
+    'addgroup' => 'groep toevoegen',
     'whichschool'=>'Voor welke school is deze groep?',
     'permissions' => 'rechten',
     'managegroups' => 'kan groepen maken',
@@ -74,7 +74,7 @@ return array(
     'createevent' => 'maak evenement',
     'editevent' => 'evenement wijzigen',
     'deleteevent' => 'verwijderen',
-    'export' => 'exporteer naar kalender',
+    'export' => 'exporteren',
     'starts' => 'van',
     'ends' => 'tot',
 
@@ -87,7 +87,7 @@ return array(
     'recurrence' => 'Herhalen (elke x periode tot eind datum)',
     'actions' => 'acties',
     'name' => 'naam',
-    'surname' => 'familie naam',
+    'surname' => 'familienaam',
 
 
     'editgroup' => 'groep aanpassen',
@@ -95,7 +95,7 @@ return array(
     'groupinfo' => 'groep info',
     'groupname' => 'groep naam',
     'nousers'=> 'Geen gebruikers die kunnen toegevoegd worden',
-    'adduser' => 'voeg gebruiker toe',
+    'adduser' => 'gebruiker toevoegen',
     'usersingroup' => 'Gebruikers in deze groep',
     'creategroup' => 'maak groep aan',
     'noschools' => 'Er zijn geen scholen beschikbaar.',
@@ -108,10 +108,10 @@ return array(
 
     'editinformation' => 'pas informatie aan',
     'backto' => 'terug naar :page',
-    'savechanges' => 'aanpassingen opslaan',
+    'savechanges' => 'Opslaan',
     'activated' => 'geactiveerd',
 
-    '#ofusers' => 'aantal gebruikers',
-    '#ofgroups' => 'aantal groepen',
+    '#ofusers' => 'gebruikers',
+    '#ofgroups' => 'groepen',
 
 );

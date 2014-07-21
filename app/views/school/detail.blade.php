@@ -72,4 +72,134 @@
 
 {{ HTML::script('js/app.js') }}
 
+@if(Session::get('lang') == 'nl')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@elseif(Session::get('lang') == 'en')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/English.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@elseif(Session::get('lang') == 'fr')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/French.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@elseif(Session::get('lang') == 'de')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/German.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@endif
+
 @stop

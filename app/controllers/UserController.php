@@ -432,7 +432,7 @@ class UserController extends \BaseController {
 
                     $user->save();
 
-                    return Redirect::back();
+                    return Redirect::route('calendar.index');
                 }
                 return Redirect::back();
             } else {
