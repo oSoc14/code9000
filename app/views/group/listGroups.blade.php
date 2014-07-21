@@ -12,7 +12,7 @@
       </div>
       <div class="col-xs-6">
           <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route('group.create')}}" id="addEvent">
-            <i class="fa fa-plus"></i> Add group
+            <i class="fa fa-plus"></i> {{ucfirst(trans('educal.addgroup'))}}
           </a>
       </div>
   </div>
@@ -22,9 +22,9 @@
         <thead>
           <tr>
             <th class="hidden-xs">#</th>
-            <th>Name</th>
-            <th>URLs</th>
-            <th>Actions</th>
+            <th>{{ucfirst(trans('educal.name'))}}</th>
+            <th>{{ucfirst(trans('educal.urls'))}}</th>
+            <th>{{ucfirst(trans('educal.actions'))}}</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@
             </div>
           </td>
           @else
-          <td>NO EXPORT</td>
+          <td>{{ucfirst(trans('educal.noexport'))}}</td>
           @endif
           <td>
             <a href="export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Download Pdf"><i class="fa fa-download fa-2x"></i></a>&nbsp;
@@ -88,13 +88,59 @@
 {{ HTML::style('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.css') }}
 
 {{ HTML::script('js/app.js') }}
+
+@if(Session::get('lang') == 'nl')
 <script>
     $(document).ready(function() {
         $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+            },
             "aoColumnDefs": [
                 {"bSortable": false, "aTargets": [2]}
             ]
         });
     } );
 </script>
+@elseif(Session::get('lang') == 'en')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/English.json"
+            },
+            "aoColumnDefs": [
+                {"bSortable": false, "aTargets": [2]}
+            ]
+        });
+    } );
+</script>
+@elseif(Session::get('lang') == 'fr')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/French.json"
+            },
+            "aoColumnDefs": [
+                {"bSortable": false, "aTargets": [2]}
+            ]
+        });
+    } );
+</script>
+@elseif(Session::get('lang') == 'de')
+<script>
+    $(document).ready(function() {
+        $('#groupTable').dataTable({
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/German.json"
+            },
+            "aoColumnDefs": [
+                {"bSortable": false, "aTargets": [2]}
+            ]
+        });
+    } );
+</script>
+@endif
+
 @stop
