@@ -16,7 +16,6 @@
             <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> {{ucfirst(trans('educal.adduser'))}}</a>
         </div>
     </div>
-  </div>
   <div class="row">
     <div class="col-xs-12 table-responsive">
       <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
