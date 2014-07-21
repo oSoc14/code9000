@@ -23,6 +23,11 @@ return array(
     'email' => 'Email address',
     'password' => 'Wachtwoord',
     'remember' => 'Remember me',
+    'registeruser' => 'Register as a user',
+    'registerschool' => 'Warning! If you want to register as a school, click <a href="#" id="showSchoolRegisterModal">here</a>.',
+    'registeraschool' => 'Register as a school',
+    'terms' => ' I agree to the <a href="#">terms of service</a>.',
+    'city' => 'stad',
 
     'calendar' => 'kalender',
     'schools' => 'scholen',

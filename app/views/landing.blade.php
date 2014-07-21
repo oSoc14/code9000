@@ -111,15 +111,15 @@
           {{Form::email('lemail', null , ['class'=>'form-control','placeholder'=>"What's your email address?"])}}
           </div>
           <div class="form-group">
-            <label for="login-password">{{ucfirst(trans('educal.password')))}}</label>
+            <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
             <input type="password" class="form-control" id="login-password" name="password" placeholder="Enter your password">
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="login-remember" id="login-remember">{{ ucfirst(trans('educal.remember')))}}
+              <input type="checkbox" name="login-remember" id="login-remember">{{ ucfirst(trans('educal.remember'))}}
             </label>
           </div>
-          <button type="submit" class="btn btn-default btn-educal-danger">{{ ucfirst(trans('educal.login')))}}</button>
+          <button type="submit" class="btn btn-default btn-educal-danger">{{ ucfirst(trans('educal.login'))}}</button>
           {{ Form::close(), PHP_EOL }}
         </div>
       </div>
@@ -136,12 +136,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Register as a user</h4>
+          <h4 class="modal-title">{{ ucfirst(trans('educal.registeruser'))}}</h4>
         </div>
         <div class="modal-body">
             @if($errors->has('usererror'))
                 <div class="alert alert-danger" role="alert">
-                  <strong>Errors</strong>
+                  <strong>{{ucfirst(trans('educal.errors'))}}</strong>
                   <ul>
                 @foreach ($errors->all() as $message)
                     <li>{{$message}}</li>
@@ -153,36 +153,36 @@
             'route' => 'user.register',
             'data-ajax' => 'true',
             ]), PHP_EOL }}
-          <div class="alert alert-warning" role="alert">Warning! If you want to register as a school, click <a href="#" id="showSchoolRegisterModal">here</a>.</div>
+          <div class="alert alert-warning" role="alert">{{ucfirst(trans('educal.registerschool'))}}</div>
           <div class="form-group">
-              {{Form::label('name', 'Name')}}
+              {{Form::label('name', ucfirst(trans('educal.name')))}}
               {{Form::text('name', null , ['class'=>'form-control','placeholder'=>"What's your given name?"])}}
           </div>
           <div class="form-group">
-              {{Form::label('surname', 'Surname')}}
+              {{Form::label('surname', ucfirst(trans('educal.surname')))}}
               {{Form::text('surname', null , ['class'=>'form-control','placeholder'=>"What's your surname?"])}}
           </div>
           <div class="form-group">
-              {{Form::label('email', 'Email address')}}
+              {{Form::label('email', ucfirst(trans('educal.email')))}}
               {{Form::email('email', null , ['class'=>'form-control','placeholder'=>"What's your email address?"])}}
           </div>
           <div class="form-group">
-            <label for="user-password">Password</label>
+            <label for="user-password">{{ucfirst(trans('educal.password'))}}</label>
             <input type="password" class="form-control" id="user-password" name="password" placeholder="Choose a password">
           </div>
           <div class="form-group">
             <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
           </div>
           <div class="form-group">
-            <label>School</label>
+            <label>{{ucfirst(trans('educal.school'))}}</label>
             {{ Form::select('school', $schools, null, array('class' => 'form-control')) }}
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="tos" id="tos"> I agree to the <a href="#">terms of service</a>.
+              <input type="checkbox" name="tos" id="tos">{{ucfirst(trans('educal.terms'))}}
             </label>
           </div>
-          <button type="submit" class="btn btn-default btn-educal-danger">Register</button>
+          <button type="submit" class="btn btn-default btn-educal-danger">{{ucfirst(trans('educal.register'))}}</button>
             {{ Form::close(), PHP_EOL }}
         </div>
       </div>
@@ -200,12 +200,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Register as a school</h4>
+          <h4 class="modal-title">{{ucfirst(trans('educal.registeraschool'))}}</h4>
         </div>
         <div class="modal-body">
             @if($errors->has('schoolerror'))
               <div class="alert alert-danger" role="alert">
-                <strong>Errors</strong>
+                <strong>{{ucfirst(trans('educal.errors'))}}</strong>
                 <ul>
                   @foreach ($errors->all() as $message)
                   <li>{{$message}}</li>
@@ -219,19 +219,19 @@
             'data-ajax' => 'true',
             ]), PHP_EOL }}
           <div class="form-group">
-              {{Form::label('semail', 'Email address')}}
+              {{Form::label('semail', ucfirst(trans('educal.email')))}}
               {{Form::email('semail', null , ['class'=>'form-control','placeholder'=>"What's your school's email address?"])}}
           </div>
           <div class="form-group">
-              {{Form::label('sname', 'Name')}}
+              {{Form::label('sname', ucfirst(trans('educal.name')))}}
               {{Form::text('sname', null , ['class'=>'form-control','placeholder'=>"What'the name of the school?"])}}
           </div>
           <div class="form-group">
-              {{Form::label('city', 'City')}}
+              {{Form::label('city', ucfirst(trans('educal.city')))}}
               {{Form::text('city', null , ['class'=>'form-control','placeholder'=>"Where is the school located? (e.g. 'Chicago')"])}}
           </div>
           <div class="form-group">
-            <label for="school-password">Password</label>
+            <label for="school-password">{{ucfirst(trans('educal.password'))}}</label>
             <input type="password" class="form-control" id="school-password" name="password" placeholder="Choose a password">
           </div>
           <div class="form-group">
@@ -239,10 +239,10 @@
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="tos" id="tos"> I agree to the <a href="#">terms of service</a>
+              <input type="checkbox" name="tos" id="tos">{{ucfirst(trans('educal.terms'))}}
             </label>
           </div>
-          <button type="submit" class="btn btn-default btn-educal-danger">Register</button>
+          <button type="submit" class="btn btn-default btn-educal-danger">{{ucfirst(trans('educal.register'))}}</button>
             {{ Form::close(), PHP_EOL }}
         </div>
       </div>
