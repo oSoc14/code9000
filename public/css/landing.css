@@ -35,7 +35,7 @@ h2 {
   border: none;
   border-bottom: 3px solid #ab0046;
   color: white;
-  text-shadow: rgba(0, 0, 0, 0) 0px 0px 5px;
+  text-shadow: none;
 }
 /* line 51, ../sass/landing.scss */
 .btn-educal-danger:hover {
@@ -65,7 +65,7 @@ h2 {
   border: none;
   border-bottom: 3px solid #c9c315;
   color: #333333;
-  text-shadow: rgba(0, 0, 0, 0) 0px 0px 5px;
+  text-shadow: none;
 }
 /* line 51, ../sass/landing.scss */
 .btn-educal-warning:hover {
@@ -95,7 +95,7 @@ h2 {
   border: none;
   border-bottom: 3px solid #108a98;
   color: white;
-  text-shadow: rgba(0, 0, 0, 0) 0px 0px 5px;
+  text-shadow: none;
 }
 /* line 51, ../sass/landing.scss */
 .btn-educal-primary:hover {
