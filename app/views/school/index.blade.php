@@ -76,7 +76,11 @@
 
 <script>
   $(document).ready(function() {
-    $('#groupTable').dataTable();
+    $('#groupTable').dataTable( {
+        "language": {
+            "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+        }
+    } );
   } );
 </script>
 @stop
