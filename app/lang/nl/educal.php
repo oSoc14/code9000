@@ -59,7 +59,7 @@ return array(
     'day' => 'dag',
     'years' => 'jaren',
     'months' => 'maanden',
-    'weeks' => 'weeken',
+    'weeks' => 'weken',
     'days' => 'dagen',
     'loading' => 'laden ...',
 

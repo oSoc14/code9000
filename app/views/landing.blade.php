@@ -110,11 +110,11 @@
           ]), PHP_EOL }}
           <div class="form-group">
           {{Form::label('lemail', ucfirst(trans('educal.email')))}}
-          {{Form::email('lemail', null , ['class'=>'form-control','placeholder'=>"What's your email address?"])}}
+          {{Form::email('lemail', null , ['class'=>'form-control'])}}
           </div>
           <div class="form-group">
             <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
-            <input type="password" class="form-control" id="login-password" name="password" placeholder="Enter your password">
+            <input type="password" class="form-control" id="login-password" name="password">
           </div>
           <div class="checkbox">
             <label>
@@ -158,22 +158,23 @@
           <div class="alert alert-warning" role="alert">{{ucfirst(trans('educal.registerschool'))}}</div>
           <div class="form-group">
               {{Form::label('name', ucfirst(trans('educal.name')))}}
-              {{Form::text('name', null , ['class'=>'form-control','placeholder'=>"What's your given name?"])}}
+              {{Form::text('name', null , ['class'=>'form-control'])}}
           </div>
           <div class="form-group">
               {{Form::label('surname', ucfirst(trans('educal.surname')))}}
-              {{Form::text('surname', null , ['class'=>'form-control','placeholder'=>"What's your surname?"])}}
+              {{Form::text('surname', null , ['class'=>'form-control'])}}
           </div>
           <div class="form-group">
               {{Form::label('email', ucfirst(trans('educal.email')))}}
-              {{Form::email('email', null , ['class'=>'form-control','placeholder'=>"What's your email address?"])}}
+              {{Form::email('email', null , ['class'=>'form-control'])}}
           </div>
           <div class="form-group">
             <label for="user-password">{{ucfirst(trans('educal.password'))}}</label>
-            <input type="password" class="form-control" id="user-password" name="password" placeholder="Choose a password">
+            <input type="password" class="form-control" id="user-password" name="password">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
+            <label for="user-password-confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
+            <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation">
           </div>
           <div class="form-group">
             <label>{{ucfirst(trans('educal.school'))}}</label>
@@ -222,23 +223,24 @@
             ]), PHP_EOL }}
           <div class="form-group">
               {{Form::label('semail', ucfirst(trans('educal.email')))}}
-              {{Form::email('semail', null , ['class'=>'form-control','placeholder'=>"What's your school's email address?"])}}
+              {{Form::email('semail', null , ['class'=>'form-control'])}}
           </div>
           <div class="form-group">
               {{Form::label('sname', ucfirst(trans('educal.name')))}}
-              {{Form::text('sname', null , ['class'=>'form-control','placeholder'=>"What's the name of the school?"])}}
+              {{Form::text('sname', null , ['class'=>'form-control'])}}
 
           </div>
           <div class="form-group">
               {{Form::label('city', ucfirst(trans('educal.city')))}}
-              {{Form::text('city', null , ['class'=>'form-control','placeholder'=>"Where is the school located? (e.g. 'Chicago')"])}}
+              {{Form::text('city', null , ['class'=>'form-control'])}}
           </div>
           <div class="form-group">
             <label for="school-password">{{ucfirst(trans('educal.password'))}}</label>
-            <input type="password" class="form-control" id="school-password" name="password" placeholder="Choose a password">
+            <input type="password" class="form-control" id="school-password" name="password">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" id="school-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
+            <label for="school-password-confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
+            <input type="password" class="form-control" id="school-password-confirmation" name="password_confirmation">
           </div>
           <div class="checkbox">
             <label>
