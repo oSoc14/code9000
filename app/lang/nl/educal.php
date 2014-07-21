@@ -11,6 +11,19 @@ return array(
     |
     */
 
+    'lead' => 'EduCal is an application for schools to easily create and manage calendars that can be shared with parents.',
+    'login' => 'Log in',
+    'loginaccount' => 'Log in to your account',
+    'register' => 'Register',
+    'or' => 'or',
+    'getstarted' => 'get started',
+    'contact' => 'contact',
+    'errors' => 'Errors',
+
+    'email' => 'Email address',
+    'password' => 'Wachtwoord',
+    'remember' => 'Remember me',
+
     'calendar' => 'kalender',
     'schools' => 'scholen',
     'school' => 'school',

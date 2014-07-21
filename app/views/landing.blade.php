@@ -48,10 +48,10 @@
       <div class="col-xs-12 introduction-content">
         <h1 class="hidden">EduCal</h1>
         <img src="images/logo_educal.png" alt="Logo" />
-        <p class="lead">EduCal is an application for schools to easily create and manage calendars that can be shared with parents.</p>
+        <p class="lead">{{trans('educal.lead')}}</p>
         <div class="button-container">
-          <a href="#" class="btn btn-lg btn-default btn-educal-warning" data-toggle="modal" data-target="#loginModal">Log in <span class="glyphicon glyphicon-log-in"></span></a> or
-          <a href="#" class="btn btn-lg btn-default btn-educal-danger" data-toggle="modal" data-target="#registerUserModal">Register <span class="glyphicon glyphicon-link"></span></a>
+          <a href="#" class="btn btn-lg btn-default btn-educal-warning" data-toggle="modal" data-target="#loginModal">{{ucfirst(trans('educal.login'))}} <span class="glyphicon glyphicon-log-in"></span></a> {{trans('educal.or')}}
+          <a href="#" class="btn btn-lg btn-default btn-educal-danger" data-toggle="modal" data-target="#registerUserModal">{{ucfirst(trans('educal.register'))}} <span class="glyphicon glyphicon-link"></span></a>
         </div>
       </div>
     </div>
@@ -60,15 +60,15 @@
   <div class="container content-container">
     <div class="row content-container">
       <div class="col-xs-12 col-sm-12 col-md-4">
-        <h2>About</h2>
+        <h2>{{ucfirst(trans('educal.about'))}}</h2>
         <p>Nowadays, parents have a lot of different calendars to keep track of for their children. <strong>EduCal</strong> is an interactive calendar management platform that allows schools (and others) to manage multiple calendars. These calendars can be downloaded by staff and parents as an iCal-file or pdf-file. This iCal-file can then be <strong>imported</strong> in their own agendas.</p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
-        <h2>Get started</h2>
+        <h2>{{ucfirst(trans('educal.getstarted'))}}</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias asperiores, culpa distinctio doloremque earum eius ex illo laudantium nemo nihil odio praesentium quidem quos ratione rem tempore ullam ut. Amet.</p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
-        <h2>Contact</h2>
+        <h2>{{ucfirst(trans('educal.contact'))}}</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias asperiores, culpa distinctio doloremque earum eius ex illo laudantium nemo nihil odio praesentium quidem quos ratione rem tempore ullam ut. Amet.</p>
       </div>
     </div>
@@ -91,12 +91,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Log in to your account</h4>
+          <h4 class="modal-title">{{ucfirst(trans('educal.loginaccount'))}}</h4>
         </div>
         <div class="modal-body">
             @if(Session::has('errorMessage'))
             <div class="alert alert-danger" role="alert">
-                <strong>Errors</strong>
+                <strong>{{ucfirst(trans('educal.errors'))}}</strong>
                 <ul>
                     <li>{{ Session::get('errorMessage') }}</li>
                 </ul>
@@ -107,19 +107,19 @@
           'data-ajax' => 'false',
           ]), PHP_EOL }}
           <div class="form-group">
-          {{Form::label('lemail', 'Email address')}}
+          {{Form::label('lemail', ucfirst(trans('educal.email')))}}
           {{Form::email('lemail', null , ['class'=>'form-control','placeholder'=>"What's your email address?"])}}
           </div>
           <div class="form-group">
-            <label for="login-password">Password</label>
+            <label for="login-password">{{ucfirst(trans('educal.password')))}}</label>
             <input type="password" class="form-control" id="login-password" name="password" placeholder="Enter your password">
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="login-remember" id="login-remember"> Remember me
+              <input type="checkbox" name="login-remember" id="login-remember">{{ ucfirst(trans('educal.remember')))}}
             </label>
           </div>
-          <button type="submit" class="btn btn-default btn-educal-danger">Log in</button>
+          <button type="submit" class="btn btn-default btn-educal-danger">{{ ucfirst(trans('educal.login')))}}</button>
           {{ Form::close(), PHP_EOL }}
         </div>
       </div>
