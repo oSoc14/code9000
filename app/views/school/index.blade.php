@@ -19,11 +19,11 @@
         <thead>
           <tr>
             <th class="hidden-xs">#</th>
-            <th data-class="expand">Name</th>
-            <th data-hide="phone" data-name="City">City</th>
-            <th data-hide="phone,tablet" data-name="Short name">Short name</th>
-            <th data-hide="phone,tablet" data-name="Groups"># of groups</th>
-            <th data-hide="phone" data-name="Actions">Actions</th>
+            <th data-class="expand">{{ucfirst(trans('educal.name'))}}</th>
+            <th data-hide="phone" data-name="{{ucfirst(trans('educal.city'))}}">{{ucfirst(trans('educal.city'))}}</th>
+            <th data-hide="phone,tablet" data-name="{{ucfirst(trans('educal.short'))}}">{{ucfirst(trans('educal.short'))}}</th>
+            <th data-hide="phone,tablet" data-name="{{ucfirst(trans('educal.#ofgroups'))}}">{{ucfirst(trans('educal.#ofgroups'))}}</th>
+            <th data-hide="phone" data-name="{{ucfirst(trans('educal.actions'))}}">{{ucfirst(trans('educal.actions'))}}</th>
           </tr>
         </thead>
         <tbody>
@@ -51,14 +51,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                Confirmation
+                {{ucfirst(trans('educal.confirmation'))}}
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this item?
+                {{ucfirst(trans('educal.confirmationmsg'))}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-educal-warning" data-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-educal-danger">Delete</a>
+                <button type="button" class="btn btn-default btn-educal-warning" data-dismiss="modal">{{ucfirst(trans('educal.cancel'))}}</button>
+                <a href="#" class="btn btn-educal-danger">{{ucfirst(trans('educal.delete'))}}</a>
             </div>
         </div>
     </div>
@@ -74,5 +74,134 @@
 
 {{ HTML::script('js/app.js') }}
 
+@if(Session::get('lang') == 'nl')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@elseif(Session::get('lang') == 'en')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/English.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@elseif(Session::get('lang') == 'fr')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/French.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@elseif(Session::get('lang') == 'de')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/German.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@endif
 @stop
 

@@ -36,33 +36,6 @@ $(document).ready(function() {
     });
   }
 
-  if ($('#groupTable').length != 0){
-    var responsiveHelper;
-    var breakpointDefinition = {
-      tablet: 1024,
-      phone : 480
-    };
-    var tableElement = $('#groupTable');
-
-    //$('#groupTable').dataTable();
-
-    tableElement.dataTable({
-      autoWidth        : false,
-      preDrawCallback: function () {
-        // Initialize the responsive datatables helper once.
-        if (!responsiveHelper) {
-          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-        }
-      },
-      rowCallback    : function (nRow) {
-        responsiveHelper.createExpandIcon(nRow);
-      },
-      drawCallback   : function (oSettings) {
-        responsiveHelper.respond();
-      }
-    });
-  }
-
   $('.activateUser').on('click', function(ev){
     ev.preventDefault;
     var that = $(this);
@@ -164,7 +137,6 @@ jQuery(function(){
             minTime:false
           })
         }
-
       },
       onSelectDate:function(){
         if(jQuery('#datetimepicker2').val() != ''){

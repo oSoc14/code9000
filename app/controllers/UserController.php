@@ -7,7 +7,6 @@ class UserController extends \BaseController {
     /**
      * Get all users for a school, where they can be activated as well by the administration
      * Show these on view
-     * TODO: PERMISSIONS List users by school
      */
     public function index()
     {
@@ -15,16 +14,13 @@ class UserController extends \BaseController {
         if(Sentry::check()) {
             $user = Sentry::getUser();
             $users = null;
-            $schoolName = null;
             $schools = School::get();
             $schoolsArray = [];
             foreach ($schools as $school){
                 $schoolsArray[$school->id] = $school->name;
             }
-            if ($user->hasAccess('school'))
-            {
+            if ($user->hasAccess('school')) {
                 $users = User::where('id','<>',$user->id)->get();
-                $schoolName = 'Userlist';
             } elseif ($user->hasAccess('user')) {
                 $schoolId = $user->school_id;
                 // Get all users with this school_id, except for the logged in user
@@ -46,41 +42,18 @@ class UserController extends \BaseController {
     }
 
     /**
-     * Get a single user based on his ID, the admin can edit certain settings in this view
-     * TODO: PERMISSIONS List users by schoolsingle user
-     * TODO: Activate user possibility
+     * TODO: Custom variable error messages (multiple language support)
+     * @return mixed
      */
-    public function show($id)
-    {
-        // If user is logged in, get school_id, find respective users
-        if(Sentry::check()) {
-            $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
-                $user = Sentry::findUserByID($id);
-                $user->load('school');
-                $user->load('groups');
-
-                return View::make('user.show')
-                    ->with('user', $user);
-            }else{
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
-            }
-        }   else{
-            // If not logged in, redirect to the login screen
-            return Redirect::route('landing');
-        }
-    }
-
     public function auth()
     {
         try
         {
             // Login credentials
-            $credentials = array(
+            $credentials = [
                 'email'    => Input::get('lemail'),
                 'password' => Input::get('password'),
-            );
+            ];
 
             // Authenticate the user
             $user = Sentry::authenticate($credentials, false);
@@ -151,10 +124,14 @@ class UserController extends \BaseController {
 
     }
 
+    /**
+     * Store a new user in the database
+     * @return mixed
+     */
     public function store()
     {
         $validator = Validator::make(
-            array(
+            [
                 'name' => Input::get('name'),
                 'surname' => Input::get('surname'),
                 'email' => Input::get('email'),
@@ -162,15 +139,15 @@ class UserController extends \BaseController {
                 'password' => Input::get('password'),
                 'password_confirmation' => Input::get('password_confirmation'),
                 'tos' => Input::get('tos')
-            ),
-            array(
+            ],
+            [
                 'name' => 'required',
                 'surname' => 'required',
                 'school' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:8|confirmed',
                 'tos' => 'required'
-            )
+            ]
         );
         if ($validator->fails())
         {
@@ -180,14 +157,14 @@ class UserController extends \BaseController {
                 ->withErrors($validator);
 
         } else {
-            Sentry::createUser(array(
+            Sentry::createUser([
                 'email'    => Input::get('email'),
                 'password' => Input::get('password'),
                 'activated' => false,
                 'school_id' => Input::get('school'),
                 'first_name' => e(Input::get('name')),
                 'last_name' => e(Input::get('surname')),
-            ));
+            ]);
             return Redirect::route('landing');
         }
     }
@@ -198,41 +175,54 @@ class UserController extends \BaseController {
      */
     public function create()
     {
-        $validator = Validator::make(
-            array(
-                'name' => Input::get('name'),
-                'surname' => Input::get('surname'),
-                'email' => Input::get('email'),
-                'school' => Input::get('school'),
-                'password' => Input::get('password'),
-                'password_confirmation' => Input::get('password_confirmation'),
-            ),
-            array(
-                'name' => 'required',
-                'surname' => 'required',
-                'school' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|min:8|confirmed',
-            )
-        );
-        if ($validator->fails())
-        {
-            $validator->getMessageBag()->add('usererror', 'Failed to make a user');
-            return Redirect::back()
-                ->withInput()
-                ->withErrors($validator);
+        if(Sentry::check()) {
+            // Find active user
+            $user = Sentry::getUser();
+            if ($user->hasAnyAccess(['school','user'])){
+                $validator = Validator::make(
+                    [
+                        'name' => Input::get('name'),
+                        'surname' => Input::get('surname'),
+                        'email' => Input::get('email'),
+                        'school' => Input::get('school'),
+                        'password' => Input::get('password'),
+                        'password_confirmation' => Input::get('password_confirmation'),
+                    ],
+                    [
+                        'name' => 'required',
+                        'surname' => 'required',
+                        'school' => 'required',
+                        'email' => 'required|email|unique:users,email',
+                        'password' => 'required|min:8|confirmed',
+                    ]
+                );
+                if ($validator->fails())
+                {
+                    $validator->getMessageBag()->add('usererror', 'Failed to make a user');
+                    return Redirect::back()
+                        ->withInput()
+                        ->withErrors($validator);
 
-        }
-        else{
-            Sentry::createUser(array(
-                'email'    => Input::get('email'),
-                'password' => Input::get('password'),
-                'activated' => true,
-                'school_id' => Input::get('school'),
-                'first_name' => Input::get('name'),
-                'last_name' => Input::get('surname'),
-            ));
-            return Redirect::back();
+                } else {
+                    if($user->hasAccess('user') || ($user->hasAccess('user') && $user->school_id == Input::get('school'))) {
+                        Sentry::createUser([
+                            'email'    => Input::get('email'),
+                            'password' => Input::get('password'),
+                            'activated' => true,
+                            'school_id' => Input::get('school'),
+                            'first_name' => Input::get('name'),
+                            'last_name' => Input::get('surname'),
+                        ]);
+                    } else {
+                        return Redirect::route('user.index');
+                    }
+                    return Redirect::route('user.index');
+                }
+            } else {
+                return Redirect::route('calendar.index');
+            }
+        } else {
+            return Redirect::route('landing');
         }
     }
 
@@ -240,14 +230,13 @@ class UserController extends \BaseController {
     /**
      * Remove a user from a school
      * @param $id = userID
-     * TODO: PERMISSIONS remove user from school
      */
     public function removeUserFromSchool($id)
     {
-        // If user is logged in, get school_id, find respective users
+        // If user is logged in, check for permissions
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
+            if ($user->hasAnyAccess(['school','user'])){
                 try
                 {
                     // Find the user using the user id
@@ -259,7 +248,7 @@ class UserController extends \BaseController {
                      *          -> false: delete user from school
                      * ->false: safe to remove user from school
                      */
-                    if(($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id) || $user->school_id == null) {
+                    if($selectedUser->hasAccess('admin') && ($selectedUser->school_id == $user->school_id || $user->school_id == null)) {
                         $school = School::find($selectedUser->school_id);
                         $group = Sentry::findGroupByName($school->short.'_admin');
                         $users = Sentry::findAllUsersInGroup($group);
@@ -306,11 +295,11 @@ class UserController extends \BaseController {
         // If user is logged in, get school_id, find respective users
         if(Sentry::check()) {
             $loggedInUser = Sentry::getUser();
-            if ($loggedInUser->hasAnyAccess(array('school','user'))){
+            if ($loggedInUser->hasAnyAccess(['school','user'])){
                 // Find the user using the user id
                 try {
                     $user = Sentry::findUserById($id);
-
+                    // Check if all permission are in order, if ok, just progress through the script, else we handle errors
                     if(($loggedInUser->school_id == $user->school_id || $loggedInUser->hasAccess('school')) && $user->id != $loggedInUser->id) {
 
                     } else {
@@ -335,9 +324,9 @@ class UserController extends \BaseController {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
-        }   else{
+        } else {
             // If not logged in, redirect to the login screen
-            return Redirect::route('calendar.index');
+            return Redirect::route('landing');
         }
     }
 
@@ -349,18 +338,20 @@ class UserController extends \BaseController {
      */
     public function editUser($id = null)
     {
-        // If user is logged in, get school_id, find respective users
+        // Check if user is logged in
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user')) || $user->id == $id){
-                $selectedUser = null;
-                if($id != null) {
-                    $selectedUser = Sentry::findUserById($id);
-                } else {
-                    $selectedUser = Sentry::getUser();
-                }
-
-                if($user->school_id == $selectedUser->school_id) {
+            // If id is given, find user by that id
+            if($id != null) {
+                $selectedUser = Sentry::findUserById($id);
+            // If no id is given, make the id equal to the id of the logged in user
+            } else {
+                $selectedUser = Sentry::getUser();
+                $id = $selectedUser->id;
+            }
+            // Check permissions for the user
+            if ($user->hasAnyAccess(['school','user']) || $user->id == $id){
+                if($user->school_id == $selectedUser->school_id || $user->school_id == null) {
                     return View::make('user.edit')
                         ->with('user', $selectedUser);
                 } else {
@@ -384,25 +375,29 @@ class UserController extends \BaseController {
         if(Sentry::check()) {
             $userLogged = Sentry::getUser();
             $user = Sentry::findUserById($id);
+            // Check if the user that wants to do the update is either the user himself,
+            // or another user with the correct permissions (such as the superAdmin, or an administrator from the school)
             if ($userLogged->hasAccess('school') || $userLogged->id == $id || ($userLogged->hasAccess('user') && $userLogged->school_id == $user->school_id)){
                 $validator = Validator::make(
-                    array(
+                    [
                         'name' => Input::get('name'),
                         'surname' => Input::get('surname'),
                         'email' => Input::get('email'),
                         'password' => Input::get('password'),
                         'password_confirmation' => Input::get('password_confirmation'),
                         'lang' => Input::get('lang')
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => 'required',
                         'surname' => 'required',
                         'email' => 'required|email',
                         'password' => 'min:8|confirmed',
                         'lang' => 'required'
-                    )
+                    ]
                 );
-
+                // If the user tries to change his e-mail, check if there is already another user with that e-mail adress
+                // (this happens in the try-catch block, if the try fails, it means there is no other user with the same
+                // e-mail adress, which means that we can safely update the user's e-mail
                 if($user->email != Input::get('email')) {
                     try
                     {
@@ -411,7 +406,7 @@ class UserController extends \BaseController {
                         ));
 
                         // Add an error message in the message collection (MessageBag instance)
-                        $validator->getMessageBag()->add('email', Lang::get('validation.unique', array('attribute ' => 'email ')));
+                        $validator->getMessageBag()->add('email', Lang::get('validation.unique', ['attribute ' => 'email ']));
 
                     }
                     catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
@@ -422,13 +417,13 @@ class UserController extends \BaseController {
 
                 if ($validator->fails()) {
                     return Redirect::back()->withInput()->withErrors($validator);
-                } else{
+                } else {
                     if(Input::get('password'))
                         $user->password     = Input::get('password');
 
                     $user->first_name   = e(Input::get('name'));
                     $user->last_name    = e(Input::get('surname'));
-                    $user->lang = e(Input::get('lang'));
+                    $user->lang         = e(Input::get('lang'));
 
                     Session::forget('lang');
                     Session::put('lang', Input::get('lang'));
@@ -440,11 +435,11 @@ class UserController extends \BaseController {
                     return Redirect::back();
                 }
                 return Redirect::back();
-            }else{
+            } else {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
-        }   else{
+        } else {
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }
@@ -460,7 +455,7 @@ class UserController extends \BaseController {
     {
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
+            if ($user->hasAnyAccess(['school','user'])) {
                 try
                 {
                     // Find the user using the user id
@@ -475,7 +470,8 @@ class UserController extends \BaseController {
                     $group = Sentry::findGroupById($groupId);
                     if(($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id) || $user->school_id == null) {
                         $school = School::find($selectedUser->school_id);
-
+                        // Make sure the user can not remove the last user from the school_admin group
+                        // otherwise no one is left to configure the group (except for the superAdmin)
                         if($group->name == $school->short.'_admin') {
                             $users = Sentry::findAllUsersInGroup($group);
                             if(count($users)>1) {
@@ -495,15 +491,6 @@ class UserController extends \BaseController {
                         // Return to the previous page
                         return Redirect::back();
                     }
-                    /*// Find the user using the user id
-                    $user = Sentry::findUserById($id);
-
-                    // Find the group using the group id
-                    $group = Sentry::findGroupById($groupId);
-
-                    // Assign the group to the user
-                    $user->removeGroup($group);*/
-
                 }
                 catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
                 {
@@ -517,11 +504,11 @@ class UserController extends \BaseController {
                     // Return to the previous page
                     return Redirect::back()->with('error', $error);
                 }
-            }else{
+            } else {
                 // If no permissions, redirect to calendar index
                 return Redirect::route('calendar.index');
             }
-        }   else{
+        } else {
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }
@@ -534,19 +521,23 @@ class UserController extends \BaseController {
         if(Sentry::check()) {
             Sentry::logout();
         }
-        // Redirect to root
+        // Redirect to landing
         return Redirect::route('landing');
     }
 
+    /**
+     * Method for adding users to a group
+     *
+     * @param $group_id
+     * @return mixed
+     */
     public function addToGroup($group_id) {
         if(Sentry::check()) {
             $user = Sentry::getUser();
-            if ($user->hasAnyAccess(array('school','user'))){
+            // Find the group using the group id
+            $group = Sentry::findGroupById($group_id);
+            if ($user->hasAccess('school') || ($user->hasAccess('user') && $user->school_id == $group->school_id)){
                 $user = Sentry::findUserById(Input::get('user'));
-
-                // Find the group using the group id
-                $group = Sentry::findGroupById($group_id);
-
                 $user->addGroup($group);
 
                 return Redirect::back();

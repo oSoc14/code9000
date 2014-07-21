@@ -17,9 +17,11 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
+        // Check if user is logged in/activated
         if(Sentry::check()) {
             return Redirect::route('calendar.index');
-        }else{
+        } else {
+            // If user is not logged in, show the default landing page where users can log in or register
             $schools = School::get();
             $schoolsArray = [];
             foreach ($schools as $school){

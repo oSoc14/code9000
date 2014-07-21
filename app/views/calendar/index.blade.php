@@ -59,10 +59,27 @@
                   <i class="fa fa-share"></i> {{ucfirst(trans('educal.export'))}}
                 </a>
                 @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
-                <a type="button" class="btn btn-default btn-educal-danger pull-right" href="" id="deleteEvent">
-                  <i class="fa fa-times-circle"></i> {{ucfirst(trans('educal.deleteevent'))}}
+                <a type="button" class="btn btn-default btn-educal-danger pull-right" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="" title="Remove" id="deleteEvent">
+                    <i class="fa fa-times-circle"></i> {{ucfirst(trans('educal.deleteevent'))}}
+                </a>
                 @endif
-              </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Confirmation
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger danger">Delete</a>
             </div>
         </div>
     </div>

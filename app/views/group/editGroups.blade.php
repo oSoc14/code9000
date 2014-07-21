@@ -8,13 +8,13 @@
 <div class="container-fluid">
 <div class="row">
   <div class="col-xs-12">
-    <a href="{{ route('group.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> Back to groups</a>
-    <h1>Edit Group</h1>
+    <a href="{{ route('group.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.groups')]))}}</a>
+    <h1>{{ucfirst(trans('educal.editgroup'))}}</h1>
       <!-- TODO: Check checkboxes, global function for str_replace -->
 
       @if($errors->count())
       <div class="alert alert-danger" role="alert">
-          <strong>Errors</strong>
+          <strong>{{ucfirst(trans('educal.errors'))}}</strong>
           <ul>
               @foreach ($errors->all() as $message)
               <li>{{$message}}</li>
@@ -26,13 +26,13 @@
       {{ Form::open(array('route' => array('group.update', $group->id), 'class'=>'form form-horizontal')) }}
 
       <div class="form-group">
-          <label for="user" class="col-md-2 control-label">Group name</label>
+          <label for="user" class="col-md-2 control-label">{{ucfirst(trans('educal.groupname'))}}</label>
           <div class="col-md-8">
           <?php
            $grp = str_replace($group->school->short.'_','',$group->name);
             ?>
           @if($grp == 'global' || $grp == 'admin')
-          <label class="alert-warning">This name can not be changed</label>
+          <label class="alert-warning">{{ucfirst(trans('educal.nameunchangeable'))}}</label>
           {{Form::text('name', $grp, ['class'=>'form-control', 'disabled'=>'disabled'])}}
           @else
           {{Form::text('name', $grp, ['class'=>'form-control'])}}
@@ -41,32 +41,32 @@
       </div>
 
       <div class="form-group">
-        <label class="col-md-2 control-label">User permissions</label>
+        <label class="col-md-2 control-label">{{ucfirst(trans('educal.permissions'))}}</label>
         <div class="col-md-8">
           <div class="checkbox">
             <label>
                 @if(isset($group->permissions['group']))
-                <input type="checkbox" name="permissions[group]" checked> Can create groups
+                <input type="checkbox" name="permissions[group]" checked> {{ucfirst(trans('educal.managegroups'))}}
                 @else
-                <input type="checkbox" name="permissions[group]"> Can create groups
+                <input type="checkbox" name="permissions[group]"> {{ucfirst(trans('educal.managegroups'))}}
                 @endif
             </label>
           </div>
           <div class="checkbox">
             <label>
                 @if(isset($group->permissions['user']))
-                <input type="checkbox" name="permissions[user]" checked> Can add users
+                <input type="checkbox" name="permissions[user]" checked> {{ucfirst(trans('educal.manageusers'))}}
                 @else
-                <input type="checkbox" name="permissions[user]"> Can add users
+                <input type="checkbox" name="permissions[user]"> {{ucfirst(trans('educal.manageusers'))}}
                 @endif
             </label>
           </div>
           <div class="checkbox">
             <label>
                 @if(isset($group->permissions['event']))
-                <input type="checkbox" name="permissions[event]" checked> Can add, edit and remove events
+                <input type="checkbox" name="permissions[event]" checked> {{ucfirst(trans('educal.manageevents'))}}
                 @else
-                <input type="checkbox" name="permissions[event]"> Can add, edit and remove events
+                <input type="checkbox" name="permissions[event]"> {{ucfirst(trans('educal.manageevents'))}}
                 @endif
             </label>
           </div>
@@ -75,7 +75,7 @@
 
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> Save changes</button>
+          <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> {{ucfirst(trans('educal.savechanges'))}}</button>
         </div>
       </div>
       {{ Form::close(), PHP_EOL }}
@@ -88,7 +88,7 @@
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordionGroup" href="#addUsersCollapse"><strong>Add user</strong></a></h2>
+        <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordionGroup" href="#addUsersCollapse"><strong>{{ucfirst(trans('educal.adduser'))}}</strong></a></h2>
       </div>
       <div class="panel-body collapse out" id="addUsersCollapse">
         {{Form::open(array('route' => array('user.addToGroup',$group->id)))}}
@@ -97,9 +97,9 @@
           {{Form::select('user', $smartUsers, [], array('class'=>'form-control'));}}
         </div>
         <div class="col-xs-3">
-          <button type="submit" class="btn btn-default btn-educal-primary">Add user</button>
+          <button type="submit" class="btn btn-default btn-educal-primary">{{ucfirst(trans('educal.adduser'))}}</button>
           @else
-          <p>Geen gebruikers die kunnen toegevoegd worden</p>
+          <p>{{ucfirst(trans('educal.nousers'))}}</p>
           @endif
           {{ Form::close(), PHP_EOL }}
         </div>
@@ -108,15 +108,15 @@
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordionGroup" href="#currentUsersCollapse"><strong>Users in this group</strong></a></h2>
+        <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordionGroup" href="#currentUsersCollapse"><strong>{{ucfirst(trans('educal.usersingroup'))}}</strong></a></h2>
       </div>
       <div class="panel-body collapse in" id="currentUsersCollapse">
         <table id="userTable" class="table table-striped" cellspacing="0" width="100%">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>E-mail</th>
-              <th>Actions</th>
+              <th>{{ucfirst(trans('educal.name'))}}</th>
+              <th>{{ucfirst(trans('educal.email'))}}</th>
+              <th>{{ucfirst(trans('educal.actions'))}}</th>
             </tr>
           </thead>
           <tbody>

@@ -40,7 +40,7 @@ class PdfCalendarController extends \BaseController {
 
     public function composePdf($appointments, $school, $group)
     {
-
+        // Pdf "header"
         $html =     '<h1>'.$school.'</h1>'
                     .'<h2>'.$group.'</h2>'
                     .'<table>'
@@ -97,6 +97,7 @@ class PdfCalendarController extends \BaseController {
         {
             return $value['start_date'];
         }));
+        // Here we render appointments
         foreach($listAppointments as $app) {
             $html .= '<tr><td>'.$app['start_date'].' - '.$app['end_date'].'</td>'
                         .'<td>'.$app['title'].'</td>'

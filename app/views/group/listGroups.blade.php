@@ -14,7 +14,7 @@
       </div>
       <div class="col-xs-6">
           <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route('group.create')}}" id="addEvent">
-            <i class="fa fa-plus"></i> Add group
+            <i class="fa fa-plus"></i> {{ucfirst(trans('educal.addgroup'))}}
           </a>
       </div>
   </div>
@@ -24,10 +24,10 @@
         <thead>
           <tr>
             <th class="hidden-xs">#</th>
-            <th data-class="expand">Name</th>
-            <th data-hide="phone" data-name="URLs">URLs</th>
-            <th data-hide="phone" data-name="URL options">URL options</th>
-            <th data-hide="phone,tablet" data-name="Actions">Actions</th>
+            <th data-class="expand">{{ucfirst(trans('educal.name'))}}</th>
+            <th data-hide="phone" data-name="URLs">{{ucfirst(trans('educal.urls'))}}</th>
+            <th data-hide="phone" data-name="URL options">{{ucfirst(trans('educal.urloptions'))}}</th>
+            <th data-hide="phone,tablet" data-name="Actions">{{ucfirst(trans('educal.actions'))}}</th>
           </tr>
         </thead>
         <tbody>
@@ -46,8 +46,8 @@
             <a href="#" data-group-id="{{$group->id}}" data-link="{{ URL::to('/') }}/export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to PDF link" class="linkTo"><i class="fa fa-file-pdf-o fa-2x"></i></a>
           </td>
           @else
-          <td>NO EXPORT</td>
-          <td>NO OPTIONS</td>
+          <td>{{ucfirst(trans('educal.noexport'))}}</td>
+          <td></td>
           @endif
           <td>
             <a href="export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Download Pdf">
@@ -65,6 +65,22 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Confirmation
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this group?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="content-bg"></div>
 @stop
 
@@ -75,4 +91,134 @@
 {{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
 
 {{ HTML::script('js/app.js') }}
+
+@if(Session::get('lang') == 'nl')
+<script>
+    $(document).ready(function() {
+      var responsiveHelper;
+      var breakpointDefinition = {
+        tablet: 1024,
+        phone : 480
+      };
+      var tableElement = $('#groupTable');
+        tableElement.dataTable({
+          "language": {
+              "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+          },
+          "aoColumnDefs": [
+              {"bSortable": false, "aTargets": [2]}
+          ],
+          autoWidth        : false,
+          preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper) {
+              responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+            }
+          },
+          rowCallback    : function (nRow) {
+            responsiveHelper.createExpandIcon(nRow);
+          },
+          drawCallback   : function (oSettings) {
+            responsiveHelper.respond();
+          }
+        });
+    } );
+</script>
+@elseif(Session::get('lang') == 'en')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/English.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@elseif(Session::get('lang') == 'fr')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/French.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@elseif(Session::get('lang') == 'de')
+<script>
+  $(document).ready(function() {
+    var responsiveHelper;
+    var breakpointDefinition = {
+      tablet: 1024,
+      phone : 480
+    };
+    var tableElement = $('#groupTable');
+    tableElement.dataTable({
+      "language": {
+        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/German.json"
+      },
+      "aoColumnDefs": [
+        {"bSortable": false, "aTargets": [2]}
+      ],
+      autoWidth        : false,
+      preDrawCallback: function () {
+        // Initialize the responsive datatables helper once.
+        if (!responsiveHelper) {
+          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        }
+      },
+      rowCallback    : function (nRow) {
+        responsiveHelper.createExpandIcon(nRow);
+      },
+      drawCallback   : function (oSettings) {
+        responsiveHelper.respond();
+      }
+    });
+  } );
+</script>
+@endif
 @stop

@@ -8,12 +8,13 @@
 
 @section('content')
 <div class="container-fluid" id="content-container">
-  <div class="row first-row">
-    <div class="col-xs-6">
-      <h1>{{ucfirst(trans('educal.users'))}}</h1>
-    </div>
-    <div class="col-xs-6">
-      <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> Add user</a>
+    <div class="row first-row">
+        <div class="col-xs-6">
+            <h1>{{ucfirst(trans('educal.users'))}}</h1>
+        </div>
+        <div class="col-xs-6">
+            <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> {{ucfirst(trans('educal.adduser'))}}</a>
+        </div>
     </div>
   </div>
   <div class="row">
@@ -22,41 +23,45 @@
         <thead>
         <tr>
           <th class="hidden-xs">#</th>
-          <th data-class="expand">Name</th>
-          <th>Surname</th>
-          <th data-hide="phone,tablet" data-name="Email">Email</th>
-          <th data-hide="phone" data-name="Actived">Activated</th>
+          <th data-class="expand">{{ucfirst(trans('educal.name'))}}</th>
+          <th>{{ucfirst(trans('educal.surname'))}}</th>
+          <th data-hide="phone,tablet" data-name="{{ucfirst(trans('educal.email'))}}">{{ucfirst(trans('educal.email'))}}</th>
+          <th data-hide="phone" data-name="{{ucfirst(trans('educal.activated'))}}">{{ucfirst(trans('educal.activated'))}}</th>
+          <th data-hide="phone,tablet" data-name="{{ucfirst(trans('educal.actions'))}}">{{ucfirst(trans('educal.actions'))}}</th>
         </tr>
         </thead>
+                <tbody>
+                <?php $i = 0; ?>
+                @foreach($users as $user)
+                <?php $i++; ?>
+                <tr>
+                    <td class="hidden-xs">{{ $i }}</td>
+                    <td>{{ $user->first_name }}</td>
+                    <td>{{ $user->last_name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>
 
-        <tbody>
-        <?php $i = 0; ?>
-        @foreach($users as $user)
-        <?php $i++; ?>
-        <tr>
-          <td class="hidden-xs">{{ $i }}</td>
-          <td>{{ $user->first_name }}</td>
-          <td>{{ $user->last_name }}</td>
-          <td>{{ $user->email }}</td>
-          <td>
+                        <!-- TODO: fix colors -->
+                        <label for="activateUser">
+                            @if($user->activated == 1)
+                            <input type="checkbox" data-userid="{{$user->id}}" class="activateUser checkbox" checked>
+                            @else
+                            <input type="checkbox" data-userid="{{$user->id}}" class="activateUser checkbox">
+                            @endif
+                        </label>
 
-              <!-- TODO: fix colors -->
-            <label for="activateUser">
-                @if($user->activated == 1)
-                <input type="checkbox" data-userid="{{$user->id}}" class="activateUser checkbox" checked>
-                @else
-                <input type="checkbox" data-userid="{{$user->id}}" class="activateUser checkbox">
-                @endif
-            </label>
-
-            </a>
-          </td>
-        </tr>
-        @endforeach
-        </tbody>
-      </table>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ route('user.edit', $user->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
+                        <a data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{{ route('user.removeUserFromSchool', $user->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 </div>
 @if($errors->has('usererror'))
 <div class="modal fade" id="registerUserModal" tabindex="-1" data-errors="true" role="dialog" aria-labelledby="registerUserModal" aria-hidden="true">
@@ -118,14 +123,160 @@
             </div>
         </div>
     </div>
-<div id="content-bg"></div>
-@stop
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Confirmation
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this user?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a href="#" class="btn btn-danger danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content-bg"></div>
+    @stop
 
-@section('footerScript')
+    @section('footerScript')
 
   {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
   {{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
   {{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
 
   {{ HTML::script('js/app.js') }}
+
+    @if(Session::get('lang') == 'nl')
+    <script>
+      $(document).ready(function() {
+        var responsiveHelper;
+        var breakpointDefinition = {
+          tablet: 1024,
+          phone : 480
+        };
+        var tableElement = $('#groupTable');
+        tableElement.dataTable({
+          "language": {
+            "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+          },
+          "aoColumnDefs": [
+            {"bSortable": false, "aTargets": [5]}
+          ],
+          autoWidth        : false,
+          preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper) {
+              responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+            }
+          },
+          rowCallback    : function (nRow) {
+            responsiveHelper.createExpandIcon(nRow);
+          },
+          drawCallback   : function (oSettings) {
+            responsiveHelper.respond();
+          }
+        });
+      } );
+    </script>
+    @elseif(Session::get('lang') == 'en')
+    <script>
+      $(document).ready(function() {
+        var responsiveHelper;
+        var breakpointDefinition = {
+          tablet: 1024,
+          phone : 480
+        };
+        var tableElement = $('#groupTable');
+        tableElement.dataTable({
+          "language": {
+            "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/English.json"
+          },
+          "aoColumnDefs": [
+            {"bSortable": false, "aTargets": [5]}
+          ],
+          autoWidth        : false,
+          preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper) {
+              responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+            }
+          },
+          rowCallback    : function (nRow) {
+            responsiveHelper.createExpandIcon(nRow);
+          },
+          drawCallback   : function (oSettings) {
+            responsiveHelper.respond();
+          }
+        });
+      } );
+    </script>
+    @elseif(Session::get('lang') == 'fr')
+    <script>
+      $(document).ready(function() {
+        var responsiveHelper;
+        var breakpointDefinition = {
+          tablet: 1024,
+          phone : 480
+        };
+        var tableElement = $('#groupTable');
+        tableElement.dataTable({
+          "language": {
+            "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/French.json"
+          },
+          "aoColumnDefs": [
+            {"bSortable": false, "aTargets": [5]}
+          ],
+          autoWidth        : false,
+          preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper) {
+              responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+            }
+          },
+          rowCallback    : function (nRow) {
+            responsiveHelper.createExpandIcon(nRow);
+          },
+          drawCallback   : function (oSettings) {
+            responsiveHelper.respond();
+          }
+        });
+      } );
+    </script>
+    @elseif(Session::get('lang') == 'de')
+    <script>
+      $(document).ready(function() {
+        var responsiveHelper;
+        var breakpointDefinition = {
+          tablet: 1024,
+          phone : 480
+        };
+        var tableElement = $('#groupTable');
+        tableElement.dataTable({
+          "language": {
+            "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/German.json"
+          },
+          "aoColumnDefs": [
+            {"bSortable": false, "aTargets": [5]}
+          ],
+          autoWidth        : false,
+          preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper) {
+              responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+            }
+          },
+          rowCallback    : function (nRow) {
+            responsiveHelper.createExpandIcon(nRow);
+          },
+          drawCallback   : function (oSettings) {
+            responsiveHelper.respond();
+          }
+        });
+      } );
+    </script>
+    @endif
 @stop
