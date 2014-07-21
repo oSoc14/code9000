@@ -12,7 +12,7 @@
       </div>
       <div class="col-xs-6">
           <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route('group.create')}}" id="addEvent">
-            <i class="fa fa-plus"></i> Add group
+            <i class="fa fa-plus"></i> {{ucfirst(trans('educal.addgroup'))}}
           </a>
       </div>
   </div>
@@ -22,9 +22,9 @@
         <thead>
           <tr>
             <th class="hidden-xs">#</th>
-            <th>Name</th>
-            <th>URLs</th>
-            <th>Actions</th>
+            <th>{{ucfirst(trans('educal.name'))}}</th>
+            <th>{{ucfirst(trans('educal.urls'))}}</th>
+            <th>{{ucfirst(trans('educal.actions'))}}</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@
             </div>
           </td>
           @else
-          <td>NO EXPORT</td>
+          <td>{{ucfirst(trans('educal.noexport'))}}</td>
           @endif
           <td>
             <a href="export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Download Pdf"><i class="fa fa-download fa-2x"></i></a>&nbsp;

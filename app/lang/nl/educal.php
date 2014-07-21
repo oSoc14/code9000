@@ -57,6 +57,13 @@ return array(
     'day' => 'dag',
     'loading' => 'laden ...',
 
+    'addgroup' => 'voeg groep toe',
+    'whichschool'=>'Voor welke school is deze groep?',
+    'permissions' => 'rechten',
+    'managegroups' => 'can create groups',
+    'manageusers' => 'can add users',
+    'manageevents' => 'can add,edit and remove events',
+
     'eventdetails' => 'details',
     'createevent' => 'maak evenement',
     'editevent' => 'wijzigen',
@@ -77,9 +84,15 @@ return array(
     'editgroup' => 'edit group',
     'updategroup' => 'update group',
     'groupinfo' => 'group info',
+    'groupname' => 'groep naam',
+    'nousers'=> 'Geen gebruikers die kunnen toegevoegd worden',
     'adduser' => 'voeg gebruiker toe',
-    'nousers' => 'There are no users to be added',
-    'usersingroup' => 'Users in this group',
+    'usersingroup' => 'Gebruikers in deze groep',
+    'creategroup' => 'create and add group',
+    'noschools' => 'There are no schools to add a group to.',
+    'nameunchangeable' => 'This name can not be changed',
+    'urls' => 'Urls',
+    'noexport' => 'NO EXPORT',
 
     'editschool' => 'edit school',
 
