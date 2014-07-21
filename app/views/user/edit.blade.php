@@ -8,7 +8,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12">
-      <a href="{{ route('group.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i>{{ucfirst(trans('educal.backto',['page'=>trans('educal.groups')]))}}</a>
+      <a href="{{ route('user.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.users')]))}}</a>
       <h1>{{ucfirst(trans('educal.editinformation'))}}</h1>
 
       {{Form::open(array('route' => array('user.update',$user->id), 'class'=>'form form-horizontal')) }}
@@ -45,24 +45,24 @@
     <div class="form-group">
         {{Form::label('lang', ucfirst(trans('educal.language')), array('class'=>'col-md-2 control-label'))}}
         <div class="col-md-8">
-            {{ Form::select('lang', ['nl' => 'nl','fr' => 'fr','en' => 'en','de' => 'de'], Session::get('lang'), array('class' => 'form-control')) }}
+            {{ Form::select('lang', ['nl' => 'Nederlands','fr' => 'Français','en' => 'English','de' => 'Deutsch'], Session::get('lang'), array('class' => 'form-control')) }}
         </div>
     </div>
     <div class="form-group">
       <label for="password" class="col-md-2 control-label">{{ucfirst(trans('educal.newpassword'))}}</label>
       <div class="col-md-8">
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your new password here">
+        <input type="password" class="form-control" id="password" name="password">
       </div>
     </div>
     <div class="form-group">
         <label for="password_confirmation" class="col-md-2 control-label">{{ucfirst(trans('educal.repeatpassword'))}}</label>
       <div class="col-md-8">
-        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Repeat your new password">
+        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
       </div>
     </div>
     <div class="form-group">
       <div class="col-md-offset-2 col-md-8">
-        <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i>{{ucfirst(trans('educal.savechanges'))}}</button>
+        <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> {{ucfirst(trans('educal.savechanges'))}}</button>
       </div>
     </div>
     {{ Form::close(), PHP_EOL }}

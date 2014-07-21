@@ -89,6 +89,13 @@
 @section('footerScript')
 {{ HTML::script("packages/fullcalendar/lib/moment.min.js") }}
 {{ HTML::script("packages/fullcalendar/fullcalendar.min.js") }}
+@if(Session::get('lang') == 'nl')
+  {{ HTML::script("packages/fullcalendar/lang/nl.js") }}
+@elseif(Session::get('lang') == 'fr')
+  {{ HTML::script("packages/fullcalendar/lang/fr.js") }}
+@elseif(Session::get('lang') == 'de')
+  {{ HTML::script("packages/fullcalendar/lang/de.js") }}
+@endif
 {{ HTML::script('js/calendar.js') }}
 {{ HTML::script('js/app.js') }}
 @stop
