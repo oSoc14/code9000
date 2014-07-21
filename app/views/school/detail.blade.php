@@ -34,7 +34,7 @@
             <td>{{ count(Sentry::findAllUsersInGroup($group2)) }}</td>
             <td>
               <a href="{{ route('group.edit', $group->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
-              <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
+              <a data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{{ route('group.delete', $group->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
             </td>
           </tr>
           @endforeach
@@ -42,6 +42,22 @@
       </table>
     </div>
   </div>
+</div>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Confirmation
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this group?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger danger">Delete</a>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="content-bg"></div>
 @stop

@@ -132,7 +132,7 @@ $(document).ready(function() {
         }
         $('#editEvent').attr('href', 'calendar/event/edit/' + calEvent.id);
         $('#icalEvent').attr('href', 'export/appointment/' + calEvent.id);
-        $('#deleteEvent').attr('href', 'calendar/event/delete/' + calEvent.id);
+        $('#deleteEvent').attr('data-href', 'calendar/event/delete/' + calEvent.id);
       },
       /*{
        url: 'php/get-events.php',

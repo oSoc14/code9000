@@ -279,9 +279,15 @@ class GroupController extends \BaseController {
             // Find active user
             $user = Sentry::getUser();
             $group = Group::find($id);
-            // check if User belongs to group/school which the appointment is from
+            // Check if User belongs to group/school which the appointment is from
             if ($user->hasAccess('school') || ($user->hasAccess('group') && $user->school_id == $group->school_id)){
-                $group->delete();
+                $school = $group->school;
+                $grp = str_replace($school->short.'_','',$group->name);
+                // Do not allow default groups to be deleted
+                if($grp == 'global' || $grp == 'admin')
+                    return Redirect::back();
+                else
+                    $group->delete();
             }
             return Redirect::route('group.index');
         } else {
