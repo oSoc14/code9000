@@ -102,7 +102,7 @@ $(document).ready(function() {
   $('.linkTo').on('click', function(){
     var that = $(this);
     var id = that.data('group-id');
-    $('.linkToText_'+id).val(that.data('link')).select();
+    $('.linkToText_'+id).val(that.data('link')).fadeOut(300).fadeIn(300).select();
   });
 
   $('.linkToText').on('click', function(){

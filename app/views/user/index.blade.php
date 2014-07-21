@@ -2,6 +2,8 @@
 
 @section('header')
 {{ HTML::style("css/app.css") }}
+{{ HTML::style('packages/datatables/css/dataTables.bootstrap.css') }}
+{{ HTML::style('packages/responsive-datatables/css/dataTables.responsive.css') }}
 @stop
 
 @section('content')
@@ -20,10 +22,10 @@
         <thead>
         <tr>
           <th class="hidden-xs">#</th>
-          <th>Name</th>
+          <th data-class="expand">Name</th>
           <th>Surname</th>
-          <th>Email</th>
-          <th>Activated?</th>
+          <th data-hide="phone,tablet" data-name="Email">Email</th>
+          <th data-hide="phone" data-name="Actived">Activated</th>
         </tr>
         </thead>
 
@@ -121,19 +123,9 @@
 
 @section('footerScript')
 
-{{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
+  {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
+  {{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
+  {{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
 
-{{ HTML::script('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.js') }}
-{{ HTML::style('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.css') }}
-
-{{ HTML::script('js/app.js') }}
-<script>
-    $(document).ready(function() {
-        $('#groupTable').dataTable({
-            "aoColumnDefs": [
-                {"bSortable": false, "aTargets": [4]}
-            ]
-        });
-    } );
-</script>
+  {{ HTML::script('js/app.js') }}
 @stop

@@ -30,12 +30,12 @@ $break-xlarge: 1200px;
 $sans-serif: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
 
 // Buttons
-@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor, $txt-shadow-opacity: 0.35){
+@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor){
   background: $bgcolor;
   border: none;
   border-bottom: 3px solid $bordercolor;
   color: $color;
-  @include text-shadow(rgba(0, 0, 0, $txt-shadow-opacity) 0px 0px 5px);
+  @include text-shadow(none);
   &:hover{
     background: $bghover;
     color: $color;
@@ -60,7 +60,7 @@ $sans-serif: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
   @include btn-educal($pink, #fff, $lightpink, $darkpink);
 }
 .btn-educal-warning {
-  @include btn-educal($yellow, $darkgrey, $lightyellow, $darkyellow, 0);
+  @include btn-educal($yellow, $darkgrey, $lightyellow, $darkyellow);
 }
 .btn-educal-primary{
   @include btn-educal($blue, #fff, $lightblue, $darkblue);
