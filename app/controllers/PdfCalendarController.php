@@ -20,18 +20,31 @@ class PdfCalendarController extends \BaseController {
         $selGroup->load('appointments');
         $schoolName = $selGroup->load('school');
         $schoolName = $schoolName->school->name;
+
+        // Set the limitations for which appointments to get
+        $dsta = new DateTime();
+        $dend = new DateTime();
+        $dsta->sub(new DateInterval("P1Y"));
+        $dend->add(new DateInterval("P1Y"));
+
         // Add global appointments, unless only global appointments are requested
         if($group != 'global') {
             $globalGroup = Group::where('name', $school.'_global')->first();
             $globalGroup->load('appointments');
 
             foreach($globalGroup->appointments as $appointment) {
-                array_push($appointments, $appointment);
+                $da = new DateTime($appointment->start_date);
+                // Set the limits for what appointments to get (1y in past till 1y in future)
+                if($da > $dsta && $da < $dend)
+                    array_push($appointments, $appointment);
             }
         }
         // Push to array
         foreach($selGroup->appointments as $appointment) {
-            array_push($appointments, $appointment);
+            $da = new DateTime($appointment->start_date);
+            // Set the limits for what appointments to get (1y in past till 1y in future)
+            if($da > $dsta && $da < $dend)
+                array_push($appointments, $appointment);
         }
 
         $calendar = self::composePdf($appointments, $schoolName, $group);
@@ -52,6 +65,12 @@ class PdfCalendarController extends \BaseController {
                     .'</tr></thead><tbody>';
         $listAppointments = [];
 
+        // Set the limitations for which appointments to get
+        $dsta = new DateTime();
+        $dend = new DateTime();
+        $dsta->sub(new DateInterval("P1M"));
+        $dend->add(new DateInterval("P1M"));
+
         // Loop through appointments and add them to the calendar.
         foreach($appointments as $appointment) {
             $app = [];
@@ -66,11 +85,17 @@ class PdfCalendarController extends \BaseController {
                 $rep_freq = $appointment['attributes']['repeat_freq'];
                 // Create DateTime objects to be able to do math with days.
                 $dtStart = new DateTime($appointment['attributes']['start_date']);
-                $dtEnd = new DateTime($appointment['attributes']['end_date']);;
+                $dtStart->format('d-m-Y H:i');
+                $dtEnd = new DateTime($appointment['attributes']['end_date']);
+                $dtEnd->format('d-m-Y H:i');
                 for($i=0;$i<$appointment['attributes']['nr_repeat'];$i++) {
                     $app['start_date'] = $dtStart->format('d-m-Y H:i');
                     $app['end_date'] = $dtEnd->format('d-m-Y H:i');
-                    array_push($listAppointments, $app);
+
+                    // Set the limits for what appointments to get (1 month in past till 1 month in future)
+                    if($dtStart > $dsta && $dtStart < $dend)
+                        array_push($listAppointments, $app);
+
                     switch($appointment['attributes']['repeat_type']) {
                         case 'd':
                             $dtStart->add(new DateInterval('P'.$rep_freq.'D'));
@@ -91,7 +116,14 @@ class PdfCalendarController extends \BaseController {
                     }
                 }
             } else {
-                array_push($listAppointments, $app);
+                $dateStr = new DateTime($appointment['attributes']['start_date']);
+                $app['start_date'] = $dateStr->format('d-m-Y H:i');
+                $dateStr2 = new DateTime($appointment['attributes']['end_date']);
+                $app['end_date'] = $dateStr2->format('d-m-Y H:i');
+                $da = new DateTime($appointment->start_date);
+                // Set the limits for what appointments to get (1y in past till 1y in future)
+                if($da > $dsta && $da < $dend)
+                    array_push($listAppointments, $app);
             }
         }
         $listAppointments = array_values(array_sort($listAppointments, function($value)

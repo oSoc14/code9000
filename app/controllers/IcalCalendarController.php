@@ -17,18 +17,32 @@ class IcalCalendarController extends \BaseController {
         // Load appointments based on group
         $selGroup = Group::where('name', $school.'_'.$group)->first();
         $selGroup->load('appointments');
+
+        // Set the limitations for which appointments to get
+        $dsta = new DateTime();
+        $dend = new DateTime();
+        $dsta->sub(new DateInterval("P1Y"));
+        $dend->add(new DateInterval("P1Y"));
+
         // Add global appointments, unless only global appointments are requested
         if($group != 'global') {
             $globalGroup = Group::where('name', $school.'_global')->first();
             $globalGroup->load('appointments');
 
+
             foreach($globalGroup->appointments as $appointment) {
-                array_push($appointments, $appointment);
+                $da = new DateTime($appointment->start_date);
+                // Set the limits for what appointments to get (1y in past till 1y in future)
+                if($da > $dsta && $da < $dend)
+                    array_push($appointments, $appointment);
             }
         }
         // Push to array
         foreach($selGroup->appointments as $appointment) {
-            array_push($appointments, $appointment);
+            $da = new DateTime($appointment->start_date);
+            // Set the limits for what appointments to get (1y in past till 1y in future)
+            if($da > $dsta && $da < $dend)
+                array_push($appointments, $appointment);
         }
 
         $calendar = self::composeIcal($appointments);
