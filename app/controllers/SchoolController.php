@@ -45,7 +45,9 @@ class SchoolController extends \BaseController {
                     'city' => Input::get('city'),
                     'password' => Input::get('password'),
                     'password_confirmation' => Input::get('password_confirmation'),
-                    'tos' => Input::get('tos')
+                    'tos' => Input::get('tos'),
+                    'honey'   => 'honeypot',
+                    'honey_time'   => 'required|honeytime:5'
                 ],
                 [
                     'name' => 'required|unique:schools,name',

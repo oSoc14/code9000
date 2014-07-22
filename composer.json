@@ -9,7 +9,8 @@
     "cartalyst/sentry": "2.1.*",
     "eluceo/ical": "*",
     "willdurand/negotiation": "@stable",
-    "thujohn/pdf": "dev-master"
+    "thujohn/pdf": "dev-master",
+    "msurguy/honeypot": "dev-master"
   },
   "autoload": {
     "classmap": [

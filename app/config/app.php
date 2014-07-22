@@ -123,6 +123,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
         'Thujohn\Pdf\PdfServiceProvider',
+        'Msurguy\Honeypot\HoneypotServiceProvider',
 	),
 
 	/*
