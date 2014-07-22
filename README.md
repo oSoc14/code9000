@@ -9,6 +9,7 @@ EduCal is an application for schools to easily create and manage calendars that 
 * jQuery
 * Twitter Bootstrap
 * FullCalendar.js
+* DataTables.js
 
 ##How to install
 Make sure you have composer installed
@@ -18,7 +19,10 @@ Begin by installing the required packages through Composer.
 
     composer install
     
-Next run the migrations to create your database.
+Next change your database credentials
+> [database credentials](http://laravel.com/docs/database)
+    
+Finally run the migrations to create your database.
 
     php artisan migrate
 
