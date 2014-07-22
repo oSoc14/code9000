@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         src: [
           'public/js/jquery-1.11.1.min.js',
           'public/js/moment.js',
-          'public/js/js/bootstrap.min.js',
+          'public/js/bootstrap.min.js',
           'public/js/jquery.datetimepicker.js'
         ],
         dest: 'public/js/build/production.js'
