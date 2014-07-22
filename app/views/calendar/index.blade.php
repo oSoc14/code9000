@@ -1,11 +1,6 @@
 @extends('layout.master')
 
 @section('header')
-<!-- jQuery UI -->
-{{ HTML::style("css/jquery-ui.min.css") }}
-{{ HTML::style("css/jquery-ui.structure.min.css") }}
-{{ HTML::style("css/jquery-ui.theme.min.css") }}
-
 {{ HTML::style("/packages/fullcalendar/fullcalendar.css") }}
 {{ HTML::style("/css/app.css") }}
 @stop

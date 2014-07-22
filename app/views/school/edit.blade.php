@@ -35,7 +35,11 @@
             {{ Form::text('city', $school->city , ['class'=>'form-control','placeholder'=>"Where is the school located? (e.g. 'Chicago')"])}}
             </div>
         </div>
-        <button type="submit" class="btn btn-default btn-educal-danger"><i class="fa fa-save"></i> Save changes</button>
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+          <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> {{ucfirst(trans('educal.savechanges'))}}</button>
+        </div>
+      </div>
 
         {{ Form::close(), PHP_EOL }}
 

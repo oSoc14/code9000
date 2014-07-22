@@ -85,7 +85,7 @@
     var tableElement = $('#groupTable');
     tableElement.dataTable({
       "language": {
-        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/Dutch.json"
+        "url": "packages/datatables/lang/Dutch.json"
       },
       "aoColumnDefs": [
         {"bSortable": false, "aTargets": [2]}
@@ -117,7 +117,7 @@
     var tableElement = $('#groupTable');
     tableElement.dataTable({
       "language": {
-        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/English.json"
+        "url": "packages/datatables/lang/English.json"
       },
       "aoColumnDefs": [
         {"bSortable": false, "aTargets": [2]}
@@ -149,7 +149,7 @@
     var tableElement = $('#groupTable');
     tableElement.dataTable({
       "language": {
-        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/French.json"
+        "url": "packages/datatables/lang/French.json"
       },
       "aoColumnDefs": [
         {"bSortable": false, "aTargets": [2]}
@@ -181,7 +181,7 @@
     var tableElement = $('#groupTable');
     tableElement.dataTable({
       "language": {
-        "url": "http://cdn.datatables.net/plug-ins/be7019ee387/i18n/German.json"
+        "url": "packages/datatables/lang/German.json"
       },
       "aoColumnDefs": [
         {"bSortable": false, "aTargets": [2]}
