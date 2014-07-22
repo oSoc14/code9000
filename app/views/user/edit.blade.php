@@ -45,7 +45,7 @@
     <div class="form-group">
         {{Form::label('lang', ucfirst(trans('educal.language')), array('class'=>'col-md-2 control-label'))}}
         <div class="col-md-8">
-            {{ Form::select('lang', ['nl' => 'Nederlands','fr' => 'Français','en' => 'English','de' => 'Deutsch'], Session::get('lang'), array('class' => 'form-control')) }}
+            {{ Form::select('lang', ['nl' => 'Nederlands','fr' => 'Français','en' => 'English'], Session::get('lang'), array('class' => 'form-control')) }}
         </div>
     </div>
     <div class="form-group">
