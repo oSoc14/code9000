@@ -5,7 +5,7 @@ $(document).ready(function() {
   });
 
   $('#confirm-delete').on('show.bs.modal', function(e) {
-    $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
+    $(this).find('.btn-educal-danger').attr('href', $(e.relatedTarget).data('href'));
   });
   
   if($("#registerSchoolModal").data("errors") == true){

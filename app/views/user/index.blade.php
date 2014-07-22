@@ -137,8 +137,8 @@
                     {{ucfirst(trans('educal.confirmationmsg'))}}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ucfirst(trans('educal.cancel'))}}</button>
-                    <a href="#" class="btn btn-danger danger">{{ucfirst(trans('educal.delete'))}}</a>
+                    <button type="button" class="btn btn-educal-warning" data-dismiss="modal">{{ucfirst(trans('educal.cancel'))}}</button>
+                    <a href="#" class="btn btn-educal-danger">{{ucfirst(trans('educal.delete'))}}</a>
                 </div>
             </div>
         </div>
