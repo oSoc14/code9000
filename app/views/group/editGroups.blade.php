@@ -145,9 +145,8 @@
 @section('footerScript')
 
 {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
-
-{{ HTML::script('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.js') }}
-{{ HTML::style('//cdn.datatables.net/plug-ins/be7019ee387/integration/bootstrap/3/dataTables.bootstrap.css') }}
+{{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
+{{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
 
 {{ HTML::script('js/app.js') }}
 <script>
