@@ -162,19 +162,14 @@
       @endif
     </div>
 
-    <!-- Content -->
     <div id="content-wrapper">
       @yield('content')
-    </div><!-- / #content-wrapper -->
-
-  </div><!-- / #main-wrapper -->
+    </div>
+  </div>
   <div id="backdrop" class="hidden"></div>
 
 
-{{ HTML::script("js/jquery-1.11.1.min.js") }}
-{{ HTML::script("js/moment.js") }}
-{{ HTML::script("js/bootstrap.min.js") }}
-{{ HTML::script("js/jquery.datetimepicker.js") }}
+{{ HTML::script("js/build/production.min.js") }}
 @yield('footerScript')
 
 </body>

@@ -1,28 +1,23 @@
-/* line 1, ../sass/print.scss */
 body {
   font-family: 'Helvetica', 'Arial', sans-serif;
   width: 100%;
 }
 
-/* line 6, ../sass/print.scss */
 table {
   border-collapse: collapse !important;
 }
 
-/* line 10, ../sass/print.scss */
 small {
   font-style: italic;
   color: #888;
 }
 
-/* line 15, ../sass/print.scss */
 .table {
   width: 100%;
   max-width: 100%;
   margin-bottom: 20px;
 }
 
-/* line 25, ../sass/print.scss */
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -36,13 +31,11 @@ small {
   text-align: left;
 }
 
-/* line 32, ../sass/print.scss */
 .table > thead > tr > th {
   vertical-align: bottom;
   border-bottom: 2px solid #ddd;
 }
 
-/* line 41, ../sass/print.scss */
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
 .table > thead:first-child > tr:first-child > th,
@@ -52,17 +45,14 @@ small {
   border-top: 0;
 }
 
-/* line 44, ../sass/print.scss */
 .table > tbody + tbody {
   border-top: 2px solid #ddd;
 }
 
-/* line 47, ../sass/print.scss */
 .table .table {
   background-color: #fff;
 }
 
-/* line 55, ../sass/print.scss */
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
 .table-condensed > tfoot > tr > th,
@@ -72,12 +62,10 @@ small {
   padding: 5px;
 }
 
-/* line 58, ../sass/print.scss */
 .table-bordered {
   border: 1px solid #ddd;
 }
 
-/* line 66, ../sass/print.scss */
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,
@@ -87,32 +75,27 @@ small {
   border: 1px solid #ddd;
 }
 
-/* line 70, ../sass/print.scss */
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
   border-bottom-width: 2px;
 }
 
-/* line 74, ../sass/print.scss */
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9;
 }
 
-/* line 78, ../sass/print.scss */
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
   background-color: #f5f5f5;
 }
 
-/* line 81, ../sass/print.scss */
 table col[class*="col-"] {
   position: static;
   display: table-column;
   float: none;
 }
 
-/* line 87, ../sass/print.scss */
 table td[class*="col-"],
 table th[class*="col-"] {
   position: static;
@@ -120,7 +103,6 @@ table th[class*="col-"] {
   float: none;
 }
 
-/* line 103, ../sass/print.scss */
 .table > thead > tr > td.active,
 .table > tbody > tr > td.active,
 .table > tfoot > tr > td.active,
@@ -136,7 +118,6 @@ table th[class*="col-"] {
   background-color: #f5f5f5;
 }
 
-/* line 110, ../sass/print.scss */
 .table-hover > tbody > tr > td.active:hover,
 .table-hover > tbody > tr > th.active:hover,
 .table-hover > tbody > tr.active:hover > td,
@@ -145,7 +126,6 @@ table th[class*="col-"] {
   background-color: #e8e8e8;
 }
 
-/* line 124, ../sass/print.scss */
 .table > thead > tr > td.success,
 .table > tbody > tr > td.success,
 .table > tfoot > tr > td.success,
@@ -161,7 +141,6 @@ table th[class*="col-"] {
   background-color: #dff0d8;
 }
 
-/* line 131, ../sass/print.scss */
 .table-hover > tbody > tr > td.success:hover,
 .table-hover > tbody > tr > th.success:hover,
 .table-hover > tbody > tr.success:hover > td,
@@ -170,7 +149,6 @@ table th[class*="col-"] {
   background-color: #d0e9c6;
 }
 
-/* line 145, ../sass/print.scss */
 .table > thead > tr > td.info,
 .table > tbody > tr > td.info,
 .table > tfoot > tr > td.info,
@@ -186,7 +164,6 @@ table th[class*="col-"] {
   background-color: #d9edf7;
 }
 
-/* line 152, ../sass/print.scss */
 .table-hover > tbody > tr > td.info:hover,
 .table-hover > tbody > tr > th.info:hover,
 .table-hover > tbody > tr.info:hover > td,
@@ -195,7 +172,6 @@ table th[class*="col-"] {
   background-color: #c4e3f3;
 }
 
-/* line 166, ../sass/print.scss */
 .table > thead > tr > td.warning,
 .table > tbody > tr > td.warning,
 .table > tfoot > tr > td.warning,
@@ -211,7 +187,6 @@ table th[class*="col-"] {
   background-color: #fcf8e3;
 }
 
-/* line 173, ../sass/print.scss */
 .table-hover > tbody > tr > td.warning:hover,
 .table-hover > tbody > tr > th.warning:hover,
 .table-hover > tbody > tr.warning:hover > td,
@@ -220,7 +195,6 @@ table th[class*="col-"] {
   background-color: #faf2cc;
 }
 
-/* line 187, ../sass/print.scss */
 .table > thead > tr > td.danger,
 .table > tbody > tr > td.danger,
 .table > tfoot > tr > td.danger,
@@ -236,7 +210,6 @@ table th[class*="col-"] {
   background-color: #f2dede;
 }
 
-/* line 194, ../sass/print.scss */
 .table-hover > tbody > tr > td.danger:hover,
 .table-hover > tbody > tr > th.danger:hover,
 .table-hover > tbody > tr.danger:hover > td,

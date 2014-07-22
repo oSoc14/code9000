@@ -1,6 +1,5 @@
 /* General elements
 ---------------------- */
-/* line 59, ../sass/app.scss */
 .btn-educal-danger {
   background: #f50064;
   border: none;
@@ -8,21 +7,18 @@
   color: white;
   text-shadow: none;
 }
-/* line 39, ../sass/app.scss */
 .btn-educal-danger:hover {
   background: #f95a93;
   color: white;
   border-bottom: 3px solid #ab0046;
   outline: none;
 }
-/* line 45, ../sass/app.scss */
 .btn-educal-danger:focus {
   background: #f50064;
   color: white;
   border-bottom: 3px solid #ab0046;
   outline: none;
 }
-/* line 51, ../sass/app.scss */
 .btn-educal-danger:active {
   border: none;
   position: relative;
@@ -30,7 +26,6 @@
   margin-bottom: 3px !important;
 }
 
-/* line 62, ../sass/app.scss */
 .btn-educal-warning {
   background: #e9e34b;
   border: none;
@@ -38,21 +33,18 @@
   color: #333333;
   text-shadow: none;
 }
-/* line 39, ../sass/app.scss */
 .btn-educal-warning:hover {
   background: #f0eb72;
   color: #333333;
   border-bottom: 3px solid #c9c315;
   outline: none;
 }
-/* line 45, ../sass/app.scss */
 .btn-educal-warning:focus {
   background: #e9e34b;
   color: #333333;
   border-bottom: 3px solid #c9c315;
   outline: none;
 }
-/* line 51, ../sass/app.scss */
 .btn-educal-warning:active {
   border: none;
   position: relative;
@@ -60,7 +52,6 @@
   margin-bottom: 3px !important;
 }
 
-/* line 65, ../sass/app.scss */
 .btn-educal-primary {
   background: #00cde1;
   border: none;
@@ -68,21 +59,18 @@
   color: white;
   text-shadow: none;
 }
-/* line 39, ../sass/app.scss */
 .btn-educal-primary:hover {
   background: #46ddea;
   color: white;
   border-bottom: 3px solid #108a98;
   outline: none;
 }
-/* line 45, ../sass/app.scss */
 .btn-educal-primary:focus {
   background: #00cde1;
   color: white;
   border-bottom: 3px solid #108a98;
   outline: none;
 }
-/* line 51, ../sass/app.scss */
 .btn-educal-primary:active {
   border: none;
   position: relative;
@@ -90,36 +78,30 @@
   margin-bottom: 3px !important;
 }
 
-/* line 70, ../sass/app.scss */
 body {
   background: #fff;
   font-family: "Open Sans", "Helvetica", "Arial", sans-serif;
   color: #556066;
 }
 @media screen and (max-width: 768px) {
-  /* line 70, ../sass/app.scss */
   body {
     padding-top: 50px;
   }
 }
 
-/* line 79, ../sass/app.scss */
 a {
   color: #f50064;
 }
-/* line 81, ../sass/app.scss */
 a:hover {
   color: #556066;
 }
 
-/* line 85, ../sass/app.scss */
 img {
   max-width: 100%;
 }
 
 /* NAVBAR
 ---------------------- */
-/* line 92, ../sass/app.scss */
 #navbar-educal {
   background: #fff;
   color: #fff;
@@ -128,35 +110,28 @@ img {
   z-index: 1060;
   display: none;
 }
-/* line 99, ../sass/app.scss */
 #navbar-educal .navbar-toggle {
   border: 0;
 }
-/* line 101, ../sass/app.scss */
 #navbar-educal .navbar-toggle:hover, #navbar-educal .navbar-toggle:focus {
   background-color: #00cde1;
   border: 0;
 }
-/* line 104, ../sass/app.scss */
 #navbar-educal .navbar-toggle:hover .icon-bar, #navbar-educal .navbar-toggle:focus .icon-bar {
   background-color: #fff;
 }
-/* line 108, ../sass/app.scss */
 #navbar-educal .navbar-toggle:target {
   background: none;
 }
-/* line 112, ../sass/app.scss */
 #navbar-educal .navbar-toggle .icon-bar {
   background-color: #00cde1;
 }
 @media screen and (max-width: 768px) {
-  /* line 92, ../sass/app.scss */
   #navbar-educal {
     display: block;
   }
 }
 
-/* line 121, ../sass/app.scss */
 #navbar-logo {
   background: url("images/logo_educal.png") left top no-repeat;
   width: 188px;
@@ -164,7 +139,6 @@ img {
   margin: 2px 0 0 0;
 }
 @media screen and (max-width: 768px) {
-  /* line 121, ../sass/app.scss */
   #navbar-logo {
     margin-left: 15px;
   }
@@ -172,7 +146,6 @@ img {
 
 /* SIDEBAR
 ---------------------- */
-/* line 134, ../sass/app.scss */
 .sidebar-wrapper {
   margin-left: -250px;
   left: 250px;
@@ -186,12 +159,10 @@ img {
   -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px;
 }
-/* line 144, ../sass/app.scss */
 .sidebar-wrapper a {
   text-decoration: none;
 }
 
-/* line 150, ../sass/app.scss */
 #accordion {
   color: #00cde1;
   list-style: none;
@@ -199,25 +170,20 @@ img {
   padding: 0 0 0 33px;
   margin: 0 auto;
 }
-/* line 156, ../sass/app.scss */
 #accordion .bottom-options {
   margin-top: 10px;
 }
-/* line 158, ../sass/app.scss */
 #accordion .bottom-options .panel-title {
   color: #556066;
 }
-/* line 160, ../sass/app.scss */
 #accordion .bottom-options .panel-title:hover {
   color: #aaa;
 }
 
-/* line 167, ../sass/app.scss */
 .breadcrumb {
   display: block;
 }
 
-/* line 171, ../sass/app.scss */
 #navbar-logo-sidebar {
   display: block;
   background: url("images/logo_educal_sidebar.png") center center no-repeat;
@@ -226,26 +192,21 @@ img {
   margin-top: 15px;
 }
 @media screen and (max-width: 768px) {
-  /* line 171, ../sass/app.scss */
   #navbar-logo-sidebar {
     margin-left: 15px;
   }
 }
 
-/* line 182, ../sass/app.scss */
 .sidebar-wrapper .panel-heading {
   padding: 0;
 }
-/* line 184, ../sass/app.scss */
 .sidebar-wrapper .panel-heading .active {
   color: #f50064;
 }
-/* line 186, ../sass/app.scss */
 .sidebar-wrapper .panel-heading .active:hover {
   color: #ab0046;
 }
 
-/* line 192, ../sass/app.scss */
 .sidebar-wrapper .panel-title {
   padding: 12px 20px;
   margin: 0;
@@ -267,19 +228,16 @@ img {
   transition-timing-function: ease-in;
   text-align: left;
 }
-/* line 203, ../sass/app.scss */
 .sidebar-wrapper .panel-title:hover {
   cursor: pointer;
   color: #46ddea;
   padding-left: 25px;
 }
-/* line 208, ../sass/app.scss */
 .sidebar-wrapper .panel-title .fa {
   margin-right: 10px;
 }
 
 @media screen and (max-width: 768px) {
-  /* line 214, ../sass/app.scss */
   .sidebar-wrapper {
     left: 0;
     background: #fff;
@@ -298,38 +256,31 @@ img {
     transition-timing-function: ease-in;
   }
 
-  /* line 222, ../sass/app.scss */
   #accordion {
     padding: 0 0 0 4px;
   }
 
-  /* line 225, ../sass/app.scss */
   #navbar-logo-sidebar {
     display: none;
   }
 
-  /* line 228, ../sass/app.scss */
   .breadcrumb {
     display: none;
   }
 
-  /* line 231, ../sass/app.scss */
   .sidebar-active {
     left: 250px;
   }
 
-  /* line 234, ../sass/app.scss */
   #content-wrapper {
     margin-left: 0 !important;
     padding-top: 20px !important;
   }
 
-  /* line 238, ../sass/app.scss */
   .fc-header-center {
     display: none;
   }
 }
-/* line 243, ../sass/app.scss */
 #backdrop {
   position: fixed;
   top: 0;
@@ -342,7 +293,6 @@ img {
   opacity: 0.5;
 }
 
-/* line 255, ../sass/app.scss */
 #userinfo-wrapper {
   position: fixed;
   bottom: 0;
@@ -353,12 +303,10 @@ img {
   padding: 10px;
   color: #556066;
 }
-/* line 264, ../sass/app.scss */
 #userinfo-wrapper .username {
   color: #fff;
 }
 @media screen and (max-width: 768px) {
-  /* line 255, ../sass/app.scss */
   #userinfo-wrapper {
     left: 0;
   }
@@ -366,36 +314,29 @@ img {
 
 /* CONTENT
 ---------------------- */
-/* line 275, ../sass/app.scss */
 #content-wrapper {
   margin-left: 250px;
   padding-top: 40px;
   padding-right: 15px;
   padding-left: 15px;
 }
-/* line 280, ../sass/app.scss */
 #content-wrapper p {
   line-height: 1.75em;
 }
-/* line 283, ../sass/app.scss */
 #content-wrapper h1 {
   margin: 0px 0 20px 0;
   font-weight: 700;
 }
-/* line 287, ../sass/app.scss */
 #content-wrapper .form-horizontal label {
   text-align: left;
 }
-/* line 290, ../sass/app.scss */
 #content-wrapper .link-goback {
   display: inline-block;
   margin-bottom: 9px;
 }
-/* line 295, ../sass/app.scss */
 #content-wrapper .content-table {
   margin-top: 8px !important;
 }
-/* line 297, ../sass/app.scss */
 #content-wrapper .content-table th {
   height: 40px;
   color: #fff;
@@ -405,31 +346,25 @@ img {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 306, ../sass/app.scss */
 #content-wrapper .content-table a:hover {
   color: #556066;
 }
 @media screen and (max-width: 768px) {
-  /* line 312, ../sass/app.scss */
   #content-wrapper .table-responsive {
     border: none;
   }
 }
-/* line 318, ../sass/app.scss */
 #content-wrapper .form-repeat-container {
   display: none;
 }
-/* line 321, ../sass/app.scss */
 #content-wrapper .linkToText {
   width: 100%;
 }
 
-/* line 326, ../sass/app.scss */
 .first-row {
   min-height: 88px;
 }
 
-/* line 330, ../sass/app.scss */
 #content-container {
   position: relative;
   z-index: 1020;
@@ -437,15 +372,12 @@ img {
 
 /* CALENDAR
 ---------------------- */
-/* line 343, ../sass/app.scss */
 #calendar a {
   color: #fff;
 }
-/* line 345, ../sass/app.scss */
 #calendar a:hover {
   color: #b6cdea;
 }
-/* line 349, ../sass/app.scss */
 #calendar .fc-event {
   background: #00cde1;
   border: none;
@@ -466,7 +398,6 @@ img {
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
 }
-/* line 357, ../sass/app.scss */
 #calendar .fc-event:hover {
   color: #108a98;
   -webkit-box-shadow: rgba(0, 0, 0, 0.25) -1px -1px 3px;
@@ -474,11 +405,9 @@ img {
   box-shadow: rgba(0, 0, 0, 0.25) -1px -1px 3px;
   cursor: pointer;
 }
-/* line 363, ../sass/app.scss */
 #calendar .fc-state-highlight {
   background: #daf2ef;
 }
-/* line 366, ../sass/app.scss */
 #calendar .fc-button {
   z-index: 1020;
   text-shadow: none;
@@ -503,50 +432,42 @@ img {
   -o-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
 }
-/* line 39, ../sass/app.scss */
 #calendar .fc-button:hover {
   background: #00cde1;
   color: white;
   border-bottom: 3px solid #333333;
   outline: none;
 }
-/* line 45, ../sass/app.scss */
 #calendar .fc-button:focus {
   background: #556066;
   color: white;
   border-bottom: 3px solid #333333;
   outline: none;
 }
-/* line 51, ../sass/app.scss */
 #calendar .fc-button:active {
   border: none;
   position: relative;
   top: 3px;
   margin-bottom: 3px !important;
 }
-/* line 374, ../sass/app.scss */
 #calendar .fc-button:hover {
   background: #00cde1;
   border-color: #108a98 !important;
 }
-/* line 378, ../sass/app.scss */
 #calendar .fc-button:active {
   border-bottom: 2px solid #108a98 !important;
   top: 1px !important;
   z-index: 1010;
 }
-/* line 385, ../sass/app.scss */
 #calendar .fc-state-disabled {
   color: #fff;
   top: 1px;
   border-bottom: 1px solid #333333 !important;
 }
-/* line 389, ../sass/app.scss */
 #calendar .fc-state-disabled:active {
   top: 1px;
   border-bottom: 1px solid #108a98 !important;
 }
-/* line 394, ../sass/app.scss */
 #calendar .fc-state-active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -554,58 +475,47 @@ img {
   background: #00cde1;
   border-color: #108a98 !important;
 }
-/* line 398, ../sass/app.scss */
 #calendar .fc-state-active:active {
   border-color: #108a98 !important;
 }
-/* line 402, ../sass/app.scss */
 #calendar .fc-header-title h2 {
   font-size: 25px;
   position: relative;
   bottom: 4px;
 }
-/* line 407, ../sass/app.scss */
 #calendar .fc-widget-content {
   border-width: 0;
 }
 @media screen and (max-width: 1024px) {
-  /* line 407, ../sass/app.scss */
   #calendar .fc-widget-content {
     border-width: 1px 0 0 1px;
   }
 }
-/* line 413, ../sass/app.scss */
 #calendar thead tr.fc-first {
   color: #fff;
   text-transform: uppercase;
   height: 40px;
   text-shadow: rgba(0, 0, 0, 0.75) 0px 0px 5px;
 }
-/* line 418, ../sass/app.scss */
 #calendar thead tr.fc-first th {
   vertical-align: middle;
 }
-/* line 421, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-mon, #calendar thead tr.fc-first .fc-tue, #calendar thead tr.fc-first .fc-wed, #calendar thead tr.fc-first .fc-thu, #calendar thead tr.fc-first .fc-fri {
   border: none;
 }
-/* line 424, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-sat, #calendar thead tr.fc-first .fc-sun {
   background: #333333;
   border: none;
 }
-/* line 428, ../sass/app.scss */
 #calendar thead tr.fc-first .fc-widget-header {
   border: none;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-  /* line 342, ../sass/app.scss */
   #calendar {
     margin-top: 21px;
   }
 }
 
-/* line 441, ../sass/app.scss */
 #content-bg {
   width: 100%;
   background: url("images/content-bg.jpg") repeat top left #556066;
@@ -620,28 +530,21 @@ img {
   }*/
 }
 @media screen and (max-width: 768px) {
-  /* line 441, ../sass/app.scss */
   #content-bg {
     height: 241px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 441, ../sass/app.scss */
   #content-bg {
     height: 211px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-  /* line 441, ../sass/app.scss */
   #content-bg {
     height: 261px;
   }
 }
 
-/* line 467, ../sass/app.scss */
 #addEvent:active {
   margin: 0 0 43px 0 !important;
 }
-
-/* TABLE VIEWS (USERS, SCHOOLS, ...
----------------------- */
