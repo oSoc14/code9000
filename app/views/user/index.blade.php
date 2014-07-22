@@ -39,8 +39,6 @@
                     <td>{{ $user->last_name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-
-                        <!-- TODO: fix colors -->
                         <label for="activateUser">
                             @if($user->activated == 1)
                             <input type="checkbox" data-userid="{{$user->id}}" class="activateUser checkbox" checked>
@@ -48,8 +46,6 @@
                             <input type="checkbox" data-userid="{{$user->id}}" class="activateUser checkbox">
                             @endif
                         </label>
-
-                        </a>
                     </td>
                     <td>
                         <a href="{{ route('user.edit', $user->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
@@ -71,12 +67,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Add a user</h4>
+                    <h4 class="modal-title">{{ucfirst(trans('educal.adduser'))}}</h4>
                 </div>
                 <div class="modal-body">
                     @if($errors->count())
                     <div class="alert alert-danger" role="alert">
-                        <strong>Errors</strong>
+                        <strong>{{ucfirst(trans('educal.errors'))}}</strong>
                         <ul>
                             @foreach ($errors->all() as $message)
                             <li>{{$message}}</li>
@@ -98,25 +94,26 @@
                     <input type="hidden" class="form-control" id="school" name="school" value="{{$school->id}}">
                     @endif
                     <div class="form-group">
-                        <label for="user-email">Name</label>
-                        <input type="text" class="form-control" id="user-name" name="name" placeholder="What's your given name?">
+                        {{Form::label('name', ucfirst(trans('educal.name')))}}
+                        {{Form::text('name', null , ['class'=>'form-control'])}}
                     </div>
                     <div class="form-group">
-                        <label for="user-email">Surname</label>
-                        <input type="text" class="form-control" id="user-surname" name="surname" placeholder="What's your surname?">
+                        {{Form::label('surname', ucfirst(trans('educal.surname')))}}
+                        {{Form::text('surname', null , ['class'=>'form-control'])}}
                     </div>
                     <div class="form-group">
-                        <label for="user-email">Email address</label>
-                        <input type="email" class="form-control" id="user-email" name="email" placeholder="What's your email address?">
+                        {{Form::label('email', ucfirst(trans('educal.email')))}}
+                        {{Form::email('email', null , ['class'=>'form-control'])}}
                     </div>
                     <div class="form-group">
-                        <label for="user-password">Password</label>
-                        <input type="password" class="form-control" id="user-password" name="password" placeholder="Choose a password">
+                        <label for="user-password">{{ucfirst(trans('educal.password'))}}</label>
+                        <input type="password" class="form-control" id="user-password" name="password">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation" placeholder="Repeat that password here">
+                        <label for="user-password-confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
+                        <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation">
                     </div>
-                    <button type="submit" class="btn btn-default btn-educal-danger">Register</button>
+                    <button type="submit" class="btn btn-default btn-educal-danger">{{ucfirst(trans('educal.register'))}}</button>
                     {{ Form::close(), PHP_EOL }}
                 </div>
             </div>
@@ -126,14 +123,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    Confirmation
+                    {{ucfirst(trans('educal.confirmation'))}}
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete this user?
+                    {{ucfirst(trans('educal.confirmationmsg'))}}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <a href="#" class="btn btn-danger danger">Delete</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ucfirst(trans('educal.cancel'))}}</button>
+                    <a href="#" class="btn btn-danger danger">{{ucfirst(trans('educal.delete'))}}</a>
                 </div>
             </div>
         </div>
