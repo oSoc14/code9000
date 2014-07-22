@@ -28,6 +28,7 @@ class GroupController extends \BaseController {
                 $school = School::where('id', '=', $schoolId)->first();
                 $schoolName = $school->name;
                 // Return view with selected parameters
+
                 return View::make('group.listGroups')->with('groups',$groups)->with('schoolName',$schoolName);
             } else {
                 return Redirect::route('calendar.index');
@@ -229,9 +230,7 @@ class GroupController extends \BaseController {
                         'name' => Input::get('name'),
                         'permissions' => Input::get('permissions')
                     ],
-                    [
-                        'name' => 'required'
-                    ]
+                    [  ]
                 );
                 // Make a second validator to see if the new group name is unique if it's not the same as before
                 $validator2 = Validator::make([],[]);

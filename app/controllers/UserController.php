@@ -198,23 +198,32 @@ class UserController extends \BaseController {
                         'password' => 'required|min:8|confirmed',
                     ]
                 );
-                if ($validator->fails())
-                {
+                if ($validator->fails()) {
                     $validator->getMessageBag()->add('usererror', 'Failed to make a user');
                     return Redirect::back()
                         ->withInput()
                         ->withErrors($validator);
 
                 } else {
+                    // TODO: SuperAdmin maken
+                    $schoolId = Input::get('school');
                     if($user->hasAccess('user') || ($user->hasAccess('user') && $user->school_id == Input::get('school'))) {
-                        Sentry::createUser([
+                        if ($user->hasAccess('school') && Input::get('superAdmin')){
+                            $schoolId = null;
+                        }
+                        $created = Sentry::createUser([
                             'email'    => Input::get('email'),
                             'password' => Input::get('password'),
                             'activated' => true,
-                            'school_id' => Input::get('school'),
+                            'school_id' => $schoolId,
                             'first_name' => Input::get('name'),
                             'last_name' => Input::get('surname'),
                         ]);
+                        if ($user->hasAccess('school') && Input::get('superAdmin')){
+                            $group = Sentry::findGroupById(1);
+                            $created->addGroup($group);
+                        }
+
                     } else {
                         return Redirect::route('user.index');
                     }

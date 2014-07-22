@@ -38,6 +38,7 @@ return array(
     'registeraschool' => 'Register as a school',
     'terms' => ' I agree to the <a href="#">terms of service</a>.',
     'city' => 'city',
+    'addAdmin' => 'Make this user a super admin',
 
     'calendar' => 'calendar',
     'schools' => 'schools',

@@ -114,6 +114,13 @@
                         <label for="user-password-confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
                         <input type="password" class="form-control" id="user-password-confirmation" name="password_confirmation">
                     </div>
+                    @if(Sentry::getUser()->hasAccess('school'))
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="superAdmin" id="superAdmin">{{ucfirst(trans('educal.addAdmin'))}}
+                        </label>
+                    </div>
+                    @endif
                     <button type="submit" class="btn btn-default btn-educal-danger">{{ucfirst(trans('educal.register'))}}</button>
                     {{ Form::close(), PHP_EOL }}
                 </div>
