@@ -91,22 +91,22 @@
           </a>
         </li>
         @endif
-        @if(Sentry::getUser()->hasAnyAccess(array('school','user')))
-        <li class="panel-heading">
-          <a href="{{ route('user.index') }}">
-            <p class="panel-title {{ (Route::currentRouteName()=='user.index' ? 'active' : '') }}">
-              <i class="fa fa-users fa-lg"></i>
-              {{ucfirst(trans('educal.users'))}}
-            </p>
-          </a>
-        </li>
-        @endif
         @if(Sentry::getUser()->hasAnyAccess(array('school','group')))
         <li class="panel-heading">
           <a href="{{ route('group.index') }}">
             <p class="panel-title  {{ Route::currentRouteName()=='group.index' ? 'active' : '' }}">
               <i class="fa fa-rocket fa-lg"></i>
               {{ucfirst(trans('educal.groups'))}}
+            </p>
+          </a>
+        </li>
+        @endif
+        @if(Sentry::getUser()->hasAnyAccess(array('school','user')))
+        <li class="panel-heading">
+          <a href="{{ route('user.index') }}">
+            <p class="panel-title {{ (Route::currentRouteName()=='user.index' ? 'active' : '') }}">
+              <i class="fa fa-users fa-lg"></i>
+              {{ucfirst(trans('educal.users'))}}
             </p>
           </a>
         </li>
