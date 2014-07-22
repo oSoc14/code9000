@@ -14,10 +14,14 @@
         <div class="col-xs-6 col-lg-5">
 
             @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
-            <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route
+            <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right hidden-xs" href="{{route
 ('event.create')}}" id="addEvent">
               <i class="fa fa-plus"></i> {{ucfirst(trans('educal.addevent'))}}
             </a>
+          <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right visible-xs" href="{{route
+('event.create')}}" id="addEvent">
+            <i class="fa fa-plus"></i>
+          </a>
             @endif
         </div>
     </div>

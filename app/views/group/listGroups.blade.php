@@ -13,8 +13,11 @@
           <h1>{{ucfirst(trans('educal.groups'))}}</h1>
       </div>
       <div class="col-xs-6">
-          <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route('group.create')}}" id="addEvent">
+          <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right hidden-xs" href="{{route('group.create')}}" id="addEvent">
             <i class="fa fa-plus"></i> {{ucfirst(trans('educal.addgroup'))}}
+          </a>
+          <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right visible-xs" href="{{route('group.create')}}" id="addEvent">
+            <i class="fa fa-plus"></i>
           </a>
       </div>
   </div>
