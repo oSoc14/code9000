@@ -44,12 +44,17 @@
                     {{Form::email('email', $user->email , ['class'=>'form-control', 'placeholder'=>$user->email])}}
                 </div>
             </div>
+            @if($user->id == Sentry::getUser()->id)
             <div class="form-group">
+            @else
+            <div class="hidden">
+            @endif
                 {{Form::label('lang', ucfirst(trans('educal.language')), array('class'=>'col-md-2 control-label'))}}
                 <div class="col-md-8">
                     {{ Form::select('lang', ['nl' => 'Nederlands','fr' => 'Français','en' => 'English'], Session::get('lang'), array('class' => 'form-control')) }}
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="password" class="col-md-2 control-label">{{ucfirst(trans('educal.newpassword'))}}</label>
                 <div class="col-md-8">

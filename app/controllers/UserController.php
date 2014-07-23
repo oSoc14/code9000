@@ -35,6 +35,7 @@ class UserController extends \BaseController
             // Check if user is superAdmin
             if ($user->hasAccess('school')) {
                 $users = User::where('id', '<>', $user->id)->get();
+                $school = null;
 
             } elseif ($user->hasAccess('user')) {
                 // If user is no superAdmin, display users based on the logged in user's school
@@ -203,14 +204,12 @@ class UserController extends \BaseController
                         'name'                  => Input::get('name'),
                         'surname'               => Input::get('surname'),
                         'email'                 => Input::get('email'),
-                        'school'                => Input::get('school'),
                         'password'              => Input::get('password'),
                         'password_confirmation' => Input::get('password_confirmation'),
                     ],
                     [
                         'name'     => 'required',
                         'surname'  => 'required',
-                        'school'   => 'required',
                         'email'    => 'required|email|unique:users,email',
                         'password' => 'required|min:8|confirmed',
                     ]
@@ -522,10 +521,11 @@ class UserController extends \BaseController
                     // Update $selectedUser fields
                     $selectedUser->first_name = e(Input::get('name'));
                     $selectedUser->last_name  = e(Input::get('surname'));
-                    $selectedUser->lang       = e(Input::get('lang'));
 
                     // If the user is editing himself, update current language
                     if($user->id == $selectedUser->id) {
+
+                        $selectedUser->lang = e(Input::get('lang'));
 
                         Session::forget('lang');
                         Session::put('lang', Input::get('lang'));
