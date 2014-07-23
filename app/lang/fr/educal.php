@@ -46,7 +46,7 @@ return array(
     'user' => 'utilisateur',
     'groups' => 'groupes',
     'group' => 'groupe',
-    'about' => 'sur',
+    'about' => 'info',
     'language' => 'langue',
     'settings' => 'réglages',
     'logout' => 'déconnexion',
