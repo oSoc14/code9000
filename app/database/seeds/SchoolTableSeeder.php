@@ -10,12 +10,6 @@ class SchoolTableSeeder extends Seeder {
     public function run()
     {
         Eloquent::unguard();
-
-        School::create(array(
-            'name'        => 'Het Trappenhuis',
-            'short'       => 'hettrappenhuis',
-            'city'        => 'Gent'
-        ));
     }
 
 }
