@@ -1,209 +1,233 @@
-$(document).ready(function() {
-  $('[data-toggle=offcanvas]').click(function() {
+/*
+ * When the page is loaded run the following code
+ */
+$(document).ready(function () {
+
+  // When the menu-toggle is clicked open the sidebar.
+  $('[data-toggle=offcanvas]').click(function () {
     $('#backdrop').toggleClass('hidden');
     $('.sidebar-wrapper').toggleClass('sidebar-active');
   });
 
-  $('#confirm-delete').on('show.bs.modal', function(e) {
+  // When a delete button is clicked open op the confirmation modal and fill in the correct url
+  $('#confirm-delete').on('show.bs.modal', function (e) {
     $(this).find('.btn-educal-danger').attr('href', $(e.relatedTarget).data('href'));
   });
-  
-  if($("#registerSchoolModal").data("errors") == true){
+
+
+  // Shows the correct modal on the landing page if an error has occured.
+  if ($("#registerSchoolModal").data("errors") == true) {
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('show');
     $('#loginModal').modal('hide');
   }
 
-  if($("#registerUserModal").data("errors") == true){
+  if ($("#registerUserModal").data("errors") == true) {
     $('#registerUserModal').modal('show');
     $('#registerSchoolModal').modal('hide');
     $('#loginModal').modal('hide');
   }
 
-  if($("#loginModal").data("errors") == true){
+  if ($("#loginModal").data("errors") == true) {
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('hide');
     $('#loginModal').modal('show');
   }
 
-  if( $('.form-repeat-container').length != 0){
+  // If the checkbox for repeating events is checked at edit/appointment/{id}, show the repeat input fields.
+  if ($('.form-repeat-container').length != 0) {
     // If checkbox is already checked, show repeat-container on page load
-    if($('#repeat').prop('checked')) {
+    if ($('#repeat').prop('checked')) {
       $('.form-repeat-container').show();
-    };
-    $('input#repeat').click(function(){
+    }
+    ;
+    $('input#repeat').click(function () {
       $('.form-repeat-container').slideToggle();
     });
   }
 
-  $('.activateUser').on('click', function(ev){
+  // When the user activated checkbox is changed, call the user/activate/{id} route.
+  $('.activateUser').on('click', function (ev) {
     ev.preventDefault;
     var that = $(this);
+    // Get the id for the user from the checkbox
     var userid = that.data('userid');
     $.ajax({
-      type:"GET",
-      url: "user/activate/"+userid,
+      type: "GET",
+      url: "user/activate/" + userid,
       cache: false,
       dataType: "json",
       contentType: "application/json",
-      beforeSend:function(){
+      // While the server is activating the user disable the checkbox.
+      beforeSend: function () {
         that.prop('disabled', true);
       },
-      success:function(data){
+      success: function (data) {
         that.prop('disabled', false);
       },
-      error:function(xhr, status, errorThrown) {
+      error: function (xhr, status, errorThrown) {
         console.log(status + ', ' + errorThrown);
         that.prop('disabled', false);
       }
     });
   });
 
-  $('#repeat_type').change(function(ev){
+  // When a field for the repeating events is changed, calculate the nummber of repeats.
+  $('#repeat_type').change(function (ev) {
     calculateRepeats();
   });
 
-  $('#repeat_freq').change(function(ev){
+  $('#repeat_freq').change(function (ev) {
     calculateRepeats();
   });
 
-
-  $('#datetimepicker1').change(function(ev){
+  $('#datetimepicker1').change(function (ev) {
     calculateRepeats();
   });
 
-  $('.linkTo').on('click', function(){
+  // When the type of export is changed in the group list, select the content.
+  $('.linkTo').on('click', function () {
     var that = $(this);
     var id = that.data('group-id');
-    $('.linkToText_'+id).val(that.data('link')).fadeOut(300).fadeIn(300).select();
+    $('.linkToText_' + id).val(that.data('link')).fadeOut(300).fadeIn(300).select();
   });
 
-  $('.linkToText').on('click', function(){
+  $('.linkToText').on('click', function () {
     $(this).select();
   });
 
 });
 
-jQuery(function(){
-  if ($('#datetimepicker1').length != 0){
+/*
+ * When the page is loaded initialize the datetimepickers
+ */
+jQuery(function () {
+  if ($('#datetimepicker1').length != 0) {
     jQuery('#datetimepicker1').datetimepicker({
-      format:'Y/m/d H:i',
-      mask:true,
-      onShow:function( ct ){
-        if(jQuery('#datetimepicker2').val() != '' && jQuery('#datetimepicker2').val() != '____/__/__ __:__'){
+      format: 'Y/m/d H:i',
+      mask: true,
+      onShow: function (ct) {
+        // If the value off the datetimepicker isn't empty or the placeholder, set the max date and time for the startdate
+        if (jQuery('#datetimepicker2').val() != '' && jQuery('#datetimepicker2').val() != '____/__/__ __:__') {
           this.setOptions({
-            maxDate:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD'),
-            maxTime:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
+            maxDate: moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD'),
+            maxTime: moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
           })
-        }else{
+        } else {
           this.setOptions({
-            maxDate:false,
-            maxTime:false
+            maxDate: false,
+            maxTime: false
           })
         }
       },
-      onSelectDate:function(){
-        if(jQuery('#datetimepicker2').val() != ''){
-          if(moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD') == moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')){
+      onSelectDate: function () {
+        // When the end date isn't set, set the max time for the startdate
+        if (jQuery('#datetimepicker2').val() != '') {
+          if (moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD') == moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')) {
             this.setOptions({
-              maxTime:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
+              maxTime: moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
             })
-          }else{
+          } else {
             this.setOptions({
-              maxTime:false
+              maxTime: false
             })
           }
-        }else{
+        } else {
           this.setOptions({
-            maxTime:false
+            maxTime: false
           })
         }
       },
-      timepicker:true,
-      defaultSelect:true
+      timepicker: true,
+      defaultSelect: true
     });
+
     jQuery('#datetimepicker2').datetimepicker({
-      format:'Y/m/d H:i',
-      mask:true,
-      onShow:function( ct ){
-        if(jQuery('#datetimepicker1').val() != ''){
+      format: 'Y/m/d H:i',
+      mask: true,
+      onShow: function (ct) {
+        // If the value off the datetimepicker isn't empty, set the min date and time for the enddate
+        if (jQuery('#datetimepicker1').val() != '') {
           this.setOptions({
-            minDate:moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD'),
-            minTime:moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
+            minDate: moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD'),
+            minTime: moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
           })
-        }else{
+        } else {
           this.setOptions({
-            minDate:false,
-            minTime:false
+            minDate: false,
+            minTime: false
           })
         }
       },
-      onSelectDate:function(){
-        if(jQuery('#datetimepicker2').val() != ''){
-          if(moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD') == moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')){
+      onSelectDate: function () {
+        // When the end date isn't set, set the min time for the startdate
+        if (jQuery('#datetimepicker2').val() != '') {
+          if (moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD') == moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')) {
             this.setOptions({
-              minTime:moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
+              minTime: moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('HH:mm')
             })
-          }else{
+          } else {
             this.setOptions({
-              minTime:false
+              minTime: false
             })
           }
-        }else{
+        } else {
           this.setOptions({
-            minTime:false
+            minTime: false
           })
         }
       },
-      timepicker:true,
-      defaultSelect:true
+      timepicker: true,
+      defaultSelect: true
     });
 
     // Edit event form: get value for dateTimePicker3 when applicable (recurring events)
     var calcDate = null;
-    if($('#repeat').prop('checked')) {
+    if ($('#repeat').prop('checked')) {
       var type = $('#repeat_type').val();
-      var startDate = moment($('#datetimepicker1').val(),'YYYY/MM/DD HH:mm');
+      var startDate = moment($('#datetimepicker1').val(), 'YYYY/MM/DD HH:mm');
       var freq = $('#repeat_freq').val();
 
-      for(i=1;i<$('#nr_repeat').val();i++) {
-        startDate = startDate.add(type,freq);
+      for (i = 1; i < $('#nr_repeat').val(); i++) {
+        startDate = startDate.add(type, freq);
       }
-      calcDate = moment(startDate,'YYYY/MM/DD').format('YYYY/MM/DD');
+      calcDate = moment(startDate, 'YYYY/MM/DD').format('YYYY/MM/DD');
     }
 
     jQuery('#datetimepicker3').datetimepicker({
-      format:'Y/m/d',
-      mask:true,
-      onShow:function( ct ){
-        if(jQuery('#datetimepicker2').val() != '' && jQuery('#datetimepicker2').val() != '____/__/__ __:__'){
+      format: 'Y/m/d',
+      mask: true,
+      onShow: function (ct) {
+        // Set the min date for the end repeat date
+        if (jQuery('#datetimepicker2').val() != '' && jQuery('#datetimepicker2').val() != '____/__/__ __:__') {
           this.setOptions({
-            minDate:moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')
+            minDate: moment(jQuery('#datetimepicker2').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')
           })
         } else {
-          if(jQuery('#datetimepicker1').val() != '' && jQuery('#datetimepicker1').val() != '____/__/__ __:__') {
+          if (jQuery('#datetimepicker1').val() != '' && jQuery('#datetimepicker1').val() != '____/__/__ __:__') {
             this.setOptions({
-              minDate:moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')
+              minDate: moment(jQuery('#datetimepicker1').val(), "YYYY/MM/DD HH:mm").format('YYYY/MM/DD')
             })
           } else {
             this.setOptions({
-              minDate:false
+              minDate: false
             });
           }
         }
       },
-      onSelectDate:function(){
-        // calculate stuff
+      onSelectDate: function () {
+        // Calculate the nummber of repeating events
         calculateRepeats();
       },
-      timepicker:false,
-      defaultSelect:true,
-      value:calcDate,
-      format:'Y/m/d'
+      timepicker: false,
+      defaultSelect: true,
+      value: calcDate,
+      format: 'Y/m/d'
     });
   }
+
   // When the "register as school" button is clicked, hide the "register as user" modal
-  $('#showSchoolRegisterModal').click(function(){
+  $('#showSchoolRegisterModal').click(function () {
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('show');
   });
@@ -212,20 +236,20 @@ jQuery(function(){
 /**
  * Calculates the amount of times an event
  */
-function calculateRepeats(){
+function calculateRepeats() {
   var freq = $('#repeat_freq').val();
   var endDate = moment($('#datetimepicker3').val(), 'YYYY/MM/DD');
 
-  if(freq>0 && endDate.isValid() && $('#repeat').prop('checked')) {
+  if (freq > 0 && endDate.isValid() && $('#repeat').prop('checked')) {
     var type = $('#repeat_type').val();
     var startDate = $('#datetimepicker1').val();
     startDate = moment(startDate, 'YYYY/MM/DD');
 
-    if(startDate.isValid() && startDate.isBefore(endDate) && type) {
+    if (startDate.isValid() && startDate.isBefore(endDate) && type) {
       $('#nr_repeat').removeAttr('value');
       var i = 1;
-      while(startDate.isBefore(moment(endDate))) {
-        startDate = startDate.add(type,freq);
+      while (startDate.isBefore(moment(endDate))) {
+        startDate = startDate.add(type, freq);
         i++;
       }
       $('#nr_repeat').val(i);
