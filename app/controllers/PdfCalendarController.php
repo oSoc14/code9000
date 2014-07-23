@@ -71,6 +71,8 @@ class PdfCalendarController extends \BaseController {
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
         $dend = new DateTime();
+        // In this case we set the limit to 1 month in the past until 1 month in the future
+        // Too many events will make the rendering substantially slower (Dompdf "issue")
         $dsta->sub(new DateInterval("P1M"));
         $dend->add(new DateInterval("P1M"));
 
