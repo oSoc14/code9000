@@ -87,6 +87,7 @@ return array(
     'recurrence' => 'Herhalen (elke x periode tot eind datum)',
     'actions' => 'actions',
     'name' => 'nom',
+    'firstname' => 'prénom',
     'surname' => 'nom de famille',
 
 

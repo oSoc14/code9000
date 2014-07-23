@@ -23,7 +23,7 @@
         <thead>
         <tr>
           <th class="hidden-xs">#</th>
-          <th data-class="expand">{{ucfirst(trans('educal.name'))}}</th>
+          <th data-class="expand">{{ucfirst(trans('educal.firstname'))}}</th>
           <th>{{ucfirst(trans('educal.surname'))}}</th>
           <th data-hide="phone,tablet" data-name="{{ucfirst(trans('educal.email'))}}">{{ucfirst(trans('educal.email'))}}</th>
           <th data-hide="phone" data-name="{{ucfirst(trans('educal.activated'))}}">{{ucfirst(trans('educal.activated'))}}</th>
@@ -95,7 +95,7 @@
                     <input type="hidden" class="form-control" id="school" name="school" value="{{$school->id}}">
                     @endif
                     <div class="form-group">
-                        {{Form::label('name', ucfirst(trans('educal.name')))}}
+                        {{Form::label('name', ucfirst(trans('educal.firstname')))}}
                         {{Form::text('name', null , ['class'=>'form-control'])}}
                     </div>
                     <div class="form-group">

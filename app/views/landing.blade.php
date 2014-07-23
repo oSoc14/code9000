@@ -160,7 +160,7 @@
             ]), PHP_EOL }}
           <div class="alert alert-warning" role="alert">{{ucfirst(trans('educal.registerschool'))}}</div>
           <div class="form-group">
-              {{Form::label('name', ucfirst(trans('educal.name')))}}
+              {{Form::label('name', ucfirst(trans('educal.firstname')))}}
               {{Form::text('name', null , ['class'=>'form-control'])}}
           </div>
           <div class="form-group">
