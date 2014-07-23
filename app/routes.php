@@ -194,7 +194,7 @@ Route::group(['prefix' => 'group'], function()
         'uses' => 'GroupController@index'
     ]);
 
-    // Home
+    // Edit a group
     Route::get('/{id}', [
         'as'   => 'group.edit',
         'uses' => 'GroupController@edit'
