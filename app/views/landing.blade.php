@@ -67,17 +67,20 @@
     <div class="row content-container">
       <div class="col-xs-12 col-md-4">
         <h2>{{ucfirst(trans('educal.about'))}}</h2>
-        <p>Nowadays, parents have a lot of different calendars to keep track of for their children. <strong>EduCal</strong> is an interactive calendar management platform that allows schools (and others) to manage multiple calendars. These calendars can be downloaded by staff and parents as an iCal-file or pdf-file. This iCal-file can then be <strong>imported</strong> in their own agendas.</p>
+        <p>
+          Ouders kunnen tegenwoordig veel verschillende kalenders hebben om de activiteiten van hun kinderen bij te houden. <strong>EduCal</strong> is een interactief kalendermanagement platform waarmee scholen (maar ook andere organisaties) meerdere kalenders kunnen beheren.</p><p>Deze kalenders kunnen daarna gedownload worden door leerkrachten en ouders als een iCal of PDF-bestand. Dit iCal bestand kan met 1 klik <strong>geïmporteerd</strong> worden in hun eigen digitale kalender.
+        </p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
         <h2>{{ucfirst(trans('educal.getstarted'))}}</h2>
-        <p>To get started with EduCal, you first need to make an account. You can do this as either a <strong>user</strong> or a <strong>school</strong>. As soon as you're registered, the account needs to be <strong>activated</strong> by the administrator of the school you applied to. This does not happen automatically. After that, the admin will also place you in your correct <strong>groups</strong> and you are ready to go!</p>
+        <p>
+          Om aan de slag te gaan met EduCal moet u eerst een account aanmaken. Dit kan je doen zowel als <strong>gebruiker</strong> als <strong>school</strong>. Vanaf u geregistreerd bent moet uw account <strong>geactiveerd</strong> worden door een administrator van de school waarbij u zich aanmeldde. Tenslotte zal de admin u in uw correcte <strong>groep</strong> plaatsen en u bent klaar om te beginnen.
+        </p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
         <h2>{{ucfirst(trans('educal.contact'))}}</h2>
-        <p>This platform is created by the Code9000 team as part of <a href="http://summerofcode.be">open Summer of Code 2014</a> by
-          <a href="http://www.okfn.be">OKFN Belgium</a></p>
-        <p>EduCal is sponsored by <a href="http://www.digipolis.be">Digipolis</a> and the <a href="http://www.gent.be">city of Ghent</a>.</p>
+        <p>Dit platform is ontwikkeld door het Code9000 team als onderdeel van <a href="http://summerofcode.be">open Summer of Code 2014</a>, georganiseerd door <a href="http://www.okfn.be">OKFN Belgium</a>.</p>
+        <p>EduCal is mede mogelijk gemaakt door <a href="http://www.digipolis.be">Digipolis</a> en de <a href="http://www.gent.be">Stad Gent</a>.</p>
         <p>&copy; OKFN Belgium</p>
       </div>
     </div>
