@@ -59,7 +59,7 @@
                 <i class="fa fa-download fa-inverse fa-stack-1x"></i>
               </span></a>
             <a href="{{route('group.edit',$group->id)}}"><i class="fa fa-pencil fa-2x"></i></a>
-            <a href="#" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>
+            <a href="#" data-toggle="modal" data-target="#confirm-delete" title="Remove" data-href="{{route('group.delete',$group->id)}}"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>
         @endforeach
@@ -78,8 +78,8 @@
                 Are you sure you want to delete this group?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-danger danger">Delete</a>
+                <button type="button" class="btn btn-default btn-educal-warning" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-default btn-educal-danger">Delete</a>
             </div>
         </div>
     </div>

@@ -55,8 +55,8 @@
                 Are you sure you want to delete this group?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-danger danger">Delete</a>
+                <button type="button" class="btn btn-default btn-educal-danger" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-default btn-educal-warning">Delete</a>
             </div>
         </div>
     </div>

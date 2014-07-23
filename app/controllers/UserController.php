@@ -12,27 +12,41 @@ class UserController extends \BaseController
     /**
      * Get all users for a school, where they can be activated as well by the administration
      * Show these on view
+     *
+     * @return mixed
      */
     public function index()
     {
         // If user is logged in, get school_id, find respective users
         if (Sentry::check()) {
+            // Get info from the logged in user
             $user         = Sentry::getUser();
+
+            // Make an empty users object which will hold all the users from a certain school
             $users        = null;
+
+            // Get all schools, and put them in an array with the key-value pair school_id=>school_name
             $schools      = School::get();
             $schoolsArray = [];
             foreach ($schools as $school) {
                 $schoolsArray[$school->id] = $school->name;
             }
+
+            // Check if user is superAdmin
             if ($user->hasAccess('school')) {
                 $users = User::where('id', '<>', $user->id)->get();
+
             } elseif ($user->hasAccess('user')) {
+                // If user is no superAdmin, display users based on the logged in user's school
                 $schoolId = $user->school_id;
+
                 // Get all users with this school_id, except for the logged in user
                 $users  = User::where('school_id', $schoolId)
                     ->where('id', '<>', $user->id)
                     ->get();
+
                 $school = School::where('id', $schoolId)->first();
+
             } else {
                 return Redirect::route('calendar.index');
             }
@@ -41,7 +55,6 @@ class UserController extends \BaseController
                 ->with('users', $users)
                 ->with('school', $school)
                 ->with('schools', $schoolsArray);
-
         }
 
         // If no permissions, redirect to calendar index
@@ -49,6 +62,7 @@ class UserController extends \BaseController
     }
 
     /**
+     * Authenticate users
      * TODO: Custom variable error messages (multiple language support)
      * @return mixed
      */
@@ -86,6 +100,7 @@ class UserController extends \BaseController
 
             // Redirect to logged in page
             return Redirect::route('calendar.index');
+
         } // Error handling
         catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
             // No email input
@@ -106,14 +121,13 @@ class UserController extends \BaseController
         } catch (Cartalyst\Sentry\Throttling\UserBannedException $e) {
             $errorMessage = 'User is banned.';
         }
-        // If there is an errormessage, return to login page
-        // With errorMessage
+
+        // If there is an errormessage, return to login page with errorMessage
         if ($errorMessage) {
             return Redirect::route('landing')
                 ->withInput()
                 ->with('errorMessage', $errorMessage);
         }
-
     }
 
     /**
@@ -122,6 +136,7 @@ class UserController extends \BaseController
      */
     public function store()
     {
+        // Define validation rules
         $validator = Validator::make(
             [
                 'name'                  => Input::get('name'),
@@ -143,6 +158,8 @@ class UserController extends \BaseController
                 'tos'      => 'required'
             ]
         );
+
+        // If validation fails, return to previous page with errorMessages
         if ($validator->fails()) {
             $validator->getMessageBag()->add('usererror', 'Failed to make a user');
 
@@ -151,6 +168,7 @@ class UserController extends \BaseController
                 ->withErrors($validator);
 
         } else {
+            // If there are no errors, create a new user
             Sentry::createUser(
                 [
                     'email'      => Input::get('email'),
@@ -201,7 +219,6 @@ class UserController extends \BaseController
                         ->withErrors($validator);
 
                 } else {
-                    // TODO: SuperAdmin maken
                     $schoolId = Input::get('school');
                     if ($user->hasAccess('user') || ($user->hasAccess('user') && $user->school_id == Input::get(
                                 'school'
