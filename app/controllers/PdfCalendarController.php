@@ -14,6 +14,7 @@ class PdfCalendarController extends \BaseController {
      */
     public function index($school, $group)
     {
+        // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
         // Load appointments based on group
         $selGroup = Group::where('name', $school.'_'.$group)->first();
@@ -24,8 +25,9 @@ class PdfCalendarController extends \BaseController {
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
         $dend = new DateTime();
-        $dsta->sub(new DateInterval("P1Y"));
-        $dend->add(new DateInterval("P1Y"));
+        // In this case we set the limit to 1 year in the past until 1 year in the future
+        $dsta->sub(new DateInterval("P1M"));
+        $dend->add(new DateInterval("P1M"));
 
         // Add global appointments, unless only global appointments are requested
         if($group != 'global') {
@@ -39,14 +41,15 @@ class PdfCalendarController extends \BaseController {
                     array_push($appointments, $appointment);
             }
         }
-        // Push to array
+
+        // Add group specific appointments
         foreach($selGroup->appointments as $appointment) {
             $da = new DateTime($appointment->start_date);
             // Set the limits for what appointments to get (1y in past till 1y in future)
             if($da > $dsta && $da < $dend)
                 array_push($appointments, $appointment);
         }
-
+        // Compose the PDF with the help of the Dompdf plugin
         $calendar = self::composePdf($appointments, $schoolName, $group);
         return PDF::load($calendar, 'A4', 'landscape')->download($schoolName.' - calendar');
     }

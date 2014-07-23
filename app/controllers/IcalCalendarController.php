@@ -13,6 +13,7 @@ class IcalCalendarController extends \BaseController {
      */
 	public function index($school, $group)
     {
+        // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
         // Load appointments based on group
         $selGroup = Group::where('name', $school.'_'.$group)->first();
@@ -21,6 +22,7 @@ class IcalCalendarController extends \BaseController {
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
         $dend = new DateTime();
+        // In this case we set the limit to 1 year in the past until 1 year in the future
         $dsta->sub(new DateInterval("P1Y"));
         $dend->add(new DateInterval("P1Y"));
 
@@ -29,26 +31,33 @@ class IcalCalendarController extends \BaseController {
             $globalGroup = Group::where('name', $school.'_global')->first();
             $globalGroup->load('appointments');
 
-
             foreach($globalGroup->appointments as $appointment) {
                 $da = new DateTime($appointment->start_date);
                 // Set the limits for what appointments to get (1y in past till 1y in future)
+                // If the appointment is within the limits, add it to the $appointments array
                 if($da > $dsta && $da < $dend)
                     array_push($appointments, $appointment);
             }
         }
-        // Push to array
+        // Add group specific appointments
         foreach($selGroup->appointments as $appointment) {
             $da = new DateTime($appointment->start_date);
             // Set the limits for what appointments to get (1y in past till 1y in future)
+            // If the appointment is within the limits, add it to the $appointments array
             if($da > $dsta && $da < $dend)
                 array_push($appointments, $appointment);
         }
-
+        // Compose iCal with the help of the eluceo plugin
         $calendar = self::composeIcal($appointments);
         return $calendar->render();
 	}
 
+    /**
+     * This function composes the contents of the iCal file, which are eventually rendered by the index function.
+     * This function makes use of the Eluceo plugin
+     * @param $appointments
+     * @return \Eluceo\iCal\Component\Calendar
+     */
     public function composeIcal($appointments)
     {
         // Set default timezone (PHP 5.4)
@@ -69,7 +78,7 @@ class IcalCalendarController extends \BaseController {
             $event->setNoTime($appointment['attributes']['allday']);
             $event->setStatus('TENTATIVE');
 
-            // Recurence option (e.g. New Year happens every year)
+            // Recurrence option (e.g. New Year happens every year)
             // Set recurrence rule
             if($appointment['attributes']['repeat_type']) {
 
@@ -111,7 +120,7 @@ class IcalCalendarController extends \BaseController {
     }
 
 	/**
-	 * Display the specified resource.
+	 * Return only a single event in the .ics file
 	 *
 	 * @param  int  $id
 	 * @return Response
