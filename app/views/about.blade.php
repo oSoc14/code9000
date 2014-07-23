@@ -7,14 +7,16 @@
 @section('content')
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-12">
-  <h1>About</h1>
-  <p>EduCal is an application for schools to easily create and manage calendars that can be shared with parents.</p>
-  <h3>What is this?</h3>
-  <p>Schools can have a lot of activities throughout the year such as commitee meetings, open days for the public, kid's parties, etc. This can be hard to keep track of for parents. EduCal centralizes and creates an easy-to-use link to import the school's agenda.</p>
+    <div class="col-xs-12 col-md-10">
+  <h1>Over EduCal</h1>
+      <p>
+        Ouders kunnen tegenwoordig veel verschillende kalenders hebben om de activiteiten van hun kinderen bij te houden. <strong>EduCal</strong> is een interactief kalendermanagement platform waarmee scholen (maar ook andere organisaties) meerdere kalenders kunnen beheren.</p><p>Deze kalenders kunnen daarna gedownload worden door leerkrachten en ouders als een iCal of PDF-bestand. Dit iCal bestand kan met 1 klik <strong>geïmporteerd</strong> worden in hun eigen digitale kalender.
+      </p>
   <h3>Credit</h3>
-  <p>Authors: Bjorn Van Acker, Sander Meert, Nick Denys<br>
-    Copyright 2014 OKFN Belgium</p>
+      <p>Dit platform is ontwikkeld door het Code9000 team als onderdeel van <a href="http://summerofcode.be">open Summer of Code 2014</a>, georganiseerd door <a href="http://www.okfn.be">OKFN Belgium</a>.</p>
+      <p>EduCal is mede mogelijk gemaakt door <a href="http://www.digipolis.be">Digipolis</a> en de <a href="http://www.gent.be">Stad Gent</a>.</p>
+      <p>Authors: Bjorn Van Acker, Sander Meert, Nick Denys<br>
+        &copy; OKFN Belgium</p>
       </div>
     </div>
   </div>
