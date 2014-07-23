@@ -87,7 +87,8 @@ return array(
     'until' => 'util',
     'recurrence' => 'Repeat (every x period until enddate)',
     'actions' => 'actions',
-    'name' => 'first name',
+    'name' => 'name',
+    'firstname' => 'first name',
     'surname' => 'surname',
 
 
