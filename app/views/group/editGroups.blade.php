@@ -10,7 +10,6 @@
   <div class="col-xs-12">
     <a href="{{ route('group.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.groups')]))}}</a>
     <h1>{{ucfirst(trans('educal.editgroup'))}}</h1>
-      <!-- TODO: Check checkboxes, global function for str_replace -->
 
       @if($errors->count())
       <div class="alert alert-danger" role="alert">

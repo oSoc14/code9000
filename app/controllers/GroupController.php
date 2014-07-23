@@ -112,6 +112,7 @@ class GroupController extends \BaseController
 
                 // Generate the full groupname (schoolshort_groupshort)
                 $groupFullName = $school->short . '_' . strtolower(e(str_replace(' ','_',Input::get('name'))));
+                $groupFullName = preg_replace('/[^A-Za-z0-9\-_]/', '', $groupFullName);
 
                 // Validate input fields
                 $validator = Validator::make(
@@ -266,6 +267,7 @@ class GroupController extends \BaseController
 
                 // Generate full group name
                 $groupFullName = strtolower($school->short . '_' . e(str_replace(' ','_',Input::get('name'))));
+                $groupFullName = preg_replace('/[^A-Za-z0-9\-_]/', '', $groupFullName);
 
                 // Make a validator to see if the new group name is unique if it's not the same as before
                 // Validate input fields
@@ -291,16 +293,17 @@ class GroupController extends \BaseController
                 );
 
                 // Error handling
-                if ($validator->fails() || $validator2->fails()) {
+                if ($validator->fails() || ($validator2->fails() && $groupFullName != $group->name)) {
                     if($validator2->fails()) {
-                        $validator->getMessageBag()->add('name', Lang::get('validation.unique', ['attribute ' => 'name ']));
+                        $validator->getMessageBag()->add('name', Lang::get('validation.unique', ['attribute ' => 'name']));
                     }
 
-                    return Redirect::route('group.create')->withInput()->withErrors($validator);
+                    return Redirect::route('group.edit', $id)->withInput()->withErrors($validator);
 
 
                 } elseif ($grp == 'global' || $grp == 'admin') {
                     // Do not allow default groups to be renamed
+
                     return Redirect::route('group.edit', $id);
 
                 } else {
