@@ -1,5 +1,11 @@
 <?php
-class CalendarController extends \BaseController {
+
+/**
+ * Class CalendarController
+ * This controller is the main controller of the application. It handles the CRUD of all events.
+ */
+class CalendarController extends \BaseController
+{
 
     /**
      * Display a calendar view to logged in user
@@ -21,7 +27,7 @@ class CalendarController extends \BaseController {
      */
     public function events()
     {
-        if(!Sentry::check()) {
+        if (!Sentry::check()) {
             // User is not logged in, or is not activated
             return Redirect::route('landing');
 
@@ -30,10 +36,13 @@ class CalendarController extends \BaseController {
             $user = Sentry::getUser();
 
             // Check if user is superAdmin
-            if($user->hasAccess('school')) {
+            if ($user->hasAccess('school')) {
                 $appointments = Appointment::get()->toArray();
+
                 // Returns JSON response of the user
-                return Response::json($appointments)->setCallback(Input::get('callback'));//return View::make('calendar.events');
+                return Response::json($appointments)->setCallback(
+                    Input::get('callback')
+                ); //return View::make('calendar.events');
 
             } else {
                 // If user is not superAdmin, show groups based on the school of the logged in user
@@ -42,8 +51,8 @@ class CalendarController extends \BaseController {
 
                 // Loop through groups to get all appointments
                 foreach ($user->school->groups as $group) {
-                    foreach($group->appointments as $appointment){
-                        array_push($appointments,$appointment);
+                    foreach ($group->appointments as $appointment) {
+                        array_push($appointments, $appointment);
                     }
                 }
 
@@ -61,18 +70,18 @@ class CalendarController extends \BaseController {
      */
     public function create()
     {
-        if(Sentry::check()) {
+        if (Sentry::check()) {
             // Find active user and set default variables to null
-            $user = Sentry::getUser();
-            $groups = null;
+            $user       = Sentry::getUser();
+            $groups     = null;
             $schoolName = null;
 
             // Permission checks
-            if($user->hasAnyAccess(['school','event'])) {
+            if ($user->hasAnyAccess(['school', 'event'])) {
 
                 // If user is a superAdmin, show all possible groups to add an event to
-                if($user->hasAccess(['school'])) {
-                    $groups = Group::where('school_id','<>','')->get();
+                if ($user->hasAccess(['school'])) {
+                    $groups = Group::where('school_id', '<>', '')->get();
 
                 } else {
                     // If the user isn't a superAdmin, only show the groups to which the user has permissions
@@ -82,12 +91,12 @@ class CalendarController extends \BaseController {
 
                 // Transform recieved objectList (from database) into array to send with view
                 $smartgroup = [];
-                foreach($groups as $group){
+                foreach ($groups as $group) {
                     $smartgroup[$group->id] = $group->name;
                 }
 
                 // Show the form where users can add appointments
-                return View::make('calendar.create')->with('groups',$smartgroup);
+                return View::make('calendar.create')->with('groups', $smartgroup);
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
@@ -105,35 +114,35 @@ class CalendarController extends \BaseController {
      */
     public function store()
     {
-        if(Sentry::check()) {
+        if (Sentry::check()) {
             // Find active user and set default variables to null
             $schools = null;
-            $user = Sentry::getUser();
+            $user    = Sentry::getUser();
 
             // Permission checks
-            if ($user->hasAnyAccess(['school','event'])) {
+            if ($user->hasAnyAccess(['school', 'event'])) {
 
                 $endDate = new DateTime();
                 // Check if endDate isn't blank (____/__/__ __:__)
-                if(Input::get('end') == '____/__/__ __:__') {
+                if (Input::get('end') == '____/__/__ __:__') {
                     $endDate = null;
                 }
                 // Validate input fields
                 $validator = Validator::make(
                     [
-                        'group' => Input::get('group'),
+                        'group'       => Input::get('group'),
                         'description' => Input::get('description'),
-                        'start' => Input::get('start'),
-                        'end' => $endDate,
-                        'title' => Input::get('title'),
-                        'day' => Input::get('day')
+                        'start'       => Input::get('start'),
+                        'end'         => $endDate,
+                        'title'       => Input::get('title'),
+                        'day'         => Input::get('day')
                     ],
                     [
-                        'group' => 'required',
+                        'group'       => 'required',
                         'description' => 'required',
-                        'start' => 'required|date',
-                        'end' => 'date',
-                        'title' => 'required'
+                        'start'       => 'required|date',
+                        'end'         => 'date',
+                        'title'       => 'required'
                     ]
                 );
 
@@ -143,13 +152,13 @@ class CalendarController extends \BaseController {
 
                 } else {
                     // If inputs are valid, prepare Appointment opbject to be stored
-                    $event = new Appointment();
-                    $event->title = e(Input::get('title'));
+                    $event              = new Appointment();
+                    $event->title       = e(Input::get('title'));
                     $event->description = e(Input::get('description'));
-                    $event->start_date = new DateTime(Input::get('start'));
+                    $event->start_date  = new DateTime(Input::get('start'));
 
                     // If the all day checkbox is checked, then set the allday field to true
-                    if(Input::get('day')) {
+                    if (Input::get('day')) {
                         $event->allday = true;
 
                     } else {
@@ -157,14 +166,17 @@ class CalendarController extends \BaseController {
                         $event->allday = false;
 
                         // If the end is empty or equal to the start, we make the event last 1 hour by default
-                        if((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start'))) {
+                        if ((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start'))) {
                             $event->end_date = new DateTime(Input::get('start'));
                             $event->end_date->add(new DateInterval('PT1H'));
 
-                        } elseif(new DateTime(Input::get('start'))>=new DateTime(Input::get('end'))) {
+                        } elseif (new DateTime(Input::get('start')) >= new DateTime(Input::get('end'))) {
                             // If the startDate is greater than the endDate,
                             // add an error message in the message collection (MessageBag instance)
-                            $validator->getMessageBag()->add('end', Lang::get('validation.after', ['attribute ' => 'end ', 'date' => Input::get('start')]));
+                            $validator->getMessageBag()->add(
+                                'end',
+                                Lang::get('validation.after', ['attribute ' => 'end ', 'date' => Input::get('start')])
+                            );
 
                             // Redirect back with inputs and validator instance
                             return Redirect::back()->withErrors($validator)->withInput();
@@ -176,8 +188,8 @@ class CalendarController extends \BaseController {
                     }
 
                     // Recurring events handling
-                    if(Input::get('repeat') && Input::get('nr_repeat')) {
-                        $event->nr_repeat = Input::get('nr_repeat');
+                    if (Input::get('repeat') && Input::get('nr_repeat')) {
+                        $event->nr_repeat   = Input::get('nr_repeat');
                         $event->repeat_type = e(Input::get('repeat_type'));
                         $event->repeat_freq = Input::get('repeat_freq');
                     }
@@ -187,6 +199,7 @@ class CalendarController extends \BaseController {
 
                     // Save the appointment to the database and return to the calendar index view
                     $event->save();
+
                     return Redirect::route('calendar.index');
                 }
             } else {
@@ -201,24 +214,24 @@ class CalendarController extends \BaseController {
     /**
      * Show the form for editing the specified appointment.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function edit($id)
     {
-        if(Sentry::check()) {
+        if (Sentry::check()) {
             // Find active user
             $user = Sentry::getUser();
 
             // Check permissions
-            if ($user->hasAnyAccess(['school','event'])) {
+            if ($user->hasAnyAccess(['school', 'event'])) {
                 $event = Appointment::find($id);
 
                 // Check if user is superAdmin
-                if($user->hasAccess(['school'])) {
-                    $groups = Group::where('school_id','<>','')->get();
+                if ($user->hasAccess(['school'])) {
+                    $groups = Group::where('school_id', '<>', '')->get();
 
-                } elseif($user->school_id == $event->group->school_id) {
+                } elseif ($user->school_id == $event->group->school_id) {
                     // Check if User belongs to group/school which the appointment is from
                     $user->load('school.groups.appointments');
                     $groups = $user->school->groups;
@@ -229,13 +242,13 @@ class CalendarController extends \BaseController {
 
                 // Make a list of all the groups in a school to show with the view
                 $smartgroup = [];
-                foreach($groups as $group){
+                foreach ($groups as $group) {
                     $smartgroup[$group->id] = $group->name;
                 }
 
                 $event = Appointment::find($id);
 
-                return View::make('calendar.edit')->with('groups',$smartgroup)->with('event',$event);
+                return View::make('calendar.edit')->with('groups', $smartgroup)->with('event', $event);
             } else {
                 return Redirect::route('calendar.index');
             }
@@ -248,66 +261,73 @@ class CalendarController extends \BaseController {
     /**
      * Update the specified appointment in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function update($id)
     {
-        if(Sentry::check()) {
+        if (Sentry::check()) {
             // Find active user
-            $user = Sentry::getUser();
+            $user  = Sentry::getUser();
             $event = Appointment::find($id);
 
             // Check if User belongs to group/school which the appointment is from
-            if ($user->hasAccess('school') || ($user->hasAccess('event') && $user->school_id == $event->group->school_id)){
+            if ($user->hasAccess('school') || ($user->hasAccess(
+                        'event'
+                    ) && $user->school_id == $event->group->school_id)
+            ) {
                 $endDate = new DateTime();
 
                 // Check if endDate isn't blank (____/__/__ __:__)
-                if(Input::get('end') == '____/__/__ __:__') {
+                if (Input::get('end') == '____/__/__ __:__') {
                     $endDate = null;
                 }
 
                 // Validate input fields
                 $validator = Validator::make(
                     [
-                        'group' => Input::get('group'),
+                        'group'       => Input::get('group'),
                         'description' => Input::get('description'),
-                        'end' => $endDate,
-                        'start' => Input::get('start'),
-                        'title' => Input::get('title')
+                        'end'         => $endDate,
+                        'start'       => Input::get('start'),
+                        'title'       => Input::get('title')
                     ],
                     [
-                        'group' => 'required',
+                        'group'       => 'required',
                         'description' => 'required',
-                        'start' => 'required|date',
-                        'end' => 'date',
-                        'title' => 'required'
+                        'start'       => 'required|date',
+                        'end'         => 'date',
+                        'title'       => 'required'
                     ]
                 );
 
                 if ($validator->fails()) {
-                    return Redirect::route('event.edit',$id)->withInput()->withErrors($validator);
+                    return Redirect::route('event.edit', $id)->withInput()->withErrors($validator);
 
                 } else {
                     // If validator succeeds, prepare event object to be updated in the database
-                    $event->title = e(Input::get('title'));
+                    $event->title       = e(Input::get('title'));
                     $event->description = e(Input::get('description'));
-                    $event->start_date = new DateTime(Input::get('start'));
+                    $event->start_date  = new DateTime(Input::get('start'));
 
-                    if(Input::get('day')) {
+                    if (Input::get('day')) {
                         $event->allday = true;
 
                     } else {
                         $event->allday = false;
                         // If end-date is blank (____/__/__...), or if it's the same as the start-date/time,
                         // then end-date = start-date + 1h
-                        if((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start'))) {
+                        if ((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start'))) {
                             $event->end_date = new DateTime(Input::get('start'));
                             $event->end_date->add(new DateInterval('PT1H'));
 
-                        } elseif(new DateTime(Input::get('start'))>=new DateTime(Input::get('end'))) {
+                        } elseif (new DateTime(Input::get('start')) >= new DateTime(Input::get('end'))) {
                             // Add an error message in the message collection (MessageBag instance)
-                            $validator->getMessageBag()->add('end', Lang::get('validation.after', ['attribute ' => 'end ', 'date' => Input::get('start')]));
+                            $validator->getMessageBag()->add(
+                                'end',
+                                Lang::get('validation.after', ['attribute ' => 'end ', 'date' => Input::get('start')])
+                            );
+
                             // Redirect back with inputs and validator instance
                             return Redirect::back()->withErrors($validator)->withInput();
 
@@ -317,12 +337,12 @@ class CalendarController extends \BaseController {
                     }
 
                     // Recurring events handling
-                    if(Input::get('repeat') && Input::get('nr_repeat')) {
-                        $event->nr_repeat = Input::get('nr_repeat');
+                    if (Input::get('repeat') && Input::get('nr_repeat')) {
+                        $event->nr_repeat   = Input::get('nr_repeat');
                         $event->repeat_type = e(Input::get('repeat_type'));
                         $event->repeat_freq = Input::get('repeat_freq');
                     } else {
-                        $event->nr_repeat = null;
+                        $event->nr_repeat   = null;
                         $event->repeat_type = null;
                         $event->repeat_freq = null;
                     }
@@ -344,18 +364,18 @@ class CalendarController extends \BaseController {
     /**
      * Remove the specified appointment from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function destroy($id)
     {
-        if(Sentry::check()) {
+        if (Sentry::check()) {
             // Find active user
-            $user = Sentry::getUser();
+            $user  = Sentry::getUser();
             $event = Appointment::find($id);
 
             // Check if User belongs to group/school which the appointment is from
-            if ($user->hasAccess('school') || ($user->hasAccess('event') && $user->school_id == $event->group->school_id)){
+            if ($user->hasAccess('school') || ($user->hasAccess('event') && $user->school_id == $event->group->school_id)) {
                 $event->delete();
             }
 
