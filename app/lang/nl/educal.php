@@ -86,7 +86,7 @@ return array(
     'until' => 'Tot',
     'recurrence' => 'Herhalen (elke x periode tot eind datum)',
     'actions' => 'acties',
-    'name' => 'naam',
+    'name' => 'voornaam',
     'surname' => 'familienaam',
 
 
