@@ -491,6 +491,9 @@ img {
     border-width: 1px 0 0 1px;
   }
 }
+#calendar .fc-event-time {
+  display: none;
+}
 #calendar thead tr.fc-first {
   color: #fff;
   text-transform: uppercase;
