@@ -14,13 +14,14 @@ class IcalCalendarController extends \BaseController
      *
      * @param  string $school
      * @param  string $group
-     * @return Cal.ics download file
+     * @return cal.ics download file
      *
      */
     public function index($school, $group)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
+
         // Load appointments based on group
         $selGroup = Group::where('name', $school . '_' . $group)->first();
         $selGroup->load('appointments');
@@ -28,6 +29,7 @@ class IcalCalendarController extends \BaseController
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
         $dend = new DateTime();
+
         // In this case we set the limit to 1 year in the past until 1 year in the future
         $dsta->sub(new DateInterval("P1Y"));
         $dend->add(new DateInterval("P1Y"));
@@ -39,6 +41,7 @@ class IcalCalendarController extends \BaseController
 
             foreach ($globalGroup->appointments as $appointment) {
                 $da = new DateTime($appointment->start_date);
+
                 // Set the limits for what appointments to get (1y in past till 1y in future)
                 // If the appointment is within the limits, add it to the $appointments array
                 if ($da > $dsta && $da < $dend) {
@@ -46,15 +49,18 @@ class IcalCalendarController extends \BaseController
                 }
             }
         }
+
         // Add group specific appointments
         foreach ($selGroup->appointments as $appointment) {
             $da = new DateTime($appointment->start_date);
+
             // Set the limits for what appointments to get (1y in past till 1y in future)
             // If the appointment is within the limits, add it to the $appointments array
             if ($da > $dsta && $da < $dend) {
                 array_push($appointments, $appointment);
             }
         }
+
         // Compose iCal with the help of the eluceo plugin
         $calendar = self::composeIcal($appointments);
 
@@ -92,6 +98,7 @@ class IcalCalendarController extends \BaseController
             if ($appointment['attributes']['repeat_type']) {
 
                 $recurrenceRule = new \Eluceo\iCal\Property\Event\RecurrenceRule();
+                // Check the repeat type (day, week, month, year) and set the corresponding recurrence rule
                 switch ($appointment['attributes']['repeat_type']) {
                     case 'd':
                         $recurrenceRule->setFreq(\Eluceo\iCal\Property\Event\RecurrenceRule::FREQ_DAILY);
@@ -106,6 +113,7 @@ class IcalCalendarController extends \BaseController
                         $recurrenceRule->setFreq(\Eluceo\iCal\Property\Event\RecurrenceRule::FREQ_YEARLY);
                         break;
                 }
+
                 $recurrenceRule->setInterval($appointment['attributes']['repeat_freq']);
                 $recurrenceRule->setCount($appointment['attributes']['nr_repeat']);
 
@@ -136,7 +144,8 @@ class IcalCalendarController extends \BaseController
      */
     public function show($id)
     {
-        // Find selected appointment
+        // Find selected appointment and push it to an array with a single element which will be sent to the
+        // composeIcal function (in this controller as well)
         $appointment  = Appointment::find($id);
         $appointments = [];
         array_push($appointments, $appointment);

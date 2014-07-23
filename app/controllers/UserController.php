@@ -478,63 +478,66 @@ class UserController extends \BaseController
      * Remove a user from selected group
      * @param $id
      * @param $groupId
-     * TODO: Re-render dropdown menu to show users
      */
     public function removeFromGroup($id, $groupId)
     {
         if (Sentry::check()) {
-            $user = Sentry::getUser();
-            if ($user->hasAnyAccess(['school', 'user'])) {
-                try {
-                    // Find the user using the user id
-                    $selectedUser = Sentry::findUserById($id);
-                    /**
-                     * Check if the selected user is in the admins group,
-                     * ->true: check if he is the last person in that group
-                     *          -> true: don't allow user to be removed (school needs 1 admin at least)
-                     *          -> false: delete user from group
-                     * ->false: safe to remove user from group
-                     */
-                    $group = Sentry::findGroupById($groupId);
-                    if (($selectedUser->hasAccess(
-                                'admin'
-                            ) && $selectedUser->school_id == $user->school_id) || $user->school_id == null
-                    ) {
-                        $school = School::find($selectedUser->school_id);
-                        // Make sure the user can not remove the last user from the school_admin group
-                        // otherwise no one is left to configure the group (except for the superAdmin)
-                        if ($group->name == $school->short . '_admin') {
-                            $users = Sentry::findAllUsersInGroup($group);
-                            if (count($users) > 1) {
-                                // Delete the user
-                                $selectedUser->removeGroup($group);
+            try {
+                // Find the user using the user id
+                $selectedUser = Sentry::findUserById($id);
+                $user = Sentry::getUser();
+                $group = Sentry::findGroupById($groupId);
 
-                                // Return to the previous page
-                                return Redirect::back();
-                            } else {
-                                $error = "You can't remove this user.";
+            } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+                $error = 'User was not found.';
 
-                                // Return to the previous page
-                                return Redirect::back()->with('error', $error);
-                            }
-                        }
-                    } else {
-                        // Remove the user from group
+                // Return to the previous page
+                return Redirect::back()->with('error', $error);
+
+            } catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e) {
+                $error = 'Group was not found.';
+
+                // Return to the previous page
+                return Redirect::back()->with('error', $error);
+            }
+
+            if (($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id)
+                || $user->hasAccess('school')) {
+
+                /**
+                 * Check if the selected user is in the admins group,
+                 * ->true: check if he is the last person in that group
+                 *          -> true: don't allow user to be removed (school needs 1 admin at least)
+                 *          -> false: delete user from group
+                 * ->false: safe to remove user from group
+                 */
+
+                $school = School::find($selectedUser->school_id);
+                // Make sure the user can not remove the last user from the school_admin group
+                // otherwise no one is left to configure the group (except for the superAdmin)
+                if ($group->name == $school->short . '_admin') {
+                    $users = Sentry::findAllUsersInGroup($group);
+
+                    if (count($users) > 1) {
+                        // Delete the user
                         $selectedUser->removeGroup($group);
 
                         // Return to the previous page
-                        return Redirect::back();
+                        Redirect::route('group.edit', $group->id);
+                    } else {
+                        $error = "You can't remove this user.";
+
+                        // Return to the previous page
+                        Redirect::route('group.edit', $group->id)->with('error', $error);
                     }
-                } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                    $error = 'User was not found.';
+
+                } else {
+
+                    // Remove the user from group
+                    $selectedUser->removeGroup($group);
 
                     // Return to the previous page
-                    return Redirect::back()->with('error', $error);
-                } catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e) {
-                    $error = 'Group was not found.';
-
-                    // Return to the previous page
-                    return Redirect::back()->with('error', $error);
+                    return Redirect::back();
                 }
             } else {
                 // If no permissions, redirect to calendar index

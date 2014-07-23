@@ -11,6 +11,7 @@ class PdfCalendarController extends \BaseController
 
     /**
      * Find correct appointments depending on $school and $group
+     * Additionally add the appointments from the "global" group
      * Process these appointments and render them to an .pdf file which will be returned for download
      *
      * @param  string $school
@@ -22,16 +23,20 @@ class PdfCalendarController extends \BaseController
     {
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
+
         // Load appointments based on group
         $selGroup = Group::where('name', $school . '_' . $group)->first();
         $selGroup->load('appointments');
+
+        // Get the schoolname corresponding to the group (to be used in the PDF header)
         $schoolName = $selGroup->load('school');
         $schoolName = $schoolName->school->name;
 
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
         $dend = new DateTime();
-        // In this case we set the limit to 1 year in the past until 1 year in the future
+
+        // In this case we set the limit to 1 month in the past until 1 month in the future
         $dsta->sub(new DateInterval("P1M"));
         $dend->add(new DateInterval("P1M"));
 
@@ -42,7 +47,7 @@ class PdfCalendarController extends \BaseController
 
             foreach ($globalGroup->appointments as $appointment) {
                 $da = new DateTime($appointment->start_date);
-                // Set the limits for what appointments to get (1y in past till 1y in future)
+                // Set the limits for what appointments to get (1 month in past till 1 month in future)
                 if ($da > $dsta && $da < $dend) {
                     array_push($appointments, $appointment);
                 }
@@ -52,11 +57,13 @@ class PdfCalendarController extends \BaseController
         // Add group specific appointments
         foreach ($selGroup->appointments as $appointment) {
             $da = new DateTime($appointment->start_date);
+
             // Set the limits for what appointments to get (1y in past till 1y in future)
             if ($da > $dsta && $da < $dend) {
                 array_push($appointments, $appointment);
             }
         }
+
         // Compose the PDF with the help of the Dompdf plugin
         $calendar = self::composePdf($appointments, $schoolName, $group);
 
@@ -65,8 +72,8 @@ class PdfCalendarController extends \BaseController
 
     public function composePdf($appointments, $school, $group)
     {
-        // Pdf "header"
-        $html             = HTML::style('css/print.css')
+        // Pdf "header" and html
+        $html = HTML::style('css/print.css')
             . '<h1>School: ' . $school . '</h1>'
             . '<h2>Group: ' . $group . '</h2>'
             . '<table class="table table-striped">'
@@ -75,6 +82,8 @@ class PdfCalendarController extends \BaseController
             . '<th>Title</th>'
             . '<th>Description</th>'
             . '</tr></thead><tbody>';
+
+        // Make an empty array which will be filled with all appointments
         $listAppointments = [];
 
         // Set the limitations for which appointments to get
@@ -87,32 +96,40 @@ class PdfCalendarController extends \BaseController
 
         // Loop through appointments and add them to the calendar.
         foreach ($appointments as $appointment) {
+
+            // Create an $app object which represents a single appointment to be pushed in the $listAppointments array
             $app                = [];
             $app['title']       = $appointment['attributes']['title'];
             $app['description'] = $appointment['attributes']['description'];
             $app['start_date']  = $appointment['attributes']['start_date'];
             $app['end_date']    = $appointment['attributes']['end_date'];
             $app['allday']      = $appointment['attributes']['allday'];
+
             // Recurence option (e.g. New Year happens every year)
             // Set recurrence rule
             if ($appointment['attributes']['repeat_type']) {
+
                 $rep_freq = $appointment['attributes']['repeat_freq'];
+
                 // Create DateTime objects to be able to do math with days.
                 $dtStart = new DateTime($appointment['attributes']['start_date']);
                 $dtStart->format('d-m-Y H:i');
                 $dtEnd = new DateTime($appointment['attributes']['end_date']);
                 $dtEnd->format('d-m-Y H:i');
+
+                // Calculate recurring appointments
                 for ($i = 0; $i < $appointment['attributes']['nr_repeat']; $i++) {
+
                     $app['start_date'] = $dtStart->format('d-m-Y H:i');
                     $app['end_date']   = $dtEnd->format('d-m-Y H:i');
 
                     // Set the limits for what appointments to get (1 month in past till 1 month in future)
+                    // If the appointment falls outside of these limits, do not add it to the $listAppointments
                     if ($dtStart > $dsta && $dtStart < $dend) {
-                        $html .= '<tr><td>' . $app['start_date'] . ' - ' . $app['end_date'] . '</td>'
-                            . '<td">' . $app['title'] . '</td>'
-                            . '<td>' . $app['description'] . '</td></tr>';
+                        array_push($listAppointments, $app);
                     }
 
+                    // Check the repeat type (day, week, month, year) and set the corresponding recurrence rule
                     switch ($appointment['attributes']['repeat_type']) {
                         case 'd':
                             $dtStart->add(new DateInterval('P' . $rep_freq . 'D'));
@@ -132,20 +149,25 @@ class PdfCalendarController extends \BaseController
                             break;
                     }
                 }
+
             } else {
-                $dateStr           = new DateTime($appointment['attributes']['start_date']);
-                $app['start_date'] = $dateStr->format('d-m-Y H:i');
-                $dateStr2          = new DateTime($appointment['attributes']['end_date']);
-                $app['end_date']   = $dateStr2->format('d-m-Y H:i');
+
+                // If there is no recurrence rule, just format the start and enddate gotten from the database
+                $dateString        = new DateTime($appointment['attributes']['start_date']);
+                $app['start_date'] = $dateString->format('d-m-Y H:i');
+                $dateString2       = new DateTime($appointment['attributes']['end_date']);
+                $app['end_date']   = $dateString2->format('d-m-Y H:i');
                 $da                = new DateTime($appointment->start_date);
-                // Set the limits for what appointments to get (1y in past till 1y in future)
+
+                // Set the limits for which appointments to get (1 month in past till 1 month in future)
                 if ($da > $dsta && $da < $dend) {
-                    $html .= '<tr><td>' . $app['start_date'] . ' - ' . $app['end_date'] . '</td>'
-                        . '<td">' . $app['title'] . '</td>'
-                        . '<td>' . $app['description'] . '</td></tr>';
+                    // If appointment is within these limits, push it to the $listAppointments
+                    array_push($listAppointments, $app);
                 }
             }
         }
+
+        // Sort $listAppointments by start_date
         $listAppointments = array_values(
             array_sort(
                 $listAppointments,
@@ -154,6 +176,20 @@ class PdfCalendarController extends \BaseController
                 }
             )
         );
+
+        // Loop through $listAppointments and add these to the pdf html
+        foreach($listAppointments as $apps) {
+            $html .= '<tr><td>' . $apps['start_date'];
+
+            if($apps['end_date']) {
+                $html .= ' - ' . $apps['end_date'] . '</td>';
+            }
+
+            $html .= '</td>'
+                . '<td>' . $apps['title'] . '</td>'
+                . '<td>' . $apps['description'] . '</td></tr>';
+        }
+
         // Here we render appointments
         $html .= '</tbody></table>'
             . '<small>generated by EduCal</small>';
@@ -169,7 +205,8 @@ class PdfCalendarController extends \BaseController
      */
     public function show($id)
     {
-        // Find selected appointment
+        // Find selected appointment and push it to an array with a single element which will be sent to the
+        // composePdf function (in this controller as well)
         $appointment  = Appointment::find($id);
         $school       = $appointment->load('group.school');
         $appointments = [];
