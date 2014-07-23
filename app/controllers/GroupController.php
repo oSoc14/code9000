@@ -111,7 +111,7 @@ class GroupController extends \BaseController
                 }
 
                 // Generate the full groupname (schoolshort_groupshort)
-                $groupFullName = $school->short . '_' . strtolower(e(Input::get('name')));
+                $groupFullName = $school->short . '_' . strtolower(e(str_replace(' ','_',Input::get('name'))));
 
                 // Validate input fields
                 $validator = Validator::make(
@@ -265,29 +265,38 @@ class GroupController extends \BaseController
                 $grp = str_replace($school->short . '_', '', $group->name);
 
                 // Generate full group name
-                $groupFullName = strtolower($school->short . '_' . e(Input::get('name')));
+                $groupFullName = strtolower($school->short . '_' . e(str_replace(' ','_',Input::get('name'))));
 
                 // Make a validator to see if the new group name is unique if it's not the same as before
-                $validator = Validator::make([], []);
-                if ($group->name != $groupFullName) {
-                    $validator = Validator::make(
-                        ['name' => $groupFullName],
-                        ['name' => 'unique:groups,name']
-                    );
-                }
+                // Validate input fields
+                $validator = Validator::make(
+                    [
+                        'name' => Input::get('name'),
+                        'school' => Input::get('school'),
+                        'permissions' => Input::get('permissions')
+                    ],
+                    [
+                        'name' => 'required',
+                        'school' => 'integer'
+                    ]
+                );
+                // Make a second validator to see if the new group name is unique
+                $validator2 = Validator::make(
+                    [
+                        'name' => $groupFullName,
+                    ],
+                    [
+                        'name' => 'unique:groups,name',
+                    ]
+                );
 
-                // Error handling if validator fails
-                if (isset($validator)) {
-
-                    if ($validator->fails()) {
-                        $validator->getMessageBag()->add(
-                            'name',
-                            Lang::get('validation.unique', ['attribute ' => 'name '])
-                        );
+                // Error handling
+                if ($validator->fails() || $validator2->fails()) {
+                    if($validator2->fails()) {
+                        $validator->getMessageBag()->add('name', Lang::get('validation.unique', ['attribute ' => 'name ']));
                     }
 
-
-                    return Redirect::route('group.edit', $id)->withInput()->withErrors($validator);
+                    return Redirect::route('group.create')->withInput()->withErrors($validator);
 
 
                 } elseif ($grp == 'global' || $grp == 'admin') {
