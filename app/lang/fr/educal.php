@@ -22,6 +22,7 @@ return array(
     'short' => 'code',
     'startdate' => 'date de début',
     'enddate' => 'date de fin',
+    'date' => 'date',
 
     'delete' => 'effacer',
     'cancel' => 'annuler',

@@ -22,6 +22,7 @@ return array(
     'short' => 'shortcode',
     'startdate' => 'startdatum',
     'enddate' => 'einddatum',
+    'date' => 'datum',
 
     'delete' => 'verwijderen',
     'cancel' => 'annuleren',

@@ -70,17 +70,18 @@ class PdfCalendarController extends \BaseController
         return PDF::load($calendar, 'A4', 'landscape')->download($schoolName . ' - calendar');
     }
 
+    // TODO: FIX THE SORTING
     public function composePdf($appointments, $school, $group)
     {
         // Pdf "header" and html
         $html = HTML::style('css/print.css')
-            . '<h1>School: ' . $school . '</h1>'
-            . '<h2>Group: ' . $group . '</h2>'
+            . '<h1>'.ucfirst(trans('educal.school')).': ' . $school . '</h1>'
+            . '<h2>'.ucfirst(trans('educal.group')).': ' . $group . '</h2>'
             . '<table class="table table-striped">'
             . '<thead><tr>'
-            . '<th>Date</th>'
-            . '<th>Title</th>'
-            . '<th>Description</th>'
+            . '<th>'.ucfirst(trans('educal.date')).'</th>'
+            . '<th>'.ucfirst(trans('educal.title')).'</th>'
+            . '<th>'.ucfirst(trans('educal.description')).'</th>'
             . '</tr></thead><tbody>';
 
         // Make an empty array which will be filled with all appointments
@@ -120,8 +121,12 @@ class PdfCalendarController extends \BaseController
                 // Calculate recurring appointments
                 for ($i = 0; $i < $appointment['attributes']['nr_repeat']; $i++) {
 
+                    // Format dates in readable strings
                     $app['start_date'] = $dtStart->format('d-m-Y H:i');
                     $app['end_date']   = $dtEnd->format('d-m-Y H:i');
+
+                    // Extra dateTime field to sort the array by later
+                    $app['dateTime']   = $dtStart->format('YmdHi');
 
                     // Set the limits for what appointments to get (1 month in past till 1 month in future)
                     // If the appointment falls outside of these limits, do not add it to the $listAppointments
@@ -155,6 +160,8 @@ class PdfCalendarController extends \BaseController
                 // If there is no recurrence rule, just format the start and enddate gotten from the database
                 $dateString        = new DateTime($appointment['attributes']['start_date']);
                 $app['start_date'] = $dateString->format('d-m-Y H:i');
+                // Extra dateTime field to sort the array by later
+                $app['dateTime']   = $dateString->format('YmdHi');
                 $dateString2       = new DateTime($appointment['attributes']['end_date']);
                 $app['end_date']   = $dateString2->format('d-m-Y H:i');
                 $da                = new DateTime($appointment->start_date);
@@ -166,28 +173,28 @@ class PdfCalendarController extends \BaseController
                 }
             }
         }
-
-        // Sort $listAppointments by start_date
+        // Sort $listAppointments by dateTime field
         $listAppointments = array_values(
             array_sort(
                 $listAppointments,
                 function ($value) {
-                    return $value['start_date'];
+                    return $value['dateTime'];
                 }
             )
         );
 
         // Loop through $listAppointments and add these to the pdf html
         foreach($listAppointments as $apps) {
-            $html .= '<tr><td>' . $apps['start_date'];
+            $html .= '<tr><td width="20%">'.ucfirst(trans('educal.starts')).'  ' . $apps['start_date'];
 
+            // Only show this if the end date is specified
             if($apps['end_date']) {
-                $html .= ' - ' . $apps['end_date'] . '</td>';
+                $html .= '<br>'.ucfirst(trans('educal.ends')).' '. $apps['end_date'] . '</td>';
             }
 
             $html .= '</td>'
-                . '<td>' . $apps['title'] . '</td>'
-                . '<td>' . $apps['description'] . '</td></tr>';
+                . '<td width="20%">' . $apps['title'] . '</td>'
+                . '<td width="60%">' . $apps['description'] . '</td></tr>';
         }
 
         // Here we render appointments
