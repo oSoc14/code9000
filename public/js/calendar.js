@@ -34,7 +34,6 @@ $(document).ready(function () {
 
   // Parse the events gotten from the database and push them to global variable
   function parseEvents(events) {
-    console.log(events);
     $.each(events, function (index, value) {
       if (value['repeat_type']) {
         for (i = 0; i < value['nr_repeat']; i++) {
@@ -101,7 +100,6 @@ $(document).ready(function () {
 
   // Render the calendar and all events on it
   function renderEvents() {
-    console.log(_events);
     // Full calendar plugin
     $('#calendar').fullCalendar({
       header: {
