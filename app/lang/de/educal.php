@@ -101,6 +101,7 @@ return array(
     'creategroup' => 'create and add group',
     'noschools' => 'There are no schools to add a group to.',
     'nameunchangeable' => 'This name can not be changed',
+    'permissionsunchangeable' => 'These permissions can not be changed',
     'urls' => 'Urls',
     'noexport' => 'NO EXPORT',
 

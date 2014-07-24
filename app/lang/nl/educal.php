@@ -102,6 +102,7 @@ return array(
     'creategroup' => 'maak groep aan',
     'noschools' => 'Er zijn geen scholen beschikbaar.',
     'nameunchangeable' => 'Deze naam kan niet worden aangepast.',
+    'permissionsunchangeable' => 'Deze permissies kunnen niet worden aangepast.',
     'urls' => 'Urls',
     'urloptions' => 'Url opties',
     'noexport' => 'KAN NIET EXPORTEREN',

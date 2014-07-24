@@ -102,6 +102,7 @@ return array(
     'creategroup' => 'créer un groupe',
     'noschools' => 'Il n\'y a pas d\'écoles pour ajouter un groupe à.',
     'nameunchangeable' => 'Ce nom ne peut pas être changé',
+    'permissionsunchangeable' => 'These permissions can not be changed',
     'urls' => 'Urls',
     'noexport' => 'NO EXPORT',
 

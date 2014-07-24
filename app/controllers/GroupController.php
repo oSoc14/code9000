@@ -266,8 +266,12 @@ class GroupController extends \BaseController
                 $grp = str_replace($school->short . '_', '', $group->name);
 
                 // Generate full group name
-                $groupFullName = strtolower($school->short . '_' . e(str_replace(' ','_',Input::get('name'))));
-                $groupFullName = preg_replace('/[^A-Za-z0-9\-_]/', '', $groupFullName);
+                if(Input::get('name') != null) {
+                    $groupFullName = strtolower($school->short . '_' . e(str_replace(' ','_',Input::get('name'))));
+                    $groupFullName = preg_replace('/[^A-Za-z0-9\-_]/', '', $groupFullName);
+                } else {
+                    $groupFullName = $group->name;
+                }
 
                 // Make a validator to see if the new group name is unique if it's not the same as before
                 // Validate input fields
@@ -278,7 +282,6 @@ class GroupController extends \BaseController
                         'permissions' => Input::get('permissions')
                     ],
                     [
-                        'name' => 'required',
                         'school' => 'integer'
                     ]
                 );

@@ -238,7 +238,7 @@ Route::group(['prefix' => 'export'], function()
     ])->where(['school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
 
     // iCal Export route for a single appointment
-    Route::get('/appointment/{id}', [
+    Route::get('/appointment/find/{id}', [
         'as'   => 'export.single',
         'uses' => 'IcalCalendarController@show'
     ])->where('id', '[0-9]+');

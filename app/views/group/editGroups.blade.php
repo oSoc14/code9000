@@ -38,45 +38,52 @@
           @endif
         </div>
       </div>
-
+      @if($grp != 'global' && $grp != 'admin')
+      <div class="form-group">
+          <label class="col-md-2 control-label">{{ucfirst(trans('educal.permissions'))}}</label>
+          <div class="col-md-8">
+              <div class="checkbox">
+                  <label>
+                      @if(isset($group->permissions['group']))
+                      <input type="checkbox" name="permissions[group]" checked> {{ucfirst(trans('educal.managegroups'))}}
+                      @else
+                      <input type="checkbox" name="permissions[group]"> {{ucfirst(trans('educal.managegroups'))}}
+                      @endif
+                  </label>
+              </div>
+              <div class="checkbox">
+                  <label>
+                      @if(isset($group->permissions['user']))
+                      <input type="checkbox" name="permissions[user]" checked> {{ucfirst(trans('educal.manageusers'))}}
+                      @else
+                      <input type="checkbox" name="permissions[user]"> {{ucfirst(trans('educal.manageusers'))}}
+                      @endif
+                  </label>
+              </div>
+              <div class="checkbox">
+                  <label>
+                      @if(isset($group->permissions['event']))
+                      <input type="checkbox" name="permissions[event]" checked> {{ucfirst(trans('educal.manageevents'))}}
+                      @else
+                      <input type="checkbox" name="permissions[event]"> {{ucfirst(trans('educal.manageevents'))}}
+                      @endif
+                  </label>
+              </div>
+          </div>
+      </div>
+      <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> {{ucfirst(trans('educal.savechanges'))}}</button>
+          </div>
+      </div>
+      @else
       <div class="form-group">
         <label class="col-md-2 control-label">{{ucfirst(trans('educal.permissions'))}}</label>
         <div class="col-md-8">
-          <div class="checkbox">
-            <label>
-                @if(isset($group->permissions['group']))
-                <input type="checkbox" name="permissions[group]" checked> {{ucfirst(trans('educal.managegroups'))}}
-                @else
-                <input type="checkbox" name="permissions[group]"> {{ucfirst(trans('educal.managegroups'))}}
-                @endif
-            </label>
-          </div>
-          <div class="checkbox">
-            <label>
-                @if(isset($group->permissions['user']))
-                <input type="checkbox" name="permissions[user]" checked> {{ucfirst(trans('educal.manageusers'))}}
-                @else
-                <input type="checkbox" name="permissions[user]"> {{ucfirst(trans('educal.manageusers'))}}
-                @endif
-            </label>
-          </div>
-          <div class="checkbox">
-            <label>
-                @if(isset($group->permissions['event']))
-                <input type="checkbox" name="permissions[event]" checked> {{ucfirst(trans('educal.manageevents'))}}
-                @else
-                <input type="checkbox" name="permissions[event]"> {{ucfirst(trans('educal.manageevents'))}}
-                @endif
-            </label>
-          </div>
+            <label class="alert-warning">{{ucfirst(trans('educal.permissionsunchangeable'))}}</label>
         </div>
       </div>
-
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default btn-educal-primary"><i class="fa fa-save"></i> {{ucfirst(trans('educal.savechanges'))}}</button>
-        </div>
-      </div>
+      @endif
       {{ Form::close(), PHP_EOL }}
     </div>
   </div>
