@@ -247,8 +247,8 @@ function calculateRepeats() {
 
     if (startDate.isValid() && startDate.isBefore(endDate) && type) {
       $('#nr_repeat').removeAttr('value');
-      var i = 1;
-      while (startDate.isBefore(moment(endDate))) {
+      var i = 0;
+      while (startDate.isBefore(moment(endDate).add(23, 'hours'))) {
         startDate = startDate.add(type, freq);
         i++;
       }
