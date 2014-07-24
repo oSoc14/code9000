@@ -45,6 +45,8 @@
                 <p class="modal-title">{{ucfirst(trans('educal.eventdetails'))}}</p>
             </div>
             <div class="modal-body">
+
+                <span><b>Group: </b></span><span id="groupName"></span>
                 <h1 id="eventTitle"></h1>
                 <p id="eventDescription" class="lead"></p>
                 <p><strong>{{ucfirst(trans('educal.starts'))}}:</strong> <span id="eventStart"></span></p>

@@ -21,7 +21,6 @@ $(document).ready(function () {
       dataType: "json",
       contentType: "application/json",
       success: function (data) {
-        console.log(data);
         parseEvents(data);
         $('#preloader').hide();
         $('#addEvent').show();
@@ -35,6 +34,7 @@ $(document).ready(function () {
 
   // Parse the events gotten from the database and push them to global variable
   function parseEvents(events) {
+    console.log(events);
     $.each(events, function (index, value) {
       if (value['repeat_type']) {
         for (i = 0; i < value['nr_repeat']; i++) {
@@ -46,6 +46,7 @@ $(document).ready(function () {
           newItem['id'] = value['id'];
           newItem['description'] = value['description'];
           newItem['allDay'] = (value['allday'] == 1 ? true : false);
+          newItem['groupName'] = value['group']['name'].replace(value['group']['school']['short']+'_','');
           _events.push(newItem);
         }
       } else {
@@ -57,6 +58,7 @@ $(document).ready(function () {
         newItem['id'] = value['id'];
         newItem['description'] = value['description'];
         newItem['allDay'] = (value['allday'] == 1 ? true : false);
+        newItem['groupName'] = value['group']['name'].replace(value['group']['school']['short']+'_','');
         _events.push(newItem);
       }
     });
@@ -99,6 +101,7 @@ $(document).ready(function () {
 
   // Render the calendar and all events on it
   function renderEvents() {
+    console.log(_events);
     // Full calendar plugin
     $('#calendar').fullCalendar({
       header: {
@@ -136,6 +139,7 @@ $(document).ready(function () {
         } else {
           $('#eventEnds').hide();
         }
+        $('#groupName').text(calEvent.groupName);
         $('#editEvent').attr('href', 'calendar/event/edit/' + calEvent.id);
         $('#icalEvent').attr('href', 'export/appointment/find/' + calEvent.id);
         $('#deleteEvent').attr('data-href', 'calendar/event/delete/' + calEvent.id);
