@@ -237,14 +237,19 @@ jQuery(function () {
  * Calculates the amount of times an event
  */
 function calculateRepeats() {
+  // Get values from input fields
   var freq = $('#repeat_freq').val();
   var endDate = moment($('#datetimepicker3').val(), 'YYYY/MM/DD');
 
+  // Check if we have to calculate the repeat count
   if (freq > 0 && endDate.isValid() && $('#repeat').prop('checked')) {
+
+    // Get values from input fields
     var type = $('#repeat_type').val();
     var startDate = $('#datetimepicker1').val();
     startDate = moment(startDate, 'YYYY/MM/DD');
 
+    // Calculate repeat count
     if (startDate.isValid() && startDate.isBefore(endDate) && type) {
       $('#nr_repeat').removeAttr('value');
       var i = 0;
@@ -252,8 +257,12 @@ function calculateRepeats() {
         startDate = startDate.add(type, freq);
         i++;
       }
+
+      // Put the repeat count in a hidden field
       $('#nr_repeat').val(i);
+
     } else {
+      // If we don't have to calculate the repeat count, reset the hidden field
       $('#nr_repeat').removeAttr('value');
     }
 

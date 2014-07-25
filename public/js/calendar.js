@@ -21,8 +21,11 @@ $(document).ready(function () {
       dataType: "json",
       contentType: "application/json",
       success: function (data) {
+        // Parse data
         parseEvents(data);
+        // Hide preloader after events have been loaded
         $('#preloader').hide();
+        // Show add Event button
         $('#addEvent').show();
         getCalendarView();
       },
@@ -35,29 +38,53 @@ $(document).ready(function () {
   // Parse the events gotten from the database and push them to global variable
   function parseEvents(events) {
     $.each(events, function (index, value) {
+
+      // If the event is recurring, we have to loop it
       if (value['repeat_type']) {
+
         for (i = 0; i < value['nr_repeat']; i++) {
+
+          // Create a new Item object, which will be added to the _events global variable
           var newItem = {};
           newItem['title'] = value['title'];
+
+          // Calculate dates
           newItem['start'] = moment(value['start_date']).add(value['repeat_type'], i * value['repeat_freq']);
-          if (moment(value['end_date']).isValid())
+
+          if (moment(value['end_date']).isValid()) {
             newItem['end'] = moment(value['end_date']).add(value['repeat_type'], i * value['repeat_freq']);
+          }
+
           newItem['id'] = value['id'];
           newItem['description'] = value['description'];
           newItem['allDay'] = (value['allday'] == 1 ? true : false);
+
+          // Find group name
           newItem['groupName'] = value['group']['name'].replace(value['group']['school']['short']+'_','');
+
+          // Add event to _events variable
           _events.push(newItem);
         }
       } else {
+        // If the event is non-recurring, just add 1 newItem object to the _events variable
         var newItem = {};
         newItem['title'] = value['title'];
+
+        // Make date objects with momentjs
         newItem['start'] = moment(value['start_date']);
-        if (moment(value['end_date']).isValid())
+
+        if (moment(value['end_date']).isValid()) {
           newItem['end'] = moment(value['end_date']);
+        }
+
         newItem['id'] = value['id'];
         newItem['description'] = value['description'];
         newItem['allDay'] = (value['allday'] == 1 ? true : false);
+
+        // Find group name
         newItem['groupName'] = value['group']['name'].replace(value['group']['school']['short']+'_','');
+
+        // Add event to _events variable
         _events.push(newItem);
       }
     });
@@ -83,7 +110,7 @@ $(document).ready(function () {
     return today;
   }
 
-  // Deside the correct view depending on the window width.
+  // Decide the correct view depending on the window width.
   function getCalendarView() {
     if ($(window).width() < 850) {
       $('#calendar').fullCalendar('changeView', 'agendaDay');
@@ -121,15 +148,21 @@ $(document).ready(function () {
       },
       // When clicking on a event show the detail modal.
       eventClick: function (calEvent, jsEvent, view) {
+
+        // Add the correct values to the corresponding fields in the eventDetail modal
         $(this).attr('data-toggle', 'modal');
         $(this).attr('data-target', '#eventModal');
-        // calEvent.description
+
+        // CalEvent description
         $('#eventTitle').text(calEvent.title);
         $('#eventDescription').text(calEvent.description);
-        if (calEvent.allDay)
+
+        if (calEvent.allDay) {
           $('#eventStart').text((calEvent.start).format('YYYY/MM/DD') + ' (all day)');
-        else
+        } else {
           $('#eventStart').text((calEvent.start).format('YYYY/MM/DD HH:mm'));
+        }
+
         // If end-date is specified, show the part of the modal, otherwise hide it.
         if (calEvent.end) {
           $('#eventEnd').text((calEvent.end).format('YYYY/MM/DD HH:mm'));
@@ -137,13 +170,16 @@ $(document).ready(function () {
         } else {
           $('#eventEnds').hide();
         }
+
         $('#groupName').text(calEvent.groupName);
+
+        // Fix links
         $('#editEvent').attr('href', 'calendar/event/edit/' + calEvent.id);
         $('#icalEvent').attr('href', 'export/appointment/find/' + calEvent.id);
         $('#deleteEvent').attr('data-href', 'calendar/event/delete/' + calEvent.id);
       },
       loading: function (bool) {
-        //$('#loading').toggle(bool);
+
       }
     });
   }
