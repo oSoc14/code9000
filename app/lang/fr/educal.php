@@ -48,6 +48,7 @@ return array(
     'groups' => 'groupes',
     'group' => 'groupe',
     'about' => 'info',
+    'help' => 'aide',
     'language' => 'langue',
     'settings' => 'réglages',
     'logout' => 'déconnexion',

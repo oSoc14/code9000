@@ -26,6 +26,11 @@ Route::get('about', ['as' => 'about', function() {
     return View::make('about');
 }]);
 
+// Info page
+Route::get('help', ['as' => 'help', function() {
+  return View::make('help');
+}]);
+
 Route::group(['prefix' => 'school'], function () {
     // Create a new school
     Route::post('/register', [

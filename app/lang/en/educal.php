@@ -49,6 +49,7 @@ return array(
     'groups' => 'groups',
     'group' => 'group',
     'about' => 'about',
+    'help' => 'help',
     'language' => 'language',
     'settings' => 'settings',
     'logout' => 'logout',

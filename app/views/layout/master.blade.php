@@ -113,18 +113,26 @@
         @endif
         <div class="bottom-options">
           <li class="panel-heading">
+            <a href="{{ route('user.edit') }}">
+              <p class="panel-title">
+                <i class="fa fa-cogs fa-lg"></i>
+                {{ucfirst(trans('educal.settings'))}}
+              </p>
+            </a>
+          </li>
+          <li class="panel-heading">
             <a href="{{ route('about') }}">
               <p class="panel-title">
-                <i class="fa fa-question-circle fa-lg"></i>
+                <i class="fa fa-info-circle fa-lg"></i>
                 {{ucfirst(trans('educal.about'))}}
               </p>
             </a>
           </li>
           <li class="panel-heading">
-            <a href="{{ route('user.edit') }}">
+            <a href="{{ route('help') }}">
               <p class="panel-title">
-                <i class="fa fa-cogs fa-lg"></i>
-                {{ucfirst(trans('educal.settings'))}}
+                <i class="fa fa-question-circle fa-lg"></i>
+                {{ucfirst(trans('educal.help'))}}
               </p>
             </a>
           </li>
