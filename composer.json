@@ -10,7 +10,8 @@
     "eluceo/ical": "*",
     "willdurand/negotiation": "@stable",
     "thujohn/pdf": "dev-master",
-    "msurguy/honeypot": "dev-master"
+    "msurguy/honeypot": "dev-master",
+    "guzzlehttp/guzzle": "~4.0"
   },
   "autoload": {
     "classmap": [

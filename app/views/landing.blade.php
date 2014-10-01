@@ -88,7 +88,7 @@
 
 <!-- Login Modal -->
 @if(Session::has('errorMessage'))
-<div class="modal fade" id="loginModal" tabindex="-1" data-errors="true" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+<div class="modal fade" data-dismiss="modal" id="loginModal" tabindex="-1" data-errors="true" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
   @else
   <div class="modal fade" id="loginModal" tabindex="-1" data-errors="false" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
     @endif
@@ -125,8 +125,82 @@
             </label>
           </div>
           <button type="submit" class="btn btn-default btn-educal-danger">{{ ucfirst(trans('educal.login'))}}</button>
+          <a href="#" data-dismiss="modal" class="btn btn-default" data-toggle="modal" data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
+        </div>
           {{ Form::close(), PHP_EOL }}
         </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  @if(!empty($mail_error))
+  <div class="modal fade" id="requestResetPasswordLink" data-errors="true" tabindex="-1" role="dialog" aria-labelledby="requestResetPasswordLink" aria-hidden="false">
+  @else
+  <div class="modal fade" id="requestResetPasswordLink" data-errors="false" tabindex="-1" role="dialog" aria-labelledby="requestResetPasswordLink" aria-hidden="false">
+  @endif
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Geef uw email adres in</h4>
+        </div>
+        <div class="modal-body">
+          {{Form::open(array('route' => array('user.sendResetLink'), 'class'=>'form form-horizontal')) }}
+
+          @if($errors->count())
+          <div class="alert alert-danger" role="alert">
+            <strong>{{ucfirst(trans('educal.errors'))}}</strong>
+            <ul>
+              Het email adres werd niet gevonden.
+            </ul>
+          </div>
+          @endif
+
+          <div class="form-group">
+            {{Form::label('email-reset', 'email', array('class' => 'col-md-2 control-label'))}}
+            <div class="col-md-8">
+              {{Form::email('email-reset', '' , ['class'=>'form-control'])}}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+              <button type="submit" class="btn btn-default btn-educal-primary"> Verstuur</button>
+            </div>
+          </div>
+          {{ Form::close(), PHP_EOL }}
+          {{ Session::get('errorMessage') }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal for password reset email success -->
+  <div class="modal fade" id="requestResetPasswordLinkSuccess" data-errors="false" tabindex="-1" role="dialog" aria-labelledby="requestResetPasswordLink" aria-hidden="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4>Gelukt!</h4>
+          {{Form::label('email-success', '', ['class' => 'hidden']) }}
+          {{Form::email('email-success', '' , ['class'=>'hidden form-control'])}}
+        </div>
+        <div class="modal-body">
+          <p>Er is een e-mail met verdere instructies verstuurd om je wachtwoord opnieuw in te stellen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Send a link with the request for a new password - Modal -->
+  <div class="modal fade" id="requestResetPasswordLinkSuccess" tabindex="-1" data-errors="false" role="dialog" aria-labelledby="requestResetPasswordLinkSuccess" aria-hidden="false">
+    <div class="modal dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4>Succes</h4>
+      </div>
+      <div class="modal-body">
+        <p>Er werd een mailtje verstuurd met verdere instructies</p>
       </div>
     </div>
   </div>

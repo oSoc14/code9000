@@ -132,13 +132,37 @@ Route::group(['prefix' => 'user'], function () {
         'as'   => 'user.removeUserFromSchool',
         'uses' => 'UserController@removeUserFromSchool'
     ])->where('id', '[0-9]+');
+
+    // GET: Reset the user's password
+    Route::get('/reset/{hash}', [
+        'as' => 'user.resetPassword',
+        'uses' => 'UserController@resetPassword',
+    ])->where([
+        'hash' => '[a-zA-Z0-9]+'
+    ]);
+
+    // POST: send an email with the reset link
+    Route::any('/sendReset', [
+        'as' => 'user.sendResetLink',
+        'uses' => 'UserController@sendResetLink'
+    ]);
+
+    // POST: Reset the user's password
+    // GET: Reset the user's password
+    Route::any('/reset/{hash}', [
+        'as' => 'user.resetPassword',
+        'uses' => 'UserController@resetPassword',
+    ])->where([
+        'hash' => '[a-zA-Z0-9]+'
+    ]);
+
 });
 
 
 /***
  * Manages all the calendar/event routes
  */
-Route::group(['prefix' => 'calendar'], function()
+Route::group(['prefix' => 'calendar'], function ()
 {
     // Home
     Route::get('/', [

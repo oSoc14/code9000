@@ -7,24 +7,47 @@ $(document).ready(function() {
   $('#confirm-delete').on('show.bs.modal', function(e) {
     $(this).find('.btn-educal-danger').attr('href', $(e.relatedTarget).data('href'));
   });
-  
+
   if($("#registerSchoolModal").data("errors") == true){
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('show');
     $('#loginModal').modal('hide');
+    $('#requestResetPasswordLink').modal('hide');
+    $('#requestResetPasswordLinkSuccess').modal('hide');
+  }
+
+  if($("#email-reset").val() != ''){
+      $('#registerUserModal').modal('hide');
+      $('#registerSchoolModal').modal('hide');
+      $('#loginModal').modal('hide');
+      $('#requestResetPasswordLink').modal('show');
+      $('#requestResetPasswordLinkSuccess').model('hide');
+  }
+
+  if($("#email-success").val() != ''){
+      $('#registerUserModal').modal('hide');
+      $('#registerSchoolModal').modal('hide');
+      $('#loginModal').modal('hide');
+      $('#requestResetPasswordLink').modal('hide');
+      $('#requestResetPasswordLinkSuccess').modal('show');
   }
 
   if($("#registerUserModal").data("errors") == true){
     $('#registerUserModal').modal('show');
     $('#registerSchoolModal').modal('hide');
     $('#loginModal').modal('hide');
+    $('#requestResetPasswordLink').modal('hide');
+    $('#requestResetPasswordLinkSuccess').modal('hide');
   }
 
   if($("#loginModal").data("errors") == true){
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('hide');
     $('#loginModal').modal('show');
+    $('#requestResetPasswordLink').modal('hide');
+    $('#requestResetPasswordLinkSuccess').modal('hide');
   }
+
 
   if( $('.form-repeat-container').length != 0){
     // If checkbox is already checked, show repeat-container on page load
