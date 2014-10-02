@@ -21,7 +21,7 @@ $(document).ready(function() {
       $('#registerSchoolModal').modal('hide');
       $('#loginModal').modal('hide');
       $('#requestResetPasswordLink').modal('show');
-      $('#requestResetPasswordLinkSuccess').model('hide');
+      $('#requestResetPasswordLinkSuccess').modal('hide');
   }
 
   if($("#email-success").val() != ''){
