@@ -153,9 +153,12 @@ class UserController extends \BaseController {
 
             $url = URL::route('user.resetPassword', array($resetCode));
 
-            $message = '<p>Klik op de volgende link om uw wachtwoord opnieuw in te stellen: <a href="'. $url . '">' . $url . '</a></p>';
+            $message = '<html><body><p>Klik op de volgende link om uw wachtwoord opnieuw in te stellen: <a href="'. $url . '">' . $url . '</a></p></body></html>';
 
-            $result = mail($email, 'Educal: Reset wachtwoord', $message);
+       	    $headers = "MIME-Version: 1.0\n";
+            $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
+
+            $result = mail($email, 'Educal: Reset wachtwoord', $message, $headers);
 
             \Log::info("Sent an email to $email, with the reset link: " . $url);
 
