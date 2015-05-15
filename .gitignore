@@ -7,6 +7,5 @@ composer.lock
 .DS_Store
 Thumbs.db
 .idea
-/app/config/database.php
 /app/config/local
 .sass-cache
