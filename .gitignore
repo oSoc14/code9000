@@ -8,4 +8,5 @@ composer.lock
 Thumbs.db
 .idea
 /app/config/database.php
+/app/config/local
 .sass-cache
