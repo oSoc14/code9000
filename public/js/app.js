@@ -15,27 +15,53 @@ $(document).ready(function () {
   });
 
 
+
   // Shows the correct modal on the landing page if an error has occured.
-  if ($("#registerSchoolModal").data("errors") == true) {
+
+
+  if($("#registerSchoolModal").data("errors") == true){
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('show');
     $('#loginModal').modal('hide');
+    $('#requestResetPasswordLink').modal('hide');
+    $('#requestResetPasswordLinkSuccess').modal('hide');
+  }
+
+  if($("#email-reset").val() != ''){
+      $('#registerUserModal').modal('hide');
+      $('#registerSchoolModal').modal('hide');
+      $('#loginModal').modal('hide');
+      $('#requestResetPasswordLink').modal('show');
+      $('#requestResetPasswordLinkSuccess').modal('hide');
+  }
+
+  if($("#email-success").val() != ''){
+      $('#registerUserModal').modal('hide');
+      $('#registerSchoolModal').modal('hide');
+      $('#loginModal').modal('hide');
+      $('#requestResetPasswordLink').modal('hide');
+      $('#requestResetPasswordLinkSuccess').modal('show');
   }
 
   if ($("#registerUserModal").data("errors") == true) {
     $('#registerUserModal').modal('show');
     $('#registerSchoolModal').modal('hide');
     $('#loginModal').modal('hide');
+    $('#requestResetPasswordLink').modal('hide');
+    $('#requestResetPasswordLinkSuccess').modal('hide');
   }
 
   if ($("#loginModal").data("errors") == true) {
     $('#registerUserModal').modal('hide');
     $('#registerSchoolModal').modal('hide');
     $('#loginModal').modal('show');
+    $('#requestResetPasswordLink').modal('hide');
+    $('#requestResetPasswordLinkSuccess').modal('hide');
   }
 
+
   // If the checkbox for repeating events is checked at edit/appointment/{id}, show the repeat input fields.
-  if ($('.form-repeat-container').length != 0) {
+  if( $('.form-repeat-container').length != 0){
     // If checkbox is already checked, show repeat-container on page load
     if ($('#repeat').prop('checked')) {
       $('.form-repeat-container').show();
@@ -265,6 +291,5 @@ function calculateRepeats() {
       // If we don't have to calculate the repeat count, reset the hidden field
       $('#nr_repeat').removeAttr('value');
     }
-
   }
 }

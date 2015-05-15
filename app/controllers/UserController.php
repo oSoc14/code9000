@@ -1,11 +1,14 @@
 <?php
 
+
 /**
  * Class UserController
  * This controller handles the CRUD and authentications of users.
  */
-class UserController extends \BaseController
-{
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+class UserController extends \BaseController {
 
     protected $layout = 'layout.master';
 
@@ -20,24 +23,25 @@ class UserController extends \BaseController
         // If user is logged in, get school_id, find respective users
         if (Sentry::check()) {
             // Get info from the logged in user
+
             $user = Sentry::getUser();
 
             // Make an empty users object which will hold all the users from a certain school
             $users = null;
 
-            // Get all schools, and put them in an array with the key-value pair school_id=>school_name
             $schools = School::get();
             $schoolsArray = [];
-            foreach ($schools as $school) {
+
+            foreach ($schools as $school){
                 $schoolsArray[$school->id] = $school->name;
             }
 
-            // Check if user is superAdmin
             if ($user->hasAccess('school')) {
                 $users = User::where('id', '<>', $user->id)->get();
                 $school = null;
 
             } elseif ($user->hasAccess('user')) {
+
                 // If user is no superAdmin, display users based on the logged in user's school
                 $schoolId = $user->school_id;
 
@@ -64,6 +68,129 @@ class UserController extends \BaseController
 
     /**
      * Authenticate users
+     * Reset a user's password, if the user + hash doesn't match, return to the landing page
+     *
+     * @param string $hash The hash of the reset password procedure
+     *
+     * @return Response
+     */
+    public function resetPassword($hash)
+    {
+        $method = \Request::method();
+
+        if ($method == 'GET') {
+            try {
+                // Find the user using the user id
+                $user = User::where('reset_password_code', $hash)->firstOrFail();
+
+                // Check if the reset password code is valid
+                if ($user->checkResetPasswordCode($hash)) {
+
+                    return View::make('user.password')->with(['user' => $user, 'hash' => $hash]);
+                } else {
+                    // The provided password reset code is Invalid
+                    return Redirect::back()->withInput();
+                }
+            } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+                return Redirect::route('landing');
+            } catch (ModelNotFoundException $ex) {
+                return Redirect::route('landing');
+            }
+        } else if ($method == 'POST') {
+
+            $user = User::where('reset_password_code', $hash)->first();
+
+            if (empty($user)) {
+                return Redirect::route('landing');
+            }
+
+            // Set a hasher, this is lost because we use our own user model
+            $user->setHasher(new Cartalyst\Sentry\Hashing\NativeHasher);
+
+            // Check if the reset password code is valid (redundant)
+            if ($user->checkResetPasswordCode($hash)) {
+
+                $post = Input::all();
+                $password = $post['password'];
+                $confirmation = $post['password_confirmation'];
+
+                $validator = Validator::make(
+                    [
+                    'password' => $password,
+                    'password_confirmation' => $confirmation
+                    ],
+                    [
+                    'password' => 'required|min:8|confirmed',
+                    ]
+                );
+
+                if ($validator->fails()) {
+
+                    $validator->getMessageBag()->add('usererror', 'Failed to reset your password.');
+
+                    return Redirect::route('user.resetPassword', array($hash))
+                                ->withInput()
+                                ->withErrors($validator);
+
+                } else {
+
+                    $user->password = $password;
+
+                    $user->save();
+
+                    \Log::info("Successfully reset the password for user with id $user->id.");
+
+                    return Redirect::back()->withInput(['email' => $user->email]);
+                }
+            } else {
+                // The provided password reset code is invalid
+                return Redirect::route('landing');
+            }
+        }
+    }
+
+    /**
+     * Request a mail to be sent with a reset link
+     *
+     * @return boolean
+     */
+    public function sendResetLink()
+    {
+        try {
+
+            $post = Input::all();
+
+            // Check if the user exists
+            $email = $post['email-reset'];
+
+            $user = User::where('email', $email)->firstOrFail();
+
+            $resetCode = $user->getResetPasswordCode();
+
+            $url = URL::route('user.resetPassword', array($resetCode));
+
+            $message = '<html><body><p>Klik op de volgende link om uw wachtwoord opnieuw in te stellen: <a href="'. $url . '">' . $url . '</a></p></body></html>';
+
+       	    $headers = "MIME-Version: 1.0\n";
+            $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
+
+            $result = mail($email, 'Educal: Reset wachtwoord', $message, $headers);
+
+            \Log::info("Sent an email to $email, with the reset link: " . $url);
+
+            return Redirect::route('landing')
+                    ->withInput(['email-success' => 'Er werd een mail gestuurd met verdere instructies.']);
+
+        } catch (ModelNotFoundException $ex) {
+
+            return Redirect::route('landing')
+                ->withInput(['email-reset' => $email])
+                ->withErrors(["message" => "Het email adres werd niet gevonden."]);
+        }
+
+    }
+
+    /**
      * TODO: Custom variable error messages (multiple language support)
      * @return mixed
      */
@@ -79,8 +206,10 @@ class UserController extends \BaseController
             // Authenticate the user
             $user = Sentry::authenticate($credentials, false);
 
-            // If "remember me" is checked, make cookie, else don't make cookie
-            if (Input::get('remember')) {
+
+            // If "remember me" is checked, make cookie, if not, don't make a cookie
+            if(Input::get('remember')) {
+
                 Sentry::loginAndRemember($user);
             } else {
                 Sentry::login($user);
@@ -88,7 +217,9 @@ class UserController extends \BaseController
 
             //Get the users prefered language
             $user = Sentry::getUser();
-            if ($user->lang != null && $user->lang != '') {
+
+
+            if($user->lang != null && $user->lang != ''){
                 Session::put('lang', $user->lang);
             } elseif ($user->school != null) {
                 Session::put('lang', $user->school->lang);
@@ -123,8 +254,9 @@ class UserController extends \BaseController
             $errorMessage = 'User is banned.';
         }
 
-        // If there is an errormessage, return to login page with errorMessage
-        if ($errorMessage) {
+        // If there is an errormessage, return to login page
+        // With errorMessage
+        if($errorMessage) {
             return Redirect::route('landing')
                 ->withInput()
                 ->with('errorMessage', $errorMessage);
