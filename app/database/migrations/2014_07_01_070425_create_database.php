@@ -15,6 +15,7 @@ class CreateDatabase extends Migration {
         //CREATES SCHOOLS TABLE
         Schema::create('schools', function($table)
         {
+            // TODO: Add additional school fields (URL?), remove short and start working with IDs
             $table->increments('id');
             $table->string('name',255);
             $table->string('short',20);
@@ -28,6 +29,8 @@ class CreateDatabase extends Migration {
         //CREATES USERS TABLE
         Schema::create('users', function($table)
         {
+            // TODO: Make permissions an intermediate column, or remove it alltogether and base permissions solely off groups.
+            // TODO: Permissions are at the moment null for all, are they even needed here?
             $table->increments('id');
             $table->string('email');
             $table->string('password');
@@ -70,6 +73,7 @@ class CreateDatabase extends Migration {
             // We'll need to ensure that MySQL uses the InnoDB engine to
             // support the indexes, other engines aren't affected.
             $table->engine = 'InnoDB';
+            // TODO: Change how group names are handled/generated and don't require them to be unique
             $table->unique('name');
         });
 
@@ -82,7 +86,7 @@ class CreateDatabase extends Migration {
             // We'll need to ensure that MySQL uses the InnoDB engine to
             // support the indexes, other engines aren't affected.
             $table->engine = 'InnoDB';
-            $table->primary(array('user_id', 'group_id'));
+            $table->primary(['user_id', 'group_id']);
         });
 
         //CREATE THROTTLE TABLE
@@ -104,6 +108,8 @@ class CreateDatabase extends Migration {
             $table->index('user_id');
         });
 
+        // TODO: Create parent appointments table + reference this table in the appointments table with an optional parameter parent_id
+        // TODO: Repeat type, freq, nr_repeat columns can be removed/adjusted
         //CREATES APPOINTMENTS TABLE
         Schema::create('appointments', function($table)
         {

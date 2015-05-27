@@ -110,6 +110,9 @@ class CalendarController extends \BaseController
      *
      * @return Response
      */
+
+    // TODO: Make this better, get rid of pre-filled form fields, or check the input client side instead of server side
+    // TODO: Add functionality for parent_events for repeating events, also handle these in the Update and Edit methods
     public function store()
     {
         if (Sentry::check()) {

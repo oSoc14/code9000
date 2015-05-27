@@ -58,6 +58,8 @@ class GroupController extends \BaseController
      *
      * @return Response
      */
+
+    // TODO: Add colors/codes to groups
     public function create()
     {
         if (Sentry::check()) {
@@ -110,6 +112,7 @@ class GroupController extends \BaseController
                     $school = $user->school;
                 }
 
+                // TODO: Get rid of this crap
                 // Generate the full groupname (schoolshort_groupshort)
                 $groupFullName = $school->short . '_' . strtolower(e(str_replace(' ','_',Input::get('name'))));
                 $groupFullName = preg_replace('/[^A-Za-z0-9\-_]/', '', $groupFullName);
@@ -219,7 +222,7 @@ class GroupController extends \BaseController
                         array_push($possibleUsers, $su);
                     }
                 }
-
+                // TODO: If users > 10 , do like this, else, get list with checkboxes if possible
                 // Transform array into usable list for dropdownmenu
                 $smartUsers = [];
                 foreach ($possibleUsers as $pus) {

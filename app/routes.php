@@ -22,12 +22,12 @@ Route::get('/', [
 ]);
 
 // About page
-Route::get('about', ['as' => 'about', function() {
+Route::get('about', ['as' => 'about', 'before' => 'auth', function() {
     return View::make('about');
 }]);
 
 // Info page
-Route::get('help', ['as' => 'help', function() {
+Route::get('help', ['as' => 'help', 'before' => 'auth', function() {
   return View::make('help');
 }]);
 
@@ -41,31 +41,36 @@ Route::group(['prefix' => 'school'], function () {
     // List all schools
     Route::get('/', [
         'as'   => 'school.index',
-        'uses' => 'SchoolController@index'
+        'uses' => 'SchoolController@index',
+        'before' => 'admin'
     ]);
 
     // Show details of a certain school
     Route::get('/{id}', [
         'as'   => 'school.detail',
-        'uses' => 'SchoolController@show'
+        'uses' => 'SchoolController@show',
+        'before' => 'admin'
     ])->where('id', '[0-9]+');
 
     // Show the view to edit a school
     Route::get('/edit/{id}', [
         'as'   => 'school.edit',
-        'uses' => 'SchoolController@edit'
+        'uses' => 'SchoolController@edit',
+        'before' => 'admin'
     ])->where('id', '[0-9]+');
 
     // Update a school
     Route::post('/edit/{id}', [
         'as'   => 'school.update',
-        'uses' => 'SchoolController@update'
+        'uses' => 'SchoolController@update',
+        'before' => 'admin'
     ])->where('id', '[0-9]+');
 
     // Delete a school
     Route::get('/delete/{id}', [
         'as'   => 'school.delete',
-        'uses' => 'SchoolController@destroy'
+        'uses' => 'SchoolController@destroy',
+        'before' => 'admin'
     ])->where('id', '[0-9]+');
 });
 

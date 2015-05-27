@@ -9,6 +9,8 @@ $(document).ready(function () {
     getCalendarView();
   });
 
+    // TODO: Add functionality to be able to filter events by group
+
   // Load events out of the database via the API
   var _events = [];
   getEvents();
@@ -21,6 +23,32 @@ $(document).ready(function () {
       dataType: "json",
       contentType: "application/json",
       success: function (data) {
+
+          /* console.log(data);
+          result: data
+          0: Object
+          allday: 0
+          created_at: "2014-07-24 07:26:54"
+          description: "soemthing"
+          end_date: "2014-07-24 10:45:00"
+          group: Object
+              created_at: "2014-07-23 13:09:41"
+              id: 2
+              name: "testschool_global"
+              permissions: Object
+              school: Object
+              school_id: 1
+              updated_at: "2014-07-23 13:09:41"
+              __proto__: Object
+          group_id: 2
+          id: 2
+          nr_repeat: 5
+          repeat_freq: 1
+          repeat_type: "w"
+          start_date: "2014-07-24 09:26:00"
+          title: "vdvdvd"
+          updated_at: "2014-07-24 11:21:25"
+          __proto__: Object */
         // Parse data
         parseEvents(data);
         // Hide preloader after events have been loaded
@@ -126,6 +154,8 @@ $(document).ready(function () {
   }
 
   // Render the calendar and all events on it
+    // TODO: Make the calendar rendering better (group events on same day and stuff IF POSSIBLE)
+    // TODO: Group events together: see http://stackoverflow.com/questions/5637248/jquery-full-calendar-how-to-change-view/5741423#5741423
   function renderEvents() {
     // Full calendar plugin
     $('#calendar').fullCalendar({
@@ -179,6 +209,18 @@ $(document).ready(function () {
         $('#deleteEvent').attr('data-href', 'calendar/event/delete/' + calEvent.id);
       },
       loading: function (bool) {
+
+      },
+      dayClick: function(date, jsEvent, view) {
+
+        alert('Clicked on: ' + date.format());
+
+        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+        alert('Current view: ' + view.name);
+
+        // change the day's background color just for fun
+        $(this).css('background-color', 'red');
 
       }
     });

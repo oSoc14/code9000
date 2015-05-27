@@ -94,7 +94,7 @@
             <div class="col-sm-12 col-md-6">
                 <div class='input-group date'>
                     {{Form::text('recurrence_end', null , ['class'=>'form-control','id'=>'datetimepicker3'])}}
-                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
         </div>

@@ -7,6 +7,8 @@
 class SchoolController extends \BaseController
 {
 
+    // TODO: Allow school to update their own information
+
     protected $layout = 'layout.master';
 
     /**
@@ -41,6 +43,8 @@ class SchoolController extends \BaseController
      *
      * @return Response
      */
+
+    // TODO: Get rid of short (reoccuring)
     public function store()
     {
         // If user is logged in, redirect to calendar index
@@ -103,13 +107,13 @@ class SchoolController extends \BaseController
                 $group = Sentry::createGroup(
                     [
                         'name'        => $short . '_admin',
-                        'permissions' => array(
+                        'permissions' => [
                             'school' => 0,
                             'admin'  => 1,
                             'user'   => 1,
                             'group'  => 1,
                             'event'  => 1,
-                        ),
+                        ],
                         'school_id'   => $school->id,
                     ]
                 );
@@ -179,7 +183,7 @@ class SchoolController extends \BaseController
             $user = Sentry::getUser();
 
             // Check if user is superAdmin (only they can edit schools)
-            if ($user->hasAccess(array('school'))) {
+            if ($user->hasAccess(['school'])) {
                 $school                = School::find($id);
                 $this->layout->content = View::make('school.edit')->with('school', $school);
 
@@ -272,6 +276,8 @@ class SchoolController extends \BaseController
      * @param  int $id
      * @return Response
      */
+
+    // TODO: Authenticate in route?
     public function destroy($id)
     {
         if (Sentry::check()) {

@@ -22,6 +22,7 @@ class IcalCalendarController extends \BaseController
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
 
+        // TODO: Change group handling, base it off group and school ID
         // Load appointments based on group
         $selGroup = Group::where('name', $school . '_' . $group)->first();
         $selGroup->load('appointments');
@@ -30,6 +31,7 @@ class IcalCalendarController extends \BaseController
         $dsta = new DateTime();
         $dend = new DateTime();
 
+        // TODO: Make this better (1 year static range isn't good)
         // In this case we set the limit to 1 year in the past until 1 year in the future
         $dsta->sub(new DateInterval("P1Y"));
         $dend->add(new DateInterval("P1Y"));

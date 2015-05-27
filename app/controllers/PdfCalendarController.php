@@ -19,11 +19,14 @@ class PdfCalendarController extends \BaseController
      * @return pdf downloadable file
      *
      */
+
+    // TODO: Decide if we will keep using a PDF export, or instead just make a printer friendly view
     public function index($school, $group)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
 
+        // TODO: Change group handling, base it off group and school ID
         // Load appointments based on group
         $selGroup = Group::where('name', $school . '_' . $group)->first();
         $selGroup->load('appointments');
@@ -36,9 +39,12 @@ class PdfCalendarController extends \BaseController
         $dsta = new DateTime();
         $dend = new DateTime();
 
+        // TODO: Make this better (1 month static range isn't good)
         // In this case we set the limit to 1 month in the past until 1 month in the future
         $dsta->sub(new DateInterval("P1M"));
         $dend->add(new DateInterval("P1M"));
+
+
 
         // Add global appointments, unless only global appointments are requested
         if ($group != 'global') {
