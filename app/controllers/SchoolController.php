@@ -82,18 +82,18 @@ class SchoolController extends \BaseController
                 // If there are no errors, prepare a new School object to be inserted in the database
                 $school       = new School();
                 $school->name = e(Input::get("sname"));
-                $short        = e(strtolower(Input::get("sname")));
+               // $short        = e(strtolower(Input::get("sname")));
 
                 // Generate the "short"-name for a school (which will be used to identify groups)
-                $short         = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
-                $school->short = $short;
+               // $short         = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
+               // $school->short = $short;
                 $school->city  = e(Input::get("city"));
                 $school->save();
 
                 // Create the default groups "global" and "admin"
                 Sentry::createGroup(
                     [
-                        'name'        => $short . '_global',
+                        'name'        => $school->name . '__' . $school->id,
                         'permissions' => [
                             'school' => 0,
                             'user'   => 0,
@@ -106,7 +106,7 @@ class SchoolController extends \BaseController
 
                 $group = Sentry::createGroup(
                     [
-                        'name'        => $short . '_admin',
+                        'name'        => 'Administratie__' . $school->id,
                         'permissions' => [
                             'school' => 0,
                             'admin'  => 1,
@@ -210,52 +210,27 @@ class SchoolController extends \BaseController
 
             // Check if user is superAdmin (only they can update schools)
             if ($user->hasAccess('school')) {
-
                 $school = School::find($id);
 
-                // If the school is renamed, check if it's unique
-                if (Input::get('name') != $school->name) {
-                    $validator = Validator::make(
-                        [
-                            'name' => Input::get('name'),
-                            'city' => Input::get('city'),
-                        ],
-                        [
-                            'name' => 'required|unique:schools,name',
-                            'city' => 'required',
-                        ]
-                    );
+                $validator = Validator::make(
+                    [
+                        'name'                  => Input::get('sname'),
+                        'city'                  => Input::get('city'),
+                    ],
+                    [
+                        'name'     => 'required',
+                        'city'     => 'required',
+                    ]
+                );
 
-                    // Check if validation fails, if so, redirect to previous page with errors
-                    if ($validator->fails()) {
-                        return Redirect::route('school.edit', $id)
-                            ->withInput()
-                            ->withErrors($validator);
-
-                    } else {
-                        // If there are no errors, prepare the school to be updated and saved
-                        // Generate new short for the school, also update all the groups in that school with the new short
-                        $short = e(strtolower(Input::get("name")));
-                        $short = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
-
-                        // If the schoolShort is changed, change all the groups linked to that school their names as well
-                        // to correspond the new schoolShort
-                        foreach ($school->groups as $group) {
-                            $group->name = str_replace($school->short, $short, $group->name);
-                            $group->save();
-                        }
-
-                        $school->short = $short;
-                        $school->name  = e(Input::get("name"));
-                        $school->city  = e(Input::get("city"));
-
-                        // Update school with new information
-                        $school->save();
-
-                        return Redirect::route('school.index');
-                    }
+                // If validator fails, go back and show errors
+                if ($validator->fails()) {
+                    return Redirect::route('school.edit', $id)
+                        ->withInput()
+                        ->withErrors($validator);
                 } else {
                     // If the school name stays the same, just update the other fields
+                    $school->name = e(Input::get("name"));
                     $school->city = e(Input::get("city"));
                     $school->save();
 

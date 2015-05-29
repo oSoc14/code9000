@@ -36,24 +36,24 @@
         <tbody>
         <?php $i=0; ?>
         @foreach($groups as $group)
-        <?php $i++ ?>
+        <?php $i++; ?>
         <tr>
           <td class="hidden-xs">{{ $i }}</td>
-          <td><a href="{{route('group.edit',$group->id)}}">{{ $group->name }}</a></td>
+          <td><a href="{{route('group.edit',$group->id)}}">{{ str_replace('__' . $group->school->id, '', $group->name) }}</a></td>
           @if($group->school)
           <td>
-              <input type="text" class="form-control linkToText linkToText_{{$group->id}}" value="{{ URL::to('/') }}/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" />
+              <input type="text" class="form-control linkToText linkToText_{{$group->id}}" value="{{ URL::to('/') }}/export/{{$group->id}}/{{$group->school->name}}/{{str_replace('__' . $group->school->id, '', $group->name)}}" />
           </td>
           <td>
-            <a href="#" data-group-id="{{$group->id}}" data-link="{{ URL::to('/') }}/export/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to iCal link" class="linkTo"><i class="fa fa-calendar fa-2x"></i></a>
-            <a href="#" data-group-id="{{$group->id}}" data-link="{{ URL::to('/') }}/export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Switch to PDF link" class="linkTo"><i class="fa fa-file-pdf-o fa-2x"></i></a>
+            <a href="#" data-group-id="{{$group->id}}" data-link="{{ URL::to('/') }}/export/{{$group->id}}/{{$group->school->name}}/{{str_replace('__' . $group->school->id, '', $group->name)}}" title="Switch to iCal link" class="linkTo"><i class="fa fa-calendar fa-2x"></i></a>
+            <a href="#" data-group-id="{{$group->id}}" data-link="{{ URL::to('/') }}/export/pdf/{{$group->id}}/{{$group->school->name}}/{{str_replace('__' . $group->school->id, '', $group->name)}}" title="Switch to PDF link" class="linkTo"><i class="fa fa-file-pdf-o fa-2x"></i></a>
           </td>
           @else
           <td>{{ucfirst(trans('educal.noexport'))}}</td>
           <td></td>
           @endif
           <td>
-            <a href="export/pdf/{{$group->school->short}}/{{str_replace($group->school->short."_","",$group->name)}}" title="Download Pdf">
+            <a href="export/pdf/{{$group->id}}/{{$group->school->name}}/{{str_replace('__' . $group->school->id, '', $group->name)}}" title="Download Pdf">
               <span class="fa-stack">
                 <i class="fa fa-file fa-stack-2x"></i>
                 <i class="fa fa-download fa-inverse fa-stack-1x"></i>

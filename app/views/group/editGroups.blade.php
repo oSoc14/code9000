@@ -28,9 +28,9 @@
           <label for="user" class="col-md-2 control-label">{{ucfirst(trans('educal.groupname'))}}</label>
           <div class="col-md-8">
           <?php
-           $grp = str_replace($group->school->short.'_','',$group->name);
+              $grp = str_replace('__' . $group->school->id, '', $group->name);
             ?>
-          @if($grp == 'global' || $grp == 'admin')
+          @if($grp == $group->school->name || $grp == 'Administratie')
           <label class="alert-warning">{{ucfirst(trans('educal.nameunchangeable'))}}</label>
           {{Form::text('name', $grp, ['class'=>'form-control', 'disabled'=>'disabled'])}}
           @else

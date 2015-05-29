@@ -266,10 +266,10 @@ Route::group(['prefix' => 'group'], function()
 Route::group(['prefix' => 'export'], function()
 {
     // iCal Export route for a certain class
-    Route::get('/{school}/{class}', [
+    Route::get('/{id}/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'IcalCalendarController@index'
-    ])->where(['school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
+    ])->where(['id' => '[0-9]+', 'school' => '[0-9A-Za-z_\- ]+', 'class' => '[0-9A-Za-z_\- ]+']);
 
     // iCal Export route for a single appointment
     Route::get('/appointment/find/{id}', [
@@ -278,10 +278,10 @@ Route::group(['prefix' => 'export'], function()
     ])->where('id', '[0-9]+');
 
     // PDF Export route for a certain class
-    Route::get('/pdf/{school}/{class}', [
+    Route::get('/pdf/{id}/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'PdfCalendarController@index'
-    ])->where(['school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
+    ])->where(['id' => '[0-9]+', 'school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
 
     // PDF Export route for a single appointment
     Route::get('/appointment/pdf/{id}', [

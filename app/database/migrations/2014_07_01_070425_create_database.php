@@ -18,12 +18,13 @@ class CreateDatabase extends Migration {
             // TODO: Add additional school fields (URL?), remove short and start working with IDs
             $table->increments('id');
             $table->string('name',255);
-            $table->string('short',20);
+            //$table->string('short',20);
+            $table->tinyInteger('opening');
             $table->string('city');
             $table->string('lang',5)->default('nl');
             $table->timestamps();
             $table->softDeletes();
-            $table->unique('short');
+            //$table->unique('short');
         });
 
         //CREATES USERS TABLE
@@ -73,8 +74,7 @@ class CreateDatabase extends Migration {
             // We'll need to ensure that MySQL uses the InnoDB engine to
             // support the indexes, other engines aren't affected.
             $table->engine = 'InnoDB';
-            // TODO: Change how group names are handled/generated and don't require them to be unique
-            $table->unique('name');
+            //$table->unique('name');
         });
 
         //CREATE USER GROUPS PIVOT TABLE
@@ -111,11 +111,32 @@ class CreateDatabase extends Migration {
         // TODO: Create parent appointments table + reference this table in the appointments table with an optional parameter parent_id
         // TODO: Repeat type, freq, nr_repeat columns can be removed/adjusted
         //CREATES APPOINTMENTS TABLE
+        Schema::create('parent_appointments', function($table)
+        {
+            $table->increments('id');
+            $table->string('title');
+            $table->text('description');
+            $table->string('location');
+            $table->boolean('allday');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date')->nullable();
+            // Repeat_type = day=>'d', week=>'w', month=>'M', year=>'y'
+
+            $table->timestamps();
+
+            //Defines the school a user belongs to
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+        });
+
+        // TODO: Uncomment location and parent_id for when it's implemented
+        //CREATES APPOINTMENTS TABLE
         Schema::create('appointments', function($table)
         {
             $table->increments('id');
             $table->string('title');
             $table->text('description');
+            //$table->string('location');
             $table->boolean('allday');
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
@@ -125,13 +146,14 @@ class CreateDatabase extends Migration {
             $table->integer('repeat_freq')->nullable();
             // Nr_repeat = number of times this event will be repeated
             $table->integer('nr_repeat')->nullable();
-
-
             $table->timestamps();
 
-            //Defines the school a user belongs to
+            //Defines the group an appointment belongs to
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            //Defines the parent event
+            //$table->integer('parent_id')->unsigned()->nullable();
+            //$table->foreign('parent_id')->references('id')->on('parent_appointments')->onDelete('cascade');
         });
 
 	}
@@ -143,12 +165,13 @@ class CreateDatabase extends Migration {
 	 */
 	public function down()
 	{
-        Schema::dropIfExists('schools');
+        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('parent_appointments');
+        Schema::dropIfExists('users_groups');
         Schema::dropIfExists('users');
         Schema::dropIfExists('groups');
-        Schema::dropIfExists('users_groups');
+        Schema::dropIfExists('schools');
         Schema::dropIfExists('throttle');
-        Schema::dropIfExists('appointments');
 	}
 
 }

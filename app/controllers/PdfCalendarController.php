@@ -14,6 +14,7 @@ class PdfCalendarController extends \BaseController
      * Additionally add the appointments from the "global" group
      * Process these appointments and render them to an .pdf file which will be returned for download
      *
+     * @param  string $id
      * @param  string $school
      * @param  string $group
      * @return pdf downloadable file
@@ -21,19 +22,18 @@ class PdfCalendarController extends \BaseController
      */
 
     // TODO: Decide if we will keep using a PDF export, or instead just make a printer friendly view
-    public function index($school, $group)
+    public function index($id, $school, $group)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
 
-        // TODO: Change group handling, base it off group and school ID
         // Load appointments based on group
-        $selGroup = Group::where('name', $school . '_' . $group)->first();
-        $selGroup->load('appointments');
+        $selGroup = Group::where('id', $id)->first();
+        $selGroup->load('appointments', 'school');
+        $grp = str_replace('__' . $selGroup->school->id, '', $selGroup->name);
 
         // Get the schoolname corresponding to the group (to be used in the PDF header)
-        $schoolName = $selGroup->load('school');
-        $schoolName = $schoolName->school->name;
+        $schoolName = $selGroup->school->name;
 
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
@@ -47,8 +47,8 @@ class PdfCalendarController extends \BaseController
 
 
         // Add global appointments, unless only global appointments are requested
-        if ($group != 'global') {
-            $globalGroup = Group::where('name', $school . '_global')->first();
+        if ($grp != $selGroup->school->name) {
+            $globalGroup = Group::where('name', $selGroup->school->name . '__' . $selGroup->school->id)->first();
             $globalGroup->load('appointments');
 
             foreach ($globalGroup->appointments as $appointment) {
@@ -71,7 +71,7 @@ class PdfCalendarController extends \BaseController
         }
 
         // Compose the PDF with the help of the Dompdf plugin
-        $calendar = self::composePdf($appointments, $schoolName, $group);
+        $calendar = self::composePdf($appointments, $schoolName, $selGroup->name);
 
         return PDF::load($calendar, 'A4', 'landscape')->download($schoolName . ' - calendar');
     }
