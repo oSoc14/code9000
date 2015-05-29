@@ -88,7 +88,7 @@ $(document).ready(function () {
           newItem['allDay'] = (value['allday'] == 1 ? true : false);
 
           // Find group name
-          newItem['groupName'] = value['group']['name'].replace(value['group']['school']['short']+'_','');
+          newItem['groupName'] = value['group']['name'].replace('__' + value['group']['school']['id'],'');
 
           // Add event to _events variable
           _events.push(newItem);
@@ -110,7 +110,7 @@ $(document).ready(function () {
         newItem['allDay'] = (value['allday'] == 1 ? true : false);
 
         // Find group name
-        newItem['groupName'] = value['group']['name'].replace(value['group']['school']['short']+'_','');
+        newItem['groupName'] = value['group']['name'].replace('__' + value['group']['school']['id'],'');
 
         // Add event to _events variable
         _events.push(newItem);

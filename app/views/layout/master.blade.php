@@ -70,7 +70,7 @@
     <!-- Navigation sidebar -->
     <div id="sidebar" class="sidebar-wrapper">
       <div class="logo-container">
-        <h1 id="navbar-logo-sidebar"><span class="hidden">EduCal</span></h1>
+        <a href="{{ route('calendar.index') }}"><h1 id="navbar-logo-sidebar"><span class="hidden">EduCal</span></h1></a>
       </div>
       <ul class="panel-group accordions" id="accordion">
         <li class="panel-heading">
