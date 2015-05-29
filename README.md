@@ -33,6 +33,7 @@ This project has been programmed during the open Summer of code 2014 and worked 
 
 ## Credit
 Author: Sander Meert
+
 Past Authors: Bjorn Van Acker, Nick Denys
 
 Special thanks to the City of Ghent, Digipolis, Jan Vansteelandt and Pieter Colpaert.
