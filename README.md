@@ -29,7 +29,7 @@ Finally run the migrations to create your database.
 ## What is this?
 Schools can have a lot of activities throughout the year such as commitee meetings, open days for the public, kid's parties, etc. This can be hard to keep track of for parents. EduCal centralizes and creates an easy-to-use link to import the school's agenda.
 
-This project has been programmed during the open Summer of code 2014.
+This project has been programmed during the open Summer of code 2014 and worked further upon in 2015.
 
 ## Credit
 Author: Sander Meert
