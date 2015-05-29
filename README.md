@@ -32,7 +32,7 @@ Schools can have a lot of activities throughout the year such as commitee meetin
 This project has been programmed during the open Summer of code 2014.
 
 ## Credit
-Authors: Bjorn Van Acker, Sander Meert, Nick Denys<br>
-Copyright 2014 OKFN Belgium
+Author: Sander Meert
+Past Authors: Bjorn Van Acker, Nick Denys
 
-Special thanks to the City of Ghent and Digipolis.
+Special thanks to the City of Ghent, Digipolis, Jan Vansteelandt and Pieter Colpaert.

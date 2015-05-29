@@ -23,6 +23,7 @@ return array(
     'startdate' => 'start date',
     'enddate' => 'end date',
     'date' => 'date',
+    'loggedinas' => 'Currently logged in as: ',
 
     'delete' => 'delete',
     'cancel' => 'cancel',
@@ -92,6 +93,8 @@ return array(
     'name' => 'name',
     'firstname' => 'first name',
     'surname' => 'surname',
+    'schoolinfo' => 'School Information',
+    'personalinfo' => 'Personal Information',
 
 
     'editgroup' => 'edit group',

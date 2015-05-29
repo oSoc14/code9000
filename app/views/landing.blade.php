@@ -300,7 +300,7 @@
               'route' => 'school.store',
               'data-ajax' => 'true',
               ]), PHP_EOL }}
-                  <h3>Persoonlijke Informatie</h3>
+                  <h3>{{ucfirst(trans('educal.personalinfo'))}}</h3>
                   <hr>
               <div class="form-group">
                   {{Form::label('per-name', ucfirst(trans('educal.name')))}}
@@ -323,7 +323,7 @@
                   <input type="password" class="form-control" id="school-password-confirmation" name="password_confirmation">
               </div>
 
-                  <h3>School Informatie</h3>
+                  <h3>{{ucfirst(trans('educal.schoolinfo'))}}</h3>
                   <hr>
               <div class="form-group">
                 {{Form::label('sname', ucfirst(trans('educal.name')))}}
@@ -348,7 +348,7 @@
       </div>
 
     </div>
-
+  </div>
 
     {{ HTML::script("js/jquery-1.11.1.min.js") }}
     {{ HTML::script("js/bootstrap.min.js") }}

@@ -157,7 +157,7 @@
       </ul>
       @if(Sentry::check())
       <div id="userinfo-wrapper">
-        <strong>Currently logged in as:</strong><br>
+        <strong>{{ucfirst(trans('educal.loggedinas'))}}</strong><br>
         @if(Sentry::getUser()->first_name != "")
         {{Sentry::getUser()->first_name}} {{Sentry::getUser()->last_name}}<br>
         @else

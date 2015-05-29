@@ -23,6 +23,7 @@ return array(
     'startdate' => 'startdatum',
     'enddate' => 'einddatum',
     'date' => 'datum',
+    'loggedinas' => 'Aangemeld als: ',
 
     'delete' => 'verwijderen',
     'cancel' => 'annuleren',
@@ -91,6 +92,8 @@ return array(
     'name' => 'naam',
     'firstname' => 'voornaam',
     'surname' => 'familienaam',
+    'schoolinfo' => 'School Informatie',
+    'personalinfo' => 'Persoonlijke Informatie',
 
 
     'editgroup' => 'groep aanpassen',
