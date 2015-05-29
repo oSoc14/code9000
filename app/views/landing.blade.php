@@ -300,10 +300,31 @@
               'route' => 'school.store',
               'data-ajax' => 'true',
               ]), PHP_EOL }}
+                  <h3>Persoonlijke Informatie</h3>
+                  <hr>
+              <div class="form-group">
+                  {{Form::label('per-name', ucfirst(trans('educal.name')))}}
+                  {{Form::text('per-name', null , ['class'=>'form-control'])}}
+              </div>
+              <div class="form-group">
+                  {{Form::label('per-surname', ucfirst(trans('educal.surname')))}}
+                  {{Form::text('per-surname', null , ['class'=>'form-control'])}}
+              </div>
               <div class="form-group">
                 {{Form::label('semail', ucfirst(trans('educal.email')))}}
                 {{Form::email('semail', null , ['class'=>'form-control'])}}
               </div>
+              <div class="form-group">
+                  <label for="school-password">{{ucfirst(trans('educal.password'))}}</label>
+                  <input type="password" class="form-control" id="school-password" name="password">
+              </div>
+              <div class="form-group">
+                  <label for="school-password-confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
+                  <input type="password" class="form-control" id="school-password-confirmation" name="password_confirmation">
+              </div>
+
+                  <h3>School Informatie</h3>
+                  <hr>
               <div class="form-group">
                 {{Form::label('sname', ucfirst(trans('educal.name')))}}
                 {{Form::text('sname', null , ['class'=>'form-control'])}}
@@ -312,14 +333,6 @@
               <div class="form-group">
                 {{Form::label('city', ucfirst(trans('educal.city')))}}
                 {{Form::text('city', null , ['class'=>'form-control'])}}
-              </div>
-              <div class="form-group">
-                <label for="school-password">{{ucfirst(trans('educal.password'))}}</label>
-                <input type="password" class="form-control" id="school-password" name="password">
-              </div>
-              <div class="form-group">
-                <label for="school-password-confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
-                <input type="password" class="form-control" id="school-password-confirmation" name="password_confirmation">
               </div>
               <div class="checkbox">
                 <label>

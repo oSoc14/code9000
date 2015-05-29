@@ -53,6 +53,8 @@ class SchoolController extends \BaseController
             // Validation rules for input fields
             $validator = Validator::make(
                 [
+                    'per-name'              => Input::get('per-name'),
+                    'per-surname'           => Input::get('per-surname'),
                     'name'                  => Input::get('sname'),
                     'email'                 => Input::get('semail'),
                     'city'                  => Input::get('city'),
@@ -63,11 +65,13 @@ class SchoolController extends \BaseController
                     'honey_time'            => 'required|honeytime:5'
                 ],
                 [
-                    'name'     => 'required|unique:schools,name',
-                    'city'     => 'required',
-                    'email'    => 'required|email|unique:users,email',
-                    'password' => 'required|min:8|confirmed',
-                    'tos'      => 'required'
+                    'per-name'      => 'required',
+                    'per-surname'   => 'required',
+                    'name'          => 'required|unique:schools,name',
+                    'city'          => 'required',
+                    'email'         => 'required|email|unique:users,email',
+                    'password'      => 'required|min:8|confirmed',
+                    'tos'           => 'required'
                 ]
             );
 
@@ -125,6 +129,8 @@ class SchoolController extends \BaseController
                         'password'  => Input::get("password"),
                         'activated' => true,
                         'school_id' => $school->id,
+                        'first_name'=> e(Input::get("per-name")),
+                        'last_name' => e(Input::get("per-surname")),
                     ]
                 );
 
