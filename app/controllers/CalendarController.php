@@ -123,7 +123,133 @@ class CalendarController extends \BaseController
             // Permission checks
             if ($user->hasAnyAccess(['school', 'event'])) {
 
-                dd(Input::all());
+                $endDate = new DateTime();
+                // Check if endDate isn't blank
+                if (Input::get('end-date') == '') {
+                    $endDate = null;
+                }
+
+                $validator = Validator::make(
+                    [
+                        'group'       => Input::get('group'),
+                        'description' => Input::get('description'),
+                        'start-date'  => Input::get('start-date'),
+                        'end-date'    => $endDate,
+                        'start-time'  => Input::get('start-time'),
+                        'end-time'    => Input::get('end-time'),
+                        'title'       => Input::get('title'),
+                        'day'         => Input::get('day')
+                    ],
+                    [
+                        'group'       => 'required',
+                        'description' => 'required',
+                        'start-date'  => 'date',
+                        'end-date'    => 'date',
+                        'start-time'  => 'required|date_format:H:i',
+                        'end-time'    => 'required|date_format:H:i',
+                        'title'       => 'required'
+                    ]
+                );
+
+                // If validation fails, return to the create form with errors.
+                if ($validator->fails()) {
+                    return Redirect::route('event.create')->withInput()->withErrors($validator);
+                } else {
+
+                    $event              = new Appointment();
+                    $event->title       = e(Input::get('title'));
+                    $event->description = e(Input::get('description'));
+                    $event->location    = e(Input::get('location'));
+                    $event->group_id    = Input::get('group');
+
+                    $start_date = e(Input::get('start-date'));
+                    $end_date   = e(Input::get('end-date'));
+                    $start_time = e(Input::get('start-time'));
+                    $end_time   = e(Input::get('end-time'));
+
+                    // TODO: Handle All day events, or decide to remove it alltogether
+                    // If the event isn't the whole day, determine the end date/time
+                    $event->allday = false;
+
+                    // Recurring events handling
+                    if (Input::get('repeat')) {
+
+                        $dateArray = explode(',', e(Input::get('repeat-dates')));
+                        // Check if there are any dates selected, return error if not
+                        if(count($dateArray) == 0) {
+
+                            $validator->getMessageBag()->add(
+                                'end',
+                                Lang::get('validation.countmin', ['attribute ' => 'Jaarkalender ', 'min' => '1'])
+                            );
+
+                            // Redirect back with inputs and validator instance
+                            return Redirect::back()->withErrors($validator)->withInput();
+
+                        } else {
+                            // Loop through dates
+                            foreach($dateArray as $da) {
+                                // If date is invalid, return error
+                                if(!self::validateDate($da)) {
+
+                                    $validator->getMessageBag()->add(
+                                        'end',
+                                        Lang::get('validation.date_format', ['attribute ' => 'Jaarkalender '])
+                                    );
+                                    // Redirect back with inputs and validator instance
+                                    return Redirect::back()->withErrors($validator)->withInput();
+
+                                } else {
+                                    $event->start_date = new DateTime($da . ' ' . $start_time);
+                                    $event->end_date = new DateTime($da . ' ' . $end_time);
+
+                                    var_dump($event);
+                                }
+                            }
+                        }
+
+                    } else {
+
+                        if(!$start_date) {
+                            $validator->getMessageBag()->add(
+                                'end',
+                                Lang::get('validation.required', ['attribute ' => 'start-date '])
+                            );
+
+                            return Redirect::back()->withErrors($validator)->withInput();
+                        } else {
+                            $sd = new DateTime($start_date . ' ' . $start_time);
+
+                            if($end_date == '') {
+                                $end_date = $start_date;
+                            }
+                            $ed = new DateTime($end_date . ' ' . $end_time);
+
+                            // Check if end date is before start date, if so, return with error
+                            if($sd >= $ed) {
+
+                                $validator->getMessageBag()->add(
+                                    'end',
+                                    Lang::get('validation.after', ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
+                                );
+
+                                // Redirect back with inputs and validator instance
+                                return Redirect::back()->withErrors($validator)->withInput();
+
+                            } else {
+                                $event->start_date = $sd;
+                                $event->end_date = $ed;
+                            }
+                        }
+                        var_dump($event);
+                    }
+
+                    // Save the appointment to the database and return to the calendar index view
+                   // $event->save();
+
+                    return Redirect::route('calendar.index');
+
+                }
 
                 /*
                 $endDate = new DateTime();
@@ -216,6 +342,13 @@ class CalendarController extends \BaseController
             return Redirect::route('landing');
         }
     }
+
+    public function validateDate($date)
+    {
+        $d = DateTime::createFromFormat('d/m/Y', $date);
+        return $d && $d->format('d/m/Y') == $date;
+    }
+
 
     /**
      * Show the form for editing the specified appointment.

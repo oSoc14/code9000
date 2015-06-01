@@ -29,34 +29,41 @@
         ]), PHP_EOL }}
 
         <div class="form-group">
-            {{Form::label('title', ucfirst(trans('educal.title')), array('class'=>'col-sm-12 col-md-2 control-label'))}}
+            {{Form::label('title', ucfirst(trans('educal.title')), ['class'=>'col-sm-12 col-md-2 control-label'])}}
             <div class="col-sm-12 col-md-10">
-                {{Form::text('title', null , ['class'=>'form-control','placeholder'=>"What's the title of your event?"])}}
+                {{Form::text('title', null , ['class'=>'form-control','placeholder'=>"Titel"])}}
             </div>
         </div>
 
         <div class="form-group">
-            {{Form::label('group', ucfirst(trans('educal.group')), array('class'=>'col-sm-12 col-md-2 control-label'))}}
+            {{Form::label('group', ucfirst(trans('educal.group')), ['class'=>'col-sm-12 col-md-2 control-label'])}}
             <div class="col-sm-12 col-md-10">
-                {{Form::select('group', $groups, [], array('class'=>'form-control'))}}
+                {{Form::select('group', $groups, [], ['class'=>'form-control'])}}
             </div>
         </div>
 
         <div class="form-group">
-            {{Form::label('description', ucfirst(trans('educal.description')), array('class'=>'col-sm-12 col-md-2 control-label'))}}
+            {{Form::label('description', ucfirst(trans('educal.description')), ['class'=>'col-sm-12 col-md-2 control-label'])}}
             <div class="col-sm-12 col-md-10">
-                {{Form::textarea('description', null , ['class'=>'form-control','placeholder'=>"Event description", 'rows'=>3])}}
+                {{Form::textarea('description', null , ['class'=>'form-control','placeholder'=>"Beschrijving", 'rows'=>3])}}
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-sm-12 col-md-5">
+            {{Form::label('location', 'Locatie (optioneel)', ['class'=>'col-sm-12 col-md-2 control-label'])}}
+            <div class="col-sm-12 col-md-10">
+                {{Form::text('location', null , ['class'=>'form-control','placeholder'=>"Locatie"])}}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <!-- <div class="col-md-offset-2 col-sm-12 col-md-5">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="day" id="day"> {{ucfirst(trans('educal.allday'))}}
                     </label>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-offset-2 col-sm-12 col-md-5">
                 <div class="checkbox">
                     <label>
@@ -115,8 +122,6 @@
     {{ HTML::script('js/jquery-ui-1.11.1.js') }}
     {{ HTML::script('js/jquery-ui.multidatespicker.js') }}
     {{ HTML::script('js/jquery.timepicker.min.js') }}
-    {{ HTML::script('js/datepair.min.js') }}
-    {{ HTML::script('js/jquery.datepair.min.js') }}
     {{ HTML::script('js/multical.js') }}
     {{ HTML::script('js/app.js') }}
 @stop

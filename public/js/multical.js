@@ -20,7 +20,7 @@ $(document).ready(function () {
     });
 
     $('input#repeat').click(function () {
-        toggleDates('#date-time-picker1');
+        toggleDates('#date-time-picker1', true);
     });
 
     $('#date-time-picker1 .time').timepicker({
@@ -29,7 +29,7 @@ $(document).ready(function () {
     });
 
     $('#date-time-picker1 .date').datepicker({
-        dateFormat: 'd/m/yy',
+        dateFormat: 'd-m-yy',
         autoclose: true,
         firstDay: 1,
         beforeShowDay: function(date) {
@@ -42,13 +42,16 @@ $(document).ready(function () {
 
 });
 
-function toggleDates(tar) {
+function toggleDates(tar, modal) {
     if ($('#repeat').prop('checked')) {
         $(tar + ' .date').hide();
         $(tar + ' .date-addon').hide();
-        $('#year-modal').modal('show')
     } else {
         $(tar + ' .date').show();
         $(tar + ' .date-addon').show();
+    }
+
+    if(modal) {
+        $('#year-modal').modal('show');
     }
 }
