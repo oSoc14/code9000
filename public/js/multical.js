@@ -19,16 +19,36 @@ $(document).ready(function () {
         }
     });
 
-    $('#basicExample .time').timepicker({
+    $('input#repeat').click(function () {
+        toggleDates('#date-time-picker1');
+    });
+
+    $('#date-time-picker1 .time').timepicker({
         'showDuration': true,
-        'timeFormat': 'g:ia'
+        'timeFormat': 'H:i'
     });
 
-    $('#basicExample .date').datepicker({
-        'format': 'm/d/yyyy',
-        'autoclose': true
+    $('#date-time-picker1 .date').datepicker({
+        dateFormat: 'd/m/yy',
+        autoclose: true,
+        firstDay: 1,
+        beforeShowDay: function(date) {
+            var weekend = date.getDay() == 6 || date.getDay() == 0;
+            return [1, weekend ? 'myweekend' : ''];
+        }
     });
 
-    // initialize datepair
-    $('#basicExample').datepair();
+    toggleDates('#date-time-picker1');
+
 });
+
+function toggleDates(tar) {
+    if ($('#repeat').prop('checked')) {
+        $(tar + ' .date').hide();
+        $(tar + ' .date-addon').hide();
+        $('#year-modal').modal('show')
+    } else {
+        $(tar + ' .date').show();
+        $(tar + ' .date-addon').show();
+    }
+}

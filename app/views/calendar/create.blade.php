@@ -2,7 +2,7 @@
 
 @section('header')
     {{ HTML::style("css/app.css") }}
-    {{ HTML::style("css/jquery.datepicker.css") }}
+    {{ HTML::style("css/jquery.datetimepicker.css") }}
     {{ HTML::style("css/jquery.timepicker.css") }}
 @stop
 
@@ -62,7 +62,7 @@
                     <label>
                         <input type="checkbox" name="repeat" id="repeat">
                         {{ucfirst(trans('educal.repeatingevent'))}}
-                        (<a data-toggle="modal" data-target="#year-modal" href="#" data-href="" title="Year Calendar">Toon jaarkalender</a>)
+                        (<a data-toggle="modal" data-target="#year-modal" href="#" data-href="" title="Year Calendar">toon jaarkalender</a>)
                     </label>
                 </div>
             </div>
@@ -71,17 +71,18 @@
         <input type="hidden" id="repeat-dates" name="repeat-dates" value=""/>
 
         <div class="form-group">
-            {{Form::label('datetimepicker1', ucfirst(trans('educal.startdate')), array('class'=>'col-sm-12 col-md-2 control-label'))}}
+            {{Form::label('datetimepicker1', ucfirst(trans('educal.startdate')), ['class'=>'col-sm-12 col-md-2 control-label'])}}
             <div class="col-sm-12 col-md-10">
-                <div class="input-group date" id="basicExample">
-                    <input type="text" class="date start" />
-                    <input type="text" class="time start" /> to
-                    <input type="text" class="time end" />
-                    <input type="text" class="date end" />
+                <div class="input-group date" id="date-time-picker1">
+                    <div class="input-group-addon date-addon"><i class="glyphicon glyphicon-calendar"></i></div>
+                    {{Form::text('start-date', null , ['class'=>'form-control date start','placeholder'=>"Start datum"])}}
+                    {{Form::text('end-date', null , ['class'=>'form-control date end','placeholder'=>"Eind datum"])}}
+                    <div class="input-group-addon"><i class="glyphicon glyphicon-time"></i></div>
+                    {{Form::text('start-time', null , ['class'=>'form-control time start','placeholder'=>"Start uur"])}}
+                    {{Form::text('end-time', null , ['class'=>'form-control time end','placeholder'=>"Eind uur"])}}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-educal-primary"><i class="fa fa-save"></i> {{ucfirst(trans('educal.createevent'))}}</button>

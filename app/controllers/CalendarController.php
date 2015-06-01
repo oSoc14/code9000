@@ -123,6 +123,9 @@ class CalendarController extends \BaseController
             // Permission checks
             if ($user->hasAnyAccess(['school', 'event'])) {
 
+                dd(Input::all());
+
+                /*
                 $endDate = new DateTime();
                 // Check if endDate isn't blank (____/__/__ __:__)
                 if (Input::get('end') == '____/__/__ __:__') {
@@ -202,7 +205,9 @@ class CalendarController extends \BaseController
                     $event->save();
 
                     return Redirect::route('calendar.index');
-                }
+                } */
+
+
             } else {
                 // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
