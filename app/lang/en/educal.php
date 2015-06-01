@@ -28,6 +28,7 @@ return array(
     'delete' => 'delete',
     'cancel' => 'cancel',
     'confirmation' => 'confirmation',
+    'confirm' => 'confirm',
     'confirmationmsg' => 'Are you sure you want to delete this item?',
 
     'email' => 'Email address',

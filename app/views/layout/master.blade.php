@@ -9,7 +9,6 @@
   <!-- Bootstrap Datepicker -->
   {{ HTML::style("css/jquery.datetimepicker.css") }}
   <!-- jQuery UI -->
-  {{ HTML::style("css/jquery-ui.min.css") }}
   {{ HTML::style("css/jquery-ui.structure.min.css") }}
   {{ HTML::style("css/jquery-ui.theme.css") }}
   <!-- FontAwesome icons -->

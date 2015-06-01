@@ -28,6 +28,7 @@ return array(
     'delete' => 'verwijderen',
     'cancel' => 'annuleren',
     'confirmation' => 'bevestig',
+    'confirm' => 'bevestig',
     'confirmationmsg' => 'Bent u zeker dat u dit item wilt verwijderen?',
 
     'email' => 'Email adres',

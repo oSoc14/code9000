@@ -28,6 +28,7 @@ return array(
     'delete' => 'effacer',
     'cancel' => 'annuler',
     'confirmation' => 'confirmation',
+    'confirm' => 'confirmez',
     'confirmationmsg' => 'Etes-vous sûr de vouloir supprimer cet article?',
 
     'email' => 'email',

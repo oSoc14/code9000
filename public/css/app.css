@@ -551,3 +551,14 @@ img {
 #addEvent:active {
   margin: 0 0 43px 0 !important;
 }
+
+.myweekend a.ui-state-default {
+    background: #108a98;
+    color: #daf2ef;
+}
+
+.year-cal {
+    text-align: center;
+    margin: auto;
+    overflow: auto;
+}

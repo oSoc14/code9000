@@ -15,7 +15,6 @@
 @stop
 
 @section('footerScript')
-    <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.11.1.js"></script>
     <script type="text/javascript" src="js/jquery-ui.multidatespicker.js"></script>
     <script type="text/javascript" src="js/multical.js"></script>
