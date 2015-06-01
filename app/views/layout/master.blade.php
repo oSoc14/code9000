@@ -11,7 +11,7 @@
   <!-- jQuery UI -->
   {{ HTML::style("css/jquery-ui.min.css") }}
   {{ HTML::style("css/jquery-ui.structure.min.css") }}
-  {{ HTML::style("css/jquery-ui.theme.min.css") }}
+  {{ HTML::style("css/jquery-ui.theme.css") }}
   <!-- FontAwesome icons -->
   {{ HTML::style("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css") }}
   <!-- Google Webfont -->

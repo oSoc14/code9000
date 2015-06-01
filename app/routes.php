@@ -26,6 +26,10 @@ Route::get('about', ['as' => 'about', 'before' => 'auth', function() {
     return View::make('about');
 }]);
 
+Route::get('tester', ['as' => 'tester', function() {
+    return View::make('tester');
+}]);
+
 // Info page
 Route::get('help', ['as' => 'help', 'before' => 'auth', function() {
   return View::make('help');
