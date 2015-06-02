@@ -101,6 +101,13 @@
     } elseif(Session::get('lang') == 'fr') {
         $js = 'French';
     }
+
+    // Paging hack, disable paging when there's less than 10 results
+    if(count($groups) > 10) {
+        $pag = true;
+    } else {
+        $pag = false;
+    }
 ?>
 <script>
   $(document).ready(function() {
@@ -118,6 +125,7 @@
         {"bSortable": false, "aTargets": [1, 2, 3]}
       ],
       autoWidth        : false,
+      {{ 'paging: '.($pag ? 'true' : 'false').','; }}
       preDrawCallback: function () {
         // Initialize the responsive datatables helper once.
         if (!responsiveHelper) {

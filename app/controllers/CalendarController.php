@@ -80,11 +80,12 @@ class CalendarController extends \BaseController
                 // If user is a superAdmin, show all possible groups to add an event to
                 if ($user->hasAccess(['school'])) {
                     $groups = Group::where('school_id', '<>', '')->get();
-
+                    $opening = '';
                 } else {
                     // If the user isn't a superAdmin, only show the groups to which the user has permissions
                     $user->load('school.groups.appointments');
                     $groups = $user->school->groups;
+                    $opening = $user->school->opening;
                 }
 
                 // Transform recieved objectList (from database) into array to send with view
@@ -94,7 +95,7 @@ class CalendarController extends \BaseController
                 }
 
                 // Show the form where users can add appointments
-                return View::make('calendar.create')->with('groups', $smartgroup);
+                return View::make('calendar.create')->with('groups', $smartgroup)->with('opening', $opening);
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
@@ -203,9 +204,11 @@ class CalendarController extends \BaseController
                                     $event->start_date = new DateTime($da . ' ' . $start_time);
                                     $event->end_date = new DateTime($da . ' ' . $end_time);
 
-                                    var_dump($event);
+                                    // $event->save();
                                 }
                             }
+
+                            //return Redirect::route('calendar.index');
                         }
 
                     } else {
@@ -247,7 +250,7 @@ class CalendarController extends \BaseController
                     // Save the appointment to the database and return to the calendar index view
                    // $event->save();
 
-                    return Redirect::route('calendar.index');
+                    //return Redirect::route('calendar.index');
 
                 }
 

@@ -85,7 +85,9 @@ class SchoolController extends \BaseController
             } else {
                 // If there are no errors, prepare a new School object to be inserted in the database
                 $school       = new School();
-                $school->name = e(Input::get("sname"));
+                $nn           = self::clean(e(Input::get("sname")));
+                $school->name = $nn;
+
                // $short        = e(strtolower(Input::get("sname")));
 
                 // Generate the "short"-name for a school (which will be used to identify groups)
@@ -99,10 +101,10 @@ class SchoolController extends \BaseController
                     [
                         'name'        => $school->name . '__' . $school->id,
                         'permissions' => [
-                            'school' => 0,
-                            'user'   => 0,
-                            'group'  => 0,
-                            'event'  => 1,
+                            'school'  => 0,
+                            'user'    => 0,
+                            'group'   => 0,
+                            'event'   => 1,
                         ],
                         'school_id'   => $school->id,
                     ]
@@ -112,11 +114,11 @@ class SchoolController extends \BaseController
                     [
                         'name'        => 'Administratie__' . $school->id,
                         'permissions' => [
-                            'school' => 0,
-                            'admin'  => 1,
-                            'user'   => 1,
-                            'group'  => 1,
-                            'event'  => 1,
+                            'school'  => 0,
+                            'admin'   => 1,
+                            'user'    => 1,
+                            'group'   => 1,
+                            'event'   => 1,
                         ],
                         'school_id'   => $school->id,
                     ]
@@ -220,8 +222,8 @@ class SchoolController extends \BaseController
 
                 $validator = Validator::make(
                     [
-                        'name'                  => Input::get('sname'),
-                        'city'                  => Input::get('city'),
+                        'name'     => e(Input::get('name')),
+                        'city'     => e(Input::get('city')),
                     ],
                     [
                         'name'     => 'required',
@@ -235,9 +237,19 @@ class SchoolController extends \BaseController
                         ->withInput()
                         ->withErrors($validator);
                 } else {
-                    // If the school name stays the same, just update the other fields
-                    $school->name = e(Input::get("name"));
-                    $school->city = e(Input::get("city"));
+                    // Clean up inputted school name
+                    $nn = self::clean(Input::get("name"));
+                    // Select the first group of the school, if school name changes (should be the global group)
+                    if($nn != $school->name) {
+                        $gg = $school->groups->first();
+
+                        $gg->name = $nn . '__' . $school->id;
+                        $gg->save();
+                    }
+
+                    $school->name    = $nn;
+                    $school->city    = e(Input::get("city"));
+                    $school->opening = e(Input::get("opening"));
                     $school->save();
 
                     return Redirect::route('school.index');
@@ -280,5 +292,8 @@ class SchoolController extends \BaseController
         }
     }
 
+    function clean($string) {
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+    }
 
 }

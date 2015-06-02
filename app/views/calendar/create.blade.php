@@ -85,7 +85,7 @@
                     {{Form::text('start-date', null , ['class'=>'form-control date start','placeholder'=>"Start datum"])}}
                     {{Form::text('end-date', null , ['class'=>'form-control date end','placeholder'=>"Eind datum"])}}
                     <div class="input-group-addon"><i class="glyphicon glyphicon-time"></i></div>
-                    {{Form::text('start-time', null , ['class'=>'form-control time start','placeholder'=>"Start uur"])}}
+                    {{Form::text('start-time', $opening , ['class'=>'form-control time start','placeholder'=>"Start uur"])}}
                     {{Form::text('end-time', null , ['class'=>'form-control time end','placeholder'=>"Eind uur"])}}
                 </div>
             </div>

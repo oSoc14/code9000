@@ -65,7 +65,6 @@
 {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
 {{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
 {{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
-
 {{ HTML::script('js/app.js') }}
 
 <?php
@@ -77,7 +76,7 @@
         $js = 'French';
     }
 
-        // Paging hack, disable paging when there's less than 10 results
+    // Paging hack, disable paging when there's less than 10 results
     if(count($school->groups) > 10) {
         $pag = true;
     } else {
@@ -100,7 +99,7 @@
         {"bSortable": false, "aTargets": [2]}
       ],
       autoWidth        : false,
-      {{ 'paging: '.($pag ? 'true' : 'false'); }}
+      {{ 'paging: '.($pag ? 'true' : 'false').','; }}
       preDrawCallback: function () {
         // Initialize the responsive datatables helper once.
         if (!responsiveHelper) {

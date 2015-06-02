@@ -15,11 +15,11 @@ class CreateDatabase extends Migration {
         //CREATES SCHOOLS TABLE
         Schema::create('schools', function($table)
         {
-            // TODO: Add additional school fields (URL?), remove short and start working with IDs
+            // TODO: Add additional school fields (URL?)
             $table->increments('id');
             $table->string('name',255);
             //$table->string('short',20);
-            $table->tinyInteger('opening');
+            $table->string('opening', 5);
             $table->string('city');
             $table->string('lang',5)->default('nl');
             $table->timestamps();
