@@ -157,20 +157,20 @@ class CalendarController extends \BaseController
                     return Redirect::route('event.create')->withInput()->withErrors($validator);
                 } else {
 
-                    $event              = new Appointment();
-                    $event->title       = e(Input::get('title'));
-                    $event->description = e(Input::get('description'));
-                    $event->location    = e(Input::get('location'));
-                    $event->group_id    = Input::get('group');
 
-                    $start_date = e(Input::get('start-date'));
-                    $end_date   = e(Input::get('end-date'));
-                    $start_time = e(Input::get('start-time'));
-                    $end_time   = e(Input::get('end-time'));
+
+                    $title       = e(Input::get('title'));
+                    $description = e(Input::get('description'));
+                    $location    = e(Input::get('location'));
+                    $group_id    = Input::get('group');
+                    $start_date  = e(Input::get('start-date'));
+                    $end_date    = e(Input::get('end-date'));
+                    $start_time  = e(Input::get('start-time'));
+                    $end_time    = e(Input::get('end-time'));
 
                     // TODO: Handle All day events, or decide to remove it alltogether
                     // If the event isn't the whole day, determine the end date/time
-                    $event->allday = false;
+                    //$event->allday = false;
 
                     // Recurring events handling
                     if (Input::get('repeat')) {
@@ -201,14 +201,18 @@ class CalendarController extends \BaseController
                                     return Redirect::back()->withErrors($validator)->withInput();
 
                                 } else {
-                                    $event->start_date = new DateTime($da . ' ' . $start_time);
-                                    $event->end_date = new DateTime($da . ' ' . $end_time);
+                                    $event              = new Appointment();
+                                    $event->title       = $title;
+                                    $event->description = $description;
+                                    $event->location    = $location;
+                                    $event->group_id    = $group_id;
+                                    $event->start_date  = new DateTime($da . ' ' . $start_time);
+                                    $event->end_date    = new DateTime($da . ' ' . $end_time);
 
-                                    // $event->save();
+                                    $event->save();
                                 }
                             }
-
-                            //return Redirect::route('calendar.index');
+                            return Redirect::route('calendar.index');
                         }
 
                     } else {
@@ -240,20 +244,20 @@ class CalendarController extends \BaseController
                                 return Redirect::back()->withErrors($validator)->withInput();
 
                             } else {
-                                $event->start_date = $sd;
-                                $event->end_date = $ed;
+                                $event              = new Appointment();
+                                $event->title       = $title;
+                                $event->description = $description;
+                                $event->location    = $location;
+                                $event->group_id    = $group_id;
+                                $event->start_date  = $sd;
+                                $event->end_date    = $ed;
+
+                                $event->save();
+                                return Redirect::route('calendar.index');
                             }
                         }
-                        var_dump($event);
                     }
-
-                    // Save the appointment to the database and return to the calendar index view
-                   // $event->save();
-
-                    //return Redirect::route('calendar.index');
-
                 }
-
                 /*
                 $endDate = new DateTime();
                 // Check if endDate isn't blank (____/__/__ __:__)
@@ -348,8 +352,8 @@ class CalendarController extends \BaseController
 
     public function validateDate($date)
     {
-        $d = DateTime::createFromFormat('d/m/Y', $date);
-        return $d && $d->format('d/m/Y') == $date;
+        $d = DateTime::createFromFormat('m/d/Y', $date);
+        return $d && $d->format('m/d/Y') == $date;
     }
 
 

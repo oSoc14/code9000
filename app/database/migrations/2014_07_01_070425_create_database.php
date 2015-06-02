@@ -136,7 +136,7 @@ class CreateDatabase extends Migration {
             $table->increments('id');
             $table->string('title');
             $table->text('description');
-            //$table->string('location');
+            $table->string('location');
             $table->boolean('allday');
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
