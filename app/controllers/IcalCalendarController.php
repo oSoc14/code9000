@@ -108,7 +108,7 @@ class IcalCalendarController extends \BaseController
 
             // Recurrence option (e.g. New Year happens every year)
             // Set recurrence rule
-            if ($appointment['attributes']['repeat_type']) {
+            /* if ($appointment['attributes']['repeat_type']) {
 
                 $recurrenceRule = new \Eluceo\iCal\Property\Event\RecurrenceRule();
                 // Check the repeat type (day, week, month, year) and set the corresponding recurrence rule
@@ -131,7 +131,7 @@ class IcalCalendarController extends \BaseController
                 $recurrenceRule->setCount($appointment['attributes']['nr_repeat']);
 
                 $event->setRecurrenceRule($recurrenceRule);
-            }
+            } */
 
             // Adding Timezone (optional)
             $event->setUseTimezone(true);

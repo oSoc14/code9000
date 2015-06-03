@@ -99,10 +99,10 @@ Route::filter('admin', function()
 
     if($user) {
         if(!$user->hasAccess('school')) {
-            return Redirect::to('/');
+            return Response::view('landing', [], 401);
         }
     } else {
-        return Redirect::to('/');
+        return Response::view('landing', [], 401);
     }
 });
 

@@ -47,6 +47,10 @@
 </head>
 <body>
 
+<?php
+    $schoolsArray = School::lists('name', 'id');
+?>
+
 <div class="page-container">
 
 <div class="container-fluid">
@@ -256,7 +260,7 @@
             </div>
             <div class="form-group">
               <label>{{ucfirst(trans('educal.school'))}}</label>
-              {{ Form::select('school', $schools, null, array('class' => 'form-control')) }}
+              {{ Form::select('school', $schoolsArray, null, array('class' => 'form-control')) }}
             </div>
             <div class="checkbox">
               <label>

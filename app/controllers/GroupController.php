@@ -40,10 +40,11 @@ class GroupController extends \BaseController
                 return View::make('group.listGroups')->with('groups', $groups);
 
             } else {
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
 
     }
@@ -75,13 +76,13 @@ class GroupController extends \BaseController
                 if ($user->hasAccess('group')) {
                     return View::make('group.createGroup')->with('schools', null);
                 } else {
-                    // If no permissions, redirect to calendar index
-                    return Redirect::route('calendar.index');
+                    // If no permissions, redirect the user to the calendar index page
+                    return View::make('calendar.index', [], 401);
                 }
             }
         } else {
             // If no permissions, redirect to calendar index
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
@@ -153,12 +154,12 @@ class GroupController extends \BaseController
                     return Redirect::route('group.index');
                 }
             } else {
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
             // If no permissions, redirect to calendar index
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
@@ -213,12 +214,12 @@ class GroupController extends \BaseController
                     ->with('smartUsers', $smartUsers);
 
             } else {
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
             // If no permissions, redirect to calendar index
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
@@ -298,12 +299,12 @@ class GroupController extends \BaseController
                     return Redirect::route('group.edit', $id);
                 }
             } else {
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
             // If no permissions, redirect to calendar index
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
@@ -338,7 +339,7 @@ class GroupController extends \BaseController
 
             return Redirect::route('group.index');
         } else {
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 

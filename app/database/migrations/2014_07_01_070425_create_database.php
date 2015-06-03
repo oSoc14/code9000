@@ -15,16 +15,14 @@ class CreateDatabase extends Migration {
         //CREATES SCHOOLS TABLE
         Schema::create('schools', function($table)
         {
-            // TODO: Add additional school fields (URL?)
+            // TODO: Add additional school fields? (URL, ...)
             $table->increments('id');
             $table->string('name',255);
-            //$table->string('short',20);
             $table->string('opening', 5);
             $table->string('city');
             $table->string('lang',5)->default('nl');
             $table->timestamps();
             $table->softDeletes();
-            //$table->unique('short');
         });
 
         //CREATES USERS TABLE
@@ -83,6 +81,9 @@ class CreateDatabase extends Migration {
             $table->integer('user_id')->unsigned();
             $table->integer('group_id')->unsigned();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+
             // We'll need to ensure that MySQL uses the InnoDB engine to
             // support the indexes, other engines aren't affected.
             $table->engine = 'InnoDB';
@@ -109,7 +110,6 @@ class CreateDatabase extends Migration {
         });
 
         // TODO: Create parent appointments table + reference this table in the appointments table with an optional parameter parent_id
-        // TODO: Repeat type, freq, nr_repeat columns can be removed/adjusted
         //CREATES APPOINTMENTS TABLE
         Schema::create('parent_appointments', function($table)
         {
@@ -120,8 +120,6 @@ class CreateDatabase extends Migration {
             $table->boolean('allday');
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
-            // Repeat_type = day=>'d', week=>'w', month=>'M', year=>'y'
-
             $table->timestamps();
 
             //Defines the school a user belongs to
@@ -140,20 +138,22 @@ class CreateDatabase extends Migration {
             $table->boolean('allday');
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
+            /*
             // Repeat_type = day=>'d', week=>'w', month=>'M', year=>'y'
             $table->string('repeat_type')->nullbale();
             // Repeat_freq = every x days, weeks,...
             $table->integer('repeat_freq')->nullable();
             // Nr_repeat = number of times this event will be repeated
             $table->integer('nr_repeat')->nullable();
+            */
             $table->timestamps();
 
             //Defines the group an appointment belongs to
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             //Defines the parent event
-            //$table->integer('parent_id')->unsigned()->nullable();
-            //$table->foreign('parent_id')->references('id')->on('parent_appointments')->onDelete('cascade');
+            $table->integer('parent_id')->unsigned()->nullable();
+            $table->foreign('parent_id')->references('id')->on('parent_appointments')->onDelete('set null');
         });
 
 	}

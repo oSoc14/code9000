@@ -114,7 +114,7 @@ class PdfCalendarController extends \BaseController
 
             // Recurence option (e.g. New Year happens every year)
             // Set recurrence rule
-            if ($appointment['attributes']['repeat_type']) {
+           /* if ($appointment['attributes']['repeat_type']) {
 
                 $rep_freq = $appointment['attributes']['repeat_freq'];
 
@@ -161,7 +161,7 @@ class PdfCalendarController extends \BaseController
                     }
                 }
 
-            } else {
+            } else */ {
 
                 // If there is no recurrence rule, just format the start and enddate gotten from the database
                 $dateString        = new DateTime($appointment['attributes']['start_date']);

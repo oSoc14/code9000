@@ -29,10 +29,11 @@ class SchoolController extends \BaseController
                 $this->layout->content = View::make('school.index')->with('schools', $schools);
 
             } else {
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
@@ -87,13 +88,7 @@ class SchoolController extends \BaseController
                 $school       = new School();
                 $nn           = self::clean(e(Input::get("sname")));
                 $school->name = $nn;
-
-               // $short        = e(strtolower(Input::get("sname")));
-
-                // Generate the "short"-name for a school (which will be used to identify groups)
-               // $short         = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
-               // $school->short = $short;
-                $school->city  = e(Input::get("city"));
+                $school->city = e(Input::get("city"));
                 $school->save();
 
                 // Create the default groups "global" and "admin"
@@ -168,12 +163,12 @@ class SchoolController extends \BaseController
                 $school = School::find($id);
                 $school->load("groups");
                 $this->layout->content = View::make('school.detail')->with('school', $school);
-
             } else {
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
@@ -196,10 +191,11 @@ class SchoolController extends \BaseController
                 $this->layout->content = View::make('school.edit')->with('school', $school);
 
             } else {
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
@@ -255,10 +251,11 @@ class SchoolController extends \BaseController
                     return Redirect::route('school.index');
                 }
             } else {
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
@@ -285,10 +282,11 @@ class SchoolController extends \BaseController
                 return Redirect::route('school.index');
 
             } else {
-                return Redirect::route('calendar.index');
+                // If no permissions, redirect the user to the calendar index page
+                return View::make('calendar.index', [], 401);
             }
         } else {
-            return Redirect::route('landing');
+            return Response::view('landing', [], 401);
         }
     }
 
