@@ -4,6 +4,8 @@
 
 $(document).ready(function () {
 
+    var home = $('#siteurl').html();
+
   // When resizing the window, get the correct view.
   $(window).resize(function () {
     getCalendarView();
@@ -18,7 +20,7 @@ $(document).ready(function () {
     $('#addEvent').hide();
     $.ajax({
       type: "GET",
-      url: "calendar/api/events",
+      url: home + "/calendar/api/events",
       cache: false,
       dataType: "json",
       contentType: "application/json",
@@ -204,9 +206,9 @@ $(document).ready(function () {
         $('#groupName').text(calEvent.groupName);
 
         // Fix links
-        $('#editEvent').attr('href', 'calendar/event/edit/' + calEvent.id);
-        $('#icalEvent').attr('href', 'export/appointment/find/' + calEvent.id);
-        $('#deleteEvent').attr('data-href', 'calendar/event/delete/' + calEvent.id);
+        $('#editEvent').attr('href', home + '/calendar/event/edit/' + calEvent.id);
+        $('#icalEvent').attr('href', home + '/export/appointment/find/' + calEvent.id);
+        $('#deleteEvent').attr('data-href', home + '/calendar/event/delete/' + calEvent.id);
       },
       loading: function (bool) {
 

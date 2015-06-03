@@ -43,6 +43,13 @@
         </div>
 
         <div class="form-group">
+            {{Form::label('location', 'Locatie (optioneel)', ['class'=>'col-sm-12 col-md-2 control-label'])}}
+            <div class="col-sm-12 col-md-10">
+                {{Form::text('location', $event->location , ['class'=>'form-control','placeholder'=>"Locatie"])}}
+            </div>
+        </div>
+<!--
+        <div class="form-group">
             {{Form::label('datetimepicker1', ucfirst(trans('educal.startdate')), array('class'=>'col-sm-12 col-md-2 control-label'))}}
             <div class="col-sm-12 col-md-10">
                 <div class='input-group date'>
@@ -60,49 +67,33 @@
                 </div>
             </div>
         </div>
+-->
 
+        <div class="form-group">
+            {{Form::label('datetimepicker1', ucfirst(trans('educal.startdate')), ['class'=>'col-sm-12 col-md-2 control-label'])}}
+            <div class="col-sm-12 col-md-10">
+                <div class="input-group date" id="date-time-picker1">
+                    <div class="input-group-addon date-addon"><i class="glyphicon glyphicon-calendar"></i></div>
+                    {{Form::text('start-date', date_format(new DateTime($event->start_date), 'd-m-Y') , ['class'=>'form-control date start','placeholder'=>"Start datum"])}}
+                    {{Form::text('end-date', date_format(new DateTime($event->end_date), 'd-m-Y') , ['class'=>'form-control date end','placeholder'=>"Eind datum"])}}
+                    <div class="input-group-addon"><i class="glyphicon glyphicon-time"></i></div>
+                    {{Form::text('start-time', date_format(new DateTime($event->start_date), 'h:i') , ['class'=>'form-control time start','placeholder'=>"Start uur"])}}
+                    {{Form::text('end-time', date_format(new DateTime($event->end_date), 'h:i') , ['class'=>'form-control time end','placeholder'=>"Eind uur"])}}
+                </div>
+            </div>
+        </div>
+
+        @if($event->parent_id)
         <div class="form-group">
             <div class="col-md-offset-2 col-sm-12 col-md-5">
                 <div class="checkbox">
                     <label>
-                        <input name="day" type="checkbox" {{ ($event->allday?'checked':'')}}> {{ucfirst(trans('educal.allday'))}}
-                    </label>
-                </div>
-            </div>
-            <div class="col-md-offset-2 col-sm-12 col-md-5">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="repeat" id="repeat" {{ ($event->nr_repeat?'checked':'')}}> {{ucfirst(trans('educal.repeatingevent'))}}
+                        <input type="checkbox" name="par" id="par" {{ ($event->parent_id?'checked':'')}}> Pas alle gelijkaardige activiteiten aan
                     </label>
                 </div>
             </div>
         </div>
-        <div class="form-repeat-container">
-            <div class="form-group">
-                <label for="repeat_freq" class="col-xs-12 col-sm-12 col-md-2 control-label">{{ucfirst(trans('educal.every'))}}...</label>
-                <div class="col-xs-6 col-md-3">
-                    <div class="input-group">
-                        <input type="number" id="repeat_freq" name="repeat_freq" class="form-control" value="{{ $event->repeat_freq }}"/>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-cog"></span></span>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-3">
-                    {{Form::select('repeat_type', ['d'=>ucfirst(trans('educal.days')),'w'=>ucfirst(trans('educal.weeks')),'M'=>ucfirst(trans('educal.months')),'y'=>ucfirst(trans('educal.years')) ], $event->repeat_type, array('class'=>'form-control', 'id'=>'repeat_type'))}}
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="datetimepicker3" class="col-sm-12 col-md-2 control-label">{{ucfirst(trans('educal.until'))}}...</label>
-                <div class="col-sm-12 col-md-6">
-                    <div class='input-group date'>
-                        {{Form::text('recurrence_end', null , ['class'=>'form-control','id'=>'datetimepicker3'])}}
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <input type="hidden" id="nr_repeat" name="nr_repeat" value="{{ $event->nr_repeat }}"/>
+        @endif
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -137,5 +128,9 @@
 @stop
 
 @section('footerScript')
+    {{ HTML::script('js/jquery-ui-1.11.1.js') }}
+    {{ HTML::script('js/jquery-ui.multidatespicker.js') }}
+    {{ HTML::script('js/jquery.timepicker.min.js') }}
+    {{ HTML::script('js/multical.js') }}
     {{ HTML::script('js/app.js') }}
 @stop

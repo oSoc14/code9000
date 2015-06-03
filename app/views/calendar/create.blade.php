@@ -77,6 +77,8 @@
 
         <input type="hidden" id="repeat-dates" name="repeat-dates" value=""/>
 
+
+
         <div class="form-group">
             {{Form::label('datetimepicker1', ucfirst(trans('educal.startdate')), ['class'=>'col-sm-12 col-md-2 control-label'])}}
             <div class="col-sm-12 col-md-10">
