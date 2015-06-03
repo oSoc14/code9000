@@ -109,7 +109,6 @@ class CreateDatabase extends Migration {
             $table->index('user_id');
         });
 
-        // TODO: Create parent appointments table + reference this table in the appointments table with an optional parameter parent_id
         //CREATES APPOINTMENTS TABLE
         Schema::create('parent_appointments', function($table)
         {
@@ -127,7 +126,6 @@ class CreateDatabase extends Migration {
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
 
-        // TODO: Uncomment location and parent_id for when it's implemented
         //CREATES APPOINTMENTS TABLE
         Schema::create('appointments', function($table)
         {

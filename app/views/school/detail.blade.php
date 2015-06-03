@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container-fluid" id="content-container">
-  <div class="row first-row">
+  <div class="first-row row">
     <div class="col-xs-12">
       <a href="{{ route('school.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.schools')]))}}</a>
       <h1>{{$school->name}}</h1>
@@ -100,6 +100,7 @@
       ],
       autoWidth        : false,
       {{ 'paging: '.($pag ? 'true' : 'false').','; }}
+      {{ 'info: '.($pag ? 'true' : 'false').','; }}
       preDrawCallback: function () {
         // Initialize the responsive datatables helper once.
         if (!responsiveHelper) {

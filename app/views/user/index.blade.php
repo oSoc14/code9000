@@ -184,6 +184,7 @@
           ],
           autoWidth        : false,
           {{ 'paging: '.($pag ? 'true' : 'false').','; }}
+          {{ 'info: '.($pag ? 'true' : 'false').','; }}
           preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper) {

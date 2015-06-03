@@ -25,9 +25,7 @@
           </tr>
         </thead>
         <tbody>
-        <?php $i=0; ?>
         @foreach($schools as $school)
-        <?php $i++; ?>
         <tr>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
           <td>{{ $school->city }}</td>
@@ -67,7 +65,6 @@
 {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
 {{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
 {{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
-
 {{ HTML::script('js/app.js') }}
 
 <?php
@@ -78,7 +75,6 @@ if(Session::get('lang') == 'nl') {
 } elseif(Session::get('lang') == 'fr') {
     $js = 'French';
 }
-
 // Paging hack, disable paging when there's less than 10 results
 if(count($schools) > 10) {
     $pag = true;
@@ -103,6 +99,7 @@ if(count($schools) > 10) {
       ],
       autoWidth        : false,
       {{ 'paging: '.($pag ? 'true' : 'false').','; }}
+      {{ 'info: '.($pag ? 'true' : 'false').','; }}
       preDrawCallback: function () {
         // Initialize the responsive datatables helper once.
         if (!responsiveHelper) {
@@ -119,4 +116,3 @@ if(count($schools) > 10) {
   } );
 </script>
 @stop
-

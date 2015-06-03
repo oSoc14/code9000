@@ -41,7 +41,7 @@ class GroupController extends \BaseController
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
@@ -77,7 +77,7 @@ class GroupController extends \BaseController
                     return View::make('group.createGroup')->with('schools', null);
                 } else {
                     // If no permissions, redirect the user to the calendar index page
-                    return View::make('calendar.index', [], 401);
+                    return Response::view('calendar.index', [], 401);
                 }
             }
         } else {
@@ -155,7 +155,7 @@ class GroupController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             // If no permissions, redirect to calendar index
@@ -215,7 +215,7 @@ class GroupController extends \BaseController
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             // If no permissions, redirect to calendar index
@@ -300,7 +300,7 @@ class GroupController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             // If no permissions, redirect to calendar index

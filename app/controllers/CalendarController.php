@@ -98,7 +98,7 @@ class CalendarController extends \BaseController
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
@@ -183,10 +183,10 @@ class CalendarController extends \BaseController
                             return Redirect::back()->withErrors($validator)->withInput();
 
                         } else {
-                            // Loop through dates
+                            // Loop through dates to validate them
                             foreach($dateArray as $da) {
                                 // If date is invalid, return error
-                                if(!self::validateDate($da)) {
+                                if (!self::validateDate($da)) {
 
                                     $validator->getMessageBag()->add(
                                         'end',
@@ -194,22 +194,29 @@ class CalendarController extends \BaseController
                                     );
                                     // Redirect back with inputs and validator instance
                                     return Redirect::back()->withErrors($validator)->withInput();
-
-                                } else {
-                                    $event              = new Appointment();
-                                    $event->title       = $title;
-                                    $event->description = $description;
-                                    $event->location    = $location;
-                                    $event->group_id    = $group_id;
-                                    $event->start_date  = new DateTime($da . ' ' . $start_time);
-                                    $event->end_date    = new DateTime($da . ' ' . $end_time);
-
-                                    $event->save();
                                 }
                             }
-                            return Redirect::route('calendar.index');
-                        }
+                            // If all dates are validated and correct, create parent appointment and children
+                            $parent              = new AppParent();
+                            $parent->title       = $title;
+                            $parent->description = $description;
+                            $parent->location    = $location;
+                            $parent->group_id    = $group_id;
+                            $parent->save();
 
+                            foreach($dateArray as $da) {
+                                $event              = new Appointment();
+                                $event->title       = $title;
+                                $event->description = $description;
+                                $event->location    = $location;
+                                $event->group_id    = $group_id;
+                                $event->start_date  = new DateTime($da . ' ' . $start_time);
+                                $event->end_date    = new DateTime($da . ' ' . $end_time);
+                                $event->parent_id   = $parent->id;
+                                $event->save();
+                            }
+                        }
+                        return Redirect::route('calendar.index');
                     } else {
 
                         if(!$start_date) {
@@ -255,17 +262,11 @@ class CalendarController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
         }
-    }
-
-    public function validateDate($date)
-    {
-        $d = DateTime::createFromFormat('m/d/Y', $date);
-        return $d && $d->format('m/d/Y') == $date;
     }
 
     /**
@@ -308,7 +309,7 @@ class CalendarController extends \BaseController
                 return View::make('calendar.edit')->with('groups', $smartgroup)->with('event', $event);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
@@ -411,7 +412,7 @@ class CalendarController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
@@ -438,10 +439,16 @@ class CalendarController extends \BaseController
                 return View::make('calendar.index');
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
         }
+    }
+
+    public function validateDate($date)
+    {
+        $d = DateTime::createFromFormat('m/d/Y', $date);
+        return $d && $d->format('m/d/Y') == $date;
     }
 }

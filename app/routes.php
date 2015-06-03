@@ -55,8 +55,7 @@ Route::group(['prefix' => 'school'], function () {
     // Show the view to edit a school
     Route::get('/edit/{id}', [
         'as'   => 'school.edit',
-        'uses' => 'SchoolController@edit',
-        'before' => 'admin'
+        'uses' => 'SchoolController@edit'
     ])->where('id', '[0-9]+');
 
     // Update a school

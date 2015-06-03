@@ -65,7 +65,6 @@
   </div>
 
   <div id="main-wrapper">
-
     <!-- Navigation sidebar -->
     <div id="sidebar" class="sidebar-wrapper">
       <div class="logo-container">

@@ -57,7 +57,7 @@
   <div class="row introduction-container">
     <div class="col-xs-12 introduction-content">
       <h1 class="hidden">EduCal</h1>
-      <img src="images/logo_educal.png" alt="Logo" />
+    {{ HTML::image('images/logo_educal.png', 'Logo') }}
       <p class="lead">{{trans('educal.lead')}}</p>
       <div class="button-container">
         <a href="#" class="btn btn-lg btn-default btn-educal-warning" data-toggle="modal" data-target="#loginModal">{{ucfirst(trans('educal.login'))}} <i class="fa fa-sign-in"></i></a> {{trans('educal.or')}}

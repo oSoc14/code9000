@@ -24,13 +24,11 @@ class SchoolController extends \BaseController
 
             // Check if user is a superAdmin (other users are not allowed on this page)
             if ($user->hasAccess('school')) {
-
-                $schools               = School::get();
-                $this->layout->content = View::make('school.index')->with('schools', $schools);
-
+                $schools = School::get();
+                return View::make('school.index')->with('schools', $schools);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
@@ -155,17 +153,16 @@ class SchoolController extends \BaseController
     {
         // If user is logged in, redirect to calendar index
         if (Sentry::check()) {
-
             $user = Sentry::getUser();
 
             // Check if user is a superAdmin (only he can see this page)
             if ($user->hasAccess('school')) {
                 $school = School::find($id);
                 $school->load("groups");
-                $this->layout->content = View::make('school.detail')->with('school', $school);
+                return View::make('school.detail')->with('school', $school);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
@@ -186,13 +183,12 @@ class SchoolController extends \BaseController
             $user = Sentry::getUser();
 
             // Check if user is superAdmin (only they can edit schools)
-            if ($user->hasAccess(['school'])) {
-                $school                = School::find($id);
-                $this->layout->content = View::make('school.edit')->with('school', $school);
-
+            if ($user->hasAnyAccess(['school'])) {
+                $school = School::find($id);
+                return View::make('school.edit')->with('school', $school);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
@@ -252,7 +248,7 @@ class SchoolController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
@@ -283,7 +279,7 @@ class SchoolController extends \BaseController
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return View::make('calendar.index', [], 401);
+                return Response::view('calendar.index', [], 401);
             }
         } else {
             return Response::view('landing', [], 401);
