@@ -94,9 +94,9 @@ class UserController extends \BaseController {
                     return Redirect::back()->withInput();
                 }
             } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                return Response::view('landing', [], 404);
+                return Redirect::route('landing');
             } catch (ModelNotFoundException $ex) {
-                return Response::view('landing', [], 404);
+                return Redirect::route('landing');
             }
         } else if ($method == 'POST') {
 
@@ -146,7 +146,7 @@ class UserController extends \BaseController {
                 }
             } else {
                 // The provided password reset code is invalid
-                return Response::view('landing', [], 400);
+                return Redirect::route('landing');
             }
         }
     }
@@ -392,7 +392,7 @@ class UserController extends \BaseController {
                 return Redirect::route('user.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -460,11 +460,11 @@ class UserController extends \BaseController {
             } else {
 
                 // If no permissions, redirect to calendar index
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
             // If not logged in, redirect to the login screen
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -526,7 +526,7 @@ class UserController extends \BaseController {
             }
         } else {
             // If not logged in, redirect to the login screen
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -572,7 +572,7 @@ class UserController extends \BaseController {
 
         } else {
             // If not logged in, redirect to the login screen
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -679,7 +679,7 @@ class UserController extends \BaseController {
             }
         } else {
             // If not logged in, redirect to the login screen
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -757,7 +757,7 @@ class UserController extends \BaseController {
             }
         } else {
             // If not logged in, redirect to the login screen
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -803,7 +803,7 @@ class UserController extends \BaseController {
             }
         } else {
             // If not logged in, redirect to the login screen
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 }

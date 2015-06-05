@@ -15,7 +15,7 @@ class CalendarController extends \BaseController
     {
         if (!Sentry::check()) {
             // User is not logged in, or is not activated
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         } else {
             return View::make('calendar.index');
         }
@@ -29,7 +29,7 @@ class CalendarController extends \BaseController
     {
         if (!Sentry::check()) {
             // User is not logged in, or is not activated
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         } else {
             // Gets all appointments from the school
             $user = Sentry::getUser();
@@ -98,10 +98,10 @@ class CalendarController extends \BaseController
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -110,8 +110,6 @@ class CalendarController extends \BaseController
      *
      * @return Response
      */
-
-    // TODO: Add functionality for parent_events for repeating events, also handle these in the Update and Edit methods
     public function store()
     {
         if (Sentry::check()) {
@@ -253,7 +251,6 @@ class CalendarController extends \BaseController
                                 $event->group_id    = $group_id;
                                 $event->start_date  = $sd;
                                 $event->end_date    = $ed;
-
                                 $event->save();
                                 return Redirect::route('calendar.index');
                             }
@@ -262,10 +259,10 @@ class CalendarController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -309,10 +306,10 @@ class CalendarController extends \BaseController
                 return View::make('calendar.edit')->with('groups', $smartgroup)->with('event', $event);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -380,6 +377,35 @@ class CalendarController extends \BaseController
                     // If the event isn't the whole day, determine the end date/time
                     //$event->allday = false;
 
+                    // Handle datetime
+                    if(!$start_date) {
+                        $validator->getMessageBag()->add(
+                            'end',
+                            Lang::get('validation.required', ['attribute ' => 'start-date '])
+                        );
+
+                        return Redirect::back()->withErrors($validator)->withInput();
+                    } else {
+                        $sd = new DateTime($start_date . ' ' . $start_time);
+
+                        if ($end_date == '') {
+                            $end_date = $start_date;
+                        }
+                        $ed = new DateTime($end_date . ' ' . $end_time);
+
+                        // Check if end date is before start date, if so, return with error
+                        if ($sd >= $ed) {
+
+                            $validator->getMessageBag()->add(
+                                'end',
+                                Lang::get('validation.after', ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
+                            );
+
+                            // Redirect back with inputs and validator instance
+                            return Redirect::back()->withErrors($validator)->withInput();
+                        }
+                    }
+
                     // Recurring events handling
                     if ($event->parent_id) {
                         if($parents) {
@@ -397,117 +423,30 @@ class CalendarController extends \BaseController
                                 'location'      => $location,
                                 'group_id'      => $group_id
                             ]);
-
                         } else {
                             // If event had a parent_id, but the checkbox was unchecked, unlink event from parent
                             $event->parent_id   = null;
-                            $event->title       = $title;
-                            $event->description = $description;
-                            $event->location    = $location;
-                            $event->group_id    = $group_id;
-                            $event->save();
-                        }
-
-                        return Response::view('calendar.index');
-
-                    } else {
-
-                        if(!$start_date) {
-                            $validator->getMessageBag()->add(
-                                'end',
-                                Lang::get('validation.required', ['attribute ' => 'start-date '])
-                            );
-
-                            return Redirect::back()->withErrors($validator)->withInput();
-                        } else {
-                            $sd = new DateTime($start_date . ' ' . $start_time);
-
-                            if($end_date == '') {
-                                $end_date = $start_date;
-                            }
-                            $ed = new DateTime($end_date . ' ' . $end_time);
-
-                            // Check if end date is before start date, if so, return with error
-                            if($sd >= $ed) {
-
-                                $validator->getMessageBag()->add(
-                                    'end',
-                                    Lang::get('validation.after', ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
-                                );
-
-                                // Redirect back with inputs and validator instance
-                                return Redirect::back()->withErrors($validator)->withInput();
-
-                            } else {
-                                $event->title       = $title;
-                                $event->description = $description;
-                                $event->location    = $location;
-                                $event->group_id    = $group_id;
-                                $event->start_date  = $sd;
-                                $event->end_date    = $ed;
-
-                                $event->update();
-                                return Redirect::route('calendar.index');
-                            }
-                        }
-                    }
-                /*
-                    // If validator succeeds, prepare event object to be updated in the database
-                    $event->title       = e(Input::get('title'));
-                    $event->description = e(Input::get('description'));
-                    $event->start_date  = new DateTime(Input::get('start'));
-
-                    if (Input::get('day')) {
-                        $event->allday = true;
-
-                    } else {
-                        $event->allday = false;
-                        // If end-date is blank (____/__/__...), or if it's the same as the start-date/time,
-                        // then end-date = start-date + 1h
-                        if ((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start'))) {
-                            $event->end_date = new DateTime(Input::get('start'));
-                            $event->end_date->add(new DateInterval('PT1H'));
-
-                        } elseif (new DateTime(Input::get('start')) >= new DateTime(Input::get('end'))) {
-                            // Add an error message in the message collection (MessageBag instance)
-                            $validator->getMessageBag()->add(
-                                'end',
-                                Lang::get('validation.after', ['attribute ' => 'end ', 'date' => Input::get('start')])
-                            );
-
-                            // Redirect back with inputs and validator instance
-                            return Redirect::back()->withErrors($validator)->withInput();
-
-                        } else {
-                            $event->end_date = new DateTime(Input::get('end'));
                         }
                     }
 
-                    // Recurring events handling
-                    if (Input::get('repeat') && Input::get('nr_repeat')) {
-                        $event->nr_repeat   = Input::get('nr_repeat');
-                        $event->repeat_type = e(Input::get('repeat_type'));
-                        $event->repeat_freq = Input::get('repeat_freq');
-                    } else {
-                        $event->nr_repeat   = null;
-                        $event->repeat_type = null;
-                        $event->repeat_freq = null;
-                    }
-
-                    $event->group_id = Input::get('group');
+                    $event->title       = $title;
+                    $event->description = $description;
+                    $event->location    = $location;
+                    $event->group_id    = $group_id;
+                    $event->start_date  = $sd;
+                    $event->end_date    = $ed;
                     $event->save();
 
                     return Redirect::route('calendar.index');
-                */}
+                }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
-
 
     /**
      * Remove the specified appointment from storage.
@@ -525,13 +464,11 @@ class CalendarController extends \BaseController
             // Check if User belongs to group/school which the appointment is from
             if ($user->hasAccess('school') || ($user->hasAccess('event') && $user->school_id == $event->group->school_id)) {
                 $event->delete();
-                return View::make('calendar.index');
-            } else {
-                // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
             }
+
+            return Redirect::route('calendar.index');
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 

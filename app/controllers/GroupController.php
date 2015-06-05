@@ -41,10 +41,10 @@ class GroupController extends \BaseController
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
 
     }
@@ -77,12 +77,12 @@ class GroupController extends \BaseController
                     return View::make('group.createGroup')->with('schools', null);
                 } else {
                     // If no permissions, redirect the user to the calendar index page
-                    return Response::view('calendar.index', [], 401);
+                    return Redirect::route('calendar.index');
                 }
             }
         } else {
             // If no permissions, redirect to calendar index
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -155,11 +155,11 @@ class GroupController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
             // If no permissions, redirect to calendar index
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -215,11 +215,11 @@ class GroupController extends \BaseController
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
             // If no permissions, redirect to calendar index
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -300,11 +300,11 @@ class GroupController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
             // If no permissions, redirect to calendar index
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -339,7 +339,7 @@ class GroupController extends \BaseController
 
             return Redirect::route('group.index');
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 

@@ -173,8 +173,6 @@
     </div>
   </div>
   <div id="backdrop" class="hidden"></div>
-  <div id="siteurl" class="hidden">{{ URL::to('/'); }}</div>
-
 
 {{ HTML::script("js/build/production.min.js") }}
 @yield('footerScript')

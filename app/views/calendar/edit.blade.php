@@ -88,7 +88,7 @@
             <div class="col-md-offset-2 col-sm-12 col-md-5">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="par" id="par" {{ ($event->parent_id?'checked':'')}}> Pas alle gelijkaardige activiteiten aan
+                        <input type="checkbox" name="par" id="par" checked> Pas alle gelijkaardige activiteiten aan
                     </label>
                 </div>
             </div>

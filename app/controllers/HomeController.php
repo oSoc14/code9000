@@ -20,9 +20,10 @@ class HomeController extends BaseController
     {
         // Check if user is logged in/activated
         if (Sentry::check()) {
-            return Response::view('calendar.index', [], 401);
+            return Redirect::route('calendar.index');
         } else {
-            return View::make('landing');
+            $schoolsArray = School::lists('name', 'id');
+            return View::make('landing')->with('schools', $schoolsArray);
         }
     }
 }

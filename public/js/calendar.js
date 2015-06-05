@@ -4,8 +4,6 @@
 
 $(document).ready(function () {
 
-    var home = $('#siteurl').html();
-
   // When resizing the window, get the correct view.
   $(window).resize(function () {
     getCalendarView();
@@ -20,7 +18,7 @@ $(document).ready(function () {
     $('#addEvent').hide();
     $.ajax({
       type: "GET",
-      url: home + "/calendar/api/events",
+      url: "calendar/api/events",
       cache: false,
       dataType: "json",
       contentType: "application/json",
@@ -60,7 +58,9 @@ $(document).ready(function () {
         getCalendarView();
       },
       error: function (xhr, status, errorThrown) {
-        console.log(status + ', ' + errorThrown);
+          $('#preloader').hide();
+          alert('Failed to load data...');
+          console.log(status + ', ' + errorThrown);
       }
     });
   }
@@ -206,20 +206,16 @@ $(document).ready(function () {
         $('#groupName').text(calEvent.groupName);
 
         // Fix links
-        $('#editEvent').attr('href', home + '/calendar/event/edit/' + calEvent.id);
-        $('#icalEvent').attr('href', home + '/export/appointment/find/' + calEvent.id);
-        $('#deleteEvent').attr('data-href', home + '/calendar/event/delete/' + calEvent.id);
+        $('#editEvent').attr('href', 'calendar/event/edit/' + calEvent.id);
+        $('#icalEvent').attr('href', 'export/appointment/find/' + calEvent.id);
+        $('#deleteEvent').attr('data-href', 'calendar/event/delete/' + calEvent.id);
       },
       loading: function (bool) {
 
       },
       dayClick: function(date, jsEvent, view) {
 
-        alert('Clicked on: ' + date.format());
-
-        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-
-        alert('Current view: ' + view.name);
+        alert('Clicked on: ' + date.format('DD-MM-YYYY'));
 
         // change the day's background color just for fun
         $(this).css('background-color', 'red');

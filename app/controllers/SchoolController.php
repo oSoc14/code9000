@@ -28,10 +28,10 @@ class SchoolController extends \BaseController
                 return View::make('school.index')->with('schools', $schools);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -162,10 +162,10 @@ class SchoolController extends \BaseController
                 return View::make('school.detail')->with('school', $school);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -188,10 +188,10 @@ class SchoolController extends \BaseController
                 return View::make('school.edit')->with('school', $school);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -248,10 +248,10 @@ class SchoolController extends \BaseController
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 
@@ -279,10 +279,10 @@ class SchoolController extends \BaseController
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Response::view('calendar.index', [], 401);
+                return Redirect::route('calendar.index');
             }
         } else {
-            return Response::view('landing', [], 401);
+            return Redirect::route('landing');
         }
     }
 

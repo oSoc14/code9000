@@ -13,8 +13,9 @@
             <h1>{{ucfirst(trans('educal.users'))}}</h1>
         </div>
         <div class="col-xs-6">
-            <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right hidden-xs" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> {{ucfirst(trans('educal.adduser'))}}</a>
-            <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right visible-xs" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i></a>
+            <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right" data-toggle="modal" data-target="#registerUserModal">
+                <i class="fa fa-plus"></i> <span class="hidden-xs">{{ucfirst(trans('educal.adduser'))}}</span>
+            </a>
         </div>
     </div>
   <div class="row">
