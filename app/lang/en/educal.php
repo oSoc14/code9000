@@ -20,13 +20,15 @@ return array(
     'contact' => 'contact',
     'errors' => 'Errors',
     'short' => 'shortcode',
-    'startdate' => 'startdate',
-    'enddate' => 'enddate',
+    'startdate' => 'start date',
+    'enddate' => 'end date',
     'date' => 'date',
+    'loggedinas' => 'Currently logged in as: ',
 
     'delete' => 'delete',
     'cancel' => 'cancel',
     'confirmation' => 'confirmation',
+    'confirm' => 'confirm',
     'confirmationmsg' => 'Are you sure you want to delete this item?',
 
     'email' => 'Email address',
@@ -83,7 +85,7 @@ return array(
 
     'title' => 'title',
     'description' => 'description',
-    'allday' => 'al day',
+    'allday' => 'all day',
     'repeatingevent' => 'repeating event',
     'every' => 'every',
     'until' => 'util',
@@ -92,6 +94,8 @@ return array(
     'name' => 'name',
     'firstname' => 'first name',
     'surname' => 'surname',
+    'schoolinfo' => 'School Information',
+    'personalinfo' => 'Personal Information',
 
 
     'editgroup' => 'edit group',

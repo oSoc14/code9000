@@ -12,31 +12,36 @@ class IcalCalendarController extends \BaseController
      * Find correct appointments depending on $school and $group
      * Process these appointments and render them to an .ics file which will be returned for download
      *
+     * @param  string $id
      * @param  string $school
      * @param  string $group
      * @return cal.ics download file
      *
      */
-    public function index($school, $group)
+    public function index($id, $school, $group)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
 
+        // TODO: Change group handling, base it off group and school ID
+        // TODO: Add support for entire school export (all groups)
         // Load appointments based on group
-        $selGroup = Group::where('name', $school . '_' . $group)->first();
-        $selGroup->load('appointments');
+        $selGroup = Group::where('id', $id)->first();
+        $selGroup->load('appointments', 'school');
+        $grp = str_replace('__' . $selGroup->school->id, '', $selGroup->name);
 
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
         $dend = new DateTime();
 
+        // TODO: Make this better (1 year static range isn't good)
         // In this case we set the limit to 1 year in the past until 1 year in the future
-        $dsta->sub(new DateInterval("P1Y"));
+        $dsta->sub(new DateInterval("P1M"));
         $dend->add(new DateInterval("P1Y"));
 
         // Add global appointments, unless only global appointments are requested
-        if ($group != 'global') {
-            $globalGroup = Group::where('name', $school . '_global')->first();
+        if ($grp != $selGroup->school->name) {
+            $globalGroup = Group::where('name', $selGroup->school->name . '__' . $selGroup->school->id)->first();
             $globalGroup->load('appointments');
 
             foreach ($globalGroup->appointments as $appointment) {
@@ -79,11 +84,14 @@ class IcalCalendarController extends \BaseController
         date_default_timezone_set('Europe/Berlin');
 
         // Create new calendar object
-        $calendar = new \Eluceo\iCal\Component\Calendar('EduCal');
+        $calendar = new \Eluceo\iCal\Component\Calendar('-//Open Knowledge//EduCal//NL');
+        // TODO: Define a good name for the Calendar (group name or smth)
+        $calendar->setName("EduCal Calendar");
 
         // Loop through appointments and add them to the calendar.
         foreach ($appointments as $appointment) {
 
+            // TODO: Add location
             // Create an event
             $event = new \Eluceo\iCal\Component\Event();
             $event->setSummary($appointment['attributes']['title']);
@@ -91,11 +99,16 @@ class IcalCalendarController extends \BaseController
             $event->setDtStart(new \DateTime($appointment['attributes']['start_date']));
             $event->setDtEnd(new \DateTime($appointment['attributes']['end_date']));
             $event->setNoTime($appointment['attributes']['allday']);
-            $event->setStatus('TENTATIVE');
+
+            // Generate unique ID apIDed
+            $uid = 'ap' . $appointment['attributes']['id'] . 'ed';
+            $event->setUniqueId($uid);
+
+            //$event->setStatus('TENTATIVE');
 
             // Recurrence option (e.g. New Year happens every year)
             // Set recurrence rule
-            if ($appointment['attributes']['repeat_type']) {
+            /* if ($appointment['attributes']['repeat_type']) {
 
                 $recurrenceRule = new \Eluceo\iCal\Property\Event\RecurrenceRule();
                 // Check the repeat type (day, week, month, year) and set the corresponding recurrence rule
@@ -118,7 +131,7 @@ class IcalCalendarController extends \BaseController
                 $recurrenceRule->setCount($appointment['attributes']['nr_repeat']);
 
                 $event->setRecurrenceRule($recurrenceRule);
-            }
+            } */
 
             // Adding Timezone (optional)
             $event->setUseTimezone(true);

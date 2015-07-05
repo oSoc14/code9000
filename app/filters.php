@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest())
+	if (!Sentry::getUser())
 	{
 		if (Request::ajax())
 		{
@@ -43,16 +43,11 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+            return Redirect::to('/');
 		}
 	}
 });
 
-
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -87,4 +82,32 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+/*
+ * -------------------------------------------------------------------------
+ * Admin Filter
+ * -------------------------------------------------------------------------
+ * Check whether the user is an admin (read SuperAdmin, with all permissions)
+ * If user is not an admin, redirect them back to calendar, as user, or to
+ * the landing, as guest.
+ */
+
+Route::filter('admin', function()
+{
+    $user = Sentry::getUser();
+
+    if($user) {
+        if(!$user->hasAccess('school')) {
+            return Redirect::route('landing');
+        }
+    } else {
+        return Redirect::route('landing');
+    }
+});
+
+Route::filter('groupadmin', function($route, $request, $value)
+{
+    $user = Sentry::getUser();
+    $param = $route->getParameter('param');
 });

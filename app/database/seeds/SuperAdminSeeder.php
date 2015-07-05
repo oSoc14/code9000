@@ -1,6 +1,6 @@
 <?php
 
-class UserTableSeeder extends Seeder {
+class SuperAdminSeeder extends Seeder {
 
     /**
      * Run the groupTable seeds.
@@ -10,6 +10,16 @@ class UserTableSeeder extends Seeder {
     public function run()
     {
         Eloquent::unguard();
+
+        Sentry::createGroup(array(
+            'name'        => 'superadmin',
+            'permissions' => array(
+                'school'    => 1,
+                'user'      => 1,
+                'group'    => 1,
+                'event'    => 1,
+            ),
+        ));
 
         Sentry::createUser(array(
             'email'    => 'john.doe@example.com',

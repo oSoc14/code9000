@@ -18,23 +18,17 @@
       <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
         <thead>
           <tr>
-            <th class="hidden-xs">#</th>
             <th data-class="expand">{{ucfirst(trans('educal.name'))}}</th>
             <th data-hide="phone" data-name="{{ucfirst(trans('educal.city'))}}">{{ucfirst(trans('educal.city'))}}</th>
-            <th data-hide="phone,tablet" data-name="{{ucfirst(trans('educal.short'))}}">{{ucfirst(trans('educal.short'))}}</th>
             <th data-hide="phone,tablet" data-name="{{ucfirst(trans('educal.#ofgroups'))}}">{{ucfirst(trans('educal.#ofgroups'))}}</th>
             <th data-hide="phone" data-name="{{ucfirst(trans('educal.actions'))}}">{{ucfirst(trans('educal.actions'))}}</th>
           </tr>
         </thead>
         <tbody>
-        <?php $i=0; ?>
         @foreach($schools as $school)
-        <?php $i++; ?>
         <tr>
-          <td class="hidden-xs">{{ $i }}</td>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
           <td>{{ $school->city }}</td>
-          <td>{{$school->short}}</td>
           <td>{{count($school->groups)}}</td>
           <td>
             <a href="{{ route('school.edit', $school->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
@@ -71,10 +65,23 @@
 {{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
 {{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
 {{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
-
 {{ HTML::script('js/app.js') }}
 
-@if(Session::get('lang') == 'nl')
+<?php
+if(Session::get('lang') == 'nl') {
+    $js = 'Dutch';
+} elseif(Session::get('lang') == 'en') {
+    $js = 'English';
+} elseif(Session::get('lang') == 'fr') {
+    $js = 'French';
+}
+// Paging hack, disable paging when there's less than 10 results
+if(count($schools) > 10) {
+    $pag = true;
+} else {
+    $pag = false;
+}
+?>
 <script>
   $(document).ready(function() {
     var responsiveHelper;
@@ -85,12 +92,14 @@
     var tableElement = $('#groupTable');
     tableElement.dataTable({
       "language": {
-        "url": "packages/datatables/lang/Dutch.json"
+        "url": "packages/datatables/lang/{{$js}}.json"
       },
       "aoColumnDefs": [
-        {"bSortable": false, "aTargets": [2]}
+        {"bSortable": false, "aTargets": [2, 3]}
       ],
       autoWidth        : false,
+      {{ 'paging: '.($pag ? 'true' : 'false').','; }}
+      {{ 'info: '.($pag ? 'true' : 'false').','; }}
       preDrawCallback: function () {
         // Initialize the responsive datatables helper once.
         if (!responsiveHelper) {
@@ -106,102 +115,4 @@
     });
   } );
 </script>
-@elseif(Session::get('lang') == 'en')
-<script>
-  $(document).ready(function() {
-    var responsiveHelper;
-    var breakpointDefinition = {
-      tablet: 1024,
-      phone : 480
-    };
-    var tableElement = $('#groupTable');
-    tableElement.dataTable({
-      "language": {
-        "url": "packages/datatables/lang/English.json"
-      },
-      "aoColumnDefs": [
-        {"bSortable": false, "aTargets": [2]}
-      ],
-      autoWidth        : false,
-      preDrawCallback: function () {
-        // Initialize the responsive datatables helper once.
-        if (!responsiveHelper) {
-          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-        }
-      },
-      rowCallback    : function (nRow) {
-        responsiveHelper.createExpandIcon(nRow);
-      },
-      drawCallback   : function (oSettings) {
-        responsiveHelper.respond();
-      }
-    });
-  } );
-</script>
-@elseif(Session::get('lang') == 'fr')
-<script>
-  $(document).ready(function() {
-    var responsiveHelper;
-    var breakpointDefinition = {
-      tablet: 1024,
-      phone : 480
-    };
-    var tableElement = $('#groupTable');
-    tableElement.dataTable({
-      "language": {
-        "url": "packages/datatables/lang/French.json"
-      },
-      "aoColumnDefs": [
-        {"bSortable": false, "aTargets": [2]}
-      ],
-      autoWidth        : false,
-      preDrawCallback: function () {
-        // Initialize the responsive datatables helper once.
-        if (!responsiveHelper) {
-          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-        }
-      },
-      rowCallback    : function (nRow) {
-        responsiveHelper.createExpandIcon(nRow);
-      },
-      drawCallback   : function (oSettings) {
-        responsiveHelper.respond();
-      }
-    });
-  } );
-</script>
-@elseif(Session::get('lang') == 'de')
-<script>
-  $(document).ready(function() {
-    var responsiveHelper;
-    var breakpointDefinition = {
-      tablet: 1024,
-      phone : 480
-    };
-    var tableElement = $('#groupTable');
-    tableElement.dataTable({
-      "language": {
-        "url": "packages/datatables/lang/German.json"
-      },
-      "aoColumnDefs": [
-        {"bSortable": false, "aTargets": [2]}
-      ],
-      autoWidth        : false,
-      preDrawCallback: function () {
-        // Initialize the responsive datatables helper once.
-        if (!responsiveHelper) {
-          responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-        }
-      },
-      rowCallback    : function (nRow) {
-        responsiveHelper.createExpandIcon(nRow);
-      },
-      drawCallback   : function (oSettings) {
-        responsiveHelper.respond();
-      }
-    });
-  } );
-</script>
-@endif
 @stop
-

@@ -46,14 +46,13 @@
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
 </head>
 <body>
-
 <div class="page-container">
 
 <div class="container-fluid">
   <div class="row introduction-container">
     <div class="col-xs-12 introduction-content">
       <h1 class="hidden">EduCal</h1>
-      <img src="images/logo_educal.png" alt="Logo" />
+    {{ HTML::image('images/logo_educal.png', 'Logo') }}
       <p class="lead">{{trans('educal.lead')}}</p>
       <div class="button-container">
         <a href="#" class="btn btn-lg btn-default btn-educal-warning" data-toggle="modal" data-target="#loginModal">{{ucfirst(trans('educal.login'))}} <i class="fa fa-sign-in"></i></a> {{trans('educal.or')}}
@@ -300,10 +299,31 @@
               'route' => 'school.store',
               'data-ajax' => 'true',
               ]), PHP_EOL }}
+                  <h3>{{ucfirst(trans('educal.personalinfo'))}}</h3>
+                  <hr>
+              <div class="form-group">
+                  {{Form::label('per-name', ucfirst(trans('educal.name')))}}
+                  {{Form::text('per-name', null , ['class'=>'form-control'])}}
+              </div>
+              <div class="form-group">
+                  {{Form::label('per-surname', ucfirst(trans('educal.surname')))}}
+                  {{Form::text('per-surname', null , ['class'=>'form-control'])}}
+              </div>
               <div class="form-group">
                 {{Form::label('semail', ucfirst(trans('educal.email')))}}
                 {{Form::email('semail', null , ['class'=>'form-control'])}}
               </div>
+              <div class="form-group">
+                  <label for="school-password">{{ucfirst(trans('educal.password'))}}</label>
+                  <input type="password" class="form-control" id="school-password" name="password">
+              </div>
+              <div class="form-group">
+                  <label for="school-password-confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
+                  <input type="password" class="form-control" id="school-password-confirmation" name="password_confirmation">
+              </div>
+
+                  <h3>{{ucfirst(trans('educal.schoolinfo'))}}</h3>
+                  <hr>
               <div class="form-group">
                 {{Form::label('sname', ucfirst(trans('educal.name')))}}
                 {{Form::text('sname', null , ['class'=>'form-control'])}}
@@ -312,14 +332,6 @@
               <div class="form-group">
                 {{Form::label('city', ucfirst(trans('educal.city')))}}
                 {{Form::text('city', null , ['class'=>'form-control'])}}
-              </div>
-              <div class="form-group">
-                <label for="school-password">{{ucfirst(trans('educal.password'))}}</label>
-                <input type="password" class="form-control" id="school-password" name="password">
-              </div>
-              <div class="form-group">
-                <label for="school-password-confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
-                <input type="password" class="form-control" id="school-password-confirmation" name="password_confirmation">
               </div>
               <div class="checkbox">
                 <label>
@@ -335,7 +347,7 @@
       </div>
 
     </div>
-
+  </div>
 
     {{ HTML::script("js/jquery-1.11.1.min.js") }}
     {{ HTML::script("js/bootstrap.min.js") }}

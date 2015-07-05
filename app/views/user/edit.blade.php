@@ -41,7 +41,7 @@
             <div class="form-group">
                 {{Form::label('email', ucfirst(trans('educal.email')), array('class'=>'col-md-2 control-label'))}}
                 <div class="col-md-8">
-                    {{Form::email('email', $user->email , ['class'=>'form-control', 'placeholder'=>$user->email])}}
+                    {{Form::email('email', $user->email , ['class'=>'form-control', 'placeholder'=>$user->email, 'autocomplete' => 'off'])}}
                 </div>
             </div>
             @if($user->id == Sentry::getUser()->id)

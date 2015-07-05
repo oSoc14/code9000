@@ -13,8 +13,9 @@
             <h1>{{ucfirst(trans('educal.users'))}}</h1>
         </div>
         <div class="col-xs-6">
-            <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right hidden-xs" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i> {{ucfirst(trans('educal.adduser'))}}</a>
-            <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right visible-xs" data-toggle="modal" data-target="#registerUserModal"><i class="fa fa-plus"></i></a>
+            <a href="#" class="btn btn-lg btn-default btn-educal-warning pull-right" data-toggle="modal" data-target="#registerUserModal">
+                <i class="fa fa-plus"></i> <span class="hidden-xs">{{ucfirst(trans('educal.adduser'))}}</span>
+            </a>
         </div>
     </div>
   <div class="row">
@@ -22,7 +23,6 @@
       <table id="groupTable" class="table content-table" cellspacing="0" width="100%">
         <thead>
         <tr>
-          <th class="hidden-xs">#</th>
           <th data-class="expand">{{ucfirst(trans('educal.firstname'))}}</th>
           <th>{{ucfirst(trans('educal.surname'))}}</th>
           <th data-hide="phone,tablet" data-name="{{ucfirst(trans('educal.email'))}}">{{ucfirst(trans('educal.email'))}}</th>
@@ -35,7 +35,6 @@
                 @foreach($users as $user)
                 <?php $i++; ?>
                 <tr>
-                    <td class="hidden-xs">{{ $i }}</td>
                     <td>{{ $user->first_name }}</td>
                     <td>{{ $user->last_name }}</td>
                     <td>{{ $user->email }}</td>
@@ -153,8 +152,22 @@
   {{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
 
   {{ HTML::script('js/app.js') }}
+<?php
+    if(Session::get('lang') == 'nl') {
+        $js = 'Dutch';
+    } elseif(Session::get('lang') == 'en') {
+        $js = 'English';
+    } elseif(Session::get('lang') == 'fr') {
+        $js = 'French';
+    }
 
-    @if(Session::get('lang') == 'nl')
+    // Paging hack, disable paging when there's less than 10 results
+    if(count($users) > 10) {
+        $pag = true;
+    } else {
+        $pag = false;
+    }
+?>
     <script>
       $(document).ready(function() {
         var responsiveHelper;
@@ -165,12 +178,14 @@
         var tableElement = $('#groupTable');
         tableElement.dataTable({
           "language": {
-            "url": "packages/datatables/lang/Dutch.json"
+            "url": "packages/datatables/lang/{{$js}}.json"
           },
           "aoColumnDefs": [
-            {"bSortable": false, "aTargets": [2]}
+            {"bSortable": false, "aTargets": [3, 4]}
           ],
           autoWidth        : false,
+          {{ 'paging: '.($pag ? 'true' : 'false').','; }}
+          {{ 'info: '.($pag ? 'true' : 'false').','; }}
           preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper) {
@@ -186,101 +201,4 @@
         });
       } );
     </script>
-    @elseif(Session::get('lang') == 'en')
-    <script>
-      $(document).ready(function() {
-        var responsiveHelper;
-        var breakpointDefinition = {
-          tablet: 1024,
-          phone : 480
-        };
-        var tableElement = $('#groupTable');
-        tableElement.dataTable({
-          "language": {
-            "url": "packages/datatables/lang/English.json"
-          },
-          "aoColumnDefs": [
-            {"bSortable": false, "aTargets": [2]}
-          ],
-          autoWidth        : false,
-          preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper) {
-              responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-            }
-          },
-          rowCallback    : function (nRow) {
-            responsiveHelper.createExpandIcon(nRow);
-          },
-          drawCallback   : function (oSettings) {
-            responsiveHelper.respond();
-          }
-        });
-      } );
-    </script>
-    @elseif(Session::get('lang') == 'fr')
-    <script>
-      $(document).ready(function() {
-        var responsiveHelper;
-        var breakpointDefinition = {
-          tablet: 1024,
-          phone : 480
-        };
-        var tableElement = $('#groupTable');
-        tableElement.dataTable({
-          "language": {
-            "url": "packages/datatables/lang/French.json"
-          },
-          "aoColumnDefs": [
-            {"bSortable": false, "aTargets": [2]}
-          ],
-          autoWidth        : false,
-          preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper) {
-              responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-            }
-          },
-          rowCallback    : function (nRow) {
-            responsiveHelper.createExpandIcon(nRow);
-          },
-          drawCallback   : function (oSettings) {
-            responsiveHelper.respond();
-          }
-        });
-      } );
-    </script>
-    @elseif(Session::get('lang') == 'de')
-    <script>
-      $(document).ready(function() {
-        var responsiveHelper;
-        var breakpointDefinition = {
-          tablet: 1024,
-          phone : 480
-        };
-        var tableElement = $('#groupTable');
-        tableElement.dataTable({
-          "language": {
-            "url": "packages/datatables/lang/German.json"
-          },
-          "aoColumnDefs": [
-            {"bSortable": false, "aTargets": [2]}
-          ],
-          autoWidth        : false,
-          preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper) {
-              responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-            }
-          },
-          rowCallback    : function (nRow) {
-            responsiveHelper.createExpandIcon(nRow);
-          },
-          drawCallback   : function (oSettings) {
-            responsiveHelper.respond();
-          }
-        });
-      } );
-    </script>
-    @endif
 @stop

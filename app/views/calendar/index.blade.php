@@ -12,16 +12,10 @@
             <h1>{{ucfirst(trans('educal.calendar'))}}</h1>
         </div>
         <div class="col-xs-6 col-lg-5">
-
-            @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
-            <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right hidden-xs" href="{{route
-('event.create')}}" id="addEvent">
-              <i class="fa fa-plus"></i> {{ucfirst(trans('educal.addevent'))}}
+            @if(Sentry::getUser()->hasAnyAccess(['school','event']))
+            <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route('event.create')}}" id="addEvent">
+              <i class="fa fa-plus"></i> <span class="hidden-xs">{{ucfirst(trans('educal.addevent'))}}</span>
             </a>
-          <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right visible-xs" href="{{route
-('event.create')}}" id="addEvent">
-            <i class="fa fa-plus"></i>
-          </a>
             @endif
         </div>
     </div>
@@ -51,7 +45,7 @@
                 <p id="eventDescription" class="lead"></p>
                 <p><strong>{{ucfirst(trans('educal.starts'))}}:</strong> <span id="eventStart"></span></p>
                 <p id="eventEnds"><strong>{{ucfirst(trans('educal.ends'))}}:</strong> <span id="eventEnd"></span></p>
-                @if(Sentry::getUser()->hasAnyAccess(array('school','event')))
+                @if(Sentry::getUser()->hasAnyAccess(['school','event']))
                 <a type="button" class="btn btn-default btn-educal-warning" href="" id="editEvent">
                   <i class="fa fa-edit"></i> {{ucfirst(trans('educal.editevent'))}}
                 </a>
