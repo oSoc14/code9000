@@ -22,12 +22,12 @@ Route::get('/', [
 ]);
 
 // About page
-Route::get('about', ['as' => 'about', function() {
+Route::get('about', ['as' => 'about', 'before' => 'auth', function() {
     return View::make('about');
 }]);
 
 // Info page
-Route::get('help', ['as' => 'help', function() {
+Route::get('help', ['as' => 'help', 'before' => 'auth', function() {
   return View::make('help');
 }]);
 
@@ -41,13 +41,15 @@ Route::group(['prefix' => 'school'], function () {
     // List all schools
     Route::get('/', [
         'as'   => 'school.index',
-        'uses' => 'SchoolController@index'
+        'uses' => 'SchoolController@index',
+        'before' => 'admin'
     ]);
 
     // Show details of a certain school
     Route::get('/{id}', [
         'as'   => 'school.detail',
-        'uses' => 'SchoolController@show'
+        'uses' => 'SchoolController@show',
+        'before' => 'admin'
     ])->where('id', '[0-9]+');
 
     // Show the view to edit a school
@@ -59,13 +61,15 @@ Route::group(['prefix' => 'school'], function () {
     // Update a school
     Route::post('/edit/{id}', [
         'as'   => 'school.update',
-        'uses' => 'SchoolController@update'
+        'uses' => 'SchoolController@update',
+        'before' => 'admin'
     ])->where('id', '[0-9]+');
 
     // Delete a school
     Route::get('/delete/{id}', [
         'as'   => 'school.delete',
-        'uses' => 'SchoolController@destroy'
+        'uses' => 'SchoolController@destroy',
+        'before' => 'admin'
     ])->where('id', '[0-9]+');
 });
 
@@ -261,10 +265,10 @@ Route::group(['prefix' => 'group'], function()
 Route::group(['prefix' => 'export'], function()
 {
     // iCal Export route for a certain class
-    Route::get('/{school}/{class}', [
+    Route::get('/{id}/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'IcalCalendarController@index'
-    ])->where(['school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
+    ])->where(['id' => '[0-9]+', 'school' => '[0-9A-Za-z_\- ]+', 'class' => '[0-9A-Za-z_\- ]+']);
 
     // iCal Export route for a single appointment
     Route::get('/appointment/find/{id}', [
@@ -273,10 +277,10 @@ Route::group(['prefix' => 'export'], function()
     ])->where('id', '[0-9]+');
 
     // PDF Export route for a certain class
-    Route::get('/pdf/{school}/{class}', [
+    Route::get('/pdf/{id}/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'PdfCalendarController@index'
-    ])->where(['school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
+    ])->where(['id' => '[0-9]+', 'school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
 
     // PDF Export route for a single appointment
     Route::get('/appointment/pdf/{id}', [

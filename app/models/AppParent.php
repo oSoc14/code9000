@@ -5,15 +5,15 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class Appointment extends Eloquent  {
+class AppParent extends Eloquent  {
 
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'appointments';
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'parent_appointments';
 
     //returns the group the appointment belongs to
     public function group()
@@ -21,9 +21,8 @@ class Appointment extends Eloquent  {
         return $this->belongsTo('Group');
     }
 
-    public function appparent()
+    public function appointments()
     {
-        return $this->belongsTo('AppParent');
+        return $this->hasMany('Appointment');
     }
-
 }

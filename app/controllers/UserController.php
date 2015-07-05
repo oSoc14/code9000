@@ -18,6 +18,8 @@ class UserController extends \BaseController {
      *
      * @return mixed
      */
+
+    // TODO: Make permissions a lot better
     public function index()
     {
         // If user is logged in, get school_id, find respective users
@@ -128,7 +130,7 @@ class UserController extends \BaseController {
 
                     $validator->getMessageBag()->add('usererror', 'Failed to reset your password.');
 
-                    return Redirect::route('user.resetPassword', array($hash))
+                    return Redirect::route('user.resetPassword', [$hash])
                                 ->withInput()
                                 ->withErrors($validator);
 
@@ -167,7 +169,9 @@ class UserController extends \BaseController {
 
             $resetCode = $user->getResetPasswordCode();
 
-            $url = URL::route('user.resetPassword', array($resetCode));
+            $url = URL::route('user.resetPassword', [$resetCode]);
+
+            // TODO: Make message multilanguage
 
             $message = '<html><body><p>Klik op de volgende link om uw wachtwoord opnieuw in te stellen: <a href="'. $url . '">' . $url . '</a></p></body></html>';
 
@@ -206,10 +210,8 @@ class UserController extends \BaseController {
             // Authenticate the user
             $user = Sentry::authenticate($credentials, false);
 
-
             // If "remember me" is checked, make cookie, if not, don't make a cookie
             if(Input::get('remember')) {
-
                 Sentry::loginAndRemember($user);
             } else {
                 Sentry::login($user);
@@ -461,7 +463,6 @@ class UserController extends \BaseController {
                 return Redirect::route('calendar.index');
             }
         } else {
-
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }

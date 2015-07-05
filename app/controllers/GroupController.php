@@ -18,15 +18,14 @@ class GroupController extends \BaseController
             // Find active user and set default variables to null
             $user       = Sentry::getUser();
             $groups     = null;
-            $schoolName = null;
 
             // Check if user is superAdmin
             if ($user->hasAccess('school')) {
                 $groups     = Group::where('school_id', '<>', '')->get();
-                $schoolName = 'Grouplist';
+                $groups = $groups->load('school');
 
                 // Return view with selected parameters
-                return View::make('group.listGroups')->with('groups', $groups)->with('schoolName', $schoolName);
+                return View::make('group.listGroups')->with('groups', $groups);
 
             } elseif ($user->hasAccess('group')) {
 
@@ -35,15 +34,13 @@ class GroupController extends \BaseController
 
                 // Find all groups with certain school_id
                 $groups = Group::where('school_id', '=', $schoolId)->get();
-
-                // Find selected school and get the name (which will be used as title on the view)
-                $school     = School::where('id', '=', $schoolId)->first();
-                $schoolName = $school->name;
+                $groups = $groups->load('school');
 
                 // Return view with selected parameters
-                return View::make('group.listGroups')->with('groups', $groups)->with('schoolName', $schoolName);
+                return View::make('group.listGroups')->with('groups', $groups);
 
             } else {
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -58,6 +55,8 @@ class GroupController extends \BaseController
      *
      * @return Response
      */
+
+    // TODO: Add colors/codes to groups
     public function create()
     {
         if (Sentry::check()) {
@@ -77,7 +76,7 @@ class GroupController extends \BaseController
                 if ($user->hasAccess('group')) {
                     return View::make('group.createGroup')->with('schools', null);
                 } else {
-                    // If no permissions, redirect to calendar index
+                    // If no permissions, redirect the user to the calendar index page
                     return Redirect::route('calendar.index');
                 }
             }
@@ -111,8 +110,8 @@ class GroupController extends \BaseController
                 }
 
                 // Generate the full groupname (schoolshort_groupshort)
-                $groupFullName = $school->short . '_' . strtolower(e(str_replace(' ','_',Input::get('name'))));
-                $groupFullName = preg_replace('/[^A-Za-z0-9\-_]/', '', $groupFullName);
+                $groupFullName = preg_replace('/[^A-Za-z0-9\-_ ]/', '', Input::get('name'));
+                $groupFullName = $groupFullName . '__' . $school->id;
 
                 // Validate input fields
                 $validator = Validator::make(
@@ -127,27 +126,9 @@ class GroupController extends \BaseController
                     ]
                 );
 
-                // Make a second validator to see if the new group name is unique
-                $validator2 = Validator::make(
-                    [
-                        'name' => $groupFullName,
-                    ],
-                    [
-                        'name' => 'unique:groups,name',
-                    ]
-                );
-
                 // Return correct errors if validators fail
-                if ($validator->fails() || $validator2->fails()) {
-                    if ($validator2->fails()) {
-                        $validator->getMessageBag()->add(
-                            'name',
-                            Lang::get('validation.unique', ['attribute ' => 'name '])
-                        );
-                    }
-
+                if ($validator->fails()) {
                     return Redirect::route('group.create')->withInput()->withErrors($validator);
-
                 } else {
                     // If there are no issues, create a ne group with all the correct parameters
                     $permissions    = [];
@@ -173,7 +154,7 @@ class GroupController extends \BaseController
                     return Redirect::route('group.index');
                 }
             } else {
-                // If no permissions, redirect to calendar index
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -219,7 +200,7 @@ class GroupController extends \BaseController
                         array_push($possibleUsers, $su);
                     }
                 }
-
+                // TODO: If users > 10 , do like this, else, get list with checkboxes if possible
                 // Transform array into usable list for dropdownmenu
                 $smartUsers = [];
                 foreach ($possibleUsers as $pus) {
@@ -233,7 +214,7 @@ class GroupController extends \BaseController
                     ->with('smartUsers', $smartUsers);
 
             } else {
-                // If no permissions, redirect to calendar index
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -263,12 +244,12 @@ class GroupController extends \BaseController
                 $school = $group->school;
 
                 // Get short group name (without the schoolShort in front of it)
-                $grp = str_replace($school->short . '_', '', $group->name);
+                $grp = str_replace('__' . $school->id, '', $group->name);
 
                 // Generate full group name
                 if(Input::get('name') != null) {
-                    $groupFullName = strtolower($school->short . '_' . e(str_replace(' ','_',Input::get('name'))));
-                    $groupFullName = preg_replace('/[^A-Za-z0-9\-_]/', '', $groupFullName);
+                    $groupFullName = preg_replace('/[^A-Za-z0-9\-_ ]/', '', Input::get('name'));
+                    $groupFullName = $groupFullName . '__' . $school->id;
                 } else {
                     $groupFullName = $group->name;
                 }
@@ -277,7 +258,7 @@ class GroupController extends \BaseController
                 // Validate input fields
                 $validator = Validator::make(
                     [
-                        'name' => Input::get('name'),
+                        'name' => e(Input::get('name')),
                         'school' => Input::get('school'),
                         'permissions' => Input::get('permissions')
                     ],
@@ -285,28 +266,14 @@ class GroupController extends \BaseController
                         'school' => 'integer'
                     ]
                 );
-                // Make a second validator to see if the new group name is unique
-                $validator2 = Validator::make(
-                    [
-                        'name' => $groupFullName,
-                    ],
-                    [
-                        'name' => 'unique:groups,name',
-                    ]
-                );
 
                 // Error handling
-                if ($validator->fails() || ($validator2->fails() && $groupFullName != $group->name)) {
-                    if($validator2->fails()) {
-                        $validator->getMessageBag()->add('name', Lang::get('validation.unique', ['attribute ' => 'name']));
-                    }
+                if ($validator->fails()) {
 
                     return Redirect::route('group.edit', $id)->withInput()->withErrors($validator);
 
-
-                } elseif ($grp == 'global' || $grp == 'admin') {
+                } elseif ($grp == $school->name || $grp == 'Administratie') {
                     // Do not allow default groups to be renamed
-
                     return Redirect::route('group.edit', $id);
 
                 } else {
@@ -332,7 +299,7 @@ class GroupController extends \BaseController
                     return Redirect::route('group.edit', $id);
                 }
             } else {
-                // If no permissions, redirect to calendar index
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -359,10 +326,11 @@ class GroupController extends \BaseController
             if ($user->hasAccess('school') || ($user->hasAccess('group') && $user->school_id == $group->school_id)) {
 
                 $school = $group->school;
-                $grp    = str_replace($school->short . '_', '', $group->name);
+                // Get short group name (without the schoolShort in front of it)
+                $grp = str_replace('__' . $school->id, '', $group->name);
 
                 // Do not allow default groups to be deleted
-                if ($grp == 'global' || $grp == 'admin') {
+                if ($grp == $school->name || $grp == 'Administratie') {
                     return Redirect::back();
                 } else {
                     $group->delete();

@@ -30,7 +30,6 @@ class CalendarController extends \BaseController
         if (!Sentry::check()) {
             // User is not logged in, or is not activated
             return Redirect::route('landing');
-
         } else {
             // Gets all appointments from the school
             $user = Sentry::getUser();
@@ -80,11 +79,12 @@ class CalendarController extends \BaseController
                 // If user is a superAdmin, show all possible groups to add an event to
                 if ($user->hasAccess(['school'])) {
                     $groups = Group::where('school_id', '<>', '')->get();
-
+                    $opening = '';
                 } else {
                     // If the user isn't a superAdmin, only show the groups to which the user has permissions
                     $user->load('school.groups.appointments');
                     $groups = $user->school->groups;
+                    $opening = $user->school->opening;
                 }
 
                 // Transform recieved objectList (from database) into array to send with view
@@ -94,7 +94,7 @@ class CalendarController extends \BaseController
                 }
 
                 // Show the form where users can add appointments
-                return View::make('calendar.create')->with('groups', $smartgroup);
+                return View::make('calendar.create')->with('groups', $smartgroup)->with('opening', $opening);
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
@@ -121,25 +121,29 @@ class CalendarController extends \BaseController
             if ($user->hasAnyAccess(['school', 'event'])) {
 
                 $endDate = new DateTime();
-                // Check if endDate isn't blank (____/__/__ __:__)
-                if (Input::get('end') == '____/__/__ __:__') {
+                // Check if endDate isn't blank
+                if (Input::get('end-date') == '') {
                     $endDate = null;
                 }
-                // Validate input fields
+
                 $validator = Validator::make(
                     [
                         'group'       => Input::get('group'),
                         'description' => Input::get('description'),
-                        'start'       => Input::get('start'),
-                        'end'         => $endDate,
+                        'start-date'  => Input::get('start-date'),
+                        'end-date'    => $endDate,
+                        'start-time'  => Input::get('start-time'),
+                        'end-time'    => Input::get('end-time'),
                         'title'       => Input::get('title'),
                         'day'         => Input::get('day')
                     ],
                     [
                         'group'       => 'required',
                         'description' => 'required',
-                        'start'       => 'required|date',
-                        'end'         => 'date',
+                        'start-date'  => 'date',
+                        'end-date'    => 'date',
+                        'start-time'  => 'required|date_format:H:i',
+                        'end-time'    => 'required|date_format:H:i',
                         'title'       => 'required'
                     ]
                 );
@@ -147,58 +151,111 @@ class CalendarController extends \BaseController
                 // If validation fails, return to the create form with errors.
                 if ($validator->fails()) {
                     return Redirect::route('event.create')->withInput()->withErrors($validator);
-
                 } else {
-                    // If inputs are valid, prepare Appointment opbject to be stored
-                    $event              = new Appointment();
-                    $event->title       = e(Input::get('title'));
-                    $event->description = e(Input::get('description'));
-                    $event->start_date  = new DateTime(Input::get('start'));
+                    $title       = e(Input::get('title'));
+                    $description = e(Input::get('description'));
+                    $location    = e(Input::get('location'));
+                    $group_id    = Input::get('group');
+                    $start_date  = e(Input::get('start-date'));
+                    $end_date    = e(Input::get('end-date'));
+                    $start_time  = e(Input::get('start-time'));
+                    $end_time    = e(Input::get('end-time'));
 
-                    // If the all day checkbox is checked, then set the allday field to true
-                    if (Input::get('day')) {
-                        $event->allday = true;
+                    // TODO: Handle All day events, or decide to remove it alltogether
+                    // If the event isn't the whole day, determine the end date/time
+                    //$event->allday = false;
 
-                    } else {
-                        // If the event isn't the whole day, determine the end date/time
-                        $event->allday = false;
+                    // Recurring events handling
+                    if (Input::get('repeat')) {
 
-                        // If the end is empty or equal to the start, we make the event last 1 hour by default
-                        if ((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start'))) {
-                            $event->end_date = new DateTime(Input::get('start'));
-                            $event->end_date->add(new DateInterval('PT1H'));
+                        $dateArray = explode(',', e(Input::get('repeat-dates')));
+                        // Check if there are any dates selected, return error if not
+                        if(count($dateArray) == 0) {
 
-                        } elseif (new DateTime(Input::get('start')) >= new DateTime(Input::get('end'))) {
-                            // If the startDate is greater than the endDate,
-                            // add an error message in the message collection (MessageBag instance)
                             $validator->getMessageBag()->add(
                                 'end',
-                                Lang::get('validation.after', ['attribute ' => 'end ', 'date' => Input::get('start')])
+                                Lang::get('validation.countmin', ['attribute ' => 'Jaarkalender ', 'min' => '1'])
                             );
 
                             // Redirect back with inputs and validator instance
                             return Redirect::back()->withErrors($validator)->withInput();
 
                         } else {
-                            // If there are no further issues, just use the inputted end date/time
-                            $event->end_date = new DateTime(Input::get('end'));
+                            // Loop through dates to validate them
+                            foreach($dateArray as $da) {
+                                // If date is invalid, return error
+                                if (!self::validateDate($da)) {
+
+                                    $validator->getMessageBag()->add(
+                                        'end',
+                                        Lang::get('validation.date_format', ['attribute ' => 'Jaarkalender '])
+                                    );
+                                    // Redirect back with inputs and validator instance
+                                    return Redirect::back()->withErrors($validator)->withInput();
+                                }
+                            }
+                            // If all dates are validated and correct, create parent appointment and children
+                            $parent              = new AppParent();
+                            $parent->title       = $title;
+                            $parent->description = $description;
+                            $parent->location    = $location;
+                            $parent->group_id    = $group_id;
+                            $parent->save();
+
+                            foreach($dateArray as $da) {
+                                $event              = new Appointment();
+                                $event->title       = $title;
+                                $event->description = $description;
+                                $event->location    = $location;
+                                $event->group_id    = $group_id;
+                                $event->start_date  = new DateTime($da . ' ' . $start_time);
+                                $event->end_date    = new DateTime($da . ' ' . $end_time);
+                                $event->parent_id   = $parent->id;
+                                $event->save();
+                            }
+                        }
+                        return Redirect::route('calendar.index');
+                    } else {
+
+                        if(!$start_date) {
+                            $validator->getMessageBag()->add(
+                                'end',
+                                Lang::get('validation.required', ['attribute ' => 'start-date '])
+                            );
+
+                            return Redirect::back()->withErrors($validator)->withInput();
+                        } else {
+                            $sd = new DateTime($start_date . ' ' . $start_time);
+
+                            if($end_date == '') {
+                                $end_date = $start_date;
+                            }
+                            $ed = new DateTime($end_date . ' ' . $end_time);
+
+                            // Check if end date is before start date, if so, return with error
+                            if($sd >= $ed) {
+
+                                $validator->getMessageBag()->add(
+                                    'end',
+                                    Lang::get('validation.after', ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
+                                );
+
+                                // Redirect back with inputs and validator instance
+                                return Redirect::back()->withErrors($validator)->withInput();
+
+                            } else {
+                                $event              = new Appointment();
+                                $event->title       = $title;
+                                $event->description = $description;
+                                $event->location    = $location;
+                                $event->group_id    = $group_id;
+                                $event->start_date  = $sd;
+                                $event->end_date    = $ed;
+                                $event->save();
+                                return Redirect::route('calendar.index');
+                            }
                         }
                     }
-
-                    // Recurring events handling
-                    if (Input::get('repeat') && Input::get('nr_repeat')) {
-                        $event->nr_repeat   = Input::get('nr_repeat');
-                        $event->repeat_type = e(Input::get('repeat_type'));
-                        $event->repeat_freq = Input::get('repeat_freq');
-                    }
-
-                    // Link appointment to the correct group
-                    $event->group_id = Input::get('group');
-
-                    // Save the appointment to the database and return to the calendar index view
-                    $event->save();
-
-                    return Redirect::route('calendar.index');
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
@@ -248,13 +305,13 @@ class CalendarController extends \BaseController
 
                 return View::make('calendar.edit')->with('groups', $smartgroup)->with('event', $event);
             } else {
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
             return Redirect::route('landing');
         }
     }
-
 
     /**
      * Update the specified appointment in storage.
@@ -275,89 +332,121 @@ class CalendarController extends \BaseController
                     ) && $user->school_id == $event->group->school_id)
             ) {
                 $endDate = new DateTime();
-
-                // Check if endDate isn't blank (____/__/__ __:__)
-                if (Input::get('end') == '____/__/__ __:__') {
+                // Check if endDate isn't blank
+                if (Input::get('end-date') == '') {
                     $endDate = null;
                 }
 
-                // Validate input fields
                 $validator = Validator::make(
                     [
                         'group'       => Input::get('group'),
                         'description' => Input::get('description'),
-                        'end'         => $endDate,
-                        'start'       => Input::get('start'),
-                        'title'       => Input::get('title')
+                        'start-date'  => Input::get('start-date'),
+                        'end-date'    => $endDate,
+                        'start-time'  => Input::get('start-time'),
+                        'end-time'    => Input::get('end-time'),
+                        'title'       => Input::get('title'),
+                        'day'         => Input::get('day')
                     ],
                     [
                         'group'       => 'required',
                         'description' => 'required',
-                        'start'       => 'required|date',
-                        'end'         => 'date',
+                        'start-date'  => 'date',
+                        'end-date'    => 'date',
+                        'start-time'  => 'required|date_format:H:i',
+                        'end-time'    => 'required|date_format:H:i',
                         'title'       => 'required'
                     ]
                 );
 
                 if ($validator->fails()) {
                     return Redirect::route('event.edit', $id)->withInput()->withErrors($validator);
-
                 } else {
-                    // If validator succeeds, prepare event object to be updated in the database
-                    $event->title       = e(Input::get('title'));
-                    $event->description = e(Input::get('description'));
-                    $event->start_date  = new DateTime(Input::get('start'));
+                    $title       = e(Input::get('title'));
+                    $description = e(Input::get('description'));
+                    $location    = e(Input::get('location'));
+                    $group_id    = Input::get('group');
+                    $start_date  = e(Input::get('start-date'));
+                    $end_date    = e(Input::get('end-date'));
+                    $start_time  = e(Input::get('start-time'));
+                    $end_time    = e(Input::get('end-time'));
+                    $parents     = Input::get('par');
 
-                    if (Input::get('day')) {
-                        $event->allday = true;
+                    // TODO: Handle All day events, or decide to remove it alltogether
+                    // TODO: Update date/time if needed
+                    // If the event isn't the whole day, determine the end date/time
+                    //$event->allday = false;
 
+                    // Handle datetime
+                    if(!$start_date) {
+                        $validator->getMessageBag()->add(
+                            'end',
+                            Lang::get('validation.required', ['attribute ' => 'start-date '])
+                        );
+
+                        return Redirect::back()->withErrors($validator)->withInput();
                     } else {
-                        $event->allday = false;
-                        // If end-date is blank (____/__/__...), or if it's the same as the start-date/time,
-                        // then end-date = start-date + 1h
-                        if ((Input::get('end') == '____/__/__ __:__' || Input::get('end') == Input::get('start'))) {
-                            $event->end_date = new DateTime(Input::get('start'));
-                            $event->end_date->add(new DateInterval('PT1H'));
+                        $sd = new DateTime($start_date . ' ' . $start_time);
 
-                        } elseif (new DateTime(Input::get('start')) >= new DateTime(Input::get('end'))) {
-                            // Add an error message in the message collection (MessageBag instance)
+                        if ($end_date == '') {
+                            $end_date = $start_date;
+                        }
+                        $ed = new DateTime($end_date . ' ' . $end_time);
+
+                        // Check if end date is before start date, if so, return with error
+                        if ($sd >= $ed) {
+
                             $validator->getMessageBag()->add(
                                 'end',
-                                Lang::get('validation.after', ['attribute ' => 'end ', 'date' => Input::get('start')])
+                                Lang::get('validation.after', ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
                             );
 
                             // Redirect back with inputs and validator instance
                             return Redirect::back()->withErrors($validator)->withInput();
-
-                        } else {
-                            $event->end_date = new DateTime(Input::get('end'));
                         }
                     }
 
                     // Recurring events handling
-                    if (Input::get('repeat') && Input::get('nr_repeat')) {
-                        $event->nr_repeat   = Input::get('nr_repeat');
-                        $event->repeat_type = e(Input::get('repeat_type'));
-                        $event->repeat_freq = Input::get('repeat_freq');
-                    } else {
-                        $event->nr_repeat   = null;
-                        $event->repeat_type = null;
-                        $event->repeat_freq = null;
+                    if ($event->parent_id) {
+                        if($parents) {
+                            $parent = AppParent::find($event->parent_id);
+                            // Update parent event
+                            $parent->title       = $title;
+                            $parent->description = $description;
+                            $parent->location    = $location;
+                            $parent->group_id    = $group_id;
+                            $parent->save();
+
+                            Appointment::where('parent_id', $parent->id)->update([
+                                'title'         => $title,
+                                'description'   => $description,
+                                'location'      => $location,
+                                'group_id'      => $group_id
+                            ]);
+                        } else {
+                            // If event had a parent_id, but the checkbox was unchecked, unlink event from parent
+                            $event->parent_id   = null;
+                        }
                     }
 
-                    $event->group_id = Input::get('group');
+                    $event->title       = $title;
+                    $event->description = $description;
+                    $event->location    = $location;
+                    $event->group_id    = $group_id;
+                    $event->start_date  = $sd;
+                    $event->end_date    = $ed;
                     $event->save();
 
                     return Redirect::route('calendar.index');
                 }
             } else {
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
             return Redirect::route('landing');
         }
     }
-
 
     /**
      * Remove the specified appointment from storage.
@@ -381,5 +470,11 @@ class CalendarController extends \BaseController
         } else {
             return Redirect::route('landing');
         }
+    }
+
+    public function validateDate($date)
+    {
+        $d = DateTime::createFromFormat('m/d/Y', $date);
+        return $d && $d->format('m/d/Y') == $date;
     }
 }

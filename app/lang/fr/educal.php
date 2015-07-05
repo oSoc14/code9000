@@ -23,10 +23,12 @@ return array(
     'startdate' => 'date de début',
     'enddate' => 'date de fin',
     'date' => 'date',
+    'loggedinas' => 'Connecté en tant que: ',
 
     'delete' => 'effacer',
     'cancel' => 'annuler',
     'confirmation' => 'confirmation',
+    'confirm' => 'confirmez',
     'confirmationmsg' => 'Etes-vous sûr de vouloir supprimer cet article?',
 
     'email' => 'email',
@@ -91,7 +93,8 @@ return array(
     'name' => 'nom',
     'firstname' => 'prénom',
     'surname' => 'nom de famille',
-
+    'schoolinfo' => 'Infos sur l\'école ',
+    'personalinfo' => 'Renseignements personnel',
 
     'editgroup' => 'modifier groupe',
     'updategroup' => 'modifier groupe',

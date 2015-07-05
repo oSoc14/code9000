@@ -23,10 +23,12 @@ return array(
     'startdate' => 'startdatum',
     'enddate' => 'einddatum',
     'date' => 'datum',
+    'loggedinas' => 'Aangemeld als: ',
 
     'delete' => 'verwijderen',
     'cancel' => 'annuleren',
     'confirmation' => 'bevestig',
+    'confirm' => 'bevestig',
     'confirmationmsg' => 'Bent u zeker dat u dit item wilt verwijderen?',
 
     'email' => 'Email adres',
@@ -91,6 +93,8 @@ return array(
     'name' => 'naam',
     'firstname' => 'voornaam',
     'surname' => 'familienaam',
+    'schoolinfo' => 'School Informatie',
+    'personalinfo' => 'Persoonlijke Informatie',
 
 
     'editgroup' => 'groep aanpassen',

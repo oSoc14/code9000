@@ -7,6 +7,8 @@
 class SchoolController extends \BaseController
 {
 
+    // TODO: Allow school to update their own information
+
     protected $layout = 'layout.master';
 
     /**
@@ -22,11 +24,10 @@ class SchoolController extends \BaseController
 
             // Check if user is a superAdmin (other users are not allowed on this page)
             if ($user->hasAccess('school')) {
-
-                $schools               = School::get();
-                $this->layout->content = View::make('school.index')->with('schools', $schools);
-
+                $schools = School::get();
+                return View::make('school.index')->with('schools', $schools);
             } else {
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -41,6 +42,8 @@ class SchoolController extends \BaseController
      *
      * @return Response
      */
+
+    // TODO: Get rid of short (reoccuring)
     public function store()
     {
         // If user is logged in, redirect to calendar index
@@ -49,6 +52,8 @@ class SchoolController extends \BaseController
             // Validation rules for input fields
             $validator = Validator::make(
                 [
+                    'per-name'              => Input::get('per-name'),
+                    'per-surname'           => Input::get('per-surname'),
                     'name'                  => Input::get('sname'),
                     'email'                 => Input::get('semail'),
                     'city'                  => Input::get('city'),
@@ -59,11 +64,13 @@ class SchoolController extends \BaseController
                     'honey_time'            => 'required|honeytime:5'
                 ],
                 [
-                    'name'     => 'required|unique:schools,name',
-                    'city'     => 'required',
-                    'email'    => 'required|email|unique:users,email',
-                    'password' => 'required|min:8|confirmed',
-                    'tos'      => 'required'
+                    'per-name'      => 'required',
+                    'per-surname'   => 'required',
+                    'name'          => 'required|unique:schools,name',
+                    'city'          => 'required',
+                    'email'         => 'required|email|unique:users,email',
+                    'password'      => 'required|min:8|confirmed',
+                    'tos'           => 'required'
                 ]
             );
 
@@ -77,24 +84,20 @@ class SchoolController extends \BaseController
             } else {
                 // If there are no errors, prepare a new School object to be inserted in the database
                 $school       = new School();
-                $school->name = e(Input::get("sname"));
-                $short        = e(strtolower(Input::get("sname")));
-
-                // Generate the "short"-name for a school (which will be used to identify groups)
-                $short         = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
-                $school->short = $short;
-                $school->city  = e(Input::get("city"));
+                $nn           = self::clean(e(Input::get("sname")));
+                $school->name = $nn;
+                $school->city = e(Input::get("city"));
                 $school->save();
 
                 // Create the default groups "global" and "admin"
                 Sentry::createGroup(
                     [
-                        'name'        => $short . '_global',
+                        'name'        => $school->name . '__' . $school->id,
                         'permissions' => [
-                            'school' => 0,
-                            'user'   => 0,
-                            'group'  => 0,
-                            'event'  => 1,
+                            'school'  => 0,
+                            'user'    => 0,
+                            'group'   => 0,
+                            'event'   => 1,
                         ],
                         'school_id'   => $school->id,
                     ]
@@ -102,14 +105,14 @@ class SchoolController extends \BaseController
 
                 $group = Sentry::createGroup(
                     [
-                        'name'        => $short . '_admin',
-                        'permissions' => array(
-                            'school' => 0,
-                            'admin'  => 1,
-                            'user'   => 1,
-                            'group'  => 1,
-                            'event'  => 1,
-                        ),
+                        'name'        => 'Administratie__' . $school->id,
+                        'permissions' => [
+                            'school'  => 0,
+                            'admin'   => 1,
+                            'user'    => 1,
+                            'group'   => 1,
+                            'event'   => 1,
+                        ],
                         'school_id'   => $school->id,
                     ]
                 );
@@ -121,6 +124,8 @@ class SchoolController extends \BaseController
                         'password'  => Input::get("password"),
                         'activated' => true,
                         'school_id' => $school->id,
+                        'first_name'=> e(Input::get("per-name")),
+                        'last_name' => e(Input::get("per-surname")),
                     ]
                 );
 
@@ -148,16 +153,15 @@ class SchoolController extends \BaseController
     {
         // If user is logged in, redirect to calendar index
         if (Sentry::check()) {
-
             $user = Sentry::getUser();
 
             // Check if user is a superAdmin (only he can see this page)
             if ($user->hasAccess('school')) {
                 $school = School::find($id);
                 $school->load("groups");
-                $this->layout->content = View::make('school.detail')->with('school', $school);
-
+                return View::make('school.detail')->with('school', $school);
             } else {
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -179,11 +183,11 @@ class SchoolController extends \BaseController
             $user = Sentry::getUser();
 
             // Check if user is superAdmin (only they can edit schools)
-            if ($user->hasAccess(array('school'))) {
-                $school                = School::find($id);
-                $this->layout->content = View::make('school.edit')->with('school', $school);
-
+            if ($user->hasAnyAccess(['school'])) {
+                $school = School::find($id);
+                return View::make('school.edit')->with('school', $school);
             } else {
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -206,58 +210,44 @@ class SchoolController extends \BaseController
 
             // Check if user is superAdmin (only they can update schools)
             if ($user->hasAccess('school')) {
-
                 $school = School::find($id);
 
-                // If the school is renamed, check if it's unique
-                if (Input::get('name') != $school->name) {
-                    $validator = Validator::make(
-                        [
-                            'name' => Input::get('name'),
-                            'city' => Input::get('city'),
-                        ],
-                        [
-                            'name' => 'required|unique:schools,name',
-                            'city' => 'required',
-                        ]
-                    );
+                $validator = Validator::make(
+                    [
+                        'name'     => e(Input::get('name')),
+                        'city'     => e(Input::get('city')),
+                    ],
+                    [
+                        'name'     => 'required',
+                        'city'     => 'required',
+                    ]
+                );
 
-                    // Check if validation fails, if so, redirect to previous page with errors
-                    if ($validator->fails()) {
-                        return Redirect::route('school.edit', $id)
-                            ->withInput()
-                            ->withErrors($validator);
-
-                    } else {
-                        // If there are no errors, prepare the school to be updated and saved
-                        // Generate new short for the school, also update all the groups in that school with the new short
-                        $short = e(strtolower(Input::get("name")));
-                        $short = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '', $short));
-
-                        // If the schoolShort is changed, change all the groups linked to that school their names as well
-                        // to correspond the new schoolShort
-                        foreach ($school->groups as $group) {
-                            $group->name = str_replace($school->short, $short, $group->name);
-                            $group->save();
-                        }
-
-                        $school->short = $short;
-                        $school->name  = e(Input::get("name"));
-                        $school->city  = e(Input::get("city"));
-
-                        // Update school with new information
-                        $school->save();
-
-                        return Redirect::route('school.index');
-                    }
+                // If validator fails, go back and show errors
+                if ($validator->fails()) {
+                    return Redirect::route('school.edit', $id)
+                        ->withInput()
+                        ->withErrors($validator);
                 } else {
-                    // If the school name stays the same, just update the other fields
-                    $school->city = e(Input::get("city"));
+                    // Clean up inputted school name
+                    $nn = self::clean(Input::get("name"));
+                    // Select the first group of the school, if school name changes (should be the global group)
+                    if($nn != $school->name) {
+                        $gg = $school->groups->first();
+
+                        $gg->name = $nn . '__' . $school->id;
+                        $gg->save();
+                    }
+
+                    $school->name    = $nn;
+                    $school->city    = e(Input::get("city"));
+                    $school->opening = e(Input::get("opening"));
                     $school->save();
 
                     return Redirect::route('school.index');
                 }
             } else {
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -272,6 +262,8 @@ class SchoolController extends \BaseController
      * @param  int $id
      * @return Response
      */
+
+    // TODO: Authenticate in route?
     public function destroy($id)
     {
         if (Sentry::check()) {
@@ -286,6 +278,7 @@ class SchoolController extends \BaseController
                 return Redirect::route('school.index');
 
             } else {
+                // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
@@ -293,5 +286,8 @@ class SchoolController extends \BaseController
         }
     }
 
+    function clean($string) {
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+    }
 
 }

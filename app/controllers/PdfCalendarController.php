@@ -14,35 +14,41 @@ class PdfCalendarController extends \BaseController
      * Additionally add the appointments from the "global" group
      * Process these appointments and render them to an .pdf file which will be returned for download
      *
+     * @param  string $id
      * @param  string $school
      * @param  string $group
      * @return pdf downloadable file
      *
      */
-    public function index($school, $group)
+
+    // TODO: Decide if we will keep using a PDF export, or instead just make a printer friendly view
+    public function index($id, $school, $group)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
 
         // Load appointments based on group
-        $selGroup = Group::where('name', $school . '_' . $group)->first();
-        $selGroup->load('appointments');
+        $selGroup = Group::where('id', $id)->first();
+        $selGroup->load('appointments', 'school');
+        $grp = str_replace('__' . $selGroup->school->id, '', $selGroup->name);
 
         // Get the schoolname corresponding to the group (to be used in the PDF header)
-        $schoolName = $selGroup->load('school');
-        $schoolName = $schoolName->school->name;
+        $schoolName = $selGroup->school->name;
 
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
         $dend = new DateTime();
 
+        // TODO: Make this better (1 month static range isn't good)
         // In this case we set the limit to 1 month in the past until 1 month in the future
         $dsta->sub(new DateInterval("P1M"));
         $dend->add(new DateInterval("P1M"));
 
+
+
         // Add global appointments, unless only global appointments are requested
-        if ($group != 'global') {
-            $globalGroup = Group::where('name', $school . '_global')->first();
+        if ($grp != $selGroup->school->name) {
+            $globalGroup = Group::where('name', $selGroup->school->name . '__' . $selGroup->school->id)->first();
             $globalGroup->load('appointments');
 
             foreach ($globalGroup->appointments as $appointment) {
@@ -65,7 +71,7 @@ class PdfCalendarController extends \BaseController
         }
 
         // Compose the PDF with the help of the Dompdf plugin
-        $calendar = self::composePdf($appointments, $schoolName, $group);
+        $calendar = self::composePdf($appointments, $schoolName, $selGroup->name);
 
         return PDF::load($calendar, 'A4', 'landscape')->download($schoolName . ' - calendar');
     }
@@ -108,7 +114,7 @@ class PdfCalendarController extends \BaseController
 
             // Recurence option (e.g. New Year happens every year)
             // Set recurrence rule
-            if ($appointment['attributes']['repeat_type']) {
+           /* if ($appointment['attributes']['repeat_type']) {
 
                 $rep_freq = $appointment['attributes']['repeat_freq'];
 
@@ -155,7 +161,7 @@ class PdfCalendarController extends \BaseController
                     }
                 }
 
-            } else {
+            } else */ {
 
                 // If there is no recurrence rule, just format the start and enddate gotten from the database
                 $dateString        = new DateTime($appointment['attributes']['start_date']);

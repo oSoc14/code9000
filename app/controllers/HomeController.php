@@ -21,19 +21,9 @@ class HomeController extends BaseController
         // Check if user is logged in/activated
         if (Sentry::check()) {
             return Redirect::route('calendar.index');
-
         } else {
-            // If user is not logged in, show the default landing page where users can log in or register
-            $schools      = School::get();
-            $schoolsArray = [];
-
-            // Make a schoolsArray which is used to fill the school-dropdown when a user wants to register
-            foreach ($schools as $school) {
-                $schoolsArray[$school->id] = $school->name;
-            }
-
-            return View::make('landing')
-                ->with("schools", $schoolsArray);
+            $schoolsArray = School::lists('name', 'id');
+            return View::make('landing')->with('schools', $schoolsArray);
         }
     }
 }
