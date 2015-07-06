@@ -20,11 +20,25 @@ Begin by installing the required packages through Composer.
     composer install
     
 Next change your database credentials
-> [database credentials](http://laravel.com/docs/database)
+
+* Go to folder app/config
+* Copy the file database.php to app/config/local
+* Update the new database.php file with your own database credentials
+* [database credentials](http://laravel.com/docs/database)
     
 Finally run the migrations to create your database.
 
     php artisan migrate
+    
+If your development environment is not on a '.dev' domain, you will have to change the following line of code in bootstrap/start.php:
+
+> $env = $app->detectEnvironment(array(
+	'local' => array('*.dev'),
+));
+
+And change '\*.dev' to your computer name or simply '\*'
+
+
 
 ## What is this?
 Schools can have a lot of activities throughout the year such as commitee meetings, open days for the public, kid's parties, etc. This can be hard to keep track of for parents. EduCal centralizes and creates an easy-to-use link to import the school's agenda.
