@@ -262,7 +262,7 @@
                 <input type="checkbox" name="tos" id="tos">{{ucfirst(trans('educal.terms'))}}
               </label>
             </div>
-            {{ Form::honeypot('honey', 'honey_time') }}
+            {{-- Form::honeypot('honey', 'honey_time') --}}
             <button type="submit" class="btn btn-default btn-educal-danger">{{ucfirst(trans('educal.register'))}}</button>
             {{ Form::close(), PHP_EOL }}
           </div>
@@ -338,7 +338,7 @@
                   <input type="checkbox" name="tos" id="tos">{{ucfirst(trans('educal.terms'))}}
                 </label>
               </div>
-              {{ Form::honeypot('honey', 'honey_time') }}
+              {{-- Form::honeypot('honey', 'honey_time') --}}
               <button type="submit" class="btn btn-default btn-educal-danger">{{ucfirst(trans('educal.register'))}}</button>
               {{ Form::close(), PHP_EOL }}
             </div>
