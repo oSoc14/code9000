@@ -22,8 +22,10 @@ class Role extends Cartalyst\Sentry\Groups\Eloquent\Group
 {
 
     protected $table = "roles";
-    // no custom code, inherits permissions system from Sentry Group
 
+    protected static $userModel = 'User';
+
+    protected static $userGroupsPivot = 'users_roles';
     /**
      * Returns the role's Users.
      *

@@ -28,7 +28,7 @@ class Calendar extends Cartalyst\Sentry\Groups\Eloquent\Group
      */
     public function school()
     {
-        return $this->belongsTo('School');
+        return $this->belongsTo('School','school_id','id');
     }
 
     /**

@@ -21,6 +21,13 @@
 class User extends Cartalyst\Sentry\Users\Eloquent\User
 {
 
+
+    protected $table = 'users';
+
+    protected static $groupModel = 'Role';
+
+    protected static $userGroupsPivot = 'user_roles';
+
     /**
      * Returns the user's School.
      *
