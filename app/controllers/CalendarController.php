@@ -1,100 +1,43 @@
 <?php
 
 /**
- * Class CalendarController
- * This controller is the main controller of the application. It handles the CRUD of all events.
+ * Class GroupController
+ * This controller handles the CRUD of groups.
  */
-class CalendarController extends \BaseController
+class GroupController extends \BaseController
 {
 
     /**
-     * Display a calendar view to logged in user
-     * @return Response
-     */
-    public function index()
-    {
-        if (!Sentry::check()) {
-            // User is not logged in, or is not activated
-            return Redirect::route('landing');
-        } else {
-            return View::make('calendar.index');
-        }
-    }
-
-    /**
-     * Return a listing of the events based on the logged in user.
-     * @return jSon Response with appointments
-     */
-    public function events()
-    {
-        if (!Sentry::check()) {
-            // User is not logged in, or is not activated
-            return Redirect::route('landing');
-        } else {
-            // Gets all appointments from the school
-            $user = Sentry::getUser();
-
-            // Check if user is superAdmin
-            if ($user->hasAccess('school')) {
-                $appointments = Appointment::get()->load('group.school')->toArray();
-                // Returns JSON response of the user
-                return Response::json($appointments)->setCallback(
-                    Input::get('callback')
-                ); //return View::make('calendar.events');
-
-            } else {
-                // If user is not superAdmin, show groups based on the school of the logged in user
-                $user->load('school.groups.appointments.group.school');
-                $appointments = [];
-
-                // Loop through groups to get all appointments
-                foreach ($user->school->groups as $group) {
-                    foreach ($group->appointments as $appointment) {
-                        array_push($appointments, $appointment);
-                    }
-                }
-                // Returns JSON response of the user
-                return Response::json($appointments)->setCallback(Input::get('callback'));
-            }
-        }
-    }
-
-
-    /**
-     * Show the form for creating a new appointment.
+     * Display a listing of the groups.
      *
      * @return Response
      */
-    public function create()
+    public function index()
     {
         if (Sentry::check()) {
             // Find active user and set default variables to null
             $user       = Sentry::getUser();
             $groups     = null;
-            $schoolName = null;
 
-            // Permission checks
-            if ($user->hasAnyAccess(['school', 'event'])) {
+            // Check if user is superAdmin
+            if ($user->hasAccess('school')) {
+                $groups     = Group::where('school_id', '<>', '')->get();
+                $groups = $groups->load('school');
 
-                // If user is a superAdmin, show all possible groups to add an event to
-                if ($user->hasAccess(['school'])) {
-                    $groups = Group::where('school_id', '<>', '')->get();
-                    $opening = '';
-                } else {
-                    // If the user isn't a superAdmin, only show the groups to which the user has permissions
-                    $user->load('school.groups.appointments');
-                    $groups = $user->school->groups;
-                    $opening = $user->school->opening;
-                }
+                // Return view with selected parameters
+                return View::make('group.listGroups')->with('groups', $groups);
 
-                // Transform recieved objectList (from database) into array to send with view
-                $smartgroup = [];
-                foreach ($groups as $group) {
-                    $smartgroup[$group->id] = $group->name;
-                }
+            } elseif ($user->hasAccess('group')) {
 
-                // Show the form where users can add appointments
-                return View::make('calendar.create')->with('groups', $smartgroup)->with('opening', $opening);
+                // Get school_id, by which we will search for related groups
+                $schoolId = $user->school_id;
+
+                // Find all groups with certain school_id
+                $groups = Group::where('school_id', '=', $schoolId)->get();
+                $groups = $groups->load('school');
+
+                // Return view with selected parameters
+                return View::make('group.listGroups')->with('groups', $groups);
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
@@ -103,171 +46,125 @@ class CalendarController extends \BaseController
         } else {
             return Redirect::route('landing');
         }
+
     }
 
+
     /**
-     * Store a newly created appointment in storage.
+     * Show the form for creating a new group.
+     *
+     * @return Response
+     */
+
+    // TODO: Add colors/codes to groups
+    public function create()
+    {
+        if (Sentry::check()) {
+            $schools = null;
+            // Find active user
+            $user = Sentry::getUser();
+
+            // If user is a superAdmin (has access to school), show school-dropdown for the view where the user can
+            // choose which school he wants to add the group to
+            if ($user->hasAccess('school')) {
+                $schools = School::lists('name', 'id');
+
+                return View::make('group.createGroup')->with('schools', $schools);
+
+            } else {
+
+                if ($user->hasAccess('group')) {
+                    return View::make('group.createGroup')->with('schools', null);
+                } else {
+                    // If no permissions, redirect the user to the calendar index page
+                    return Redirect::route('calendar.index');
+                }
+            }
+        } else {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('landing');
+        }
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
      *
      * @return Response
      */
     public function store()
     {
         if (Sentry::check()) {
-            // Find active user and set default variables to null
-            $schools = null;
-            $user    = Sentry::getUser();
+            // Find active user
+            $user = Sentry::getUser();
 
-            // Permission checks
-            if ($user->hasAnyAccess(['school', 'event'])) {
+            if ($user->hasAnyAccess(['school', 'group'])) {
+                $school = null;
 
-                $endDate = new DateTime();
-                // Check if endDate isn't blank
-                if (Input::get('end-date') == '') {
-                    $endDate = null;
+                // If user is a superAdmin (has access to school), get info from the "Input::get('school')"-field,
+                // otherwise, use the school_id from the user
+                if ($user->hasAccess('school')) {
+                    $school = School::find(Input::get('school'));
+                } else {
+                    $school = $user->school;
                 }
 
+                // Generate the full groupname (schoolshort_groupshort)
+                $groupFullName = preg_replace('/[^A-Za-z0-9\-_ ]/', '', Input::get('name'));
+                $groupFullName = $groupFullName . '__' . $school->id;
+
+                // Validate input fields
                 $validator = Validator::make(
                     [
-                        'group'       => Input::get('group'),
-                        'description' => Input::get('description'),
-                        'start-date'  => Input::get('start-date'),
-                        'end-date'    => $endDate,
-                        'start-time'  => Input::get('start-time'),
-                        'end-time'    => Input::get('end-time'),
-                        'title'       => Input::get('title'),
-                        'day'         => Input::get('day')
+                        'name'        => e(Input::get('name')),
+                        'school'      => Input::get('school'),
+                        'permissions' => Input::get('permissions')
                     ],
                     [
-                        'group'       => 'required',
-                        'description' => 'required',
-                        'start-date'  => 'date',
-                        'end-date'    => 'date',
-                        'start-time'  => 'required|date_format:H:i',
-                        'end-time'    => 'required|date_format:H:i',
-                        'title'       => 'required'
+                        'name'   => 'required',
+                        'school' => 'integer'
                     ]
                 );
 
-                // If validation fails, return to the create form with errors.
+                // Return correct errors if validators fail
                 if ($validator->fails()) {
-                    return Redirect::route('event.create')->withInput()->withErrors($validator);
+                    return Redirect::route('group.create')->withInput()->withErrors($validator);
                 } else {
-                    $title       = e(Input::get('title'));
-                    $description = e(Input::get('description'));
-                    $location    = e(Input::get('location'));
-                    $group_id    = Input::get('group');
-                    $start_date  = e(Input::get('start-date'));
-                    $end_date    = e(Input::get('end-date'));
-                    $start_time  = e(Input::get('start-time'));
-                    $end_time    = e(Input::get('end-time'));
+                    // If there are no issues, create a ne group with all the correct parameters
+                    $permissions    = [];
+                    $permissionlist = Input::get('permissions');
 
-                    // TODO: Handle All day events, or decide to remove it alltogether
-                    // If the event isn't the whole day, determine the end date/time
-                    //$event->allday = false;
-
-                    // Recurring events handling
-                    if (Input::get('repeat')) {
-
-                        $dateArray = explode(',', e(Input::get('repeat-dates')));
-                        // Check if there are any dates selected, return error if not
-                        if(count($dateArray) == 0) {
-
-                            $validator->getMessageBag()->add(
-                                'end',
-                                Lang::get('validation.countmin', ['attribute ' => 'Jaarkalender ', 'min' => '1'])
-                            );
-
-                            // Redirect back with inputs and validator instance
-                            return Redirect::back()->withErrors($validator)->withInput();
-
-                        } else {
-                            // Loop through dates to validate them
-                            foreach($dateArray as $da) {
-                                // If date is invalid, return error
-                                if (!self::validateDate($da)) {
-
-                                    $validator->getMessageBag()->add(
-                                        'end',
-                                        Lang::get('validation.date_format', ['attribute ' => 'Jaarkalender '])
-                                    );
-                                    // Redirect back with inputs and validator instance
-                                    return Redirect::back()->withErrors($validator)->withInput();
-                                }
-                            }
-                            // If all dates are validated and correct, create parent appointment and children
-                            $parent              = new AppParent();
-                            $parent->title       = $title;
-                            $parent->description = $description;
-                            $parent->location    = $location;
-                            $parent->group_id    = $group_id;
-                            $parent->save();
-
-                            foreach($dateArray as $da) {
-                                $event              = new Appointment();
-                                $event->title       = $title;
-                                $event->description = $description;
-                                $event->location    = $location;
-                                $event->group_id    = $group_id;
-                                $event->start_date  = new DateTime($da . ' ' . $start_time);
-                                $event->end_date    = new DateTime($da . ' ' . $end_time);
-                                $event->parent_id   = $parent->id;
-                                $event->save();
-                            }
-                        }
-                        return Redirect::route('calendar.index');
-                    } else {
-
-                        if(!$start_date) {
-                            $validator->getMessageBag()->add(
-                                'end',
-                                Lang::get('validation.required', ['attribute ' => 'start-date '])
-                            );
-
-                            return Redirect::back()->withErrors($validator)->withInput();
-                        } else {
-                            $sd = new DateTime($start_date . ' ' . $start_time);
-
-                            if($end_date == '') {
-                                $end_date = $start_date;
-                            }
-                            $ed = new DateTime($end_date . ' ' . $end_time);
-
-                            // Check if end date is before start date, if so, return with error
-                            if($sd >= $ed) {
-
-                                $validator->getMessageBag()->add(
-                                    'end',
-                                    Lang::get('validation.after', ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
-                                );
-
-                                // Redirect back with inputs and validator instance
-                                return Redirect::back()->withErrors($validator)->withInput();
-
-                            } else {
-                                $event              = new Appointment();
-                                $event->title       = $title;
-                                $event->description = $description;
-                                $event->location    = $location;
-                                $event->group_id    = $group_id;
-                                $event->start_date  = $sd;
-                                $event->end_date    = $ed;
-                                $event->save();
-                                return Redirect::route('calendar.index');
+                    // If permissions aren't empty, make a key-value array that contains the permissions
+                    if (isset($permissionlist)) {
+                        foreach($permissionlist as $key => $value) {
+                            if ($key != "school") {
+                                $permissions[$key] = 1;
                             }
                         }
                     }
+                    // Create the group
+                    Sentry::createGroup(
+                        [
+                            'name'        => $groupFullName,
+                            'permissions' => $permissions,
+                            'school_id'   => $school->id
+                        ]
+                    );
+
+                    return Redirect::route('group.index');
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
+            // If no permissions, redirect to calendar index
             return Redirect::route('landing');
         }
     }
 
     /**
-     * Show the form for editing the specified appointment.
+     * Show the form for editing the specified group.
      *
      * @param  int $id
      * @return Response
@@ -277,44 +174,58 @@ class CalendarController extends \BaseController
         if (Sentry::check()) {
             // Find active user
             $user = Sentry::getUser();
+            // Find selected group by $id
+            $group = Sentry::findGroupById($id);
 
-            // Check permissions
-            if ($user->hasAnyAccess(['school', 'event'])) {
-                $event = Appointment::find($id);
+            // Permissions check
+            if (($user->hasAccess('group') && $user->school_id == $group->school_id) || $user->hasAccess('school')) {
 
-                // Check if user is superAdmin
-                if ($user->hasAccess(['school'])) {
-                    $groups = Group::where('school_id', '<>', '')->get();
+                // Find all users in the selected group
+                $users = Sentry::findAllUsersInGroup($group);
+                // Find all users by school
+                $schoolUsers = User::where('users.school_id', $group->school_id)->get();
 
-                } elseif ($user->school_id == $event->group->school_id) {
-                    // Check if User belongs to group/school which the appointment is from
-                    $user->load('school.groups.appointments');
-                    $groups = $user->school->groups;
-
-                } else {
-                    return Redirect::route('calendar.index');
+                // Find all possible users that aren't in the group yet
+                // This array of users will be used to generate a dropdown menu
+                $possibleUsers = [];
+                foreach ($schoolUsers as $su) {
+                    $found = false;
+                    foreach ($users as $u) {
+                        if ($u->id === $su->id) {
+                            $found = true;
+                            break;
+                        }
+                    }
+                    if (!$found) {
+                        array_push($possibleUsers, $su);
+                    }
+                }
+                // TODO: If users > 10 , do like this, else, get list with checkboxes if possible
+                // Transform array into usable list for dropdownmenu
+                $smartUsers = [];
+                foreach ($possibleUsers as $pus) {
+                    $smartUsers[$pus->id] = $pus->email;
                 }
 
-                // Make a list of all the groups in a school to show with the view
-                $smartgroup = [];
-                foreach ($groups as $group) {
-                    $smartgroup[$group->id] = $group->name;
-                }
+                // Return view with selected parameters
+                return View::make('group.editGroups')
+                    ->with('users', $users)
+                    ->with('group', $group)
+                    ->with('smartUsers', $smartUsers);
 
-                $event = Appointment::find($id);
-
-                return View::make('calendar.edit')->with('groups', $smartgroup)->with('event', $event);
             } else {
                 // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
+            // If no permissions, redirect to calendar index
             return Redirect::route('landing');
         }
     }
 
+
     /**
-     * Update the specified appointment in storage.
+     * Update the specified group in storage.
      *
      * @param  int $id
      * @return Response
@@ -322,134 +233,84 @@ class CalendarController extends \BaseController
     public function update($id)
     {
         if (Sentry::check()) {
-            // Find active user
+            // Find active user and group information
             $user  = Sentry::getUser();
-            $event = Appointment::find($id);
+            $group = Sentry::findGroupById($id);
 
-            // Check if User belongs to group/school which the appointment is from
-            if ($user->hasAccess('school') || ($user->hasAccess(
-                        'event'
-                    ) && $user->school_id == $event->group->school_id)
-            ) {
-                $endDate = new DateTime();
-                // Check if endDate isn't blank
-                if (Input::get('end-date') == '') {
-                    $endDate = null;
+            // Permission checks
+            if ($user->hasAccess('school') || ($user->hasAccess('group') && $user->school_id == $group->school_id)) {
+
+                // If permissions are met, get school info
+                $school = $group->school;
+
+                // Get short group name (without the schoolShort in front of it)
+                $grp = str_replace('__' . $school->id, '', $group->name);
+
+                // Generate full group name
+                if(Input::get('name') != null) {
+                    $groupFullName = preg_replace('/[^A-Za-z0-9\-_ ]/', '', Input::get('name'));
+                    $groupFullName = $groupFullName . '__' . $school->id;
+                } else {
+                    $groupFullName = $group->name;
                 }
 
+                // Make a validator to see if the new group name is unique if it's not the same as before
+                // Validate input fields
                 $validator = Validator::make(
                     [
-                        'group'       => Input::get('group'),
-                        'description' => Input::get('description'),
-                        'start-date'  => Input::get('start-date'),
-                        'end-date'    => $endDate,
-                        'start-time'  => Input::get('start-time'),
-                        'end-time'    => Input::get('end-time'),
-                        'title'       => Input::get('title'),
-                        'day'         => Input::get('day')
+                        'name' => e(Input::get('name')),
+                        'school' => Input::get('school'),
+                        'permissions' => Input::get('permissions')
                     ],
                     [
-                        'group'       => 'required',
-                        'description' => 'required',
-                        'start-date'  => 'date',
-                        'end-date'    => 'date',
-                        'start-time'  => 'required|date_format:H:i',
-                        'end-time'    => 'required|date_format:H:i',
-                        'title'       => 'required'
+                        'school' => 'integer'
                     ]
                 );
 
+                // Error handling
                 if ($validator->fails()) {
-                    return Redirect::route('event.edit', $id)->withInput()->withErrors($validator);
+
+                    return Redirect::route('group.edit', $id)->withInput()->withErrors($validator);
+
+                } elseif ($grp == $school->name || $grp == 'Administratie') {
+                    // Do not allow default groups to be renamed
+                    return Redirect::route('group.edit', $id);
+
                 } else {
-                    $title       = e(Input::get('title'));
-                    $description = e(Input::get('description'));
-                    $location    = e(Input::get('location'));
-                    $group_id    = Input::get('group');
-                    $start_date  = e(Input::get('start-date'));
-                    $end_date    = e(Input::get('end-date'));
-                    $start_time  = e(Input::get('start-time'));
-                    $end_time    = e(Input::get('end-time'));
-                    $parents     = Input::get('par');
+                    // Set default permissions (have to be set to 0 otherwise we can't reset them if needed with Sentry
+                    $permissions    = ["event" => 0, "user" => 0, "group" => 0, "school" => 0];
+                    $permissionlist = Input::get('permissions');
 
-                    // TODO: Handle All day events, or decide to remove it alltogether
-                    // TODO: Update date/time if needed
-                    // If the event isn't the whole day, determine the end date/time
-                    //$event->allday = false;
-
-                    // Handle datetime
-                    if(!$start_date) {
-                        $validator->getMessageBag()->add(
-                            'end',
-                            Lang::get('validation.required', ['attribute ' => 'start-date '])
-                        );
-
-                        return Redirect::back()->withErrors($validator)->withInput();
-                    } else {
-                        $sd = new DateTime($start_date . ' ' . $start_time);
-
-                        if ($end_date == '') {
-                            $end_date = $start_date;
+                    // Loop through permission checkboxes from input, and put them in key)value pairs which are to be
+                    // inserted in the database
+                    if (isset($permissionlist)) {
+                        foreach ($permissionlist as $key => $value) {
+                            if ($key != "school") {
+                                $permissions[$key] = 1;
+                            }
                         }
-                        $ed = new DateTime($end_date . ' ' . $end_time);
-
-                        // Check if end date is before start date, if so, return with error
-                        if ($sd >= $ed) {
-
-                            $validator->getMessageBag()->add(
-                                'end',
-                                Lang::get('validation.after', ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
-                            );
-
-                            // Redirect back with inputs and validator instance
-                            return Redirect::back()->withErrors($validator)->withInput();
-                        }
+                        $group->permissions = $permissions;
                     }
 
-                    // Recurring events handling
-                    if ($event->parent_id) {
-                        if($parents) {
-                            $parent = AppParent::find($event->parent_id);
-                            // Update parent event
-                            $parent->title       = $title;
-                            $parent->description = $description;
-                            $parent->location    = $location;
-                            $parent->group_id    = $group_id;
-                            $parent->save();
+                    $group->name = $groupFullName;
+                    // Save/update the group
+                    $group->save();
 
-                            Appointment::where('parent_id', $parent->id)->update([
-                                'title'         => $title,
-                                'description'   => $description,
-                                'location'      => $location,
-                                'group_id'      => $group_id
-                            ]);
-                        } else {
-                            // If event had a parent_id, but the checkbox was unchecked, unlink event from parent
-                            $event->parent_id   = null;
-                        }
-                    }
-
-                    $event->title       = $title;
-                    $event->description = $description;
-                    $event->location    = $location;
-                    $event->group_id    = $group_id;
-                    $event->start_date  = $sd;
-                    $event->end_date    = $ed;
-                    $event->save();
-
-                    return Redirect::route('calendar.index');
+                    return Redirect::route('group.edit', $id);
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
                 return Redirect::route('calendar.index');
             }
         } else {
+            // If no permissions, redirect to calendar index
             return Redirect::route('landing');
         }
     }
 
+
     /**
-     * Remove the specified appointment from storage.
+     * Remove the specified group from storage.
      *
      * @param  int $id
      * @return Response
@@ -459,22 +320,27 @@ class CalendarController extends \BaseController
         if (Sentry::check()) {
             // Find active user
             $user  = Sentry::getUser();
-            $event = Appointment::find($id);
+            $group = Group::find($id);
 
             // Check if User belongs to group/school which the appointment is from
-            if ($user->hasAccess('school') || ($user->hasAccess('event') && $user->school_id == $event->group->school_id)) {
-                $event->delete();
+            if ($user->hasAccess('school') || ($user->hasAccess('group') && $user->school_id == $group->school_id)) {
+
+                $school = $group->school;
+                // Get short group name (without the schoolShort in front of it)
+                $grp = str_replace('__' . $school->id, '', $group->name);
+
+                // Do not allow default groups to be deleted
+                if ($grp == $school->name || $grp == 'Administratie') {
+                    return Redirect::back();
+                } else {
+                    $group->delete();
+                }
             }
 
-            return Redirect::route('calendar.index');
+            return Redirect::route('group.index');
         } else {
             return Redirect::route('landing');
         }
     }
 
-    public function validateDate($date)
-    {
-        $d = DateTime::createFromFormat('m/d/Y', $date);
-        return $d && $d->format('m/d/Y') == $date;
-    }
 }

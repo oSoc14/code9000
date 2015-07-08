@@ -1,13 +1,15 @@
 <?php
-class School extends Eloquent  {
+
+class School extends Eloquent
+{
 
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'schools';
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'schools';
 
     //returns the users belonging to the school
     public function users()
@@ -15,10 +17,10 @@ class School extends Eloquent  {
         return $this->hasMany('User');
     }
 
-    //returns the users belonging to the school
-    public function groups()
+    //returns the calendars belonging to the school
+    public function calendars()
     {
-        return $this->hasMany('Group');
+        return $this->hasMany('Calendar');
     }
 
 }

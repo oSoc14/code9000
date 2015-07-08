@@ -5,7 +5,8 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class AppParent extends Eloquent  {
+class AppParent extends Eloquent
+{
 
 
     /**
@@ -16,9 +17,9 @@ class AppParent extends Eloquent  {
     protected $table = 'parent_appointments';
 
     //returns the group the appointment belongs to
-    public function group()
+    public function calendar()
     {
-        return $this->belongsTo('Group');
+        return $this->belongsTo('Calendar');
     }
 
     public function appointments()

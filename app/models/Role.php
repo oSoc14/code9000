@@ -18,28 +18,10 @@
  * @copyright  (c) 2011 - 2013, Cartalyst LLC
  * @link       http://cartalyst.com
  */
-class User extends Cartalyst\Sentry\Users\Eloquent\User
+class Role extends Cartalyst\Sentry\Groups\Eloquent\Group
 {
 
-    /**
-     * Returns the user's School.
-     *
-     * @return  mixed
-     */
-    public function school()
-    {
-        return $this->belongsTo('School');
-    }
-
-
-    /**
-     * Returns the user's Calendars.
-     *
-     * @return  mixed
-     */
-    public function calendars()
-    {
-        return $this->hasMany('Calendar');
-    }
+    protected $table = "roles";
+    // no custom code, inherits permissions system from Sentry Group
 
 }

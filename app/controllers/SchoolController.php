@@ -90,33 +90,37 @@ class SchoolController extends \BaseController
                 $school->save();
 
                 // Create the default groups "global" and "admin"
-                Sentry::createGroup(
-                    [
-                        'name'        => $school->name . '__' . $school->id,
-                        'permissions' => [
-                            'school'  => 0,
-                            'user'    => 0,
-                            'group'   => 0,
-                            'event'   => 1,
-                        ],
-                        'school_id'   => $school->id,
-                    ]
-                );
+                // TODO: create new "calendars" instead of the groups
+                // TODO: add this user to the people who can edit the newly created calendars
+                // TODO: add user to
+                /*
+                  Sentry::createGroup(
+                      [
+                          'name'        => $school->name . '__' . $school->id,
+                          'permissions' => [
+                              'school'  => 0,
+                              'user'    => 0,
+                              'group'   => 0,
+                              'event'   => 1,
+                          ],
+                          'school_id'   => $school->id,
+                      ]
+                  );
 
-                $group = Sentry::createGroup(
-                    [
-                        'name'        => 'Administratie__' . $school->id,
-                        'permissions' => [
-                            'school'  => 0,
-                            'admin'   => 1,
-                            'user'    => 1,
-                            'group'   => 1,
-                            'event'   => 1,
-                        ],
-                        'school_id'   => $school->id,
-                    ]
-                );
-
+                  $group = Sentry::createGroup(
+                      [
+                          'name'        => 'Administratie__' . $school->id,
+                          'permissions' => [
+                              'school'  => 0,
+                              'admin'   => 1,
+                              'user'    => 1,
+                              'group'   => 1,
+                              'event'   => 1,
+                          ],
+                          'school_id'   => $school->id,
+                      ]
+                  );
+  */
                 // Store the newly created user along with the school
                 $user = Sentry::createUser(
                     [
@@ -130,7 +134,7 @@ class SchoolController extends \BaseController
                 );
 
                 // Add the user to the admin group
-                $user->addGroup($group);
+                // $user->addGroup($group);
 
                 // Log the user in
                 Sentry::login($user, false);

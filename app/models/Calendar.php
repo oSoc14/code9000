@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Part of the Sentry package.
  *
@@ -17,9 +18,8 @@
  * @copyright  (c) 2011 - 2013, Cartalyst LLC
  * @link       http://cartalyst.com
  */
-
-
-class Group extends Cartalyst\Sentry\Groups\Eloquent\Group{
+class Calendar extends Cartalyst\Sentry\Groups\Eloquent\Group
+{
 
     /**
      * Returns the group's School.
@@ -39,6 +39,36 @@ class Group extends Cartalyst\Sentry\Groups\Eloquent\Group{
     public function appointments()
     {
         return $this->hasMany('Appointment');
+    }
+
+    /**
+     * Returns the creator/owner of this calendar.
+     *
+     * @return  mixed
+     */
+    public function owner()
+    {
+        return $this->belongsTo('User', 'owner_id', 'id');
+    }
+
+    /**
+     * Returns the users (editors) of this calendar.
+     *
+     * @return  mixed
+     */
+    public function users()
+    {
+        return $this->belongsToMany('User', 'users_calendars', 'calendar_id', 'users_id');
+    }
+
+    /**
+     * Returns the parent calendar of this calendar, can be null!
+     *
+     * @return  mixed
+     */
+    public function parent()
+    {
+        return $this->belongsTo('Calendar', 'parent_id', 'id');
     }
 
 }

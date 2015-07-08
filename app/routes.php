@@ -176,43 +176,43 @@ Route::group(['prefix' => 'calendar'], function ()
     // Home
     Route::get('/', [
         'as'   => 'calendar.index',
-        'uses' => 'CalendarController@index'
+        'uses' => 'CalendarViewController@index'
     ]);
 
     // Shows creation form for events
     Route::get('/event/create', [
         'as'   => 'event.create',
-        'uses' => 'CalendarController@create'
+        'uses' => 'CalendarViewController@create'
     ]);
 
     // Stores events
     Route::post('/event/create', [
         'as'   => 'event.store',
-        'uses' => 'CalendarController@store'
+        'uses' => 'CalendarViewController@store'
     ]);
 
     // Shows creation form for events
     Route::get('/event/edit/{id}', [
         'as'   => 'event.edit',
-        'uses' => 'CalendarController@edit'
+        'uses' => 'CalendarViewController@edit'
     ])->where('id', '[0-9]+');
 
     // Stores events
     Route::post('/event/edit/{id}', [
         'as'   => 'event.update',
-        'uses' => 'CalendarController@update'
+        'uses' => 'CalendarViewController@update'
     ])->where('id', '[0-9]+');
 
     // Deletes the event with the given ID
     Route::get('/event/delete/{id}', [
         'as'   => 'event.delete',
-        'uses' => 'CalendarController@destroy'
+        'uses' => 'CalendarViewController@destroy'
     ])->where('id', '[0-9]+');
 
     // Returns all events for the users school
     Route::get('/api/events', [
         'as'   => 'calendar.events',
-        'uses' => 'CalendarController@events'
+        'uses' => 'CalendarViewController@events'
     ]);
 });
 
@@ -224,37 +224,37 @@ Route::group(['prefix' => 'group'], function()
     // Index, lists all groups
     Route::get('/', [
         'as'   => 'group.index',
-        'uses' => 'GroupController@index'
+        'uses' => 'CalendarController@index'
     ]);
 
     // Edit a group
     Route::get('/{id}', [
         'as'   => 'group.edit',
-        'uses' => 'GroupController@edit'
+        'uses' => 'CalendarController@edit'
     ])->where('id', '[0-9]+');
 
     // Create a new group
     Route::get('/create', [
         'as'   => 'group.create',
-        'uses' => 'GroupController@create'
+        'uses' => 'CalendarController@create'
     ]);
 
     // Store a new group
     Route::post('/create', [
         'as'   => 'group.store',
-        'uses' => 'GroupController@store'
+        'uses' => 'CalendarController@store'
     ]);
 
     // Update a group
     Route::post('/edit/{id}', [
         'as'   => 'group.update',
-        'uses' => 'GroupController@update'
+        'uses' => 'CalendarController@update'
     ])->where('id', '[0-9]+');
 
     // Destroy a group
     Route::get('/delete/{id}', [
         'as'   => 'group.delete',
-        'uses' => 'GroupController@destroy'
+        'uses' => 'CalendarController@destroy'
     ])->where('id', '[0-9]+');
 });
 
