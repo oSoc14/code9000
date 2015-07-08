@@ -4,7 +4,7 @@
  * Class GroupController
  * This controller handles the CRUD of groups.
  */
-class GroupController extends \BaseController
+class CalendarController extends \BaseController
 {
 
     /**

@@ -22,9 +22,9 @@ class Appointment extends Eloquent
         return $this->belongsTo('Calendar');
     }
 
-    public function appparent()
+    public function parent()
     {
-        return $this->belongsTo('AppParent');
+        return $this->belongsTo('Appointment','parent_id','id');
     }
 
 }
