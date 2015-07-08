@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class School
+ *
+ * A school contains
+ * - users that are associated with this school
+ * - calendars for different groups within one school
+ * Schools can be managed by admins and superadmins
+ */
 class School extends Eloquent
 {
 

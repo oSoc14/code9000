@@ -5,6 +5,12 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
+/**
+ * Class Appointment
+ *
+ * An appointment is an "event", and belongs to a calendar. An appointment can inherit from a parent event,
+ * for example in the case of recurring events, all events can be grouped to one parent.
+ */
 class Appointment extends Eloquent
 {
 

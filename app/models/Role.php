@@ -3,6 +3,8 @@
 /**
  * Part of the Sentry package.
  *
+ * Roles define access levels for users
+ *
  * NOTICE OF LICENSE
  *
  * Licensed under the 3-clause BSD License.

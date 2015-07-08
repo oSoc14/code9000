@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Calendarµ
+ *
+ * Calendars are the core objects of the app.
+ * A calendar groups events. Calendars can inherit from "higher", less specific, parent calendars.
+ * Calendars contain users who can add/edit/remove events.
+ *
+ */
 class Calendar extends Eloquent
 {
 
