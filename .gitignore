@@ -9,3 +9,6 @@ Thumbs.db
 .idea
 /app/config/local
 .sass-cache
+node_modules
+Vagrantfile
+bower_components
