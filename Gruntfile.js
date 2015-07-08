@@ -4,6 +4,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    watch: {
+      sass: {
+        files: 'public/sass/*.scss',
+        tasks: ['sass']
+      }
+    },
+
     sass: {
         options: {
             sourceMap: true
@@ -38,6 +45,7 @@ module.exports = function(grunt) {
   });
 
   // 3. Where we tell Grunt we plan to use this plug-in.
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-sass');

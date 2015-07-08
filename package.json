@@ -8,6 +8,7 @@
     "grunt-sass": "^1.0.0"
   },
   "dependencies": {
-    "bower": "^1.4.1"
+    "bower": "^1.4.1",
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
