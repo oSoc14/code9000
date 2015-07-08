@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Class GroupController
- * This controller handles the CRUD of groups.
+ * Class CalendarController
+ * This controller handles the CRUD of calendars.
  */
 class CalendarController extends \BaseController
 {
@@ -21,23 +21,23 @@ class CalendarController extends \BaseController
 
             // Check if user is superAdmin
             if ($user->hasAccess('school')) {
-                $groups     = Group::where('school_id', '<>', '')->get();
+                $groups     = Calendar::where('school_id', '<>', '')->get();
                 $groups = $groups->load('school');
 
                 // Return view with selected parameters
-                return View::make('group.listGroups')->with('groups', $groups);
+                return View::make('calendarManagement.listGroups')->with('groups', $groups);
 
-            } elseif ($user->hasAccess('group')) {
+            } elseif ($user->hasAccess('calendar')) {
 
                 // Get school_id, by which we will search for related groups
                 $schoolId = $user->school_id;
 
                 // Find all groups with certain school_id
-                $groups = Group::where('school_id', '=', $schoolId)->get();
+                $groups = Calendar::where('school_id', '=', $schoolId)->get();
                 $groups = $groups->load('school');
 
                 // Return view with selected parameters
-                return View::make('group.listGroups')->with('groups', $groups);
+                return View::make('calendarManagement.listGroups')->with('groups', $groups);
 
             } else {
                 // If no permissions, redirect the user to the calendar index page
@@ -51,12 +51,12 @@ class CalendarController extends \BaseController
 
 
     /**
-     * Show the form for creating a new group.
+     * Show the form for creating a new calendar.
      *
      * @return Response
      */
 
-    // TODO: Add colors/codes to groups
+    // TODO: Add colors/codes to calendars
     public function create()
     {
         if (Sentry::check()) {
@@ -69,12 +69,12 @@ class CalendarController extends \BaseController
             if ($user->hasAccess('school')) {
                 $schools = School::lists('name', 'id');
 
-                return View::make('group.createGroup')->with('schools', $schools);
+                return View::make('calendarManagement.createGroup')->with('schools', $schools);
 
             } else {
 
-                if ($user->hasAccess('group')) {
-                    return View::make('group.createGroup')->with('schools', null);
+                if ($user->hasAccess('calendar')) {
+                    return View::make('calendarManagement.createGroup')->with('schools', null);
                 } else {
                     // If no permissions, redirect the user to the calendar index page
                     return Redirect::route('calendar.index');
@@ -98,7 +98,7 @@ class CalendarController extends \BaseController
             // Find active user
             $user = Sentry::getUser();
 
-            if ($user->hasAnyAccess(['school', 'group'])) {
+            if ($user->hasAnyAccess(['school', 'calendar'])) {
                 $school = null;
 
                 // If user is a superAdmin (has access to school), get info from the "Input::get('school')"-field,
@@ -128,7 +128,7 @@ class CalendarController extends \BaseController
 
                 // Return correct errors if validators fail
                 if ($validator->fails()) {
-                    return Redirect::route('group.create')->withInput()->withErrors($validator);
+                    return Redirect::route('calendarManagement.create')->withInput()->withErrors($validator);
                 } else {
                     // If there are no issues, create a ne group with all the correct parameters
                     $permissions    = [];
@@ -151,7 +151,7 @@ class CalendarController extends \BaseController
                         ]
                     );
 
-                    return Redirect::route('group.index');
+                    return Redirect::route('calendarManagement.index');
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
@@ -208,7 +208,7 @@ class CalendarController extends \BaseController
                 }
 
                 // Return view with selected parameters
-                return View::make('group.editGroups')
+                return View::make('calendarManagement.editGroups')
                     ->with('users', $users)
                     ->with('group', $group)
                     ->with('smartUsers', $smartUsers);
@@ -270,11 +270,11 @@ class CalendarController extends \BaseController
                 // Error handling
                 if ($validator->fails()) {
 
-                    return Redirect::route('group.edit', $id)->withInput()->withErrors($validator);
+                    return Redirect::route('calendarManagement.edit', $id)->withInput()->withErrors($validator);
 
                 } elseif ($grp == $school->name || $grp == 'Administratie') {
                     // Do not allow default groups to be renamed
-                    return Redirect::route('group.edit', $id);
+                    return Redirect::route('calendarManagement.edit', $id);
 
                 } else {
                     // Set default permissions (have to be set to 0 otherwise we can't reset them if needed with Sentry
@@ -296,7 +296,7 @@ class CalendarController extends \BaseController
                     // Save/update the group
                     $group->save();
 
-                    return Redirect::route('group.edit', $id);
+                    return Redirect::route('calendarManagement.edit', $id);
                 }
             } else {
                 // If no permissions, redirect the user to the calendar index page
@@ -337,7 +337,7 @@ class CalendarController extends \BaseController
                 }
             }
 
-            return Redirect::route('group.index');
+            return Redirect::route('calendarManagement.index');
         } else {
             return Redirect::route('landing');
         }

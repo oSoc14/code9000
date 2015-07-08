@@ -91,7 +91,7 @@
         @endif
         @if(Sentry::getUser()->hasAnyAccess(array('school','group')))
         <li class="panel-heading">
-          <a href="{{ route('group.index') }}">
+          <a href="{{ route('calendarManagement.index') }}">
             <p class="panel-title  {{ Route::currentRouteName()=='group.index' ? 'active' : '' }}">
               <i class="fa fa-rocket fa-lg"></i>
               {{ucfirst(trans('educal.groups'))}}

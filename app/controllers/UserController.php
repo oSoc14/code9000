@@ -735,13 +735,13 @@ class UserController extends \BaseController {
                         $selectedUser->removeGroup($group);
 
                         // Return to the previous page
-                        Redirect::route('group.edit', $group->id);
+                        Redirect::route('calendarManagement.edit', $group->id);
                     } else {
                         // If there is only 1 or less users in the admin group, do not delete it
                         $error = "You can't remove this user.";
 
                         // Return to the previous page
-                        Redirect::route('group.edit', $group->id)->with('error', $error);
+                        Redirect::route('calendarManagement.edit', $group->id)->with('error', $error);
                     }
 
                 } else {

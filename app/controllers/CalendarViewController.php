@@ -36,7 +36,7 @@ class CalendarViewController extends \BaseController
 
             // Check if user is superAdmin
             if ($user->hasAccess('school')) {
-                $appointments = Appointment::get()->load('group.school')->toArray();
+                $appointments = Appointment::get()->load('calendar.school')->toArray();
                 // Returns JSON response of the user
                 return Response::json($appointments)->setCallback(
                     Input::get('callback')
@@ -44,12 +44,12 @@ class CalendarViewController extends \BaseController
 
             } else {
                 // If user is not superAdmin, show groups based on the school of the logged in user
-                $user->load('school.groups.appointments.group.school');
+                $user->load('school');//->load('calendars'); //.calendars.appointments');
                 $appointments = [];
 
                 // Loop through groups to get all appointments
-                foreach ($user->school->groups as $group) {
-                    foreach ($group->appointments as $appointment) {
+                foreach ($user->school->calendars as $calendar) {
+                    foreach ($calendar->appointments as $appointment) {
                         array_push($appointments, $appointment);
                     }
                 }

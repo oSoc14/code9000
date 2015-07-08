@@ -223,37 +223,37 @@ Route::group(['prefix' => 'group'], function()
 {
     // Index, lists all groups
     Route::get('/', [
-        'as'   => 'group.index',
+        'as'   => 'calendarManagement.index',
         'uses' => 'CalendarController@index'
     ]);
 
     // Edit a group
     Route::get('/{id}', [
-        'as'   => 'group.edit',
+        'as'   => 'calendarManagement.edit',
         'uses' => 'CalendarController@edit'
     ])->where('id', '[0-9]+');
 
     // Create a new group
     Route::get('/create', [
-        'as'   => 'group.create',
+        'as'   => 'calendarManagement.create',
         'uses' => 'CalendarController@create'
     ]);
 
     // Store a new group
     Route::post('/create', [
-        'as'   => 'group.store',
+        'as'   => 'calendarManagement.store',
         'uses' => 'CalendarController@store'
     ]);
 
     // Update a group
     Route::post('/edit/{id}', [
-        'as'   => 'group.update',
+        'as'   => 'calendarManagement.update',
         'uses' => 'CalendarController@update'
     ])->where('id', '[0-9]+');
 
     // Destroy a group
     Route::get('/delete/{id}', [
-        'as'   => 'group.delete',
+        'as'   => 'calendarManagement.delete',
         'uses' => 'CalendarController@destroy'
     ])->where('id', '[0-9]+');
 });
