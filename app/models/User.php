@@ -28,7 +28,7 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
      */
     public function school()
     {
-        return $this->belongsTo('School');
+        return $this->belongsTo('School','school_id','id');
     }
 
 
@@ -39,7 +39,19 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
      */
     public function calendars()
     {
-        return $this->hasMany('Calendar');
+        return $this->hasMany('Calendar','users_calendars','id','id');
     }
+
+
+    /**
+     * Returns the user's Role.
+     *
+     * @return  mixed
+     */
+    public function role()
+    {
+        return $this->belongsToMany('Role','user_roles','id','id');
+    }
+
 
 }

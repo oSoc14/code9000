@@ -38,17 +38,7 @@ class Calendar extends Cartalyst\Sentry\Groups\Eloquent\Group
      */
     public function appointments()
     {
-        return $this->hasMany('Appointment');
-    }
-
-    /**
-     * Returns the creator/owner of this calendar.
-     *
-     * @return  mixed
-     */
-    public function owner()
-    {
-        return $this->belongsTo('User', 'owner_id', 'id');
+        return $this->hasMany('Appointment','calendar_id','id');
     }
 
     /**
@@ -58,7 +48,7 @@ class Calendar extends Cartalyst\Sentry\Groups\Eloquent\Group
      */
     public function users()
     {
-        return $this->belongsToMany('User', 'users_calendars', 'calendar_id', 'users_id');
+        return $this->belongsToMany('User', 'users_calendars','id','id');
     }
 
     /**
@@ -68,7 +58,7 @@ class Calendar extends Cartalyst\Sentry\Groups\Eloquent\Group
      */
     public function parent()
     {
-        return $this->belongsTo('Calendar', 'parent_id', 'id');
+        return $this->hasOne('Calendar', 'parent_id', 'id');
     }
 
 }

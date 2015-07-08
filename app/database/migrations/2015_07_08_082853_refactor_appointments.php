@@ -14,12 +14,6 @@ class RefactorAppointments extends Migration
     public function up()
     {
 
-        Schema::table('users', function ($table) {
-            //Defines the parent event
-            $table->integer('parent_id')->unsigned()->nullable();
-            $table->dropForeign('parent_id');
-            $table->foreign('parent_id')->references('id')->on('appointments')->onDelete('set null');
-        });
 
         Schema::dropIfExists('parent_appointments');
     }
@@ -48,13 +42,6 @@ class RefactorAppointments extends Migration
             $table->foreign('calendar_id')->references('id')->on('calendars')->onDelete('cascade');
         });
 
-
-        Schema::table('users', function ($table) {
-            //Defines the parent event
-            $table->integer('parent_id')->unsigned()->nullable();
-            $table->dropForeign('parent_id');
-            $table->foreign('parent_id')->references('id')->on('parent_appointments')->onDelete('set null');
-        });
 
     }
 

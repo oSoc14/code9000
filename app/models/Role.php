@@ -24,4 +24,13 @@ class Role extends Cartalyst\Sentry\Groups\Eloquent\Group
     protected $table = "roles";
     // no custom code, inherits permissions system from Sentry Group
 
+    /**
+     * Returns the role's Users.
+     *
+     * @return  mixed
+     */
+    public function users()
+    {
+        return $this->hasMany('User','users_roles','id','id');
+    }
 }

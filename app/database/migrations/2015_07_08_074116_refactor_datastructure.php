@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RefactorDataStructure extends Migration
+class RefactorDatastructure extends Migration
 {
 
     /**
@@ -92,10 +92,6 @@ class RefactorDataStructure extends Migration
             //Defines the parent a calendar belongs to
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('calendars')->onDelete('cascade');
-
-            //Defines the owner of a calendar
-            $table->integer('owner_id')->unsigned()->nullable();
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
 
             // We'll need to ensure that MySQL uses the InnoDB engine to
             // support the indexes, other engines aren't affected.
@@ -191,7 +187,6 @@ class RefactorDataStructure extends Migration
             $table->foreign('calendar_id')->references('id')->on('calendars')->onDelete('cascade');
             //Defines the parent event
             $table->integer('parent_id')->unsigned()->nullable();
-            $table->foreign('parent_id')->references('id')->on('parent_appointments')->onDelete('set null');
         });
 
     }

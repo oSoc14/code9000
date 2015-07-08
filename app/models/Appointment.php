@@ -19,7 +19,7 @@ class Appointment extends Eloquent
     //returns the group the appointment belongs to
     public function calendar()
     {
-        return $this->belongsTo('Calendar');
+        return $this->belongsTo('Calendar', 'calendar_id', 'id');
     }
 
     public function parent()
