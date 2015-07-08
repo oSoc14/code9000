@@ -35,7 +35,7 @@ class CalendarViewController extends \BaseController
             $user = Sentry::getUser();
 
             // Check if user is superAdmin
-            if ($user->hasAccess('school')) {
+            if ($user->hasAccess('superadmin')) {
                 $appointments = Appointment::get()->load('calendar.school')->toArray();
                 // Returns JSON response of the user
                 return Response::json($appointments)->setCallback(
@@ -44,10 +44,10 @@ class CalendarViewController extends \BaseController
 
             } else {
                 // If user is not superAdmin, show groups based on the school of the logged in user
-                $user->load('school');//->load('calendars'); //.calendars.appointments');
                 $appointments = [];
 
                 // Loop through groups to get all appointments
+                dd($user->school);
                 foreach ($user->school->calendars as $calendar) {
                     foreach ($calendar->appointments as $appointment) {
                         array_push($appointments, $appointment);
@@ -74,11 +74,11 @@ class CalendarViewController extends \BaseController
             $schoolName = null;
 
             // Permission checks
-            if ($user->hasAnyAccess(['school', 'event'])) {
+            if ($user->hasAnyAccess(['school', 'editor'])) {
 
                 // If user is a superAdmin, show all possible groups to add an event to
                 if ($user->hasAccess(['school'])) {
-                    $groups = Group::where('school_id', '<>', '')->get();
+                    $groups = Calendar::where('school_id', '<>', '')->get();
                     $opening = '';
                 } else {
                     // If the user isn't a superAdmin, only show the groups to which the user has permissions
@@ -118,7 +118,7 @@ class CalendarViewController extends \BaseController
             $user    = Sentry::getUser();
 
             // Permission checks
-            if ($user->hasAnyAccess(['school', 'event'])) {
+            if ($user->hasAnyAccess(['school', 'editor'])) {
 
                 $endDate = new DateTime();
                 // Check if endDate isn't blank
@@ -279,14 +279,14 @@ class CalendarViewController extends \BaseController
             $user = Sentry::getUser();
 
             // Check permissions
-            if ($user->hasAnyAccess(['school', 'event'])) {
+            if ($user->hasAnyAccess(['school', 'editor'])) {
                 $event = Appointment::find($id);
 
                 // Check if user is superAdmin
                 if ($user->hasAccess(['school'])) {
-                    $groups = Group::where('school_id', '<>', '')->get();
+                    $groups = Calendar::where('school_id', '<>', '')->get();
 
-                } elseif ($user->school_id == $event->group->school_id) {
+                } elseif ($user->school_id == $event->calendar->school_id) {
                     // Check if User belongs to group/school which the appointment is from
                     $user->load('school.groups.appointments');
                     $groups = $user->school->groups;
@@ -327,9 +327,8 @@ class CalendarViewController extends \BaseController
             $event = Appointment::find($id);
 
             // Check if User belongs to group/school which the appointment is from
-            if ($user->hasAccess('school') || ($user->hasAccess(
-                        'event'
-                    ) && $user->school_id == $event->group->school_id)
+            if ($user->hasAccess('superadmin') || ($user->hasAccess('editor')
+                    && $user->school_id == $event->calendar->school_id)
             ) {
                 $endDate = new DateTime();
                 // Check if endDate isn't blank
@@ -462,7 +461,7 @@ class CalendarViewController extends \BaseController
             $event = Appointment::find($id);
 
             // Check if User belongs to group/school which the appointment is from
-            if ($user->hasAccess('school') || ($user->hasAccess('event') && $user->school_id == $event->group->school_id)) {
+            if ($user->hasAccess('superadmin') || ($user->hasAccess('editor') && $user->school_id == $event->calendar->school_id)) {
                 $event->delete();
             }
 

@@ -38,11 +38,11 @@ class UserController extends \BaseController {
                 $schoolsArray[$school->id] = $school->name;
             }
 
-            if ($user->hasAccess('school')) {
+            if ($user->hasAccess('superadmin')) {
                 $users = User::where('id', '<>', $user->id)->get();
                 $school = null;
 
-            } elseif ($user->hasAccess('user')) {
+            } elseif ($user->hasAccess('admin')) {
 
                 // If user is no superAdmin, display users based on the logged in user's school
                 $schoolId = $user->school_id;
@@ -304,7 +304,7 @@ class UserController extends \BaseController {
 
         } else {
             // If there are no errors, create a new user
-            Sentry::createUser(
+            $user =  Sentry::createUser(
                 [
                     'email'      => Input::get('email'),
                     'password'   => Input::get('password'),
@@ -314,6 +314,14 @@ class UserController extends \BaseController {
                     'last_name'  => e(Input::get('surname')),
                 ]
             );
+
+            UserController::checkCreateRoles(); // make sure the roles are created already
+
+            // Find the group using the group id
+            $editorGroup = Sentry::findGroupById(3);
+
+            // Assign the group to the user
+            $user->addGroup($editorGroup);
 
             return Redirect::route('landing');
         }
@@ -330,7 +338,7 @@ class UserController extends \BaseController {
             $user = Sentry::getUser();
 
             // Permission checks
-            if ($user->hasAccess('school') || ($user->hasAccess('user') && $user->school_id == Input::get('school'))) {
+            if ($user->hasAccess('superadmin') || ($user->hasAccess('admin') && $user->school_id == Input::get('school'))) {
 
                 // Validate inputted data
                 $validator = Validator::make(
@@ -364,7 +372,7 @@ class UserController extends \BaseController {
 
                     // If the superAdmin tries to make another superAdmin, then schoolId = null, because superadmins
                     // don't belong to a school
-                    if ($user->hasAccess('school') && Input::get('superAdmin')) {
+                    if ($user->hasAccess('superadmin') && Input::get('superAdmin')) {
                         $schoolId = null;
                     }
 
@@ -382,7 +390,7 @@ class UserController extends \BaseController {
 
                     // If a superAdmin was created, then we add him to the 1st group in the database, which is the
                     // superadmin group
-                    if ($user->hasAccess('school') && Input::get('superAdmin')) {
+                    if ($user->hasAccess('superadmin') && Input::get('superAdmin')) {
                         $group = Sentry::findGroupById(1);
                         $created->addGroup($group);
                     }
@@ -421,7 +429,7 @@ class UserController extends \BaseController {
                      * ->false: safe to remove user from school
                      */
                     if ($selectedUser->hasAccess('admin')
-                        && ($selectedUser->school_id == $user->school_id || $user->hasAccess('school'))
+                        && ($selectedUser->school_id == $user->school_id || $user->hasAccess('superadmin'))
                     ) {
                         // Get the schoolShort, based on that find the admin group and all users in that group
                         $school = School::find($selectedUser->school_id);
@@ -480,7 +488,7 @@ class UserController extends \BaseController {
             $user = Sentry::getUser();
 
             // Permission check
-            if ($user->hasAnyAccess(['school', 'user'])) {
+            if ($user->hasAnyAccess(['superadmin', 'admin'])) {
 
                 try {
                     // Find the user using the user id
@@ -490,9 +498,7 @@ class UserController extends \BaseController {
                     // A user can't deactivate/activate himself, he needs to have "user" permissions, be in the same
                     // school.
                     // Alternatively, a superAdmin can do all
-                    if (($user->school_id == $selectedUser->school_id || $user->hasAccess(
-                                'school'
-                            )) && $selectedUser->id != $user->id
+                    if (($user->school_id == $selectedUser->school_id || $user->hasAccess('superadmin')) && $selectedUser->id != $user->id
                     ) {
                         // Generate a new activation code for the selected user
                         $activationCode = $selectedUser->getActivationCode();
@@ -560,7 +566,7 @@ class UserController extends \BaseController {
 
             // Check permissions for the user (user has to be either a superAdmin, edit himself, or have user permissions
             // for the same school as the user he is trying to edit
-            if ($user->hasAccess('school') || $user->id == $id
+            if ($user->hasAccess('superadmin') || $user->id == $id
                 || ($user->hasAccess('user') && $user->school_id == $selectedUser->school_id)) {
 
                 return View::make('user.edit')->with('user', $selectedUser);
@@ -597,7 +603,7 @@ class UserController extends \BaseController {
 
             // Check if the user that wants to do the update is either the user himself,
             // or another user with the correct permissions (such as the superAdmin, or an administrator from the school)
-            if ($user->hasAccess('school') || $user->id == $id || ($user->hasAccess('user')
+            if ($user->hasAccess('superadmin') || $user->id == $id || ($user->hasAccess('user')
                     && $user->school_id == $selectedUser->school_id)
             ) {
                 // Validate the inputs
@@ -713,7 +719,7 @@ class UserController extends \BaseController {
 
             // Permission checks
             if (($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id)
-                || $user->hasAccess('school')) {
+                || $user->hasAccess('superadmin')) {
 
                 /**
                  * Check if the selected user is in the admins group,
@@ -779,21 +785,21 @@ class UserController extends \BaseController {
     /**
      * Method for adding users to a group
      *
-     * @param $group_id
+     * @param $role_id
      * @return mixed
      */
-    public function addToGroup($group_id)
+    public function addToGroup($role_id)
     {
         if (Sentry::check()) {
             $user = Sentry::getUser();
             // Find the group using the group id
-            $group = Sentry::findGroupById($group_id);
+            $role = Sentry::findGroupById($role_id);
 
             // Permission checks
-            if ($user->hasAccess('school') || ($user->hasAccess('user') && $user->school_id == $group->school_id)) {
+            if ($user->hasAccess('superadmin')) {
                 // Find the selected user and try to add him to the correct group
                 $user = Sentry::findUserById(Input::get('user'));
-                $user->addGroup($group);
+                $user->addGroup($role);
 
                 return Redirect::back();
 
@@ -806,4 +812,42 @@ class UserController extends \BaseController {
             return Redirect::route('landing');
         }
     }
+
+    /**
+     * Check if the sentry roles already exist, if not, create them
+     */
+    static function checkCreateRoles(){
+
+        $group = Sentry::findGroupById(2); // at least 3 groups should exists
+        if ($group != null) return;
+
+        Sentry::createGroup(array(
+            'name'        => 'SuperAdmininstrators',
+            'permissions' => array(
+                'superadmin' => 1,
+                'admin' => 1,
+                'editor' => 1,
+                'user' => 1,
+            ),
+        ));
+
+        Sentry::createGroup(array(
+            'name'        => 'Administrators',
+            'permissions' => array(
+                'admin' => 1,
+                'editor' => 1,
+                'user' => 1,
+            ),
+        ));
+
+        Sentry::createGroup(array(
+            'name'        => 'Editors',
+            'permissions' => array(
+                'editor' => 1,
+                'user' => 1,
+            ),
+        ));
+
+    }
+
 }

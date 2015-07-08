@@ -23,7 +23,7 @@ class SchoolController extends \BaseController
         if (Sentry::check()) {
 
             // Check if user is a superAdmin (other users are not allowed on this page)
-            if ($user->hasAccess('school')) {
+            if ($user->hasAccess('superadmin')) {
                 $schools = School::get();
                 return View::make('school.index')->with('schools', $schools);
             } else {
@@ -92,35 +92,7 @@ class SchoolController extends \BaseController
                 // Create the default groups "global" and "admin"
                 // TODO: create new "calendars" instead of the groups
                 // TODO: add this user to the people who can edit the newly created calendars
-                // TODO: add user to
-                /*
-                  Sentry::createGroup(
-                      [
-                          'name'        => $school->name . '__' . $school->id,
-                          'permissions' => [
-                              'school'  => 0,
-                              'user'    => 0,
-                              'group'   => 0,
-                              'event'   => 1,
-                          ],
-                          'school_id'   => $school->id,
-                      ]
-                  );
 
-                  $group = Sentry::createGroup(
-                      [
-                          'name'        => 'Administratie__' . $school->id,
-                          'permissions' => [
-                              'school'  => 0,
-                              'admin'   => 1,
-                              'user'    => 1,
-                              'group'   => 1,
-                              'event'   => 1,
-                          ],
-                          'school_id'   => $school->id,
-                      ]
-                  );
-  */
                 // Store the newly created user along with the school
                 $user = Sentry::createUser(
                     [
@@ -132,6 +104,21 @@ class SchoolController extends \BaseController
                         'last_name' => e(Input::get("per-surname")),
                     ]
                 );
+
+                // make sure the roles exist
+                UserController::checkCreateRoles();
+                // Find the role using the group id
+                $adminGroup = Sentry::findGroupById(2);
+
+                // Assign the group to the user
+                $user->addGroup($adminGroup);
+
+                $calendar = new Calendar();
+                $calendar->name = "global";
+                $calendar->description = "events for everyone";
+                $calendar->school_id = $school->id;
+                // TODO: add user to calendar
+                $calendar->save();
 
                 // Add the user to the admin group
                 // $user->addGroup($group);
@@ -160,7 +147,7 @@ class SchoolController extends \BaseController
             $user = Sentry::getUser();
 
             // Check if user is a superAdmin (only he can see this page)
-            if ($user->hasAccess('school')) {
+            if ($user->hasAccess('superadmin')) {
                 $school = School::find($id);
                 $school->load("groups");
                 return View::make('school.detail')->with('school', $school);
@@ -213,7 +200,7 @@ class SchoolController extends \BaseController
             $user = Sentry::getUser();
 
             // Check if user is superAdmin (only they can update schools)
-            if ($user->hasAccess('school')) {
+            if ($user->hasAccess('superadmin')) {
                 $school = School::find($id);
 
                 $validator = Validator::make(
@@ -275,7 +262,7 @@ class SchoolController extends \BaseController
             $user = Sentry::getUser();
 
             // Check if user is superAdmin (only they can remove schools)
-            if ($user->hasAccess('school')) {
+            if ($user->hasAccess('superadmin')) {
                 $school = School::find($id);
                 $school->delete();
 
@@ -293,5 +280,6 @@ class SchoolController extends \BaseController
     function clean($string) {
         return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
     }
+
 
 }
