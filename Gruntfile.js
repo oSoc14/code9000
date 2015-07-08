@@ -19,10 +19,10 @@ module.exports = function(grunt) {
       // 2. Configuration for concatinating files goes here.
       dist: {
         src: [
-          'bower_components/jquery/dist/jquery.min.js',
-          'bower_components/moment/min/moment.min.js',
-          'bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-          'bower_components/datetimepicker/jquery.datetimepicker.js'
+          'public/bower_components/jquery/dist/jquery.min.js',
+          'public/bower_components/moment/min/moment.min.js',
+          'public/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+          'public/bower_components/datetimepicker/jquery.datetimepicker.js'
         ],
         dest: 'public/js/build/production.js'
       }

@@ -150,9 +150,9 @@
 
 @section('footerScript')
 
-{{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
+{{ HTML::script('bower_components/datatables/media/js/jquery.dataTables.min.js') }}
 {{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
-{{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
+{{ HTML::script('bower_components/datatables-responsive/js/dataTables.responsive.js') }}
 
 {{ HTML::script('js/app.js') }}
 <script>

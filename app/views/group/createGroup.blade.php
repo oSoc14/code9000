@@ -81,8 +81,8 @@
 
 @section('footerScript')
 {{ HTML::script('js/app.js') }}
-{{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
-{{ HTML::style('packages/datatables/css/jquery.dataTables.min.css') }}
+{{ HTML::script('bower_components/datatables/media/js/jquery.dataTables.min.js') }}
+{{ HTML::style('bower_components/datatables/media/css/jquery.dataTables.min.css') }}
 <script>
     $(document).ready(function() {
         $('#userTable').dataTable();
