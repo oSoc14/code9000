@@ -24,50 +24,51 @@ class UserController extends \BaseController
     public function index()
     {
         // If user is logged in, get school_id, find respective users
-        if (Sentry::check()) {
-            // Get info from the logged in user
+        if (!Sentry::check()) {
 
-            $user = Sentry::getUser();
-
-            // Make an empty users object which will hold all the users from a certain school
-            $users = null;
-
-            $schools = School::get();
-            $schoolsArray = [];
-
-            foreach ($schools as $school) {
-                $schoolsArray[$school->id] = $school->name;
-            }
-
-            if ($user->hasAccess('superadmin')) {
-                $users = User::where('id', '<>', $user->id)->get();
-                $school = null;
-
-            } elseif ($user->hasAccess('admin')) {
-
-                // If user is no superAdmin, display users based on the logged in user's school
-                $schoolId = $user->school_id;
-
-                // Get all users with this school_id, except for the logged in user
-                $users = User::where('school_id', $schoolId)
-                    ->where('id', '<>', $user->id)
-                    ->get();
-
-                $school = School::where('id', $schoolId)->first();
-
-            } else {
-                return Redirect::route('calendar.index');
-            }
-
-            return View::make('user.index')
-                ->with('users', $users)
-                ->with('school', $school)
-                ->with('schools', $schoolsArray);
+            // If no permissions, redirect to calendar index
+            return Redirect::route('calendar.index');
         }
 
-        // If no permissions, redirect to calendar index
-        return Redirect::route('calendar.index');
+        // Get info from the logged in user
+        $user = Sentry::getUser();
+
+        // Make an empty users object which will hold all the users from a certain school
+        $users = null;
+
+        $schools = School::get();
+        $schoolsArray = [];
+
+        foreach ($schools as $school) {
+            $schoolsArray[$school->id] = $school->name;
+        }
+
+        if ($user->hasAccess('superadmin')) {
+            $users = User::where('id', '<>', $user->id)->get();
+            $school = null;
+
+        } elseif ($user->hasAccess('admin')) {
+
+            // If user is no superAdmin, display users based on the logged in user's school
+            $schoolId = $user->school_id;
+
+            // Get all users with this school_id, except for the logged in user
+            $users = User::where('school_id', $schoolId)
+                ->where('id', '<>', $user->id)
+                ->get();
+
+            $school = School::where('id', $schoolId)->first();
+
+        } else {
+            return Redirect::route('calendar.index');
+        }
+
+        return View::make('user.index')
+            ->with('users', $users)
+            ->with('school', $school)
+            ->with('schools', $schoolsArray);
     }
+
 
     /**
      * Authenticate users
@@ -601,104 +602,104 @@ class UserController extends \BaseController
      */
     public function updateUser($id)
     {
-        if (Sentry::check()) {
-            // Select users
-            $user = Sentry::getUser();
-
-            // Try-catch block for trying to find the selected User (to prevent crashing)
-            try {
-                $selectedUser = Sentry::findUserById($id);
-
-            } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                return Redirect::route('calendar.index');
-            }
-
-            // Check if the user that wants to do the update is either the user himself,
-            // or another user with the correct permissions (such as the superAdmin, or an administrator from the school)
-            if ($user->hasAccess('superadmin') || $user->id == $id || ($user->hasAccess('user')
-                    && $user->school_id == $selectedUser->school_id)
-            ) {
-                // Validate the inputs
-                $validator = Validator::make(
-                    [
-                        'name' => Input::get('name'),
-                        'surname' => Input::get('surname'),
-                        'email' => Input::get('email'),
-                        'password' => Input::get('password'),
-                        'password_confirmation' => Input::get('password_confirmation'),
-                        'lang' => Input::get('lang')
-                    ],
-                    [
-                        'name' => 'required',
-                        'surname' => 'required',
-                        'email' => 'required|email',
-                        'password' => 'min:8|confirmed',
-                        'lang' => 'required'
-                    ]
-                );
-
-                // If the user tries to change his e-mail, check if there is already another user with that e-mail adress
-                // (this happens in the try-catch block, if the try fails, it means there is no other user with the same
-                // e-mail adress, which means that we can safely update the user's e-mail
-                if ($selectedUser->email != Input::get('email')) {
-
-                    try {
-                        // Attempt to find the user by the new e-mail adress
-                        $user2 = Sentry::findUserByCredentials(['email' => Input::get('email')]);
-
-                        // Add an error message in the message collection (MessageBag instance)
-                        $validator->getMessageBag()->add(
-                            'email',
-                            Lang::get('validation.unique', ['attribute ' => 'email '])
-                        );
-
-                    } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                        // The e-mail adress wasn't found in the database, so we can safely change the e-mail adress
-                        $selectedUser->email = Input::get('email');
-                    }
-                }
-
-                // If the validation fails, go to previous page with errors
-                if ($validator->fails()) {
-                    return Redirect::back()->withInput()->withErrors($validator);
-
-                } else {
-
-                    // Check if the user tried to change his password, if so, update it
-                    if (Input::get('password')) {
-                        $selectedUser->password = Input::get('password');
-                    }
-
-                    // Update $selectedUser fields
-                    $selectedUser->first_name = e(Input::get('name'));
-                    $selectedUser->last_name = e(Input::get('surname'));
-
-                    // If the user is editing himself, update current language
-                    if ($user->id == $selectedUser->id) {
-
-                        $selectedUser->lang = e(Input::get('lang'));
-
-                        Session::forget('lang');
-                        Session::put('lang', Input::get('lang'));
-                        //Set the language
-                        App::setLocale(Session::get('lang'));
-                    }
-
-                    // Store updated user in the database
-                    $selectedUser->save();
-
-                    return Redirect::route('calendar.index');
-                }
-
-                return Redirect::back();
-            } else {
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
-            }
-        } else {
+        if (!Sentry::check()) {
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }
+
+        // Select users
+        $user = Sentry::getUser();
+
+        // Try-catch block for trying to find the selected User (to prevent crashing)
+        try {
+            $selectedUser = Sentry::findUserById($id);
+
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            return Redirect::route('calendar.index');
+        }
+
+        // Check if the user that wants to do the update is either the user himself,
+        // or another user with the correct permissions (such as the superAdmin, or an administrator from the school)
+        if (!$user->hasAccess('superadmin') && !$user->id == $id && !($user->hasAccess('user')
+                && $user->school_id == $selectedUser->school_id)
+        ) {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('calendar.index');
+        }
+        // Validate the inputs
+        $validator = Validator::make(
+            [
+                'name' => Input::get('name'),
+                'surname' => Input::get('surname'),
+                'email' => Input::get('email'),
+                'password' => Input::get('password'),
+                'password_confirmation' => Input::get('password_confirmation'),
+                'lang' => Input::get('lang')
+            ],
+            [
+                'name' => 'required',
+                'surname' => 'required',
+                'email' => 'required|email',
+                'password' => 'min:8|confirmed',
+                'lang' => 'required'
+            ]
+        );
+
+        // If the user tries to change his e-mail, check if there is already another user with that e-mail adress
+        // (this happens in the try-catch block, if the try fails, it means there is no other user with the same
+        // e-mail adress, which means that we can safely update the user's e-mail
+        if ($selectedUser->email != Input::get('email')) {
+
+            try {
+                // Attempt to find the user by the new e-mail adress
+                $user2 = Sentry::findUserByCredentials(['email' => Input::get('email')]);
+
+                // Add an error message in the message collection (MessageBag instance)
+                $validator->getMessageBag()->add(
+                    'email',
+                    Lang::get('validation.unique', ['attribute ' => 'email '])
+                );
+
+            } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+                // The e-mail adress wasn't found in the database, so we can safely change the e-mail adress
+                $selectedUser->email = Input::get('email');
+            }
+        }
+
+        // If the validation fails, go to previous page with errors
+        if ($validator->fails()) {
+            return Redirect::back()->withInput()->withErrors($validator);
+
+        } else {
+
+            // Check if the user tried to change his password, if so, update it
+            if (Input::get('password')) {
+                $selectedUser->password = Input::get('password');
+            }
+
+            // Update $selectedUser fields
+            $selectedUser->first_name = e(Input::get('name'));
+            $selectedUser->last_name = e(Input::get('surname'));
+
+            // If the user is editing himself, update current language
+            if ($user->id == $selectedUser->id) {
+
+                $selectedUser->lang = e(Input::get('lang'));
+
+                Session::forget('lang');
+                Session::put('lang', Input::get('lang'));
+                //Set the language
+                App::setLocale(Session::get('lang'));
+            }
+
+            // Store updated user in the database
+            $selectedUser->save();
+
+            return Redirect::route('calendar.index');
+        }
+
+        return Redirect::back();
+
     }
 
     /**
@@ -708,76 +709,77 @@ class UserController extends \BaseController
      */
     public function removeFromGroup($id, $groupId)
     {
-        if (Sentry::check()) {
-
-            try {
-                // Find the user using the user id
-                $selectedUser = Sentry::findUserById($id);
-                $user = Sentry::getUser();
-                $group = Sentry::findGroupById($groupId);
-
-            } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                $error = 'User was not found.';
-
-                // Return to the previous page
-                return Redirect::back()->with('error', $error);
-
-            } catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e) {
-                $error = 'Group was not found.';
-
-                // Return to the previous page
-                return Redirect::back()->with('error', $error);
-            }
-
-            // Permission checks
-            if (($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id)
-                || $user->hasAccess('superadmin')
-            ) {
-
-                /**
-                 * Check if the selected user is in the admins group,
-                 * ->true: check if he is the last person in that group
-                 *          -> true: don't allow user to be removed (school needs 1 admin at least)
-                 *          -> false: delete user from group
-                 * ->false: safe to remove user from group
-                 */
-
-                $school = School::find($selectedUser->school_id);
-                // Make sure the user can not remove the last user from the school_admin group
-                // otherwise no one is left to configure the group (except for the superAdmin)
-                if ($group->name == $school->short . '_admin') {
-                    $users = Sentry::findAllUsersInGroup($group);
-
-                    // If there is more than 1 user in the admin group, it's safe to delete this one
-                    if (count($users) > 1) {
-                        // Delete the user
-                        $selectedUser->removeGroup($group);
-
-                        // Return to the previous page
-                        Redirect::route('calendarManagement.edit', $group->id);
-                    } else {
-                        // If there is only 1 or less users in the admin group, do not delete it
-                        $error = "You can't remove this user.";
-
-                        // Return to the previous page
-                        Redirect::route('calendarManagement.edit', $group->id)->with('error', $error);
-                    }
-
-                } else {
-                    // Remove the user from group
-                    $selectedUser->removeGroup($group);
-
-                    // Return to the previous page
-                    return Redirect::back();
-                }
-            } else {
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
-            }
-        } else {
+        if (!Sentry::check()) {
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }
+
+        try {
+            // Find the user using the user id
+            $selectedUser = Sentry::findUserById($id);
+            $user = Sentry::getUser();
+            $group = Sentry::findGroupById($groupId);
+
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            $error = 'User was not found.';
+
+            // Return to the previous page
+            return Redirect::back()->with('error', $error);
+
+        } catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e) {
+            $error = 'Group was not found.';
+
+            // Return to the previous page
+            return Redirect::back()->with('error', $error);
+        }
+
+        // Permission checks
+        if (!($selectedUser->hasAccess('admin') && $selectedUser->school_id == $user->school_id)
+            && !$user->hasAccess('superadmin')
+        ) {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('calendar.index');
+        }
+
+        /**
+         * Check if the selected user is in the admins group,
+         * ->true: check if he is the last person in that group
+         *          -> true: don't allow user to be removed (school needs 1 admin at least)
+         *          -> false: delete user from group
+         * ->false: safe to remove user from group
+         */
+
+        $school = School::find($selectedUser->school_id);
+        // Make sure the user can not remove the last user from the school_admin group
+        // otherwise no one is left to configure the group (except for the superAdmin)
+        // TODO: refactor
+        if ($group->name == $school->short . '_admin') {
+            $users = Sentry::findAllUsersInGroup($group);
+
+            // If there is more than 1 user in the admin group, it's safe to delete this one
+            if (count($users) > 1) {
+                // Delete the user
+                $selectedUser->removeGroup($group);
+
+                // Return to the previous page
+                Redirect::route('calendarManagement.edit', $group->id);
+            } else {
+                // If there is only 1 or less users in the admin group, do not delete it
+                $error = "You can't remove this user.";
+
+                // Return to the previous page
+                Redirect::route('calendarManagement.edit', $group->id)->with('error', $error);
+            }
+
+        } else {
+            // Remove the user from group
+            $selectedUser->removeGroup($group);
+
+            // Return to the previous page
+            return Redirect::back();
+        }
+
+
     }
 
     /**
@@ -803,27 +805,26 @@ class UserController extends \BaseController
      */
     public function addToGroup($role_id)
     {
-        if (Sentry::check()) {
-            $user = Sentry::getUser();
-            // Find the group using the group id
-            $role = Sentry::findGroupById($role_id);
-
-            // Permission checks
-            if ($user->hasAccess('superadmin')) {
-                // Find the selected user and try to add him to the correct group
-                $user = Sentry::findUserById(Input::get('user'));
-                $user->addGroup($role);
-
-                return Redirect::back();
-
-            } else {
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
-            }
-        } else {
+        if (!Sentry::check()) {
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }
+        $user = Sentry::getUser();
+
+        // Permission checks
+        if (!$user->hasAccess('superadmin')) {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('calendar.index');
+        }
+
+        // Find the group using the group id
+        $role = Sentry::findGroupById($role_id);
+
+        // Find the selected user and try to add him to the correct group
+        $user = Sentry::findUserById(Input::get('user'));
+        $user->addGroup($role);
+
+        return Redirect::back();
     }
 
     /**
