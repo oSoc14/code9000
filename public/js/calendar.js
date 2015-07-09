@@ -142,15 +142,16 @@ $(document).ready(function () {
 
   // Decide the correct view depending on the window width.
   function getCalendarView() {
+    var h = $('main').height();
     if ($(window).width() < 850) {
       $('#calendar').fullCalendar('changeView', 'agendaDay');
-      $('#calendar').fullCalendar('option', 'contentHeight', 5000);
+      $('#calendar').fullCalendar('option', 'height', 5000);
     } else if ($(window).width() > 850 && $(window).width() < 1080) {
       $('#calendar').fullCalendar('changeView', 'agendaWeek');
-      $('#calendar').fullCalendar('option', 'contentHeight', null);
+      $('#calendar').fullCalendar('option', 'contentHeight', h);
     } else {
       $('#calendar').fullCalendar('changeView', 'month');
-      $('#calendar').fullCalendar('option', 'contentHeight', null);
+      $('#calendar').fullCalendar('option', 'height', h);
     }
     ;
   }
@@ -162,9 +163,8 @@ $(document).ready(function () {
     // Full calendar plugin
     $('#calendar').fullCalendar({
       header: {
-        left: 'prev,next today',
-        center: 'month,agendaWeek,agendaDay',
-        right: 'title'
+        left: 'title prev,next today',
+        right: 'month,agendaWeek,agendaDay'
       },
       defaultDate: getDate(),
       editable: false,
@@ -213,13 +213,28 @@ $(document).ready(function () {
       loading: function (bool) {
 
       },
-      dayClick: function(date, jsEvent, view) {
+      dayClick: function(date, event, view) {
 
-        alert('Clicked on: ' + date.format('DD-MM-YYYY'));
 
-        // change the day's background color just for fun
-        $(this).css('background-color', 'red');
+        // check for current popover
+        var html = $('.new-event').html();
+        $('.popover').remove();
 
+        console.log(event);
+        // delete it
+
+
+        // create new popover to add an event
+
+        // current target
+        var options = {container: "#calendar"}
+        options.html = true;
+        options.placement = 'auto left';
+        options.content = html;
+
+        var a = $(event.target);
+        a.popover(options);
+        a.popover('show');
       }
     });
   }
