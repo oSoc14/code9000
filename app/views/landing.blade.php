@@ -349,8 +349,8 @@
     </div>
   </div>
 
-    {{ HTML::script("js/jquery-1.11.1.min.js") }}
-    {{ HTML::script("js/bootstrap.min.js") }}
+    {{ HTML::script("bower_components/jquery/dist/jquery.min.js") }}
+    {{ HTML::script("bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js") }}
     {{ HTML::script("js/app.js") }}
 
 </body>
