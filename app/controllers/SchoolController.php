@@ -109,7 +109,8 @@ class SchoolController extends \BaseController
                 // make sure the roles exist
                 UserController::checkCreateRoles();
                 // Find the role using the group id
-                $adminGroup = Sentry::findGroupById(2);
+
+                $adminGroup = Sentry::findGroupByName('admin');
 
                 // Assign the group to the user
                 $user->addGroup($adminGroup);
@@ -122,7 +123,7 @@ class SchoolController extends \BaseController
                 $calendar->save();
 
                 // link to global calendar
-                User::find($user->id)->calendars()->attach($calendar->id);
+                $user->calendars()->attach($calendar);
 
                 // Add the user to the admin group
                 // $user->addGroup($group);

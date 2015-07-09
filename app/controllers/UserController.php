@@ -827,13 +827,12 @@ class UserController extends \BaseController
     static function checkCreateRoles()
     {
 
-        $group = Sentry::findGroupById(2); // at least 3 groups should exists
-        if ($group != null) {
+        if (Role::all()->count() > 2) {
             return;
         }
 
         Sentry::createGroup(array(
-            'name' => 'SuperAdmininstrators',
+            'name' => 'superadmin',
             'permissions' => array(
                 'superadmin' => 1,
                 'admin' => 1,
@@ -843,7 +842,7 @@ class UserController extends \BaseController
         ));
 
         Sentry::createGroup(array(
-            'name' => 'Administrators',
+            'name' => 'admin',
             'permissions' => array(
                 'admin' => 1,
                 'editor' => 1,
@@ -852,7 +851,7 @@ class UserController extends \BaseController
         ));
 
         Sentry::createGroup(array(
-            'name' => 'Editors',
+            'name' => 'editor',
             'permissions' => array(
                 'editor' => 1,
                 'user' => 1,
