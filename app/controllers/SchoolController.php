@@ -118,8 +118,11 @@ class SchoolController extends \BaseController
                 $calendar->name = "global";
                 $calendar->description = "events for everyone";
                 $calendar->school_id = $school->id;
-                // TODO: add user to calendar
+
                 $calendar->save();
+
+                // link to global calendar
+                User::find($user->id)->calendars()->attach($calendar->id);
 
                 // Add the user to the admin group
                 // $user->addGroup($group);
