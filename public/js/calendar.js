@@ -235,7 +235,13 @@ $(document).ready(function () {
         var a = $(event.target);
         a.popover(options);
         a.popover('show');
+        $('#backdrop').addClass('visible');
       }
     });
   }
+
+  $('#backdrop').on('click', function(){
+    $('.popover').remove();
+    $('#backdrop').removeClass('visible');
+  });
 });

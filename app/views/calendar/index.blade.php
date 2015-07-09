@@ -110,6 +110,8 @@
     </div>
   </div>
 
+<div id="backdrop" class="backdrop">
+</div>
 
 <div class="hidden new-event">
   <p class="divider-btm">
