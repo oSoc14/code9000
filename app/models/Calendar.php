@@ -38,7 +38,7 @@ class Calendar extends Eloquent
      */
     public function users()
     {
-        return $this->belongsToMany('User', 'users_calendars','id','id');
+        return $this->belongsToMany('User', 'users_calendars');
     }
 
     /**

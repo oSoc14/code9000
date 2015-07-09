@@ -46,7 +46,7 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
      */
     public function calendars()
     {
-        return $this->hasMany('Calendar','users_calendars','id','id');
+        return $this->belongsToMany('Calendar', 'users_calendars');
     }
 
 
