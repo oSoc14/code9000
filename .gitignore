@@ -12,3 +12,5 @@ Thumbs.db
 node_modules
 Vagrantfile
 bower_components
+public/css/calendar.css
+public/css/calendar.css.map
