@@ -425,66 +425,64 @@ class UserController extends \BaseController
     {
         // If user is logged in, check for permissions
         if (Sentry::check()) {
-            $user = Sentry::getUser();
+            // If not logged in, redirect to the login screen
+            return Redirect::route('landing');
+        }
 
-            // Permission check
-            if ($user->hasAnyAccess(['school', 'admin'])) {
-                try {
-                    // Find the user using the user id
-                    $selectedUser = Sentry::findUserById($id);
+        $user = Sentry::getUser();
 
-                    /**
-                     * Check if the selected user is in the admins group,
-                     * ->true: check if he is the last person in that group
-                     *          -> true: don't allow user to be removed (school needs 1 admin at least)
-                     *          -> false: delete user from school
-                     * ->false: safe to remove user from school
-                     */
-                    if ($selectedUser->hasAccess('admin')
-                        && ($selectedUser->school_id == $user->school_id || $user->hasAccess('superadmin'))
-                    ) {
-                        // Get the schoolShort, based on that find the admin group and all users in that group
-                        $school = School::find($selectedUser->school_id);
-                        $group = Sentry::findGroupByName($school->short . '_admin');
-                        $users = Sentry::findAllUsersInGroup($group);
+        // Permission check
+        if (!$user->hasAnyAccess(['school', 'admin'])) {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('calendar.index');
+        }
 
-                        // If there is more than 1 user in the school_admin group, then the user can be safely removed
-                        if (count($users) > 1) {
-                            // Delete the user
-                            $selectedUser->delete();
+        try {
+            // Find the user using the user id
+            $selectedUser = Sentry::findUserById($id);
 
-                            // Return to the previous page
-                            return Redirect::back();
+            /**
+             * Check if the selected user is in the admins group,
+             * ->true: check if he is the last person in that group
+             *          -> true: don't allow user to be removed (school needs 1 admin at least)
+             *          -> false: delete user from school
+             * ->false: safe to remove user from school
+             */
+            if ($selectedUser->hasAccess('admin')
+                && ($selectedUser->school_id == $user->school_id || $user->hasAccess('superadmin'))
+            ) {
+                // Get the schoolShort, based on that find the admin group and all users in that group
+                $school = School::find($selectedUser->school_id);
+                $group = Sentry::findGroupByName($school->short . '_admin');
+                $users = Sentry::findAllUsersInGroup($group);
 
-                        } else {
-                            // If there is only 1 user (or less), then we can't delete the user
-                            $error = "You can't remove this user.";
+                // If there is more than 1 user in the school_admin group, then the user can be safely removed
+                if (count($users) > 1) {
+                    // Delete the user
+                    $selectedUser->delete();
 
-                            // Return to the previous page
-                            return Redirect::route('user.index')->with('error', $error);
-                        }
-                    } else {
-                        // Delete the user
-                        $selectedUser->delete();
+                    // Return to the previous page
+                    return Redirect::back();
 
-                        // Return to the previous page
-                        return Redirect::route('user.index');
-                    }
-                } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                    $error = 'User was not found.';
+                } else {
+                    // If there is only 1 user (or less), then we can't delete the user
+                    $error = "You can't remove this user.";
 
                     // Return to the previous page
                     return Redirect::route('user.index')->with('error', $error);
-
                 }
             } else {
+                // Delete the user
+                $selectedUser->delete();
 
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
+                // Return to the previous page
+                return Redirect::route('user.index');
             }
-        } else {
-            // If not logged in, redirect to the login screen
-            return Redirect::route('landing');
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            $error = 'User was not found.';
+
+            // Return to the previous page
+            return Redirect::route('user.index')->with('error', $error);
         }
     }
 
@@ -496,56 +494,56 @@ class UserController extends \BaseController
     public function activateUser($id)
     {
         // If user is logged in, get school_id, find respective users
-        if (Sentry::check()) {
-            $user = Sentry::getUser();
-
-            // Permission check
-            if ($user->hasAnyAccess(['superadmin', 'admin'])) {
-
-                try {
-                    // Find the user using the user id
-                    $selectedUser = Sentry::findUserById($id);
-
-                    // Check if all permission are in order, if ok, just progress through the script, else we handle errors
-                    // A user can't deactivate/activate himself, he needs to have "user" permissions, be in the same
-                    // school.
-                    // Alternatively, a superAdmin can do all
-                    if (($user->school_id == $selectedUser->school_id || $user->hasAccess('superadmin')) && $selectedUser->id != $user->id
-                    ) {
-                        // Generate a new activation code for the selected user
-                        $activationCode = $selectedUser->getActivationCode();
-
-                        // Check if a user is already activated
-                        if ($selectedUser->activated == 0) {
-                            // Activate the user if he isn't activated yet
-                            $selectedUser->attemptActivation($activationCode);
-
-                            return $selectedUser;
-
-                        } else {
-                            // If the user is already active, deactivate user
-                            $selectedUser->activated = 0;
-                            $selectedUser->save();
-
-                            return $selectedUser;
-                        }
-
-                    } else {
-                        // Permissions not ok, return to calendar index
-                        return Redirect::route('calendar.index');
-                    }
-                } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                    return Redirect::route('calendar.index');
-                }
-
-            } else {
-                // If no permissions, redirect to calendar index
-                return Redirect::route('calendar.index');
-            }
-        } else {
+        if (!Sentry::check()) {
             // If not logged in, redirect to the login screen
             return Redirect::route('landing');
         }
+
+        $user = Sentry::getUser();
+
+        // Permission check
+        if (!$user->hasAnyAccess(['superadmin', 'admin'])) {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('calendar.index');
+        }
+
+        try {
+            // Find the user using the user id
+            $selectedUser = Sentry::findUserById($id);
+
+            // Check if all permission are in order, if ok, just progress through the script, else we handle errors
+            // A user can't deactivate/activate himself, he needs to have "user" permissions, be in the same
+            // school.
+            // Alternatively, a superAdmin can do all
+            if (!($user->school_id == $selectedUser->school_id || $user->hasAccess('superadmin')) || $selectedUser->id == $user->id
+            ) {
+                // Permissions not ok, return to calendar index
+                return Redirect::route('calendar.index');
+            }
+
+            // Generate a new activation code for the selected user
+            $activationCode = $selectedUser->getActivationCode();
+
+            // Check if a user is already activated
+            if ($selectedUser->activated == 0) {
+                // Activate the user if he isn't activated yet
+                $selectedUser->attemptActivation($activationCode);
+
+                return $selectedUser;
+
+            } else {
+                // If the user is already active, deactivate user
+                $selectedUser->activated = 0;
+                $selectedUser->save();
+
+                return $selectedUser;
+            }
+
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            return Redirect::route('calendar.index');
+        }
+
+
     }
 
 
@@ -557,42 +555,41 @@ class UserController extends \BaseController
     public function editUser($id = null)
     {
         // Check if user is logged in
-        if (Sentry::check()) {
+        if (!Sentry::check()) {
+            // If not logged in, redirect to the login screen
+            return Redirect::route('landing');
+        }
 
-            $user = Sentry::getUser();
+        $user = Sentry::getUser();
 
-            // If id is given, find user by that id
-            if ($id != null) {
+        // If id is given, find user by that id
+        if ($id != null) {
 
-                try {
-                    $selectedUser = Sentry::findUserById($id);
-                } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                    return Redirect::route('calendar.index');
-                }
-
-            } else {
-                // If no id is given, make the id equal to the id of the logged in user (User is trying to edit himself)
-                $selectedUser = Sentry::getUser();
-                $id = $selectedUser->id;
-            }
-
-            // Check permissions for the user (user has to be either a superAdmin, edit himself, or have user permissions
-            // for the same school as the user he is trying to edit
-            if ($user->hasAccess('superadmin') || $user->id == $id
-                || ($user->hasAccess('user') && $user->school_id == $selectedUser->school_id)
-            ) {
-
-                return View::make('user.edit')->with('user', $selectedUser);
-
-            } else {
-                // If no permissions, redirect to calendar index
+            try {
+                $selectedUser = Sentry::findUserById($id);
+            } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
                 return Redirect::route('calendar.index');
             }
 
         } else {
-            // If not logged in, redirect to the login screen
-            return Redirect::route('landing');
+            // If no id is given, make the id equal to the id of the logged in user (User is trying to edit himself)
+            $selectedUser = Sentry::getUser();
+            $id = $selectedUser->id;
         }
+
+        // Check permissions for the user (user has to be either a superAdmin, edit himself, or have user permissions
+        // for the same school as the user he is trying to edit
+        if ($user->hasAccess('superadmin') || $user->id == $id
+            || ($user->hasAccess('user') && $user->school_id == $selectedUser->school_id)
+        ) {
+
+            return View::make('user.edit')->with('user', $selectedUser);
+
+        } else {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('calendar.index');
+        }
+
     }
 
     /**
