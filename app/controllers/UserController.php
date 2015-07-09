@@ -175,9 +175,7 @@ class UserController extends \BaseController
 
             $url = URL::route('user.resetPassword', [$resetCode]);
 
-            // TODO: Make message multilanguage
-
-            $message = '<html><body><p>Klik op de volgende link om uw wachtwoord opnieuw in te stellen: <a href="' . $url . '">' . $url . '</a></p></body></html>';
+            $message = '<html><body><p>' . ucfirst(trans('reminders.resetmail')) . ': <a href="' . $url . '">' . $url . '</a></p></body></html>';
 
             $headers = "MIME-Version: 1.0\n";
             $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
@@ -453,8 +451,7 @@ class UserController extends \BaseController
             ) {
                 // Get the schoolShort, based on that find the admin group and all users in that group
                 $school = School::find($selectedUser->school_id);
-                $group = Sentry::findGroupByName($school->short . '_admin');
-                $users = Sentry::findAllUsersInGroup($group);
+                $users = SchoolController::getSchoolAdmins($school->id);
 
                 // If there is more than 1 user in the school_admin group, then the user can be safely removed
                 if (count($users) > 1) {
