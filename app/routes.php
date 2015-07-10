@@ -106,17 +106,16 @@ Route::group(['prefix' => 'user'], function () {
     ]);
 
     // Add user to group
-    Route::post('/admin/add/{user_id}', [
-        'as'   => 'user.addToGroup',
+    Route::post('/{id}/role/editor', [
+        'as' => 'user.addAdminRole',
         'uses' => 'UserController@addAdminRole'
     ])->where('id', '[0-9]+');
 
     // Remover a user from group
-    Route::get('/admin/remove/{id}', [
-        'as' => 'user.removeFromGroup',
+    Route::post('/{id}/role/admin', [
+        'as' => 'user.removeAdminRole',
         'uses' => 'UserController@removeAdminRole'
-    ])->where('id', '[0-9]+')
-        ->where('groupId', '[0-9]+');
+    ])->where('id', '[0-9]+');
 
     // Active a user
     Route::get('/activate/{id}', [
