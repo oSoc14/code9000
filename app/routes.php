@@ -211,7 +211,7 @@ Route::group(['prefix' => 'calendar'], function ()
     // Returns all events for the users school
     Route::get('/api/events', [
         'as'   => 'calendar.events',
-        'uses' => 'CalendarViewController@events'
+        'uses' => 'ApiController@events'
     ]);
 
 });
