@@ -123,6 +123,7 @@ main {
     padding: 10px 15px;
     margin: 0;
     line-height: 20px;
+    font-weight: 500;
   }
   button{
     color: #090;
@@ -157,9 +158,6 @@ main {
 .dtpicker{
   display: flex;
   &>label{
-    flex: 1 0 auto;
-  }
-  &>div{
     flex: 1 0 auto;
   }
 }
