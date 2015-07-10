@@ -320,7 +320,7 @@ class UserController extends \BaseController
             UserController::checkCreateRoles(); // make sure the roles are created already
 
             // Find the group using the group id
-            $editorGroup = Sentry::findGroupById(3);
+            $editorGroup = Sentry::findGroupByName('editor');
 
             // Assign the group to the user
             $user->addGroup($editorGroup);
@@ -403,9 +403,10 @@ class UserController extends \BaseController
         // If a superAdmin was created, then we add him to the 1st group in the database, which is the
         // superadmin group
         if ($user->hasAccess('superadmin') && Input::get('superAdmin')) {
-            $group = Sentry::findGroupById(1); // get the super admin role
+            $group = Sentry::findGroupByName('superadmin');
+
         } else {
-            $group = Sentry::findGroupById(3); // get the editor role
+            $group = Sentry::findGroupByName('editor');
         }
         $created->addGroup($group); // give role to user
 
@@ -697,11 +698,11 @@ class UserController extends \BaseController
     }
 
     /**
-     * Remove a user from selected group
-     * @param $id
-     * @param $groupId
+     * Remove a user from selected calendar
+     * @param $id the ID of the user to demote
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function removeFromGroup($id, $groupId)
+    public function removeAdminRole($id)
     {
         if (!Sentry::check()) {
             // If not logged in, redirect to the login screen
@@ -712,8 +713,7 @@ class UserController extends \BaseController
             // Find the user using the user id
             $selectedUser = Sentry::findUserById($id);
             $user = Sentry::getUser();
-            $group = Sentry::findGroupById($groupId);
-
+            $group = Sentry::findGroupByName('admin');
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
             $error = 'User was not found.';
 
@@ -746,31 +746,22 @@ class UserController extends \BaseController
         $school = School::find($selectedUser->school_id);
         // Make sure the user can not remove the last user from the school_admin group
         // otherwise no one is left to configure the group (except for the superAdmin)
-        // TODO: refactor
-        if ($group->name == $school->short . '_admin') {
-            $users = Sentry::findAllUsersInGroup($group);
 
-            // If there is more than 1 user in the admin group, it's safe to delete this one
-            if (count($users) > 1) {
-                // Delete the user
-                $selectedUser->removeGroup($group);
+        $users = SchoolController::getSchoolAdmins($school->id);
 
-                // Return to the previous page
-                Redirect::route('calendarManagement.edit', $group->id);
-            } else {
-                // If there is only 1 or less users in the admin group, do not delete it
-                $error = "You can't remove this user.";
-
-                // Return to the previous page
-                Redirect::route('calendarManagement.edit', $group->id)->with('error', $error);
-            }
-
-        } else {
-            // Remove the user from group
+        // If there is more than 1 user in the admin group, it's safe to delete this one
+        if (count($users) > 1) {
+            // Delete the user
             $selectedUser->removeGroup($group);
 
             // Return to the previous page
-            return Redirect::back();
+            Redirect::route('calendarManagement.edit', $group->id);
+        } else {
+            // If there is only 1 or less users in the admin group, do not delete it
+            $error = "You can't remove this user.";
+
+            // Return to the previous page
+            Redirect::route('calendarManagement.edit', $group->id)->with('error', $error);
         }
 
 
@@ -792,12 +783,12 @@ class UserController extends \BaseController
     }
 
     /**
-     * Method for adding users to a group
+     * Method for making users admin.
      *
-     * @param $role_id
+     * @param $userId the ID of the user to rank up
      * @return mixed
      */
-    public function addToGroup($role_id)
+    public function addAdminRole($userId)
     {
         if (!Sentry::check()) {
             // If not logged in, redirect to the login screen
@@ -812,10 +803,10 @@ class UserController extends \BaseController
         }
 
         // Find the group using the group id
-        $role = Sentry::findGroupById($role_id);
+        $role = Sentry::findGroupByName('admin');
 
         // Find the selected user and try to add him to the correct group
-        $user = Sentry::findUserById(Input::get('user'));
+        $user = Sentry::findUserById($userId);
         $user->addGroup($role);
 
         return Redirect::back();

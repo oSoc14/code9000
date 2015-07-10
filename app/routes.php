@@ -75,7 +75,7 @@ Route::group(['prefix' => 'school'], function () {
 
 
 Route::group(['prefix' => 'user'], function () {
-    // Show list of users
+    // Show list of users for a calendar
     Route::get('/', [
         'as' => 'user.index',
         'uses' => 'UserController@index'
@@ -106,10 +106,17 @@ Route::group(['prefix' => 'user'], function () {
     ]);
 
     // Add user to group
-    Route::post('/group/add/{group_id}', [
+    Route::post('/admin/add/{user_id}', [
         'as'   => 'user.addToGroup',
-        'uses' => 'UserController@addToGroup'
+        'uses' => 'UserController@addAdminRole'
     ])->where('id', '[0-9]+');
+
+    // Remover a user from group
+    Route::get('/admin/remove/{id}', [
+        'as' => 'user.removeFromGroup',
+        'uses' => 'UserController@removeAdminRole'
+    ])->where('id', '[0-9]+')
+        ->where('groupId', '[0-9]+');
 
     // Active a user
     Route::get('/activate/{id}', [
@@ -128,13 +135,6 @@ Route::group(['prefix' => 'user'], function () {
         'as'   => 'user.update',
         'uses' => 'UserController@updateUser'
     ])->where('id', '[0-9]+');
-
-    // Remover a user from group
-    Route::get('/removeFromGroup/{id}/{groupId}', [
-        'as'   => 'user.removeFromGroup',
-        'uses' => 'UserController@removeFromGroup'
-    ])->where('id', '[0-9]+')
-        ->where('groupId', '[0-9]+');
 
     // Destroy a user
     Route::get('/delete/{id}', [
@@ -214,6 +214,7 @@ Route::group(['prefix' => 'calendar'], function ()
         'as'   => 'calendar.events',
         'uses' => 'CalendarViewController@events'
     ]);
+
 });
 
 /***
