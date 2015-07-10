@@ -355,5 +355,58 @@ class CalendarController extends \BaseController
 
     }
 
+    /**
+     * Get all appointments from a calendar, including parent calendars
+     * @param $calendar_id the id of the calendar to export
+     * @return array all appointments
+     */
+    public static function getAppointments($calendar_id)
+    {
+        // Create an empty appointments array, which we will fill with appointments to render later
+        $appointments = [];
 
+        // TODO: Change group handling, base it off group and school ID
+        // TODO: Add support for entire school export (all groups)
+        // Load appointments based on group
+        $calendar = Calendar::where('id', $calendar_id)->first();
+        $calendar->load('appointments', 'school');
+
+        // Set the limitations for which appointments to get
+        $dsta = new DateTime();
+        $dend = new DateTime();
+
+        // TODO: Make this better (1 year static range isn't good)
+        // In this case we set the limit to 1 year in the past until 1 year in the future
+        $dsta->sub(new DateInterval("P1M"));
+        $dend->add(new DateInterval("P1Y"));
+
+        // TODO: fix code duplication!
+
+        foreach ($calendar->appointments as $appointment) {
+            $da = new DateTime($appointment->start_date);
+
+            // Set the limits for what appointments to get (1y in past till 1y in future)
+            // If the appointment is within the limits, add it to the $appointments array
+            if ($da > $dsta && $da < $dend) {
+                array_push($appointments, $appointment);
+            }
+        }
+
+        // Add all parent calendars
+        while ($calendar->parent_id > 0) {
+
+            foreach ($calendar->appointments as $appointment) {
+                $da = new DateTime($appointment->start_date);
+
+                // Set the limits for what appointments to get (1y in past till 1y in future)
+                // If the appointment is within the limits, add it to the $appointments array
+                if ($da > $dsta && $da < $dend) {
+                    array_push($appointments, $appointment);
+                }
+            }
+
+        }
+
+        return $appointments;
+    }
 }

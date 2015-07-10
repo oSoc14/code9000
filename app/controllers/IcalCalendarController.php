@@ -12,60 +12,14 @@ class IcalCalendarController extends \BaseController
      * Find correct appointments depending on $school and $group
      * Process these appointments and render them to an .ics file which will be returned for download
      *
-     * @param  string $id
-     * @param  string $school
-     * @param  string $group
-     * @return cal.ics download file
+     * @param  $calendar_id int the calendar ID
+     * @return mixed cal.ics download file
      *
      */
-    public function index($id, $school, $group)
+    public function index($calendar_id)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
-        $appointments = [];
-
-        // TODO: Change group handling, base it off group and school ID
-        // TODO: Add support for entire school export (all groups)
-        // Load appointments based on group
-        $selGroup = Group::where('id', $id)->first();
-        $selGroup->load('appointments', 'school');
-        $grp = str_replace('__' . $selGroup->school->id, '', $selGroup->name);
-
-        // Set the limitations for which appointments to get
-        $dsta = new DateTime();
-        $dend = new DateTime();
-
-        // TODO: Make this better (1 year static range isn't good)
-        // In this case we set the limit to 1 year in the past until 1 year in the future
-        $dsta->sub(new DateInterval("P1M"));
-        $dend->add(new DateInterval("P1Y"));
-
-        // Add global appointments, unless only global appointments are requested
-        if ($grp != $selGroup->school->name) {
-            $globalGroup = Group::where('name', $selGroup->school->name . '__' . $selGroup->school->id)->first();
-            $globalGroup->load('appointments');
-
-            foreach ($globalGroup->appointments as $appointment) {
-                $da = new DateTime($appointment->start_date);
-
-                // Set the limits for what appointments to get (1y in past till 1y in future)
-                // If the appointment is within the limits, add it to the $appointments array
-                if ($da > $dsta && $da < $dend) {
-                    array_push($appointments, $appointment);
-                }
-            }
-        }
-
-        // Add group specific appointments
-        foreach ($selGroup->appointments as $appointment) {
-            $da = new DateTime($appointment->start_date);
-
-            // Set the limits for what appointments to get (1y in past till 1y in future)
-            // If the appointment is within the limits, add it to the $appointments array
-            if ($da > $dsta && $da < $dend) {
-                array_push($appointments, $appointment);
-            }
-        }
-
+        $appointments = CalendarController::getAppointments($calendar_id);
         // Compose iCal with the help of the eluceo plugin
         $calendar = self::composeIcal($appointments);
 
@@ -95,7 +49,7 @@ class IcalCalendarController extends \BaseController
             // Create an event
             $event = new \Eluceo\iCal\Component\Event();
             $event->setSummary($appointment['attributes']['title']);
-            $event->setDescription(str_replace("\r\n"," ",$appointment['attributes']['description']));
+            $event->setDescription(str_replace("\r\n", " ", $appointment['attributes']['description']));
             $event->setDtStart(new \DateTime($appointment['attributes']['start_date']));
             $event->setDtEnd(new \DateTime($appointment['attributes']['end_date']));
             $event->setNoTime($appointment['attributes']['allday']);
@@ -159,7 +113,7 @@ class IcalCalendarController extends \BaseController
     {
         // Find selected appointment and push it to an array with a single element which will be sent to the
         // composeIcal function (in this controller as well)
-        $appointment  = Appointment::find($id);
+        $appointment = Appointment::find($id);
         $appointments = [];
         array_push($appointments, $appointment);
 
