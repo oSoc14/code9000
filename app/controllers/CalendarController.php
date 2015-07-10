@@ -266,6 +266,74 @@ class CalendarController extends \BaseController
     }
 
     /**
+     * Add a user to the group of people who can edit this calendar.
+     *
+     * @param  int $user_id
+     * @return Response
+     */
+    public function addUserToCalendar($user_id, $calendar_id)
+    {
+
+        if (!Sentry::check()) {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('landing');
+        }
+
+        // Find active user and group information
+        $user = Sentry::getUser();
+        $calendar = Calendar::find($calendar_id);
+        $selectedUser = Sentry::findUserById($user_id);
+
+        // Permission checks
+        if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
+            // If no permissions, redirect the user to the calendar index page
+            return Redirect::route('calendar.index');
+        }
+
+        // The minimal permission level is editor,
+        // so we don't have to check if the selected user has access to editing features
+
+        $school = $calendar->school;
+        if ($selectedUser->school_id != $school->id) {
+            // If no permissions, redirect the user to the calendar index page
+            return Redirect::route('calendar.index')->withErrors("This user does not belong to this school!");
+        }
+
+        $user->calendars()->attach($calendar);
+    }
+
+    /**
+     * Remove a user from the group of people who can edit this calendar.
+     *
+     * @param  int $user_id
+     * @return Response
+     */
+    public function removeUserFromCalendar($user_id, $calendar_id)
+    {
+
+        if (!Sentry::check()) {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('landing');
+        }
+
+        // Find active user and group information
+        $user = Sentry::getUser();
+        $calendar = Calendar::find($calendar_id);
+        $selectedUser = Sentry::findUserById($user_id);
+
+        // Permission checks
+        if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
+            // If no permissions, redirect the user to the calendar index page
+            return Redirect::route('calendar.index');
+        }
+
+        // The minimal permission level is editor,
+        // so we don't have to check if the selected user has access to editing features
+
+        $user->calendars()->detach($calendar);
+    }
+
+    /**
      * Remove the specified calendar from storage.
      *
      * @param  int $id
