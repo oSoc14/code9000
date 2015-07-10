@@ -320,10 +320,10 @@ class UserController extends \BaseController
             UserController::checkCreateRoles(); // make sure the roles are created already
 
             // Find the group using the group id
-            $editorGroup = Sentry::findGroupByName('editor');
+            $editorRole = Sentry::findGroupByName('editor');
 
             // Assign the group to the user
-            $user->addGroup($editorGroup);
+            $user->addGroup($editorRole);
 
             return Redirect::route('landing');
         }
@@ -401,14 +401,14 @@ class UserController extends \BaseController
         );
 
         // If a superAdmin was created, then we add him to the 1st group in the database, which is the
-        // superadmin group
+        // superadmin role
         if ($user->hasAccess('superadmin') && Input::get('superAdmin')) {
-            $group = Sentry::findGroupByName('superadmin');
+            $role = Sentry::findGroupByName('superadmin');
 
         } else {
-            $group = Sentry::findGroupByName('editor');
+            $role = Sentry::findGroupByName('editor');
         }
-        $created->addGroup($group); // give role to user
+        $created->addGroup($role); // give role to user
 
         // Return to previous page after everything is done
         return Redirect::route('user.index');
@@ -713,7 +713,7 @@ class UserController extends \BaseController
             // Find the user using the user id
             $selectedUser = Sentry::findUserById($id);
             $user = Sentry::getUser();
-            $group = Sentry::findGroupByName('admin');
+            $role = Sentry::findGroupByName('admin');
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
             $error = 'User was not found.';
 
@@ -752,16 +752,16 @@ class UserController extends \BaseController
         // If there is more than 1 user in the admin group, it's safe to delete this one
         if (count($users) > 1) {
             // Delete the user
-            $selectedUser->removeGroup($group);
+            $selectedUser->removeGroup($role);
 
             // Return to the previous page
-            Redirect::route('calendarManagement.edit', $group->id);
+            Redirect::route('calendarManagement.index');
         } else {
             // If there is only 1 or less users in the admin group, do not delete it
             $error = "You can't remove this user.";
 
             // Return to the previous page
-            Redirect::route('calendarManagement.edit', $group->id)->with('error', $error);
+            Redirect::route('calendarManagement.index')->with('error', $error);
         }
 
 

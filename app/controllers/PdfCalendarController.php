@@ -10,13 +10,12 @@ class PdfCalendarController extends \BaseController
 
 
     /**
-     * Find correct appointments depending on $school and $group
-     * Additionally add the appointments from the "global" group
+     * Find correct appointments depending on $school and $calendar
+     * Additionally add the appointments from the "global" calendar
      * Process these appointments and render them to an .pdf file which will be returned for download
      *
-     * @param  string $id
+     * @param  string $calendar_id
      * @param  string $school
-     * @param  string $group
      * @return pdf downloadable file
      *
      */
@@ -182,9 +181,9 @@ class PdfCalendarController extends \BaseController
         $appointments = [];
         array_push($appointments, $appointment);
 
-        $calendar = self::composePdf($appointments, $school->group->school->name, $school->group->name);
+        $calendar = self::composePdf($appointments, $school->name, $school->calendar->name);
 
-        return PDF::load($calendar, 'A4', 'landscape')->download($school->group->school->name . ' - calendar');
+        return PDF::load($calendar, 'A4', 'landscape')->download($school->name . ' - calendar');
     }
 
 }

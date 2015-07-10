@@ -31,10 +31,10 @@ class CalendarController extends \BaseController
 
         } elseif ($user->hasAccess('editor')) {
 
-            // Get school_id, by which we will search for related groups
+            // Get school_id, by which we will search for related calendars
             $schoolId = $user->school_id;
 
-            // Find all groups with certain school_id
+            // Find all calendars with certain school_id
             $calendars = Calendar::where('school_id', '=', $schoolId)->get();
             $calendars = $calendars->load('school');
 
@@ -160,12 +160,12 @@ class CalendarController extends \BaseController
             return Redirect::route('calendar.index');
         }
 
-        // Find all users in the selected group
+        // Find all users in the selected calendar
         $users = Calendar::find($id)->users();
         // Find all users by school
         $schoolUsers = User::where('users.school_id', $calendar->school_id)->get();
 
-        // Find all possible users that aren't in the group yet
+        // Find all possible users that aren't in the calendar yet
         // This array of users will be used to generate a dropdown menu
         $possibleUsers = [];
         foreach ($schoolUsers as $su) {
@@ -211,7 +211,7 @@ class CalendarController extends \BaseController
             return Redirect::route('landing');
         }
 
-        // Find active user and group information
+        // Find active user and calendar information
         $user = Sentry::getUser();
         $calendar = Calendar::find($id);
 
@@ -230,7 +230,7 @@ class CalendarController extends \BaseController
             $calName = $calendar->name;
         }
 
-        // Make a validator to see if the new group name is unique if it's not the same as before
+        // Make a validator to see if the new calendar name is unique if it's not the same as before
         // Validate input fields
         $validator = Validator::make(
             [
@@ -250,7 +250,7 @@ class CalendarController extends \BaseController
 
             // TODO: take a look at "protected" calendars
         } elseif ($calName == $school->name || $calName == 'Administratie') {
-            // Do not allow default groups to be renamed
+            // Do not allow default calendars to be renamed
             return Redirect::route('calendarManagement.edit', $id);
 
         } else {
@@ -266,7 +266,7 @@ class CalendarController extends \BaseController
     }
 
     /**
-     * Add a user to the group of people who can edit this calendar.
+     * Add a user to the calendar of people who can edit this calendar.
      *
      * @param  int $user_id
      * @return Response
@@ -279,7 +279,7 @@ class CalendarController extends \BaseController
             return Redirect::route('landing');
         }
 
-        // Find active user and group information
+        // Find active user and calendar information
         $user = Sentry::getUser();
         $calendar = Calendar::find($calendar_id);
         $selectedUser = Sentry::findUserById($user_id);
@@ -303,7 +303,7 @@ class CalendarController extends \BaseController
     }
 
     /**
-     * Remove a user from the group of people who can edit this calendar.
+     * Remove a user from the calendar of people who can edit this calendar.
      *
      * @param  int $user_id
      * @return Response
@@ -316,7 +316,7 @@ class CalendarController extends \BaseController
             return Redirect::route('landing');
         }
 
-        // Find active user and group information
+        // Find active user and calendar information
         $user = Sentry::getUser();
         $calendar = Calendar::find($calendar_id);
         $selectedUser = Sentry::findUserById($user_id);
@@ -344,7 +344,7 @@ class CalendarController extends \BaseController
         if (!Sentry::check()) {
             return;
         }
-        // Find active user and group information
+        // Find active user and calendar information
         $user = Sentry::getUser();
         $calendar = Calendar::find($id);
 
@@ -365,9 +365,9 @@ class CalendarController extends \BaseController
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
 
-        // TODO: Change group handling, base it off group and school ID
-        // TODO: Add support for entire school export (all groups)
-        // Load appointments based on group
+        // TODO: Change calendar handling, base it off calendar and school ID
+        // TODO: Add support for entire school export (all calendars)
+        // Load appointments based on calendar
         $calendar = Calendar::where('id', $calendar_id)->first();
         $calendar->load('appointments', 'school');
 

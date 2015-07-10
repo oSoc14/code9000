@@ -227,7 +227,7 @@ Route::group(['prefix' => 'group'], function()
         'uses' => 'CalendarController@index'
     ]);
 
-    // Edit a group
+    // Edit a calendar
     Route::get('/{id}', [
         'as'   => 'calendarManagement.edit',
         'uses' => 'CalendarController@edit'
@@ -265,24 +265,28 @@ Route::group(['prefix' => 'group'], function()
 Route::group(['prefix' => 'export'], function()
 {
     // iCal Export route for a certain class
+    // id = calendar
     Route::get('/{id}/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'IcalCalendarController@index'
     ])->where(['id' => '[0-9]+', 'school' => '[0-9A-Za-z_\- ]+', 'class' => '[0-9A-Za-z_\- ]+']);
 
     // iCal Export route for a single appointment
+    // id = appointment
     Route::get('/appointment/find/{id}', [
         'as'   => 'export.single',
         'uses' => 'IcalCalendarController@show'
     ])->where('id', '[0-9]+');
 
     // PDF Export route for a certain class
+    // id = calendar
     Route::get('/pdf/{id}/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'PdfCalendarController@index'
     ])->where(['id' => '[0-9]+', 'school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
 
     // PDF Export route for a single appointment
+    // id = appointment
     Route::get('/appointment/pdf/{id}', [
         'as'   => 'export.singlepdf',
         'uses' => 'PdfCalendarController@show'

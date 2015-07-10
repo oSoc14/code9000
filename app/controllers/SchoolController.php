@@ -2,7 +2,7 @@
 
 /**
  * Class SchoolController
- * This controller handles the CRUD of schools, and associated default groups that are generated alongside of a school.
+ * This controller handles the CRUD of schools, and associated default calendars that are generated alongside of a school.
  */
 class SchoolController extends \BaseController
 {
@@ -38,7 +38,7 @@ class SchoolController extends \BaseController
 
     /**
      * Store a newly created school in storage.
-     * Create default groups.
+     * Create default calendars.
      * Store new user (schooladmin) as well.
      *
      * @return Response
@@ -92,8 +92,8 @@ class SchoolController extends \BaseController
         $school->city = e(Input::get("city"));
         $school->save();
 
-        // Create the default groups "global" and "admin"
-        // TODO: create new "calendars" instead of the groups
+        // Create the default calendars "global" and "admin"
+        // TODO: create new "calendars" instead of the calendars
         // TODO: add this user to the people who can edit the newly created calendars
 
         // Store the newly created user along with the school
@@ -110,12 +110,12 @@ class SchoolController extends \BaseController
 
         // make sure the roles exist
         UserController::checkCreateRoles();
-        // Find the role using the group id
+        // Find the role using the calendar id
 
-        $adminGroup = Sentry::findGroupByName('admin');
+        $adminRole = Sentry::findGroupByName('admin');
 
-        // Assign the group to the user
-        $user->addGroup($adminGroup);
+        // Assign the calendar to the user
+        $user->addGroup($adminRole);
 
         $calendar = new Calendar();
         $calendar->name = "global";
@@ -127,8 +127,8 @@ class SchoolController extends \BaseController
         // link to global calendar
         $user->calendars()->attach($calendar);
 
-        // Add the user to the admin group
-        // $user->addGroup($group);
+        // Add the user to the admin calendar
+        // $user->addcalendar($calendar);
 
         // Log the user in
         Sentry::login($user, false);
@@ -235,9 +235,9 @@ class SchoolController extends \BaseController
         } else {
             // Clean up inputted school name
             $nn = self::clean(Input::get("name"));
-            // Select the first group of the school, if school name changes (should be the global group)
+            // Select the first calendar of the school, if school name changes (should be the global calendar)
             if ($nn != $school->name) {
-                $gg = $school->groups->first();
+                $gg = $school->calendars->first();
 
                 $gg->name = $school->name; // TODO: check, is this correct?
                 $gg->save();
@@ -300,8 +300,8 @@ class SchoolController extends \BaseController
      */
     public static function getSchoolAdmins($school_id)
     {
-        $admingroup = Sentry::findGroupByName('admin'); // all admins
-        $users = Sentry::findAllUsersInGroup($admingroup);
+        $adminrole = Sentry::findGroupByName('admin'); // all admins
+        $users = Sentry::findAllUsersInGroup($adminrole);
 
         // we got all admins, but we only need the admins for this school
         $filtered = array();
