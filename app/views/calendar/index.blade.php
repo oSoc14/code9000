@@ -1,57 +1,39 @@
-<!doctype html>
-<html lang="{{ Config::get('app.locale') }}" dir="ltr">
+@extends('layout.master-app')
 
-<head>
-  <meta charset="UTF-8">
-  <title>{{ HTML::entities('EduCal') }}</title>
-  {{ HTML::style("http://fonts.googleapis.com/css?family=Roboto:400,500") }}
-  {{ HTML::style("css/bootstrap.min.css") }}
-  {{ HTML::style("bower_components/fullcalendar/dist/fullcalendar.min.css") }}
-  {{ HTML::style("/css/calendar.css") }}
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-  {{ HTML::script("js/html5shiv.js") }}
-  {{ HTML::script("js/respond.min.js") }}
-  <![endif]-->
-  <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
-</head>
-<body>
-<nav class="nav-main">
-  <h1>Trappenhuis</h1>
-  <section>
-    <button type="button" name="button">School</button>
-    <button type="button" name="button">Leerjaar</button>
-    <input type="checkbox" value="1" id="y1">
-    <label for="y1">1</label>
-    <input type="checkbox" value="1" id="y2">
-    <label for="y2">2</label>
-    <input type="checkbox" value="1" id="y3">
-    <label for="y3">3</label>
-    <input type="checkbox" value="1" id="y4">
-    <label for="y4">4</label>
-    <input type="checkbox" value="1" id="y5">
-    <label for="y5">5</label>
-    <input type="checkbox" value="1" id="y6">
-    <label for="y6">6</label>
-    <button type="button" name="button">Klassen</button>
-    <input type="checkbox" value="1" id="c1">
-    <label for="c1">1A</label>
-    <input type="checkbox" value="1" id="c2">
-    <label for="c2">1B</label>
-    <input type="checkbox" value="1" id="c3">
-    <label for="c3">1C</label>
-  </section>
-  <ul>
-    <li><a href="#">Help!</a></li>
-    <li><a href="#">Profiel</a></li>
-    <li><a href="#">Instellingen</a></li>
-  </ul>
-</nav>
-<main>
+@section('header')
+{{ HTML::style("bower_components/fullcalendar/dist/fullcalendar.min.css") }}
+{{ HTML::style("css/calendar.css") }}
+@stop
+
+@section('nav')
+<section>
+  <button type="button" name="button">School</button>
+  <button type="button" name="button">Leerjaar</button>
+  <input type="checkbox" value="1" id="y1">
+  <label for="y1">1</label>
+  <input type="checkbox" value="1" id="y2">
+  <label for="y2">2</label>
+  <input type="checkbox" value="1" id="y3">
+  <label for="y3">3</label>
+  <input type="checkbox" value="1" id="y4">
+  <label for="y4">4</label>
+  <input type="checkbox" value="1" id="y5">
+  <label for="y5">5</label>
+  <input type="checkbox" value="1" id="y6">
+  <label for="y6">6</label>
+  <button type="button" name="button">Klassen</button>
+  <input type="checkbox" value="1" id="c1">
+  <label for="c1">1A</label>
+  <input type="checkbox" value="1" id="c2">
+  <label for="c2">1B</label>
+  <input type="checkbox" value="1" id="c3">
+  <label for="c3">1C</label>
+</section>
+@stop
+
+@section('content')
   <div id="calendar"></div>
-</main>
+
   <!-- Event detail Modal -->
   <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModal" aria- hidden="true">
     <div class="modal-dialog">
@@ -110,9 +92,6 @@
     </div>
   </div>
 
-<div id="backdrop" class="backdrop">
-</div>
-
 <div class="hidden new-event">
   <p class="divider-btm">
     <label for="" class="hidden">Event naam</label>
@@ -163,8 +142,9 @@
     <button type="button" name="button">Toevoegen</button>
   </div>
 </div>
+@stop
 
-
+@section('footerScript')
 {{ HTML::script("js/build/production.min.js") }}
 {{ HTML::script("bower_components/fullcalendar/dist/fullcalendar.min.js") }}
 @if(Session::get('lang') == 'nl')
@@ -176,7 +156,4 @@
 @endif {{ HTML::script('js/calendar.js') }}
 
 {{ HTML::script('js/app.js') }}
-
-</body>
-
-</html>
+@stop
