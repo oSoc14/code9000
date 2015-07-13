@@ -200,6 +200,12 @@ Route::group(['prefix' => 'api/1'], function () {
         'uses' => 'ApiController@orgCalendars'
     ]);
 
+    // Returns all events for the users organisation
+    Route::get('/calendars/{id}/events', [
+        'as' => 'api.orgCalendars',
+        'uses' => 'ApiController@calendarEvents'
+    ]);
+
     // TODO: post API
 });
 
