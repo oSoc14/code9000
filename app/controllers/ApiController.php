@@ -7,6 +7,29 @@
 class ApiController extends \BaseController
 {
 
+    /**
+     * Get all events for logged in user
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @deprecated
+     */
+    public function allUserEvents()
+    {
+        if (!Sentry::check()) {
+            return;
+        }
+        $user = Sentry::getUser();
+        $appointments = [];
+        $user->load('school.calendars.appointments.calendar.school');
+        // Loop through calendars to get all appointments
+        foreach ($user->school->calendars as $calendar) {
+            foreach ($calendar->appointments as $appointment) {
+                array_push($appointments, $appointment);
+            }
+        }
+
+        // Returns JSON response of the user
+        return Response::json($appointments)->setCallback(Input::get('callback'));
+    }
 
     /**
      * Return a listing of the organisations

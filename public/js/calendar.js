@@ -18,7 +18,7 @@ $(document).ready(function () {
     $('#addEvent').hide();
     $.ajax({
       type: "GET",
-      url: "calendar/api/events",
+      url: "api/1/user/events",
       cache: false,
       dataType: "json",
       contentType: "application/json",
