@@ -35,10 +35,10 @@ Route::group(['prefix' => 'orgs'], function () {
     // List all organisations (for editing)
     Route::get('/', [
         'as' => 'orgs.index',
-        'before' => 'admin'
-    ], function() {
-      return View::make('orgs/index');
-    });
+        function() {
+            return View::make('orgs/index');
+        }
+    ]);
 });
 
 Route::group(['prefix' => 'school'], function () {
