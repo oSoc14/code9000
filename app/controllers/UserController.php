@@ -160,14 +160,9 @@ class UserController extends \BaseController
      *
      * @return boolean
      */
-    public function sendResetLink()
+    public function sendResetLink($email)
     {
         try {
-
-            $post = Input::all();
-
-            // Check if the user exists
-            $email = $post['email-reset'];
 
             $user = User::where('email', $email)->firstOrFail();
 

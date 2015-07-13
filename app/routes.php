@@ -74,18 +74,44 @@ Route::group(['prefix' => 'school'], function () {
 });
 
 
-Route::group(['prefix' => 'user'], function () {
-    // Show list of users for a calendar
-    Route::get('/', [
-        'as' => 'user.index',
-        'uses' => 'UserController@index'
+Route::group(['prefix' => 'profile'], function () {
+    /*
+      // Show list of users for a school
+      Route::get('/', [
+          'as' => 'user.index',
+          'uses' => 'UserController@index'
+      ]);
+  */
+
+    // Log user out TODO: post?
+    Route::get('/logout', [
+        'as'   => 'user.logout',
+        'uses' => 'UserController@logout'
     ]);
 
-    // Authenticate user
-    Route::post('/auth', [
-        'as' => 'user.auth',
-        'uses' => 'UserController@auth'
-    ]);
+    // Show the view to edit a user
+    Route::get('/{id?}', [
+        'as' => 'user.edit',
+        'uses' => 'UserController@editUser'
+    ])->where('id', '[0-9]+');
+
+    // Add user to group
+    Route::post('/{id}/roles', [
+        'as' => 'user.addAdminRole',
+        'uses' => 'UserController@promoteUserAdmin'
+    ])->where('id', '[0-9]+');
+
+    // Remover a user from group
+    Route::delete('/{id}/roles', [
+        'as' => 'user.removeAdminRole',
+        'uses' => 'UserController@demoteUserAdmin'
+    ])->where('id', '[0-9]+');
+
+    // Update a user
+    Route::post('/{id}', [
+        'as'   => 'user.update',
+        'uses' => 'UserController@updateUser'
+    ])->where('id', '[0-9]+');
 
     // Register as a new user
     Route::post('/register', [
@@ -99,49 +125,19 @@ Route::group(['prefix' => 'user'], function () {
         'uses' => 'UserController@create'
     ]);
 
-    // Log user out
-    Route::get('/logout', [
-        'as'   => 'user.logout',
-        'uses' => 'UserController@logout'
+    // Authenticate user
+    Route::post('/auth', [
+        'as' => 'user.auth',
+        'uses' => 'UserController@auth'
     ]);
 
-    // Add user to group
-    Route::post('/{id}/role/editor', [
-        'as' => 'user.addAdminRole',
-        'uses' => 'UserController@addAdminRole'
-    ])->where('id', '[0-9]+');
-
-    // Remover a user from group
-    Route::post('/{id}/role/admin', [
-        'as' => 'user.removeAdminRole',
-        'uses' => 'UserController@removeAdminRole'
-    ])->where('id', '[0-9]+');
-
-    // Active a user
-    Route::get('/activate/{id}', [
-        'as'   => 'user.activate',
-        'uses' => 'UserController@activateUser'
-    ])->where('id', '[0-9]+');
-
-    // Show the view to edit a user
-    Route::get('/edit/{id?}', [
-        'as'   => 'user.edit',
-        'uses' => 'UserController@editUser'
-    ])->where('id', '[0-9]+');
-
-    // Update a user
-    Route::post('/update/{id}', [
-        'as'   => 'user.update',
-        'uses' => 'UserController@updateUser'
-    ])->where('id', '[0-9]+');
-
     // Destroy a user
-    Route::get('/delete/{id}', [
+    Route::delete('/{id}', [
         'as'   => 'user.removeUserFromSchool',
         'uses' => 'UserController@removeUserFromSchool'
     ])->where('id', '[0-9]+');
 
-    // GET: Reset the user's password
+    // GET: Reset the user's password with a hash received by mail
     Route::get('/reset/{hash}', [
         'as' => 'user.resetPassword',
         'uses' => 'UserController@resetPassword',
@@ -150,7 +146,7 @@ Route::group(['prefix' => 'user'], function () {
     ]);
 
     // POST: send an email with the reset link
-    Route::any('/sendReset', [
+    Route::any('/sendReset/{mail}', [
         'as' => 'user.sendResetLink',
         'uses' => 'UserController@sendResetLink'
     ]);
