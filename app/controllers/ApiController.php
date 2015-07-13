@@ -25,8 +25,8 @@ class ApiController extends \BaseController
     }
 
     /**
-     * Return a listing of the events based on the logged in user.
-     * @return jSon Response with appointments
+     * Return a listing of the events based on the organisation id
+     * @return jSon Response with events
      */
     public function orgEvents($id)
     {
@@ -46,8 +46,8 @@ class ApiController extends \BaseController
     }
 
     /**
-     * Return a listing of the events based on the logged in user.
-     * @return jSon Response with appointments
+     * Return a listing of the users based on the organisation id
+     * @return jSon Response with users
      */
     public function orgUsers($id)
     {
@@ -65,8 +65,8 @@ class ApiController extends \BaseController
     }
 
     /**
-     * Return a listing of the events based on the logged in user.
-     * @return jSon Response with appointments
+     * Return a listing of the calendars based on the logged in user.
+     * @return jSon Response with calendars
      */
     public function orgCalendars($id)
     {
