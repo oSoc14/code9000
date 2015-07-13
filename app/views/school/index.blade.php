@@ -3,7 +3,7 @@
 @section('header')
 {{ HTML::style("css/app.css") }}
 {{ HTML::style('packages/datatables/css/dataTables.bootstrap.css') }}
-{{ HTML::style('packages/responsive-datatables/css/dataTables.responsive.css') }}
+{{ HTML::style('bower_components/datatables-responsive/css/dataTables.responsive.css') }}
 @stop
 
 @section('content')
@@ -62,9 +62,9 @@
 
 @section('footerScript')
 
-{{ HTML::script('packages/datatables/js/jquery.dataTables.min.js') }}
+{{ HTML::script('bower_components/datatables/media/js/jquery.dataTables.min.js') }}
 {{ HTML::script('packages/datatables/js/dataTables.bootstrap.js') }}
-{{ HTML::script('packages/responsive-datatables/js/dataTables.responsive.js') }}
+{{ HTML::script('bower_components/datatables-responsive/js/dataTables.responsive.js') }}
 {{ HTML::script('js/app.js') }}
 
 <?php
