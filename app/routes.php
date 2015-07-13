@@ -31,6 +31,16 @@ Route::get('help', ['as' => 'help', 'before' => 'auth', function() {
   return View::make('help');
 }]);
 
+Route::group(['prefix' => 'orgs'], function () {
+    // List all organisations (for editing)
+    Route::get('/', [
+        'as' => 'orgs.index',
+        'before' => 'admin'
+    ], function() {
+      return View::make('orgs/index');
+    });
+});
+
 Route::group(['prefix' => 'school'], function () {
     // Create a new school
     Route::post('/register', [
