@@ -178,7 +178,7 @@ Route::group(['prefix' => 'api/1'], function () {
 
     // Returns all events for the users organisation
     Route::get('/orgs', [
-        'as' => 'api.schools',
+        'as' => 'api.orgs',
         'uses' => 'ApiController@orgs'
     ]);
 
@@ -190,13 +190,13 @@ Route::group(['prefix' => 'api/1'], function () {
 
     // Returns all events for the users organisation
     Route::get('/orgs/{id}/users', [
-        'as' => 'api.schoolUsers',
+        'as' => 'api.orgUsers',
         'uses' => 'ApiController@orgUsers'
     ]);
 
     // Returns all events for the users organisation
     Route::get('/orgs/{id}/calendars', [
-        'as' => 'api.schoolCalendars',
+        'as' => 'api.orgCalendars',
         'uses' => 'ApiController@orgCalendars'
     ]);
 
