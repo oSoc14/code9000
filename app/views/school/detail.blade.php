@@ -25,11 +25,12 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($school->groups as $group)
+        @foreach($school->calendars as $calendar)
           <tr>
-            <td>{{ HTML::linkRoute('calendarManagement.edit', $group->name, ['id' => $group->id], []) }}</td>
-            <?php $group2 = Sentry::findGroupByName($group->name); ?>
-            <td>{{ count(Sentry::findAllUsersInGroup($group2)) }}</td>
+              <!-- TODO: FIX THIS! -->
+              <td>{{ HTML::linkRoute('calendarManagement.edit', $calendar->name, ['id' => $calendar->id], []) }}</td>
+              <?php $calendar2 = Sentry::findGroupByName($calendar->name); ?>
+              <td>{{ count(Sentry::findAllUsersInGroup($calendar2)) }}</td>
             <td>
               <a href="{{ route('calendarManagement.edit', $group->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
               <a data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{{ route('calendarManagement.delete', $group->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>

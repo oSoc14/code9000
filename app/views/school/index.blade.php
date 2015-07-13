@@ -29,7 +29,7 @@
         <tr>
           <td>{{ HTML::linkRoute('school.detail', $school->name, ['id' => $school->id], []) }}</td>
           <td>{{ $school->city }}</td>
-          <td>{{count($school->groups)}}</td>
+            <td>{{count($school->calendars)}}</td>
           <td>
             <a href="{{ route('school.edit', $school->id) }}" title="Edit"><i class="fa fa-pencil fa-2x"></i></a>
             <a data-toggle="modal" data-target="#confirm-delete" href="#" data-href="{{ route('school.delete', $school->id) }}" title="Remove"><i class="fa fa-times-circle fa-2x"></i></a>

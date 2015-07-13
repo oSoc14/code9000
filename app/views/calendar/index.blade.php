@@ -45,7 +45,7 @@
           </button>
           <p class="modal-title">{{ucfirst(trans('educal.eventdetails'))}}</p>
         </div>
-        <div class="modal-body">    <span><b>Group: </b></span>
+        <div class="modal-body"><span><b>Calendar: </b></span>
           <span id="groupName"></span>
           <h1 id="eventTitle"></h1>
           <p id="eventDescription" class="lead"></p>

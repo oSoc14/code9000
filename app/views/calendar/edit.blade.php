@@ -32,7 +32,7 @@
         <div class="form-group">
             {{Form::label('group', ucfirst(trans('educal.group')), array('class'=>'col-sm-12 col-md-2 control-label'))}}
             <div class="col-sm-12 col-md-10">
-                {{Form::select('group', $groups, $event->group_id, array('class'=>'form-control'));}}
+                {{Form::select('calendar', $calendars, $event->calendar_id, array('class'=>'form-control'));}}
             </div>
         </div>
         <div class="form-group">

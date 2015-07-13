@@ -38,7 +38,7 @@
         <div class="form-group">
             {{Form::label('group', ucfirst(trans('educal.group')), ['class'=>'col-sm-12 col-md-2 control-label'])}}
             <div class="col-sm-12 col-md-10">
-                {{Form::select('group', $groups, [], ['class'=>'form-control'])}}
+                {{Form::select('group', $calendars, [], ['class'=>'form-control'])}}
             </div>
         </div>
 
