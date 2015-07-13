@@ -163,6 +163,36 @@ Route::group(['prefix' => 'profile'], function () {
 });
 
 
+Route::group(['prefix' => 'api/1'], function () {
+
+
+    // Returns all events for the users organisation
+    Route::get('/orgs', [
+        'as' => 'api.schools',
+        'uses' => 'ApiController@orgs'
+    ]);
+
+    // Returns all events for the users organisation
+    Route::get('/orgs/{id}', [
+        'as' => 'api.events',
+        'uses' => 'ApiController@orgEvents'
+    ]);
+
+    // Returns all events for the users organisation
+    Route::get('/orgs/{id}/users', [
+        'as' => 'api.schoolUsers',
+        'uses' => 'ApiController@orgUsers'
+    ]);
+
+    // Returns all events for the users organisation
+    Route::get('/orgs/{id}/calendars', [
+        'as' => 'api.schoolCalendars',
+        'uses' => 'ApiController@orgCalendars'
+    ]);
+
+    // TODO: post API
+});
+
 /***
  * Manages all the calendar/event routes
  */
@@ -204,11 +234,6 @@ Route::group(['prefix' => 'calendar'], function ()
         'uses' => 'CalendarViewController@destroy'
     ])->where('id', '[0-9]+');
 
-    // Returns all events for the users school
-    Route::get('/api/events', [
-        'as'   => 'calendar.events',
-        'uses' => 'ApiController@events'
-    ]);
 
 });
 

@@ -7,11 +7,20 @@
 class ApiController extends \BaseController
 {
 
+
     /**
      * Return a listing of the events based on the logged in user.
      * @return jSon Response with appointments
      */
-    public function events()
+    public function orgs($id)
+    {
+    }
+
+    /**
+     * Return a listing of the events based on the logged in user.
+     * @return jSon Response with appointments
+     */
+    public function orgEvents($id)
     {
         if (!Sentry::check()) {
             // User is not logged in, or is not activated
@@ -46,6 +55,22 @@ class ApiController extends \BaseController
             return Response::json($appointments)->setCallback(Input::get('callback'));
         }
 
+    }
+
+    /**
+     * Return a listing of the events based on the logged in user.
+     * @return jSon Response with appointments
+     */
+    public function orgUsers($id)
+    {
+    }
+
+    /**
+     * Return a listing of the events based on the logged in user.
+     * @return jSon Response with appointments
+     */
+    public function orgCalendars($id)
+    {
     }
 
 }
