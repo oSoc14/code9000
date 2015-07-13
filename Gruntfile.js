@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                'public/css/calendar.css': 'public/sass/calendar.scss'
+                'public/css/calendar.css': 'public/sass/screen.scss'
             }
         }
     },
