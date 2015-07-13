@@ -63,10 +63,10 @@
           </a>
         </li>
         @endif
-        @if(Sentry::getUser()->hasAnyAccess(array('school','group')))
+        @if(Sentry::getUser()->hasAnyAccess(array('school','calendar')))
         <li>
-          <a href="{{ route('group.index') }}"
-          {{ Route::currentRouteName()=='group.index' ? ' class="active"' : '' }}>
+          <a href="{{ route('calendar.index') }}"
+          {{ Route::currentRouteName()=='calendar.index' ? ' class="active"' : '' }}>
             <i class="fa fa-rocket fa-lg"></i>
             {{ucfirst(trans('educal.groups'))}}
           </a>
@@ -89,7 +89,7 @@
       <ul class="nav-list">
         <li><a href="{{ route('school.index') }}">Help!</a></li>
         <li><a href="{{ route('user.index') }}">Profiel</a></li>
-        <li><a href="{{ route('group.index') }}">Instellingen</a></li>
+        <li><a href="{{ route('calendar.index') }}">Instellingen</a></li>
       </ul>
       <div>
         <p>{{ucfirst(trans('educal.loggedinas'))}}</p>
