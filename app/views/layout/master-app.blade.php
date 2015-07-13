@@ -74,7 +74,7 @@
         @endif
         @if(Sentry::getUser()->hasAnyAccess(array('school','user')))
         <li>
-          <a href="{{ route('user.index') }}"
+          <a href="{{ route('orgs.index') }}"
           {{ Route::currentRouteName()=='user.index' ? ' class="active"' : '' }}>
             <i class="fa fa-users fa-lg"></i>
             {{ucfirst(trans('educal.users'))}}
@@ -87,8 +87,8 @@
     @if(Sentry::check())
     <section>
       <ul class="nav-list">
-        <li><a href="{{ route('school.index') }}">Help!</a></li>
-        <li><a href="{{ route('user.index') }}">Profiel</a></li>
+        <li><a href="{{ route('orgs.index') }}">Help!</a></li>
+        <li><a href="{{ route('orgs.index') }}">Profiel</a></li>
         <li><a href="{{ route('calendar.index') }}">Instellingen</a></li>
       </ul>
       <div>
