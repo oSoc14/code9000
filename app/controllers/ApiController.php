@@ -14,8 +14,12 @@ class ApiController extends \BaseController
      */
     public function orgs()
     {
-        $schools = School::all();
-
+        $allSchools = School::all();
+        $schools = [];
+        // Loop through calendars to get all appointments
+        foreach ($allSchools as $school) {
+            array_push($schools, $school);
+        }
         // Returns JSON response of the user
         return Response::json($schools)->setCallback(Input::get('callback'));
     }
@@ -26,38 +30,18 @@ class ApiController extends \BaseController
      */
     public function orgEvents($id)
     {
-        if (!Sentry::check()) {
-            // User is not logged in, or is not activated
-            return Redirect::route('landing');
+
+        $calendars = [];
+        $school = School::find($id);
+        $school->load('calendars');
+
+        // Loop through calendars to get all appointments
+        foreach ($school->calendars as $calendar) {
+            array_push($calendars, $calendar);
         }
-        // Gets all appointments from the school
-        $user = Sentry::getUser();
 
-        // Check if user is superAdmin
-        if ($user->hasAccess('superadmin')) {
-            $appointments = Appointment::get()->load('calendar.school')->toArray();
-
-            // Returns JSON response of the user
-            return Response::json($appointments)->setCallback(
-                Input::get('callback')
-            ); //return View::make('calendar.events');
-
-        } else {
-            // If user is not superAdmin, show calendars based on the school of the logged in user
-            $appointments = [];
-
-            $user->load('school.calendars.appointments.calendar.school');
-
-            // Loop through calendars to get all appointments
-            foreach ($user->school->calendars as $calendar) {
-                foreach ($calendar->appointments as $appointment) {
-                    array_push($appointments, $appointment);
-                }
-            }
-
-            // Returns JSON response of the user
-            return Response::json($appointments)->setCallback(Input::get('callback'));
-        }
+        // Returns JSON response of the user
+        return Response::json($calendars)->setCallback(Input::get('callback'));
 
     }
 
@@ -67,6 +51,17 @@ class ApiController extends \BaseController
      */
     public function orgUsers($id)
     {
+        $users = [];
+        $orgUsers = User::where('school_id', $id)->get();
+
+        // Loop through calendars to get all appointments
+        foreach ($orgUsers as $user) {
+            array_push($users, $user);
+        }
+
+        // Returns JSON response of the user
+        return Response::json($users)->setCallback(Input::get('callback'));
+
     }
 
     /**
@@ -75,6 +70,17 @@ class ApiController extends \BaseController
      */
     public function orgCalendars($id)
     {
+        $calendars = [];
+        $orgCalendars = Calendar::where('school_id', $id)->get();
+
+        // Loop through calendars to get all appointments
+        foreach ($orgCalendars as $calendar) {
+            array_push($calendars, $calendar);
+        }
+
+        // Returns JSON response of the user
+        return Response::json($calendars)->setCallback(Input::get('callback'));
+
     }
 
 }
