@@ -9,11 +9,15 @@ class ApiController extends \BaseController
 
 
     /**
-     * Return a listing of the events based on the logged in user.
+     * Return a listing of the organisations
      * @return jSon Response with appointments
      */
-    public function orgs($id)
+    public function orgs()
     {
+        $schools = School::all();
+
+        // Returns JSON response of the user
+        return Response::json($schools)->setCallback(Input::get('callback'));
     }
 
     /**

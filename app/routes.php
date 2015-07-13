@@ -173,7 +173,7 @@ Route::group(['prefix' => 'api/1'], function () {
     ]);
 
     // Returns all events for the users organisation
-    Route::get('/orgs/{id}', [
+    Route::get('/orgs/{id}/events', [
         'as' => 'api.events',
         'uses' => 'ApiController@orgEvents'
     ]);
