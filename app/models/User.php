@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Part of the Sentry package.
  *
@@ -17,10 +18,15 @@
  * @copyright  (c) 2011 - 2013, Cartalyst LLC
  * @link       http://cartalyst.com
  */
+class User extends Cartalyst\Sentry\Users\Eloquent\User
+{
 
 
+    protected $table = 'users';
 
-class User extends Cartalyst\Sentry\Users\Eloquent\User {
+    protected static $groupModel = 'Role';
+
+    protected static $userGroupsPivot = 'user_roles';
 
     /**
      * Returns the user's School.
@@ -29,7 +35,30 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
      */
     public function school()
     {
-        return $this->belongsTo('School');
+        return $this->belongsTo('School','school_id','id');
     }
+
+
+    /**
+     * Returns the user's Calendars.
+     *
+     * @return  mixed
+     */
+    public function calendars()
+    {
+        return $this->belongsToMany('Calendar', 'users_calendars');
+    }
+
+
+    /**
+     * Returns the user's Role.
+     *
+     * @return  mixed
+     */
+    public function role()
+    {
+        return $this->belongsToMany('Role','user_roles','id','id');
+    }
+
 
 }

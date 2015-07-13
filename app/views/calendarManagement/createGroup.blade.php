@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-md-10">
-          <a href="{{ route('group.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.groups')]))}}</a>
+          <a href="{{ route('calendarManagement.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.groups')]))}}</a>
             <h1>{{ucfirst(trans('educal.addgroup'))}}</h1>
             {{ Form::open(array('route' => array('group.store'),'class'=>'form form-horizontal')) }}
 

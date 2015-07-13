@@ -1,6 +1,9 @@
 <?php
+
 /**
  * Part of the Sentry package.
+ *
+ * Roles define access levels for users
  *
  * NOTICE OF LICENSE
  *
@@ -17,28 +20,21 @@
  * @copyright  (c) 2011 - 2013, Cartalyst LLC
  * @link       http://cartalyst.com
  */
+class Role extends Cartalyst\Sentry\Groups\Eloquent\Group
+{
 
+    protected $table = "roles";
 
-class Group extends Cartalyst\Sentry\Groups\Eloquent\Group{
+    protected static $userModel = 'User';
 
+    protected static $userGroupsPivot = 'users_roles';
     /**
-     * Returns the group's School.
+     * Returns the role's Users.
      *
      * @return  mixed
      */
-    public function school()
+    public function users()
     {
-        return $this->belongsTo('School');
+        return $this->hasMany('User','users_roles','id','id');
     }
-
-    /**
-     * Returns the appointments's of a group.
-     *
-     * @return  mixed
-     */
-    public function appointments()
-    {
-        return $this->hasMany('Appointment');
-    }
-
 }

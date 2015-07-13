@@ -13,7 +13,7 @@
           <h1>{{ucfirst(trans('educal.groups'))}}</h1>
       </div>
       <div class="col-xs-6">
-          <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route('group.create')}}" id="addEvent">
+          <a type="button" class="btn btn-default btn-lg btn-educal-warning pull-right" href="{{route('calendarManagement.create')}}" id="addEvent">
             <i class="fa fa-plus"></i> <span class="hidden-xs">{{ucfirst(trans('educal.addgroup'))}}</span>
           </a>
       </div>
@@ -32,7 +32,7 @@
         <tbody>
         @foreach($groups as $group)
         <tr>
-          <td><a href="{{route('group.edit',$group->id)}}">{{ str_replace('__' . $group->school->id, '', $group->name) }}</a></td>
+          <td><a href="{{route('calendarManagement.edit',$group->id)}}">{{ str_replace('__' . $group->school->id, '', $group->name) }}</a></td>
           @if($group->school)
           <td>
               <input type="text" class="form-control linkToText linkToText_{{$group->id}}" value="{{ URL::to('/') }}/export/{{$group->id}}/{{$group->school->name}}/{{str_replace('__' . $group->school->id, '', $group->name)}}" />
@@ -51,8 +51,8 @@
                 <i class="fa fa-file fa-stack-2x"></i>
                 <i class="fa fa-download fa-inverse fa-stack-1x"></i>
               </span></a> -->
-            <a href="{{route('group.edit',$group->id)}}"><i class="fa fa-pencil fa-2x"></i></a>
-            <a href="#" data-toggle="modal" data-target="#confirm-delete" title="Remove" data-href="{{route('group.delete',$group->id)}}"><i class="fa fa-times-circle fa-2x"></i></a>
+            <a href="{{route('calendarManagement.edit',$group->id)}}"><i class="fa fa-pencil fa-2x"></i></a>
+            <a href="#" data-toggle="modal" data-target="#confirm-delete" title="Remove" data-href="{{route('calendarManagement.delete',$group->id)}}"><i class="fa fa-times-circle fa-2x"></i></a>
           </td>
         </tr>
         @endforeach
@@ -95,6 +95,8 @@
         $js = 'English';
     } elseif(Session::get('lang') == 'fr') {
         $js = 'French';
+    } else {
+        $js = 'English';
     }
 
     // Paging hack, disable paging when there's less than 10 results

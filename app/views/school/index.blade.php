@@ -74,6 +74,8 @@ if(Session::get('lang') == 'nl') {
     $js = 'English';
 } elseif(Session::get('lang') == 'fr') {
     $js = 'French';
+} else {
+    $js = 'English';
 }
 // Paging hack, disable paging when there's less than 10 results
 if(count($schools) > 10) {

@@ -75,7 +75,7 @@ Route::group(['prefix' => 'school'], function () {
 
 
 Route::group(['prefix' => 'user'], function () {
-    // Show list of users
+    // Show list of users for a calendar
     Route::get('/', [
         'as' => 'user.index',
         'uses' => 'UserController@index'
@@ -106,9 +106,15 @@ Route::group(['prefix' => 'user'], function () {
     ]);
 
     // Add user to group
-    Route::post('/group/add/{group_id}', [
-        'as'   => 'user.addToGroup',
-        'uses' => 'UserController@addToGroup'
+    Route::post('/{id}/role/editor', [
+        'as' => 'user.addAdminRole',
+        'uses' => 'UserController@addAdminRole'
+    ])->where('id', '[0-9]+');
+
+    // Remover a user from group
+    Route::post('/{id}/role/admin', [
+        'as' => 'user.removeAdminRole',
+        'uses' => 'UserController@removeAdminRole'
     ])->where('id', '[0-9]+');
 
     // Active a user
@@ -128,13 +134,6 @@ Route::group(['prefix' => 'user'], function () {
         'as'   => 'user.update',
         'uses' => 'UserController@updateUser'
     ])->where('id', '[0-9]+');
-
-    // Remover a user from group
-    Route::get('/removeFromGroup/{id}/{groupId}', [
-        'as'   => 'user.removeFromGroup',
-        'uses' => 'UserController@removeFromGroup'
-    ])->where('id', '[0-9]+')
-        ->where('groupId', '[0-9]+');
 
     // Destroy a user
     Route::get('/delete/{id}', [
@@ -176,44 +175,45 @@ Route::group(['prefix' => 'calendar'], function ()
     // Home
     Route::get('/', [
         'as'   => 'calendar.index',
-        'uses' => 'CalendarController@index'
+        'uses' => 'CalendarViewController@index'
     ]);
 
     // Shows creation form for events
     Route::get('/event/create', [
         'as'   => 'event.create',
-        'uses' => 'CalendarController@create'
+        'uses' => 'CalendarViewController@create'
     ]);
 
     // Stores events
     Route::post('/event/create', [
         'as'   => 'event.store',
-        'uses' => 'CalendarController@store'
+        'uses' => 'CalendarViewController@store'
     ]);
 
     // Shows creation form for events
     Route::get('/event/edit/{id}', [
         'as'   => 'event.edit',
-        'uses' => 'CalendarController@edit'
+        'uses' => 'CalendarViewController@edit'
     ])->where('id', '[0-9]+');
 
     // Stores events
     Route::post('/event/edit/{id}', [
         'as'   => 'event.update',
-        'uses' => 'CalendarController@update'
+        'uses' => 'CalendarViewController@update'
     ])->where('id', '[0-9]+');
 
     // Deletes the event with the given ID
     Route::get('/event/delete/{id}', [
         'as'   => 'event.delete',
-        'uses' => 'CalendarController@destroy'
+        'uses' => 'CalendarViewController@destroy'
     ])->where('id', '[0-9]+');
 
     // Returns all events for the users school
     Route::get('/api/events', [
         'as'   => 'calendar.events',
-        'uses' => 'CalendarController@events'
+        'uses' => 'ApiController@events'
     ]);
+
 });
 
 /***
@@ -223,38 +223,38 @@ Route::group(['prefix' => 'group'], function()
 {
     // Index, lists all groups
     Route::get('/', [
-        'as'   => 'group.index',
-        'uses' => 'GroupController@index'
+        'as'   => 'calendarManagement.index',
+        'uses' => 'CalendarController@index'
     ]);
 
-    // Edit a group
+    // Edit a calendar
     Route::get('/{id}', [
-        'as'   => 'group.edit',
-        'uses' => 'GroupController@edit'
+        'as'   => 'calendarManagement.edit',
+        'uses' => 'CalendarController@edit'
     ])->where('id', '[0-9]+');
 
     // Create a new group
     Route::get('/create', [
-        'as'   => 'group.create',
-        'uses' => 'GroupController@create'
+        'as'   => 'calendarManagement.create',
+        'uses' => 'CalendarController@create'
     ]);
 
     // Store a new group
     Route::post('/create', [
-        'as'   => 'group.store',
-        'uses' => 'GroupController@store'
+        'as'   => 'calendarManagement.store',
+        'uses' => 'CalendarController@store'
     ]);
 
     // Update a group
     Route::post('/edit/{id}', [
-        'as'   => 'group.update',
-        'uses' => 'GroupController@update'
+        'as'   => 'calendarManagement.update',
+        'uses' => 'CalendarController@update'
     ])->where('id', '[0-9]+');
 
     // Destroy a group
     Route::get('/delete/{id}', [
-        'as'   => 'group.delete',
-        'uses' => 'GroupController@destroy'
+        'as'   => 'calendarManagement.delete',
+        'uses' => 'CalendarController@destroy'
     ])->where('id', '[0-9]+');
 });
 
@@ -265,24 +265,28 @@ Route::group(['prefix' => 'group'], function()
 Route::group(['prefix' => 'export'], function()
 {
     // iCal Export route for a certain class
+    // id = calendar
     Route::get('/{id}/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'IcalCalendarController@index'
     ])->where(['id' => '[0-9]+', 'school' => '[0-9A-Za-z_\- ]+', 'class' => '[0-9A-Za-z_\- ]+']);
 
     // iCal Export route for a single appointment
+    // id = appointment
     Route::get('/appointment/find/{id}', [
         'as'   => 'export.single',
         'uses' => 'IcalCalendarController@show'
     ])->where('id', '[0-9]+');
 
     // PDF Export route for a certain class
+    // id = calendar
     Route::get('/pdf/{id}/{school}/{class}', [
         'as'   => 'export.group',
         'uses' => 'PdfCalendarController@index'
     ])->where(['id' => '[0-9]+', 'school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
 
     // PDF Export route for a single appointment
+    // id = appointment
     Route::get('/appointment/pdf/{id}', [
         'as'   => 'export.singlepdf',
         'uses' => 'PdfCalendarController@show'
