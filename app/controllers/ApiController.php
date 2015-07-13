@@ -33,6 +33,8 @@ class ApiController extends \BaseController
             // If user is not superAdmin, show calendars based on the school of the logged in user
             $appointments = [];
 
+            $user->load('school.calendars.appointments.calendar.school');
+
             // Loop through calendars to get all appointments
             foreach ($user->school->calendars as $calendar) {
                 foreach ($calendar->appointments as $appointment) {
