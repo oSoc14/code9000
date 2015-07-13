@@ -319,10 +319,10 @@ class UserController extends \BaseController
 
             UserController::checkCreateRoles(); // make sure the roles are created already
 
-            // Find the group using the group id
+            // Find the role using the role name
             $editorRole = Sentry::findGroupByName('editor');
 
-            // Assign the group to the user
+            // Assign the role to the user
             $user->addGroup($editorRole);
 
             return Redirect::route('landing');
@@ -400,7 +400,7 @@ class UserController extends \BaseController
             ]
         );
 
-        // If a superAdmin was created, then we add him to the 1st group in the database, which is the
+        // If a superAdmin was created, then we add him to the superadmin role in the database, which is the
         // superadmin role
         if ($user->hasAccess('superadmin') && Input::get('superAdmin')) {
             $role = Sentry::findGroupByName('superadmin');
@@ -441,8 +441,8 @@ class UserController extends \BaseController
             $selectedUser = Sentry::findUserById($id);
 
             /**
-             * Check if the selected user is in the admins group,
-             * ->true: check if he is the last person in that group
+             * Check if the selected user has the admin role,
+             * ->true: check if he is the last person in the school with this role
              *          -> true: don't allow user to be removed (school needs 1 admin at least)
              *          -> false: delete user from school
              * ->false: safe to remove user from school
@@ -450,11 +450,11 @@ class UserController extends \BaseController
             if ($selectedUser->hasAccess('admin')
                 && ($selectedUser->school_id == $user->school_id || $user->hasAccess('superadmin'))
             ) {
-                // Get the schoolShort, based on that find the admin group and all users in that group
+                // Get the school and find its admins
                 $school = School::find($selectedUser->school_id);
                 $users = SchoolController::getSchoolAdmins($school->id);
 
-                // If there is more than 1 user in the school_admin group, then the user can be safely removed
+                // If there is more than 1 admin in the school
                 if (count($users) > 1) {
                     // Delete the user
                     $selectedUser->delete();
@@ -699,7 +699,7 @@ class UserController extends \BaseController
 
     /**
      * Remove a user from selected calendar
-     * @param $id the ID of the user to demote
+     * @param $id int the ID of the user to demote
      * @return \Illuminate\Http\RedirectResponse
      */
     public function removeAdminRole($id)
@@ -735,21 +735,13 @@ class UserController extends \BaseController
             return Redirect::route('calendar.index');
         }
 
-        /**
-         * Check if the selected user is in the admins group,
-         * ->true: check if he is the last person in that group
-         *          -> true: don't allow user to be removed (school needs 1 admin at least)
-         *          -> false: delete user from group
-         * ->false: safe to remove user from group
-         */
-
         $school = School::find($selectedUser->school_id);
-        // Make sure the user can not remove the last user from the school_admin group
-        // otherwise no one is left to configure the group (except for the superAdmin)
+        // Make sure the user can not remove the last admin from the school's admins
+        // otherwise no one is left to configure the school (except for the superAdmin)
 
         $users = SchoolController::getSchoolAdmins($school->id);
 
-        // If there is more than 1 user in the admin group, it's safe to delete this one
+        // If there is more than 1 user with admin rights, it's safe to delete this one
         if (count($users) > 1) {
             // Delete the user
             $selectedUser->removeGroup($role);
@@ -757,7 +749,7 @@ class UserController extends \BaseController
             // Return to the previous page
             Redirect::route('calendarManagement.index');
         } else {
-            // If there is only 1 or less users in the admin group, do not delete it
+            // If there is only 1 or less users with the admin role, do not delete it
             $error = "You can't remove this user.";
 
             // Return to the previous page
@@ -802,10 +794,10 @@ class UserController extends \BaseController
             return Redirect::route('calendar.index');
         }
 
-        // Find the group using the group id
+        // Find the role using by name
         $role = Sentry::findGroupByName('admin');
 
-        // Find the selected user and try to add him to the correct group
+        // Find the selected user and try to add him to the correct role
         $user = Sentry::findUserById($userId);
         $user->addGroup($role);
 
