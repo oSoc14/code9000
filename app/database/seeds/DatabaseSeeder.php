@@ -18,29 +18,16 @@ class DatabaseSeeder extends Seeder
 
         $school->save();
 
-        $user = Sentry::createUser(
-            [
-                'email' => "john.doe@example.com",
-                'password' => "password",
-                'activated' => true,
-                'school_id' => $school->id,
-                'first_name' => "John",
-                'last_name' => "Doe",
-            ]
-        );
-
         // make sure the roles exist
         UserController::checkCreateRoles();
         // Find the role using the calendar id
 
         $adminRole = Sentry::findGroupByName('admin');
 
-        // Assign the calendar to the user
-        $user->addGroup($adminRole);
 
         $user2 = Sentry::createUser(
             [
-                'email' => "foo.bar@example.com",
+                'email' => "a@a.a",
                 'password' => "password",
                 'activated' => true,
                 'school_id' => $school->id,
@@ -61,18 +48,21 @@ class DatabaseSeeder extends Seeder
 
         $calendar->save();
 
-        $app = new Appointment();
+        for ($i=0; $i < 200; $i++) {
+            $app = new Appointment();
 
-        $app->title = "test event";
-        $app->description = "we're going to test something";
-        $app->location = "Gent";
-        $app->calendar_id = $calendar->id;
-        $app->start_date = new DateTime("14-07-2015" . ' ' . "10:00");
-        $app->end_date = new DateTime("14-07-2015" . ' ' . "22:00");
-        $app->save();
+            $app->title ="School event " . $i;
+            $app->description = "we're going to test " . rand() . " something";
+            $app->location = "Gent";
+            $app->calendar_id = $calendar->id;
+            $date = date('Y-m-d', strtotime( '+'.mt_rand(-30,90).' days'));
+            $app->start_date = new DateTime($date . ' 13:00');
+            $app->end_date = new DateTime($date . ' 16:00');
+            $app->save();
+        }
 
         // link to global calendar
-        $user->calendars()->attach($calendar);
+        $user2->calendars()->attach($calendar);
 
     }
 }
