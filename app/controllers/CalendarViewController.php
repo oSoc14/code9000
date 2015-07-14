@@ -50,6 +50,7 @@ class CalendarViewController extends \BaseController
                     "admin" => $admin,
                 ]
             ]),
+            "org" => $school,
         ]);
     }
 
