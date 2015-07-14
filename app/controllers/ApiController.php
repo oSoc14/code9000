@@ -408,6 +408,32 @@ class ApiController extends \BaseController
         return ApiController::createApiOk('Changes saved');
     }
 
+    /**
+     * Remove the specified appointment from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        if (!Sentry::check()) {
+            return ApiController::createApiAccessError('You have to login first');
+        }
+        // Find active user
+        $user = Sentry::getUser();
+        $event = Appointment::find($id);
+
+        // Check if User belongs to calendar/school which the appointment is from
+        if ($user->hasAccess('superadmin') || ($user->hasAccess('editor') && $user->school_id == $event->calendar->school_id)) {
+            $event->delete();
+
+            return ApiController::createApiOk('Appointment deleted');
+        }
+
+        return ApiController::createApiAccessError('You do not have the right to perform this action');
+    }
+
+
 
     private static function createApiValidationError($error)
     {

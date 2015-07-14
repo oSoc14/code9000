@@ -55,33 +55,4 @@ class CalendarViewController extends \BaseController
         ]);
     }
 
-    /**
-     * Remove the specified appointment from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        if (!Sentry::check()) {
-            return Redirect::route('landing');
-        }
-        // Find active user
-        $user = Sentry::getUser();
-        $event = Appointment::find($id);
-
-        // Check if User belongs to calendar/school which the appointment is from
-        if ($user->hasAccess('superadmin') || ($user->hasAccess('editor') && $user->school_id == $event->calendar->school_id)) {
-            $event->delete();
-        }
-
-        return Redirect::route('calendar.index');
-    }
-
-    public function validateDate($date)
-    {
-        $d = DateTime::createFromFormat('m/d/Y', $date);
-
-        return $d && $d->format('m/d/Y') == $date;
-    }
 }
