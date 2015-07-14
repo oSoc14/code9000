@@ -147,7 +147,7 @@ Route::group(['prefix' => 'api/1'], function () {
     // Returns all events for the users organisation
     Route::post('/orgs/{id}/events/{event_id}', [
         'as' => 'api.events',
-        'uses' => 'ApiController@storeEvent'
+        'uses' => 'ApiController@updateEvent'
     ]);
 
     // Returns all events for the users organisation
