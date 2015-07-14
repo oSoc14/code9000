@@ -40,12 +40,12 @@ class SchoolController extends \BaseController
      * Store a newly created school in storage.
      * Create default calendars.
      * Store new user (schooladmin) as well.
-     *
+     * @param $slug string the slug of the school to be created
      * @return Response
      */
 
     // TODO: Get rid of short (reoccuring)
-    public function store()
+    public function store($slug)
     {
         // If user is logged in, redirect to calendar index
         if (!Sentry::check()) {
@@ -90,6 +90,7 @@ class SchoolController extends \BaseController
         $nn = self::clean(e(Input::get("sname")));
         $school->name = $nn;
         $school->city = e(Input::get("city"));
+        $school->slug = $slug;
         $school->save();
 
         // Create the default calendars "global" and "admin"
@@ -142,10 +143,21 @@ class SchoolController extends \BaseController
     /**
      * Display the specified school.
      *
-     * @param  int $id
+     * @param  int $id the Id of the school to show
      * @return Response
      */
-    public function show($id)
+    public function showSchoolById($id)
+    {
+        showSchool(School::find($id));
+    }
+
+    /**
+     * Display the specified school.
+     *
+     * @param  \School $school the school to show
+     * @return Response
+     */
+    public function showSchool($school)
     {
         // If user is logged in, redirect to calendar index
         if (!Sentry::check()) {
@@ -156,9 +168,7 @@ class SchoolController extends \BaseController
 
         // Check if user is a superAdmin (only he can see this page)
         if ($user->hasAccess('superadmin')) {
-            $school = School::find($id);
-            $school->load("groups");
-
+            $school->load("calendars");
             return View::make('school.detail')->with('school', $school);
         } else {
             // If no permissions, redirect the user to the calendar index page
@@ -171,20 +181,20 @@ class SchoolController extends \BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  string $slug the slug of the school for which we want to show the dashboard
      * @return Response
      */
-    public function edit($id)
+    public function dashboard($slug)
     {
         if (!Sentry::check()) {
             return Redirect::route('landing');
         }
 
         $user = Sentry::getUser();
+        $school = SchoolController::getSchoolBySlug($slug);
 
         // Check if user is superAdmin (only they can edit schools)
-        if ($user->hasAnyAccess(['school'])) {
-            $school = School::find($id);
+        if ($user->hasAnyAccess(['school']) && $user->school_id == $school->id) {
 
             return View::make('school.edit')->with('school', $school);
         } else {
@@ -194,14 +204,35 @@ class SchoolController extends \BaseController
 
     }
 
+    /**
+     * Update the specified school in storage.
+     *
+     * @param  string $slug the slug of the school to update
+     * @return Response
+     */
+    public function updateSchoolBySlug($slug)
+    {
+        $this->updateSchool(SchoolController::getSchoolBySlug($slug));
+    }
 
     /**
      * Update the specified school in storage.
      *
-     * @param  int $id
+     * @param  int $id the Id of the school to update
      * @return Response
      */
-    public function update($id)
+    public function updateSchoolById($id)
+    {
+        $this->updateSchool(School::find($id));
+    }
+
+    /**
+     * Update the specified school in storage.
+     *
+     * @param  School $school the school to update
+     * @return Response
+     */
+    public function updateSchool($school)
     {
         if (!Sentry::check()) {
             return Redirect::route('landing');
@@ -210,11 +241,10 @@ class SchoolController extends \BaseController
         $user = Sentry::getUser();
 
         // Check if user is superAdmin (only they can update schools)
-        if (!$user->hasAccess('superadmin')) { // If no permissions, redirect the user to the calendar index page
+        if (!$user->hasAccess('admin') || $user->school_id != $school->id) { // If no permissions, redirect the user to the calendar index page
             return Redirect::route('calendar.index');
         }
 
-        $school = School::find($id);
 
         $validator = Validator::make(
             [
@@ -229,7 +259,7 @@ class SchoolController extends \BaseController
 
         // If validator fails, go back and show errors
         if ($validator->fails()) {
-            return Redirect::route('school.edit', $id)
+            return Redirect::route('school.edit', $school->slug)
                 ->withInput()
                 ->withErrors($validator);
         } else {
@@ -254,16 +284,35 @@ class SchoolController extends \BaseController
 
     }
 
+    /**
+     * Remove the specified school from storage.
+     *
+     * @param  string $slug the school slug
+     * @return Response
+     */
+    public function destroySchoolBySlug($slug)
+    {
+        $this->destroySchool(SchoolController::getSchoolBySlug($slug));
+    }
 
     /**
-     * Remove the specified Scgiik from storage.
+     * Remove the specified school from storage.
      *
      * @param  int $id the school ID
      * @return Response
      */
+    public function destroySchoolById($id)
+    {
+        $this->destroySchool(School::find($id));
+    }
 
     // TODO: Authenticate in route?
-    public function destroy($id)
+    /**
+     * Destroy a school after checking for permissions
+     * @param $school \School the school to destroy
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroySchool($school)
     {
         if (!Sentry::check()) {
             return Redirect::route('landing');
@@ -277,11 +326,12 @@ class SchoolController extends \BaseController
             return Redirect::route('calendar.index');
         }
 
-        $school = School::find($id);
         $school->delete();
 
         return Redirect::route('school.index');
     }
+
+
 
     /**
      * Remove special characters from a string
@@ -295,7 +345,7 @@ class SchoolController extends \BaseController
 
     /**
      * Get all admins for a school
-     * @param $school_id the ID of the school
+     * @param $school_id int the ID of the school
      * @return array the admins
      */
     public static function getSchoolAdmins($school_id)
@@ -314,5 +364,12 @@ class SchoolController extends \BaseController
         return $filtered;
     }
 
-
+    /**
+     * @param $school_slug
+     * @return \School |static
+     */
+    public static function getSchoolBySlug($school_slug)
+    {
+        return School::where('slug', $school_slug)->firstOrFail();
+    }
 }

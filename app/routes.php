@@ -31,57 +31,7 @@ Route::get('help', ['as' => 'help', 'before' => 'auth', function() {
   return View::make('help');
 }]);
 
-Route::group(['prefix' => 'orgs'], function () {
-    // List all organisations (for editing)
-    Route::get('/', [
-        'as' => 'orgs.index',
-        function() {
-            return View::make('orgs/index');
-        }
-    ]);
-});
 
-Route::group(['prefix' => 'school'], function () {
-    // Create a new school
-    Route::post('/register', [
-        'as' => 'school.store',
-        'uses' => 'SchoolController@store'
-    ]);
-
-    // List all schools
-    Route::get('/', [
-        'as'   => 'school.index',
-        'uses' => 'SchoolController@index',
-        'before' => 'admin'
-    ]);
-
-    // Show details of a certain school
-    Route::get('/{id}', [
-        'as'   => 'school.detail',
-        'uses' => 'SchoolController@show',
-        'before' => 'admin'
-    ])->where('id', '[0-9]+');
-
-    // Show the view to edit a school
-    Route::get('/edit/{id}', [
-        'as'   => 'school.edit',
-        'uses' => 'SchoolController@edit'
-    ])->where('id', '[0-9]+');
-
-    // Update a school
-    Route::post('/edit/{id}', [
-        'as'   => 'school.update',
-        'uses' => 'SchoolController@update',
-        'before' => 'admin'
-    ])->where('id', '[0-9]+');
-
-    // Delete a school
-    Route::get('/delete/{id}', [
-        'as'   => 'school.delete',
-        'uses' => 'SchoolController@destroy',
-        'before' => 'admin'
-    ])->where('id', '[0-9]+');
-});
 
 
 Route::group(['prefix' => 'profile'], function () {
@@ -334,4 +284,53 @@ Route::group(['prefix' => 'export'], function()
         'as'   => 'export.singlepdf',
         'uses' => 'PdfCalendarController@show'
     ])->where('id', '[0-9]+');
+});
+
+Route::pattern('org_slug', '[A-Za-z0-9\-]+');
+/**
+ * All organisation pages (view, edit, ...)
+ */
+Route::group(['prefix' => '{org_slug}'], function () {
+    // List all organisations (for editing)
+    Route::get('/', [
+        'as' => 'orgs.index',
+        'uses' => 'SchoolController@showCalendar',
+    ]);
+
+    Route::get('/dashboard', [
+        'as' => 'orgs.index',
+        'uses' => 'SchoolController@dashboard',
+    ]);
+
+    // Show the view to edit a school
+    Route::get('/users', [
+        'as' => 'school.users',
+        'uses' => 'SchoolController@users'
+    ])->where('id', '[0-9]+');
+
+    // Show the view to view all calendars for a school
+    Route::get('/calendars', [
+        'as' => 'school.calendars',
+        'uses' => 'SchoolController@calendars'
+    ])->where('id', '[0-9]+');
+
+    // Create a new school
+    Route::post('/register', [
+        'as' => 'school.store',
+        'uses' => 'SchoolController@store'
+    ]);
+
+    // Update a school
+    Route::post('/edit', [
+        'as' => 'school.update',
+        'uses' => 'SchoolController@update',
+        'before' => 'admin'
+    ])->where('id', '[0-9]+');
+
+    // Delete a school
+    Route::delete('/', [
+        'as' => 'school.delete',
+        'uses' => 'SchoolController@destroy',
+        'before' => 'admin'
+    ]);
 });
