@@ -2,6 +2,7 @@
 
 @section('header')
 {{ HTML::style("bower_components/fullcalendar/dist/fullcalendar.min.css") }}
+{{ HTML::style("bower_components/datetimepicker/jquery.datetimepicker.css") }}
 {{ HTML::style("css/calendar.css") }}
 <script type="text/javascript">
     var org = {{ $school; }};
