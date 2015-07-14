@@ -302,6 +302,17 @@ Route::group(['prefix' => 'export'], function()
     ])->where('id', '[0-9]+');
 });
 
+Route::group(['prefix' => 'admin'], function () {
+    // Index, lists all groups
+    Route::get('/', [
+        'as' => 'admin.index',
+        function () {
+            // TODO: implement
+        }
+    ]);
+
+});
+
 Route::pattern('org_slug', '[A-Za-z0-9\-]+');
 /**
  * All organisation pages (view, edit, ...)
@@ -351,3 +362,4 @@ Route::group(['prefix' => '{org_slug}'], function () {
         'before' => 'admin'
     ]);
 });
+
