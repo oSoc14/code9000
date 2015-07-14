@@ -307,10 +307,11 @@ Route::pattern('org_slug', '[A-Za-z0-9\-]+');
  * All organisation pages (view, edit, ...)
  */
 Route::group(['prefix' => '{org_slug}'], function () {
-    // List all organisations (for editing)
+    // show the calendar for the organisation with the given slug
     Route::get('/', [
         'as' => 'orgs.index',
-        'uses' => 'SchoolController@showCalendar',
+        'uses' => 'CalendarViewController@index',
+        // TODO: show correct calendar even if for other school than currently logged in user
     ]);
 
     Route::get('/dashboard', [

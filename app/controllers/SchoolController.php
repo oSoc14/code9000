@@ -194,9 +194,9 @@ class SchoolController extends \BaseController
         $school = SchoolController::getSchoolBySlug($slug);
 
         // Check if user is superAdmin (only they can edit schools)
-        if ($user->hasAnyAccess(['school']) && $user->school_id == $school->id) {
+        if ($user->hasAccess('editor') && $school->id == $user->school_id) {
 
-            return View::make('school.edit')->with('school', $school);
+            return View::make('admin.dashboard')->with('school', $school);
         } else {
             // If no permissions, redirect the user to the calendar index page
             return Redirect::route('calendar.index');

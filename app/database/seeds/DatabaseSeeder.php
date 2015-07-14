@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $editorRole = Sentry::findGroupByName('editor');
+        $editorRole = Sentry::findGroupByName('admin');
 
         // Assign the calendar to the user
         $user2->addGroup($editorRole);
