@@ -198,25 +198,12 @@ Route::group(['prefix' => 'api/1'], function () {
     // TODO: post API
 });
 
-/***
- * Manages all the calendar/event routes
- */
-Route::group(['prefix' => 'calendar'], function ()
-{
-    // Home
-    Route::get('/', [
-        'as'   => 'calendar.index',
-        'uses' => 'CalendarViewController@index'
-    ]);
 
-    // Deletes the event with the given ID
-    Route::get('/event/delete/{id}', [
-        'as'   => 'event.delete',
-        'uses' => 'CalendarViewController@destroy'
-    ])->where('id', '[0-9]+');
-
-
-});
+// Home
+Route::get('/calendar', [
+    'as' => 'calendar.redirect',
+    'uses' => 'CalendarViewController@goToCalendar'
+]);
 
 /**
  * iCal routes and pdf-routes

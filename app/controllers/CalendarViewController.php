@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Class CalendarViewController
@@ -13,16 +14,13 @@ class CalendarViewController extends \BaseController
      */
     public function index($school_slug)
     {
-        if ($school_slug == null || $school_slug == '') {
-            if (Sentry::check()) {
-                $school = Sentry::getUser()->school;
-            } else {
-                // User is not logged in, and no slug for readonly access provided
-                return Redirect::route('landing');
-            }
-        } else {
+
+        try {
             $school = SchoolController::getSchoolBySlug($school_slug);
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('calendar.index')->withErrors("School not found!");
         }
+
 
         $logged = Sentry::check();
         $sentry_user = Sentry::getUser();
@@ -53,6 +51,15 @@ class CalendarViewController extends \BaseController
                 ]
             ]),
         ]);
+    }
+
+    public function goToCalendar()
+    {
+        if (!Sentry::check()) {
+            return Redirect::route('landing');
+        }
+
+        return Redirect::route("orgs.index", [Sentry::getUser()->school->slug]);
     }
 
 }

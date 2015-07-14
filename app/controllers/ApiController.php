@@ -433,8 +433,6 @@ class ApiController extends \BaseController
         return ApiController::createApiAccessError('You do not have the right to perform this action');
     }
 
-
-
     private static function createApiValidationError($error)
     {
         return Response::json(array('succes' => false, 'type' => 'validation', 'feedback' => $error),

@@ -50,7 +50,7 @@
       @section('nav')
       <ul class="nav-list">
         <li>
-          <a href="{{ route('calendar.index') }}" {{ Route::currentRouteName()=='calendar.index' ? ' class="active"' : '' }}>
+          <a href="{{ route('orgs.index',[$org->slug]) }}" {{ Route::currentRouteName()=='calendar.index' ? ' class="active"' : '' }}>
             <i class="glyphicon glyphicon-calendar"></i>
             {{ucfirst(trans('educal.calendar'))}}
           </a>
@@ -70,9 +70,9 @@
     @if(Sentry::check())
     <section class="flex--0">
       <ul class="nav-list">
-        <li><a href="{{ route('orgs.index') }}">Help!</a></li>
-        <li><a href="{{ route('orgs.index') }}">Profiel</a></li>
-        <li><a href="{{ route('calendar.index') }}">Instellingen</a></li>
+        <li><a href="{{ route('orgs.index',[$org->slug]) }}">Help!</a></li>
+        <li><a href="{{ route('orgs.index',[$org->slug]) }}">Profiel</a></li>
+        <li><a href="{{ route('orgs.index',[$org->slug]) }}">Instellingen</a></li>
       </ul>
       <div>
         <p>{{ucfirst(trans('educal.loggedinas'))}}</p>
