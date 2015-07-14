@@ -3,6 +3,10 @@
 @section('header')
 {{ HTML::style("bower_components/fullcalendar/dist/fullcalendar.min.css") }}
 {{ HTML::style("css/calendar.css") }}
+<script type="text/javascript">
+    var org = {{ $school; }};
+    var user = {{ $user; }};
+</script>
 @stop
 
 @section('nav')
