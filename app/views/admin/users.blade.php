@@ -6,8 +6,8 @@
 @stop
 
 @section('content')
-<div ng-app="orgs" ng-controller="OrgController">
-  <h1>Dashboard</h1>
+<div ng-app="users" ng-controller="UserController">
+  <h1>Medewerkers</h1>
 
   @include('admin/navbar')
 
@@ -21,25 +21,21 @@
       <tr>
         <th>Actief</th>
         <th>Naam</th>
-        <th>url</th>
-        <th>Stad</th>
-        <th>Taal</th>
-        <th>Meer</th>
+        <th>Email</th>
+        <th>Kalenders</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="(o, org) in orgs | filter:search">
-        <td class="td-checkbox" ng-class="{'td-checkbox--active':org.active}"><label><input type="checkbox" name="name" ng-model="org.active"></label></td>
-        <td ng-bind="org.name"></td>
-        <td ng-bind="'/'+org.slug"></td>
-        <td ng-bind="org.city"></td>
-        <td ng-bind="org.lang"></td>
-        <td><a href="#">Over</a></td>
+      <tr ng-repeat="(o, user) in users | filter:search">
+        <td class="td-checkbox" ng-class="{'td-checkbox--active':user.activated}"><label><input type="checkbox" name="name" ng-model="user.activated"></label></td>
+        <td ng-bind="user.first_name+' '+user.last_name"></td>
+        <td ng-bind="user.email"></td>
+        <td>Kalenders...</td>
       </tr>
     </tbody>
   </table>
 
-  <p ng-hide="(orgs | filter:search).length">
+  <p ng-hide="(users | filter:search).length">
     Geen resultaten
   </p>
 </div>
@@ -49,15 +45,15 @@
 {{ HTML::script('bower_components/angular/angular.min.js') }}
 {{ HTML::script('bower_components/angular-resource/angular-resource.min.js') }}
 <script type="text/javascript">
-angular.module('orgs', ['ngResource'])
+angular.module('users', ['ngResource'])
   .config(function($interpolateProvider){
     $interpolateProvider.startSymbol('[[').endSymbol(']]');
   })
-  .controller('OrgController', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
+  .controller('UserController', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
 
     // Resources
-    var Orgs = $resource('{{ route('api.orgs') }}');
-    $scope.orgs = Orgs.query();
+    var users = $resource('{{ route('api.users') }}');
+    $scope.users = users.query();
 
   }]);
 </script>

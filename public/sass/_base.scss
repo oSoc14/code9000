@@ -28,22 +28,6 @@ body {
   background-color: #333;
   color: #fff;
 }
-nav {
-  float: left;
-  width: 200px;
-  height: 100%;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 1em 2em;
-  line-height: 20px;
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    line-height: 20px;
-  }
-}
 main {
   margin-left: 200px;
   background: #fff;
@@ -54,6 +38,9 @@ main {
   color: #000;
 }
 
-section {
+.flex--1{
   flex: 10 0 auto;
+}
+.flex--0{
+  flex: 0 0 auto;
 }

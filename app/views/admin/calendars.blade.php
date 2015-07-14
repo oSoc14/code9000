@@ -6,8 +6,8 @@
 @stop
 
 @section('content')
-<div ng-app="orgs" ng-controller="OrgController">
-  <h1>Dashboard</h1>
+<div ng-app="calendars" ng-controller="CalendarController">
+  <h1>Klassen</h1>
 
   @include('admin/navbar')
 
@@ -19,27 +19,29 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Actief</th>
+        <th>Kleur</th>
         <th>Naam</th>
+        <th>Info</th>
         <th>url</th>
-        <th>Stad</th>
-        <th>Taal</th>
+        <th>parent</th>
+        <th>Medewerkers</th>
         <th>Meer</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="(o, org) in orgs | filter:search">
-        <td class="td-checkbox" ng-class="{'td-checkbox--active':org.active}"><label><input type="checkbox" name="name" ng-model="org.active"></label></td>
-        <td ng-bind="org.name"></td>
-        <td ng-bind="'/'+org.slug"></td>
-        <td ng-bind="org.city"></td>
-        <td ng-bind="org.lang"></td>
-        <td><a href="#">Over</a></td>
+      <tr ng-repeat="(c, cal) in cals | filter:search">
+        <td ng-bind="cal.color"></td>
+        <td ng-bind="cal.name"></td>
+        <td ng-bind="cal.description"></td>
+        <td ng-bind="'/'+cal.slug"></td>
+        <td ng-bind="cal.parent_id"></td>
+        <td>Medewerkers...</td>
+        <td><a href="#">Bekijken</a></td>
       </tr>
     </tbody>
   </table>
 
-  <p ng-hide="(orgs | filter:search).length">
+  <p ng-hide="(cals | filter:search).length">
     Geen resultaten
   </p>
 </div>
@@ -49,15 +51,15 @@
 {{ HTML::script('bower_components/angular/angular.min.js') }}
 {{ HTML::script('bower_components/angular-resource/angular-resource.min.js') }}
 <script type="text/javascript">
-angular.module('orgs', ['ngResource'])
+angular.module('calendars', ['ngResource'])
   .config(function($interpolateProvider){
     $interpolateProvider.startSymbol('[[').endSymbol(']]');
   })
-  .controller('OrgController', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
+  .controller('CalendarController', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
 
     // Resources
-    var Orgs = $resource('{{ route('api.orgs') }}');
-    $scope.orgs = Orgs.query();
+    var Cals = $resource('{{ route('api.calendars') }}');
+    $scope.cals = Cals.query();
 
   }]);
 </script>

@@ -44,9 +44,9 @@
 </head>
 
 <body>
-  <nav class="nav-main">
+  <nav class="nav nav-main">
     <h1>Trappenhuis</h1>
-    <section>
+    <section class="flex--1">
       @section('nav')
       <ul class="nav-list">
         <li>
@@ -55,30 +55,12 @@
             {{ucfirst(trans('educal.calendar'))}}
           </a>
         </li>
-        @if(Sentry::getUser()->hasAccess('school'))
+        @if(Sentry::getUser()->hasAccess('admin'))
         <li>
-          <a href="{{ route('school.index') }}"
+          <a href="{{ route('admin.dashboard') }}"
           {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
             <i class="glyphicon glyphicon-folder-close"></i>
-            {{ucfirst(trans('educal.schools'))}}
-          </a>
-        </li>
-        @endif
-        @if(Sentry::getUser()->hasAnyAccess(array('school','calendar')))
-        <li>
-          <a href="{{ route('calendar.index') }}"
-          {{ Route::currentRouteName()=='calendar.index' ? ' class="active"' : '' }}>
-            <i class="fa fa-rocket fa-lg"></i>
-            {{ucfirst(trans('educal.groups'))}}
-          </a>
-        </li>
-        @endif
-        @if(Sentry::getUser()->hasAnyAccess(array('school','user')))
-        <li>
-          <a href="{{ route('orgs.index') }}"
-          {{ Route::currentRouteName()=='user.index' ? ' class="active"' : '' }}>
-            <i class="fa fa-users fa-lg"></i>
-            {{ucfirst(trans('educal.users'))}}
+            Dashboard
           </a>
         </li>
         @endif
@@ -86,7 +68,7 @@
       @show
     </section>
     @if(Sentry::check())
-    <section>
+    <section class="flex--0">
       <ul class="nav-list">
         <li><a href="{{ route('orgs.index') }}">Help!</a></li>
         <li><a href="{{ route('orgs.index') }}">Profiel</a></li>
@@ -94,14 +76,16 @@
       </ul>
       <div>
         <p>{{ucfirst(trans('educal.loggedinas'))}}</p>
-        <br> @if(Sentry::getUser()->first_name != "")
-        <span>{{Sentry::getUser()->first_name}} {{Sentry::getUser()->last_name}}</span>
-        @else
-        <span>{{Sentry::getUser()->email}}</span>
-        @endif
-        @if(Sentry::getUser()->school != null)
-        <span>{{Sentry::getUser()->school->name}}</span>
-        @endif
+        <p>
+          @if(Sentry::getUser()->first_name != "")
+          <span>{{Sentry::getUser()->first_name}} {{Sentry::getUser()->last_name}}</span>
+          @else
+          <span>{{Sentry::getUser()->email}}</span>
+          @endif
+          @if(Sentry::getUser()->school != null)
+          <small>{{Sentry::getUser()->school->name}}</small>
+          @endif
+        </p>
       </div>
     </section>
     @endif
