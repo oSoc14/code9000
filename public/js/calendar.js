@@ -236,6 +236,24 @@ $(document).ready(function () {
         a.popover(options);
         a.popover('show');
         $('#backdrop').addClass('visible');
+
+        $('input[type=date]').datetimepicker({
+          format: 'Y/m/d',
+          mask:true,
+          onShow: function (ct) {
+            // If the value off the datetimepicker isn't empty or the placeholder, set the max date and time for the startdate
+            if (this.val() != '' && this.val() != '____/__/__') {
+              this.setOptions({
+                maxDate: moment(this.val(), "YYYY/MM/DD").format('YYYY/MM/DD')
+              })
+            } else {
+              this.setOptions({
+                maxDate: false
+              })
+            }
+          },
+          defaultSelect: true
+        });
       }
     });
   }
