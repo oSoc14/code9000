@@ -40,7 +40,7 @@ class CalendarViewController extends \BaseController
         }
 
 
-        return View::make('calendar.redirect')->with([
+        return View::make('calendar.index')->with([
             "school" => json_encode($school),
             "user" => json_encode([
                 "id" => $uid,
