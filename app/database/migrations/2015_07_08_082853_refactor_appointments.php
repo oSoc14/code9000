@@ -13,8 +13,6 @@ class RefactorAppointments extends Migration
      */
     public function up()
     {
-
-
         Schema::dropIfExists('parent_appointments');
     }
 
