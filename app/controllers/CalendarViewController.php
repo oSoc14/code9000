@@ -28,7 +28,6 @@ class CalendarViewController extends \BaseController
         $sentry_user = Sentry::getUser();
 
         $uid = 0;
-        dd($sentry_user);
         if ($logged) {
             $uid == $sentry_user->id;
         }

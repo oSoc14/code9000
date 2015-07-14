@@ -192,30 +192,6 @@ Route::group(['prefix' => 'calendar'], function ()
         'uses' => 'CalendarViewController@index'
     ]);
 
-    // Shows creation form for events
-    Route::get('/event/create', [
-        'as'   => 'event.create',
-        'uses' => 'CalendarViewController@create'
-    ]);
-
-    // Stores events
-    Route::post('/event/create', [
-        'as'   => 'event.store',
-        'uses' => 'CalendarViewController@store'
-    ]);
-
-    // Shows creation form for events
-    Route::get('/event/edit/{id}', [
-        'as'   => 'event.edit',
-        'uses' => 'CalendarViewController@edit'
-    ])->where('id', '[0-9]+');
-
-    // Stores events
-    Route::post('/event/edit/{id}', [
-        'as'   => 'event.update',
-        'uses' => 'CalendarViewController@update'
-    ])->where('id', '[0-9]+');
-
     // Deletes the event with the given ID
     Route::get('/event/delete/{id}', [
         'as'   => 'event.delete',
@@ -322,7 +298,6 @@ Route::group(['prefix' => '{org_slug}'], function () {
     Route::get('/', [
         'as' => 'orgs.index',
         'uses' => 'CalendarViewController@index',
-        // TODO: show correct calendar even if for other school than currently logged in user
     ]);
 
     Route::get('/dashboard', [
