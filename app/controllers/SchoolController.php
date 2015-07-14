@@ -31,7 +31,7 @@ class SchoolController extends \BaseController
             return View::make('school.index')->with('schools', $schools);
         } else {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
     }
@@ -49,7 +49,7 @@ class SchoolController extends \BaseController
     {
         // If user is logged in, redirect to calendar index
         if (!Sentry::check()) {
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         // Validation rules for input fields
@@ -134,7 +134,7 @@ class SchoolController extends \BaseController
         // Log the user in
         Sentry::login($user, false);
 
-        return Redirect::route('calendar.index');
+        return Redirect::route('calendar.redirect');
 
 
     }
@@ -172,7 +172,7 @@ class SchoolController extends \BaseController
             return View::make('school.detail')->with('school', $school);
         } else {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
     }
@@ -199,7 +199,7 @@ class SchoolController extends \BaseController
             return View::make('admin.dashboard')->with('org', $school);
         } else {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
     }
@@ -242,7 +242,7 @@ class SchoolController extends \BaseController
 
         // Check if user is superAdmin (only they can update schools)
         if (!$user->hasAccess('admin') || $user->school_id != $school->id) { // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
 
@@ -323,7 +323,7 @@ class SchoolController extends \BaseController
         // Check if user is superAdmin (only they can remove schools)
         if (!$user->hasAccess('superadmin')) {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         $school->delete();

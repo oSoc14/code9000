@@ -61,7 +61,7 @@ Route::filter('superadmin', function () {
         if (Request::ajax()) {
             return Response::make('Unauthorized', 401);
         } else {
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
     }
 });
@@ -79,7 +79,7 @@ Route::filter('admin', function () {
         if (Request::ajax()) {
             return Response::make('Unauthorized', 401);
         } else {
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
     }
 });
@@ -98,7 +98,7 @@ Route::filter('editor', function () {
         if (Request::ajax()) {
             return Response::make('Unauthorized', 401);
         } else {
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
     }
 });

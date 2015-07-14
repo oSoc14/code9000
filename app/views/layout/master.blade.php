@@ -68,12 +68,13 @@
     <!-- Navigation sidebar -->
     <div id="sidebar" class="sidebar-wrapper">
       <div class="logo-container">
-        <a href="{{ route('calendar.index') }}"><h1 id="navbar-logo-sidebar"><span class="hidden">EduCal</span></h1></a>
+        <a href="{{ route('calendar.redirect') }}"><h1 id="navbar-logo-sidebar"><span class="hidden">EduCal</span></h1>
+        </a>
       </div>
       <ul class="panel-group accordions" id="accordion">
         <li class="panel-heading">
-          <a href="{{ route('calendar.index') }}">
-            <p class="panel-title {{ Route::currentRouteName()=='calendar.index' ? 'active' : '' }}">
+          <a href="{{ route('calendar.redirect') }}">
+            <p class="panel-title {{ Route::currentRouteName()=='calendar.redirect' ? 'active' : '' }}">
               <i class="fa fa-calendar fa-lg"></i>
               {{ucfirst(trans('educal.calendar'))}}
             </p>

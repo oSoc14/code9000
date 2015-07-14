@@ -8,7 +8,9 @@
 
 @section('content')
     <div class="col-xs-12 col-sm-9">
-        <a href="{{ route('calendar.index') }}" class="link-goback"><i class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.calendar')]))}}</a>
+        <a href="{{ route('calendar.redirect') }}" class="link-goback"><i
+                    class="fa fa-angle-double-left"></i> {{ucfirst(trans('educal.backto',['page'=>trans('educal.calendar')]))}}
+        </a>
         <h1>{{ucfirst(trans('educal.editevent'))}}</h1>
         {{Form::open(array('route' => array('event.update',$event->id), 'class'=>'form-horizontal')) }}
 

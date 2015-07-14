@@ -43,7 +43,7 @@ class CalendarController extends \BaseController
 
         } else {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
 
@@ -80,7 +80,7 @@ class CalendarController extends \BaseController
                 return View::make('calendarManagement.createGroup')->with('schools', null);
             } else {
                 // If no permissions, redirect the user to the calendar index page
-                return Redirect::route('calendar.index');
+                return Redirect::route('calendar.redirect');
             }
         }
 
@@ -133,7 +133,7 @@ class CalendarController extends \BaseController
 
         } else {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
     }
 
@@ -157,7 +157,7 @@ class CalendarController extends \BaseController
         // Permissions check
         if (!($user->hasAccess('admin') && $user->school_id == $calendar->school_id) && !$user->hasAccess('superadmin')) {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         // Find all users in the selected calendar
@@ -218,7 +218,7 @@ class CalendarController extends \BaseController
         // Permission checks
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
         // If permissions are met, get school info
         $school = $calendar->school;
@@ -287,7 +287,7 @@ class CalendarController extends \BaseController
         // Permission checks
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         // The minimal permission level is editor,
@@ -296,7 +296,7 @@ class CalendarController extends \BaseController
         $school = $calendar->school;
         if ($selectedUser->school_id != $school->id) {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index')->withErrors("This user does not belong to this school!");
+            return Redirect::route('calendar.redirect')->withErrors("This user does not belong to this school!");
         }
 
         $user->calendars()->attach($calendar);
@@ -324,7 +324,7 @@ class CalendarController extends \BaseController
         // Permission checks
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         // The minimal permission level is editor,

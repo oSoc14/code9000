@@ -50,7 +50,7 @@
       @section('nav')
       <ul class="nav-list">
         <li>
-          <a href="{{ route('orgs.index',[$org->slug]) }}" {{ Route::currentRouteName()=='calendar.index' ? ' class="active"' : '' }}>
+          <a href="{{ route('orgs.index',[$org->slug]) }}" {{ Route::currentRouteName()=='calendar.redirect' ? ' class="active"' : '' }}>
             <i class="glyphicon glyphicon-calendar"></i>
             {{ucfirst(trans('educal.calendar'))}}
           </a>

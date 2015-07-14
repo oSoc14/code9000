@@ -27,7 +27,7 @@ class UserController extends \BaseController
         if (!Sentry::check()) {
 
             // If no permissions, redirect to calendar index
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         // Get info from the logged in user
@@ -60,7 +60,7 @@ class UserController extends \BaseController
             $school = School::where('id', $schoolId)->first();
 
         } else {
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         return View::make('user.index')
@@ -230,7 +230,7 @@ class UserController extends \BaseController
             App::setLocale(Session::get('lang'));
 
             // Redirect to logged in page
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
 
         } // Error handling
         catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
@@ -428,7 +428,7 @@ class UserController extends \BaseController
         // Permission check
         if (!$user->hasAnyAccess(['school', 'admin'])) {
             // If no permissions, redirect to calendar index
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         try {
@@ -497,7 +497,7 @@ class UserController extends \BaseController
         // Permission check
         if (!$user->hasAnyAccess(['superadmin', 'admin'])) {
             // If no permissions, redirect to calendar index
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         try {
@@ -511,7 +511,7 @@ class UserController extends \BaseController
             if (!($user->school_id == $selectedUser->school_id || $user->hasAccess('superadmin')) || $selectedUser->id == $user->id
             ) {
                 // Permissions not ok, return to calendar index
-                return Redirect::route('calendar.index');
+                return Redirect::route('calendar.redirect');
             }
 
             // Generate a new activation code for the selected user
@@ -533,7 +533,7 @@ class UserController extends \BaseController
             }
 
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
 
@@ -561,7 +561,7 @@ class UserController extends \BaseController
             try {
                 $selectedUser = Sentry::findUserById($id);
             } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                return Redirect::route('calendar.index');
+                return Redirect::route('calendar.redirect');
             }
 
         } else {
@@ -580,7 +580,7 @@ class UserController extends \BaseController
 
         } else {
             // If no permissions, redirect to calendar index
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
     }
@@ -605,7 +605,7 @@ class UserController extends \BaseController
             $selectedUser = Sentry::findUserById($id);
 
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         // Check if the user that wants to do the update is either the user himself,
@@ -614,7 +614,7 @@ class UserController extends \BaseController
                 && $user->school_id == $selectedUser->school_id)
         ) {
             // If no permissions, redirect to calendar index
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
         // Validate the inputs
         $validator = Validator::make(
@@ -685,7 +685,7 @@ class UserController extends \BaseController
             // Store updated user in the database
             $selectedUser->save();
 
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         return Redirect::back();
@@ -727,7 +727,7 @@ class UserController extends \BaseController
             && !$user->hasAccess('superadmin')
         ) {
             // If no permissions, redirect to calendar index
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         $school = School::find($selectedUser->school_id);
@@ -786,7 +786,7 @@ class UserController extends \BaseController
         // Permission checks
         if (!$user->hasAccess('superadmin')) {
             // If no permissions, redirect to calendar index
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         }
 
         // Find the role using by name

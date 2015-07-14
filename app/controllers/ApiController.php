@@ -246,8 +246,7 @@ class ApiController extends \BaseController
         $event->end_date = $ed;
         $event->save();
 
-        return Redirect::route('calendar.index');
-
+        return ApiController::createApiOk('Changes saved');
     }
 
     /**
