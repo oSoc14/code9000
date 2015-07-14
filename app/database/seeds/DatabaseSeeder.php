@@ -38,10 +38,6 @@ class DatabaseSeeder extends Seeder
 
         // make sure the roles exist
         UserController::checkCreateRoles();
-        // Find the role using the calendar id
-
-        $adminRole = Sentry::findGroupByName('admin');
-
 
         $user2 = Sentry::createUser(
             [
