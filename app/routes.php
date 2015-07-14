@@ -201,48 +201,6 @@ Route::group(['prefix' => 'calendar'], function ()
 
 });
 
-/***
- * Manages all the group routes
- */
-Route::group(['prefix' => 'group'], function()
-{
-    // Index, lists all groups
-    Route::get('/', [
-        'as'   => 'calendarManagement.index',
-        'uses' => 'CalendarController@index'
-    ]);
-
-    // Edit a calendar
-    Route::get('/{id}', [
-        'as'   => 'calendarManagement.edit',
-        'uses' => 'CalendarController@edit'
-    ])->where('id', '[0-9]+');
-
-    // Create a new group
-    Route::get('/create', [
-        'as'   => 'calendarManagement.create',
-        'uses' => 'CalendarController@create'
-    ]);
-
-    // Store a new group
-    Route::post('/create', [
-        'as'   => 'calendarManagement.store',
-        'uses' => 'CalendarController@store'
-    ]);
-
-    // Update a group
-    Route::post('/edit/{id}', [
-        'as'   => 'calendarManagement.update',
-        'uses' => 'CalendarController@update'
-    ])->where('id', '[0-9]+');
-
-    // Destroy a group
-    Route::get('/delete/{id}', [
-        'as'   => 'calendarManagement.delete',
-        'uses' => 'CalendarController@destroy'
-    ])->where('id', '[0-9]+');
-});
-
 /**
  * iCal routes and pdf-routes
  * returns iCal, .ics file or .pdf file
@@ -305,17 +263,22 @@ Route::group(['prefix' => '{org_slug}'], function () {
         'uses' => 'SchoolController@dashboard',
     ]);
 
-    // Show the view to edit a school
+    // Show the admin interface to manage users
     Route::get('/users', [
-        'as' => 'school.users',
-        'uses' => 'SchoolController@users'
-    ])->where('id', '[0-9]+');
+        'as' => 'orgs.users',
+        function () {
+            return View::make('admin.users');
+        }
+    ]);
 
-    // Show the view to view all calendars for a school
+
+    // Show the admin interface to manage calendars
     Route::get('/calendars', [
-        'as' => 'school.calendars',
-        'uses' => 'SchoolController@calendars'
-    ])->where('id', '[0-9]+');
+        'as' => 'orgs.calendars',
+        function () {
+            return View::make('admin.calendars');
+        }
+    ]);
 
     // Create a new school
     Route::post('/register', [
