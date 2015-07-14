@@ -259,13 +259,13 @@ Route::group(['prefix' => '{org_slug}'], function () {
     ]);
 
     Route::get('/dashboard', [
-        'as' => 'orgs.index',
+        'as' => 'admin.dashboard',
         'uses' => 'SchoolController@dashboard',
     ]);
 
     // Show the admin interface to manage users
     Route::get('/users', [
-        'as' => 'orgs.users',
+        'as' => 'admin.users',
         function () {
             return View::make('admin.users');
         }
@@ -274,7 +274,7 @@ Route::group(['prefix' => '{org_slug}'], function () {
 
     // Show the admin interface to manage calendars
     Route::get('/calendars', [
-        'as' => 'orgs.calendars',
+        'as' => 'admin.calendars',
         function () {
             return View::make('admin.calendars');
         }
