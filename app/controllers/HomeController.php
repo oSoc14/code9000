@@ -20,7 +20,7 @@ class HomeController extends BaseController
     {
         // Check if user is logged in/activated
         if (Sentry::check()) {
-            return Redirect::route('calendar.index');
+            return Redirect::route('calendar.redirect');
         } else {
             $schoolsArray = School::lists('name', 'id');
             return View::make('landing')->with('schools', $schoolsArray);

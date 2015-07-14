@@ -18,7 +18,7 @@ class CalendarViewController extends \BaseController
         try {
             $school = SchoolController::getSchoolBySlug($school_slug);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('calendar.index')->withErrors("School not found!");
+            return Redirect::route('landing')->withErrors("School not found!");
         }
 
 
