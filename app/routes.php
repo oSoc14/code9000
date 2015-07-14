@@ -139,6 +139,18 @@ Route::group(['prefix' => 'api/1'], function () {
     ]);
 
     // Returns all events for the users organisation
+    Route::post('/orgs/{id}/events/', [
+        'as' => 'api.events',
+        'uses' => 'ApiController@storeEvent'
+    ]);
+
+    // Returns all events for the users organisation
+    Route::post('/orgs/{id}/events/{event_id}', [
+        'as' => 'api.events',
+        'uses' => 'ApiController@storeEvent'
+    ]);
+
+    // Returns all events for the users organisation
     Route::get('/orgs/{id}/users', [
         'as' => 'api.orgUsers',
         'uses' => 'ApiController@orgUsers'
@@ -151,16 +163,20 @@ Route::group(['prefix' => 'api/1'], function () {
     ]);
 
     // Returns all events for the users organisation
-    Route::get('/calendars/{id}/events', [
+    Route::get('/calendars/{id}', [
         'as' => 'api.orgCalendars',
         'uses' => 'ApiController@calendarEvents'
     ]);
 
-    // Returns all events for the users organisation
+    /**
+     * Returns all events for the users organisation
+     * @deprecated
+     */
     Route::get('/user/events', [
         'as' => 'api.allUserEvents',
         'uses' => 'ApiController@allUserEvents'
     ]);
+
 
     // TODO: post API
 });
