@@ -1,0 +1,32 @@
+// Component variables
+$td-padding: 0.25em 0.5em !default;
+
+// Default table
+table {
+  width: 100%;
+  white-space: nowrap;
+}
+th {
+  text-align: left;
+  padding: 0.5em;
+}
+td {
+  border-top: 1px solid #ccc;
+  padding: $td-padding;
+  line-height: 1.5em;
+  height: 2em;
+}
+.td-checkbox {
+  width: 30px;
+  padding: 0;
+  text-align: center;
+  background: orange;
+  @include user-select(none);
+  label {
+    display: block;
+    padding: $td-padding;
+  }
+}
+.td-checkbox--active {
+  background: lightgreen;
+}

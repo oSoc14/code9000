@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
     watch: {
       sass: {
-        files: 'public/sass/*.scss',
+        files: 'public/sass/**/*.scss',
         tasks: ['sass']
       }
     },
@@ -17,7 +17,8 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                'public/css/calendar.css': 'public/sass/screen.scss'
+                'public/css/calendar.css': 'public/sass/screen.scss',
+                'public/css/admin.css': 'public/sass/admin.scss'
             }
         }
     },
