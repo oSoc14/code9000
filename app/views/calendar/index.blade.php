@@ -10,7 +10,7 @@
 @stop
 
 @section('nav')
-<section>
+<section class="flex--1">
   <button type="button" name="button">School</button>
   <button type="button" name="button">Leerjaar</button>
   <input type="checkbox" value="1" id="y1">
@@ -33,6 +33,17 @@
   <input type="checkbox" value="1" id="c3">
   <label for="c3">1C</label>
 </section>
+@if(Sentry::getUser()->hasAccess('admin'))
+<ul>
+  <li>
+    <a href="{{ route('admin.dashboard', [$org->slug]) }}"
+    {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
+      <i class="glyphicon glyphicon-folder-close"></i>
+      Dashboard
+    </a>
+  </li>
+</ul>
+@endif
 @stop
 
 @section('content')

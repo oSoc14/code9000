@@ -70,23 +70,19 @@
     @if(Sentry::check())
     <section class="flex--0">
       <ul class="nav-list">
-        <li><a href="{{ route('orgs.index',[$org->slug]) }}">Help!</a></li>
-        <li><a href="{{ route('orgs.index',[$org->slug]) }}">Profiel</a></li>
-        <li><a href="{{ route('orgs.index',[$org->slug]) }}">Instellingen</a></li>
+        <li><a href="{{ route('help') }}">Help!</a></li>
+        <li><a href="{{ route('user.edit') }}">Profiel</a></li>
       </ul>
-      <div>
-        <p>{{ucfirst(trans('educal.loggedinas'))}}</p>
-        <p>
-          @if(Sentry::getUser()->first_name != "")
-          <span>{{Sentry::getUser()->first_name}} {{Sentry::getUser()->last_name}}</span>
-          @else
-          <span>{{Sentry::getUser()->email}}</span>
-          @endif
-          @if(Sentry::getUser()->school != null)
-          <small>{{Sentry::getUser()->school->name}}</small>
-          @endif
-        </p>
-      </div>
+      <p class="text-muted">
+        @if(Sentry::getUser()->first_name != "")
+        <span>{{Sentry::getUser()->first_name}} {{Sentry::getUser()->last_name}}</span>
+        @else
+        <span>{{Sentry::getUser()->email}}</span>
+        @endif
+        @if(Sentry::getUser()->school != null)
+        <br><small>{{Sentry::getUser()->school->name}}</small>
+        @endif
+      </p>
     </section>
     @endif
   </nav>
