@@ -13,9 +13,27 @@ class DatabaseSeeder extends Seeder
         Eloquent::unguard();
 
         $school = new School();
+        $school->name = "Sint-Janscollege";
+        $school->city = "Sint-Amandsberg";
+        $school->slug = "sjc-gent";
+        $school->save();
+
+        $school = new School();
+        $school->name = "Don Bosco";
+        $school->city = "Halle";
+        $school->slug = "donbosco-halle";
+        $school->save();
+
+        $school = new School();
+        $school->name = "Sint-Franciscusinstituut Basisschool";
+        $school->city = "Kesselare";
+        $school->slug = "sfbk-kesselare";
+        $school->save();
+
+        $school = new School();
         $school->name = "open Summer of code 2015";
         $school->city = "Gent";
-
+        $school->slug = "osoc";
         $school->save();
 
         // make sure the roles exist
@@ -63,6 +81,26 @@ class DatabaseSeeder extends Seeder
 
         // link to global calendar
         $user2->calendars()->attach($calendar);
+
+
+        $adminRole = Sentry::findGroupByName('admin');
+
+        for ($i=0; $i < 200; $i++) {
+            $user = Sentry::createUser(
+                [
+                    'email' => $i . "@a.a",
+                    'password' => "password",
+                    'activated' => true,
+                    'school_id' => $i%4 + 1,
+                    'first_name' => "Foo" . $i,
+                    'last_name' => "Bar" . $i,
+                ]
+            );
+            if($i%15){
+                $user->addGroup($adminRole);
+            }
+        }
+
 
     }
 }
