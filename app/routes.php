@@ -285,8 +285,8 @@ Route::group(['prefix' => '{org_slug}'], function () {
     Route::get('/users', [
         'as' => 'admin.users',
         'before' => 'admin',
-        function () {
-            return View::make('admin.users');
+        function ($slug) {
+            return View::make('admin.users')->with('org', SchoolController::getSchoolBySlug($slug));
         }
     ]);
 
@@ -295,8 +295,8 @@ Route::group(['prefix' => '{org_slug}'], function () {
     Route::get('/calendars', [
         'as' => 'admin.calendars',
         'before' => 'admin',
-        function () {
-            return View::make('admin.calendars');
+        function ($slug) {
+            return View::make('admin.calendars')->with('org', SchoolController::getSchoolBySlug($slug));
         }
     ]);
 
