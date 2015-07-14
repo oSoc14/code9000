@@ -54,10 +54,12 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $editorRole = Sentry::findGroupByName('admin');
+        $superRole = Sentry::findGroupByName('superadmin');
+        $adminRole = Sentry::findGroupByName('admin');
+        $editorRole = Sentry::findGroupByName('editor');
 
         // Assign the calendar to the user
-        $user2->addGroup($editorRole);
+        $user2->addGroup($superRole);
 
         $calendar = new Calendar();
         $calendar->name = "global";
@@ -82,9 +84,6 @@ class DatabaseSeeder extends Seeder
         // link to global calendar
         $user2->calendars()->attach($calendar);
 
-
-        $adminRole = Sentry::findGroupByName('admin');
-
         for ($i=0; $i < 200; $i++) {
             $user = Sentry::createUser(
                 [
@@ -96,6 +95,7 @@ class DatabaseSeeder extends Seeder
                     'last_name' => "Bar" . $i,
                 ]
             );
+            $user->addGroup($editorRole);
             if($i%15){
                 $user->addGroup($adminRole);
             }
