@@ -22,12 +22,16 @@ Route::get('/', [
 ]);
 
 // About page
-Route::get('about', ['as' => 'about', 'before' => 'auth', function() {
+Route::get('about', [
+    'as' => 'about',
+    function () {
     return View::make('about');
 }]);
 
 // Info page
-Route::get('help', ['as' => 'help', 'before' => 'auth', function() {
+Route::get('help', [
+    'as' => 'help',
+    function () {
   return View::make('help');
 }]);
 
@@ -46,42 +50,49 @@ Route::group(['prefix' => 'profile'], function () {
     // Log user out TODO: post?
     Route::get('/logout', [
         'as'   => 'user.logout',
+        'before' => 'guest',
         'uses' => 'UserController@logout'
     ]);
 
     // Show the view to edit a user
     Route::get('/{id?}', [
         'as' => 'user.edit',
+        'before' => 'auth',
         'uses' => 'UserController@editUser'
     ])->where('id', '[0-9]+');
 
     // Add user to group
     Route::post('/{id}/roles', [
         'as' => 'user.addAdminRole',
+        'before' => 'admin',
         'uses' => 'UserController@promoteUserAdmin'
     ])->where('id', '[0-9]+');
 
     // Remover a user from group
     Route::delete('/{id}/roles', [
         'as' => 'user.removeAdminRole',
+        'before' => 'admin',
         'uses' => 'UserController@demoteUserAdmin'
     ])->where('id', '[0-9]+');
 
     // Update a user
     Route::post('/{id}', [
         'as'   => 'user.update',
+        'before' => 'auth',
         'uses' => 'UserController@updateUser'
     ])->where('id', '[0-9]+');
 
     // Register as a new user
     Route::post('/register', [
         'as' => 'user.register',
+        'before' => 'guest',
         'uses' => 'UserController@store'
     ]);
 
     // Create a new user (backoffice side)
     Route::post('/create', [
         'as' => 'user.create',
+        'before' => 'auth',
         'uses' => 'UserController@create'
     ]);
 
@@ -94,6 +105,7 @@ Route::group(['prefix' => 'profile'], function () {
     // Destroy a user
     Route::delete('/{id}', [
         'as'   => 'user.removeUserFromSchool',
+        'before' => 'auth',
         'uses' => 'UserController@removeUserFromSchool'
     ])->where('id', '[0-9]+');
 
@@ -125,6 +137,11 @@ Route::group(['prefix' => 'profile'], function () {
 
 Route::group(['prefix' => 'api/1'], function () {
 
+    /**
+     *  ! important
+     *  Don't filter API calls for auth, admin, ...
+     *  API methods have their own error responses and should not return empty 401 errors
+     */
 
     // Returns all events for the users organisation
     Route::get('/orgs', [
@@ -260,12 +277,14 @@ Route::group(['prefix' => '{org_slug}'], function () {
 
     Route::get('/dashboard', [
         'as' => 'admin.dashboard',
+        'before' => 'admin',
         'uses' => 'SchoolController@dashboard',
     ]);
 
     // Show the admin interface to manage users
     Route::get('/users', [
         'as' => 'admin.users',
+        'before' => 'admin',
         function () {
             return View::make('admin.users');
         }
@@ -275,6 +294,7 @@ Route::group(['prefix' => '{org_slug}'], function () {
     // Show the admin interface to manage calendars
     Route::get('/calendars', [
         'as' => 'admin.calendars',
+        'before' => 'admin',
         function () {
             return View::make('admin.calendars');
         }

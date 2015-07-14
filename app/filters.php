@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (!Sentry::getUser())
+    if (!Sentry::check())
 	{
 		if (Request::ajax())
 		{
@@ -43,9 +43,64 @@ Route::filter('auth', function()
 		}
 		else
 		{
-            return Redirect::to('/');
+            return Redirect::route('landing');
 		}
 	}
+});
+
+Route::filter('superadmin', function () {
+    if (!Sentry::check()) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('landing');
+        }
+    }
+
+    if (Sentry::getUser()->hasAccess('superadmin')) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('calendar.index');
+        }
+    }
+});
+
+Route::filter('admin', function () {
+    if (!Sentry::check()) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('landing');
+        }
+    }
+
+    if (Sentry::getUser()->hasAccess('admin')) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('calendar.index');
+        }
+    }
+});
+
+
+Route::filter('editor', function () {
+    if (!Sentry::check()) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('landing');
+        }
+    }
+
+    if (Sentry::getUser()->hasAccess('editor')) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('calendar.index');
+        }
+    }
 });
 
 
@@ -92,22 +147,3 @@ Route::filter('csrf', function()
  * If user is not an admin, redirect them back to calendar, as user, or to
  * the landing, as guest.
  */
-
-Route::filter('admin', function()
-{
-    $user = Sentry::getUser();
-
-    if($user) {
-        if(!$user->hasAccess('school')) {
-            return Redirect::route('landing');
-        }
-    } else {
-        return Redirect::route('landing');
-    }
-});
-
-Route::filter('groupadmin', function($route, $request, $value)
-{
-    $user = Sentry::getUser();
-    $param = $route->getParameter('param');
-});
