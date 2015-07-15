@@ -23,14 +23,14 @@
   var adaptView = function() {
     var h = $('main').height();
     if ($(window).width() < 850) {
-      $('#calendar').fullCalendar('changeView', 'agendaDay');
-      $('#calendar').fullCalendar('option', 'height', 5000);
+      calendar.fullCalendar('changeView', 'agendaDay');
+      calendar.fullCalendar('option', 'height', 5000);
     } else if ($(window).width() > 850 && $(window).width() < 1080) {
-      $('#calendar').fullCalendar('changeView', 'agendaWeek');
-      $('#calendar').fullCalendar('option', 'height', h);
+      calendar.fullCalendar('changeView', 'agendaWeek');
+      calendar.fullCalendar('option', 'height', h);
     } else {
-      $('#calendar').fullCalendar('changeView', 'month');
-      $('#calendar').fullCalendar('option', 'height', h);
+      calendar.fullCalendar('changeView', 'month');
+      calendar.fullCalendar('option', 'height', h);
     };
   }
 
