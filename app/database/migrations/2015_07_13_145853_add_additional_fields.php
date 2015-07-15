@@ -25,7 +25,7 @@ class AddAdditionalFields extends Migration
         });
 
         Schema::table('appointments', function ($table) {
-            $table->boolean('color');
+            $table->int('color');
             $table->string('image');
             $table->string('organiser');
             $table->boolean('cancelled');
