@@ -157,8 +157,8 @@ class DatabaseSeeder extends Seeder
             $app->location = 'Gent';
             $app->calendar_id = $i%$count+1;
             $date = date('Y-m-d', strtotime( '+'.mt_rand(-10,30).' days'));
-            $app->start_date = new DateTime($date . ' 13:00');
-            $app->end_date = new DateTime($date . ' 16:00');
+            $app->start = new DateTime($date . ' 13:00');
+            $app->end = new DateTime($date . ' 16:00');
             $app->save();
         }
     }
