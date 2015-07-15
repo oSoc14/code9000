@@ -4,8 +4,9 @@
 {{ HTML::style("bower_components/fullcalendar/dist/fullcalendar.min.css") }}
 {{ HTML::style("bower_components/datetimepicker/jquery.datetimepicker.css") }}
 <script type="text/javascript">
-    var org = {{ $school; }};
-    var user = {{ $user; }};
+    var org = {{ $school }};
+    var user = {{ $user }};
+    var calendars = {{ $calendars }}
 </script>
 @stop
 
