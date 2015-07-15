@@ -595,7 +595,7 @@ class ApiController extends \BaseController
      * @param  int $id
      * @return Response
      */
-    public function destroy($id = 0)
+    public function destroyCalendar($id = 0)
     {
         if (!Sentry::check()) {
             return;

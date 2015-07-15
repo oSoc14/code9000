@@ -173,6 +173,12 @@ Route::group(['prefix' => 'api/1'], function () {
         'uses' => 'ApiController@handleEvent'
     ]);
 
+    // Returns all events for the users organisation
+    Route::delete('/events/', [
+        'as' => 'api.events',
+        'uses' => 'ApiController@destroyAppointment'
+    ]);
+
     // Returns all events for a calendar
     Route::get('/calendars/{id}', [
         'as' => 'api.orgCalendarWithEvents',
@@ -191,6 +197,11 @@ Route::group(['prefix' => 'api/1'], function () {
         'uses' => 'ApiController@handleCalendar'
     ]);
 
+    // Returns all events for a calendar
+    Route::delete('/calendars/', [
+        'as' => 'api.calendar',
+        'uses' => 'ApiController@destroyCalendar'
+    ]);
 
     /**
      * Returns all events for the users organisation
@@ -220,7 +231,7 @@ Route::group(['prefix' => 'export'], function()
 {
     // iCal Export route for a certain class
     // id = calendar
-    Route::get('/{id}/{school}/{class}', [
+    Route::get('/{id}/{school}/{calendar}', [
         'as'   => 'export.group',
         'uses' => 'IcalCalendarController@index'
     ])->where(['id' => '[0-9]+', 'school' => '[0-9A-Za-z_\- ]+', 'class' => '[0-9A-Za-z_\- ]+']);
