@@ -170,6 +170,7 @@
   {{ HTML::script("bower_components/fullcalendar/dist/lang/de.js") }}
 @endif
 
+{{ HTML::script('js/api.js') }}
 {{ HTML::script('js/render.js') }}
 {{ HTML::script('js/editor.js') }}
 {{ HTML::script('js/calendar.js') }}

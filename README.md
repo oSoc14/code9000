@@ -38,7 +38,19 @@ If your development environment is not on a '.dev' domain, you will have to chan
 
 And change '\*.dev' to your computer name or simply '\*'
 
+## Default users (seed)
 
+superadmin
+```
+mail: a@a.a
+pass: password
+```
+
+admins and editors (1001 can be replaced by numbers upto 1100)
+```
+mail: 1001@a.a
+pass: a
+```
 
 ## What is this?
 Schools can have a lot of activities throughout the year such as commitee meetings, open days for the public, kid's parties, etc. This can be hard to keep track of for parents. EduCal centralizes and creates an easy-to-use link to import the school's agenda.
