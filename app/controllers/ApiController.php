@@ -174,7 +174,7 @@ class ApiController extends \BaseController
         }
         $endDate = new DateTime();
         // Check if endDate isn't blank
-        if (Input::get('end-date') == '') {
+        if (Input::get('end') == '') {
             $endDate = null;
         }
         $validator = Validator::make(
@@ -213,7 +213,7 @@ class ApiController extends \BaseController
         if (!$start) {
             $validator->getMessageBag()->add(
                 'end',
-                Lang::get('validation.required', ['attribute ' => 'start-date '])
+                Lang::get('validation.required', ['attribute ' => 'start '])
             );
 
             return ApiController::createApiValidationError($validator->errors());
@@ -225,7 +225,7 @@ class ApiController extends \BaseController
             $validator->getMessageBag()->add(
                 'end',
                 Lang::get('validation.after',
-                    ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
+                    ['attribute ' => 'end ', 'date' => Input::get('start')])
             );
 
             // Redirect back with inputs and validator instance
@@ -375,7 +375,7 @@ class ApiController extends \BaseController
         if (!$start) {
             $validator->getMessageBag()->add(
                 'end',
-                Lang::get('validation.required', ['attribute ' => 'start-date '])
+                Lang::get('validation.required', ['attribute ' => 'start '])
             );
 
             return ApiController::createApiValidationError($validator->errors());
@@ -388,7 +388,7 @@ class ApiController extends \BaseController
             $validator->getMessageBag()->add(
                 'end',
                 Lang::get('validation.after',
-                    ['attribute ' => 'end-date ', 'date' => Input::get('start-date')])
+                    ['attribute ' => 'end ', 'date' => Input::get('start')])
             );
 
             return ApiController::createApiValidationError($validator->errors());
@@ -413,7 +413,7 @@ class ApiController extends \BaseController
      * @param  int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroyAppointment($id)
     {
         if (!Sentry::check()) {
             return ApiController::createApiAccessError('You have to login first');
@@ -430,6 +430,127 @@ class ApiController extends \BaseController
         }
 
         return ApiController::createApiAccessError('You do not have the right to perform this action');
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function storeCalendar()
+    {
+        if (!Sentry::check()) {
+            // If no permissions, redirect to calendar index
+            return ApiController::createApiAccessError('You have to login first');
+        }
+        // Find active user
+        $user = Sentry::getUser();
+
+        if (!$user->hasAnyAccess(['admin', 'editor'])) {
+
+            return ApiController::createApiAccessError('You do not have the right to perform this action');
+        }
+        $school = null;
+
+        // Validate input fields
+        $validator = Validator::make(
+            [
+                'name' => e(Input::get('name')),
+                'school' => Input::get('school'),
+            ],
+            [
+                'name' => 'required',
+                'school' => 'integer'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return ApiController::createApiValidationError($validator->errors());
+        }
+
+        $calendar = new Calendar();
+        $calendar->name = e(Input::get('name'));
+        $calendar->description = e(Input::get('name'));
+        $calendar->school_id = Input::get('school');
+
+        $calendar->save();
+
+        $user->calendars()->attach($calendar);
+
+        return ApiController::createApiOk('Changes saved');
+
+    }
+
+
+    /**
+     * Update the specified calendar in storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function updateCalendar($id)
+    {
+
+        if (!Sentry::check()) {
+            // If no permissions, redirect to calendar index
+            return ApiController::createApiAccessError('You have to login first');
+        }
+
+        // Find active user and calendar information
+        $user = Sentry::getUser();
+        $calendar = Calendar::find($id);
+
+        // Permission checks
+        if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
+            // If no permissions, redirect the user to the calendar index page
+
+            return ApiController::createApiAccessError('You do not have the right to perform this action');
+        }
+        // If permissions are met, get school info
+        $school = $calendar->school;
+
+        // Generate full calendar name
+        if (Input::get('name') != null) {
+            $calName = preg_replace('/[^A-Za-z0-9\-_ ]/', '', Input::get('name'));
+        } else {
+            $calName = $calendar->name;
+        }
+
+        // Make a validator to see if the new calendar name is unique if it's not the same as before
+        // Validate input fields
+        $validator = Validator::make(
+            [
+                'name' => e($calName),
+                'school' => Input::get('school'),
+                'permissions' => Input::get('permissions')
+            ],
+            [
+                'school' => 'integer'
+            ]
+        );
+
+        // Error handling
+        if ($validator->fails()) {
+
+            return ApiController::createApiValidationError($validator->errors());
+
+            // TODO: take a look at "protected" calendars
+        } elseif ($calName == $school->name || $calName == 'Administratie') {
+            // Do not allow default calendars to be renamed
+
+            return ApiController::createApiAccessError('You cannot rename this calendar');
+
+        } else {
+
+            $calendar->name = $calName;
+            // Save/update the calendar
+            $calendar->save();
+
+            return ApiController::createApiOk('Changes saved');
+        }
+
+
     }
 
     private static function createApiValidationError($error)
