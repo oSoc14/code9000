@@ -57,7 +57,7 @@ Route::filter('superadmin', function () {
         }
     }
 
-    if (Sentry::getUser()->hasAccess('superadmin')) {
+    if (!Sentry::getUser()->hasAccess('superadmin')) {
         if (Request::ajax()) {
             return Response::make('Unauthorized', 401);
         } else {
@@ -75,7 +75,7 @@ Route::filter('admin', function () {
         }
     }
 
-    if (Sentry::getUser()->hasAccess('admin')) {
+    if (!Sentry::getUser()->hasAccess('admin')) {
         if (Request::ajax()) {
             return Response::make('Unauthorized', 401);
         } else {
@@ -94,7 +94,7 @@ Route::filter('editor', function () {
         }
     }
 
-    if (Sentry::getUser()->hasAccess('editor')) {
+    if (!Sentry::getUser()->hasAccess('editor')) {
         if (Request::ajax()) {
             return Response::make('Unauthorized', 401);
         } else {

@@ -187,18 +187,18 @@ class SchoolController extends \BaseController
     public function dashboard($slug)
     {
         if (!Sentry::check()) {
-            return Redirect::route('landing');
+            return Redirect::route('landing')->withErrors("You have to be logged in to use this function!");
         }
 
         $user = Sentry::getUser();
         $school = SchoolController::getSchoolBySlug($slug);
 
         // Check if user is superAdmin (only they can edit schools)
-        if ($user->hasAccess('editor') && $school->id == $user->school_id) {
+        if ($user->hasAccess('admin') && $school->id == $user->school_id) {
             return View::make('admin.dashboard')->with('org', $school);
         } else {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.redirect');
+            return Redirect::route('calendar.redirect')->withErrors("You have to be logged in as admin to use this function!");
         }
 
     }
