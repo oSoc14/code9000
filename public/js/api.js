@@ -22,9 +22,11 @@ var api = (function() {
 
     }).done();
   }
+  var postEvent = function(event) {
+    return $.post('api/1/orgs/' + org.id + '/events', event);
+  }
   return {
     get: get,
-    sources: sources,
-    success: success
+    postEvent: postEvent
   };
 })();

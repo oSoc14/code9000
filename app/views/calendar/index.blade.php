@@ -110,7 +110,7 @@
 <div class="hidden new-event">
   <p class="divider-btm">
     <label for="" class="hidden">Event naam</label>
-    <input class="input" type="text" placeholder="Event naam">
+    <input class="input input-title" type="text" placeholder="Event naam">
   </p>
   <div class="divider-btm dtpicker">
     <label for="d1">Tijd</label>
@@ -124,7 +124,7 @@
     </div>
   </div>
   <p class="divider-btm">
-    <input class="input" type="text" placeholder="Locatie">
+    <input class="input input-location" type="text" placeholder="Locatie">
   </p>
   <p class="divider-btm">
     <label class="checkbox-minimal">
@@ -133,7 +133,7 @@
   </p>
   <p class="divider-btm event-description">
     <label for="description">Omschrijving</label>
-    <input class="input" type="text" id="desctiption" placeholder="Voeg omschrijving toe">
+    <input class="input input-descr" type="text" id="desctiption" placeholder="Voeg omschrijving toe">
   </p>
   <div>
     <label class="radio-minimal">
@@ -143,18 +143,14 @@
       <label class="radio-minimal">
         <input type="radio" name="t"> Leerjaar:
       </label>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>6</span>
-      <span>7</span>
     </div>
-    <label class="radio-minimal">
-      <input type="radio" name="t"> Klas
-    </label>
-    <button type="button" name="button">Toevoegen</button>
+    <div class="select-cal">
+      <label class="radio-minimal">
+        <input type="radio" name="t"> Klassen
+      </label>
+      <input class="input input-cals" type="text" placeholder="klassen gescheiden door komma">
+    </div>
+    <button type="button" class="event-create" name="button">Toevoegen</button>
   </div>
 </div>
 @stop

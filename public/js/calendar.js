@@ -18,11 +18,13 @@
 
   // Adaptive view based on window width
   var addSources = function(sources) {
-    console.log(sources)
+    org.cals = sources;
     $.each(sources, function(index, source) {
-      source.color = 'hsl(' + (index%6)*60 + ', 100%, 30%)';
+      source.color = 'hsl(' + (index % 6) * 60 + ', 100%, 30%)';
       calendar.fullCalendar('addEventSource', source);
     })
+
+    editor.init();
   };
 
   api.get('api/1/orgs/1/calendars', addSources);

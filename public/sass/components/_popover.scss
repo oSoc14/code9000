@@ -22,6 +22,7 @@
     margin: 0;
     line-height: 20px;
     font-weight: 500;
+    flex: 0 0 auto;
   }
   button {
     color: #090;
@@ -43,12 +44,12 @@
     .input-date {
       padding-bottom: 0;
       height: 30px;
-      outline:none;
+      outline: none;
     }
     .input-time {
       padding-top: 0;
       height: 30px;
-      outline:none;
+      outline: none;
     }
   }
 }
