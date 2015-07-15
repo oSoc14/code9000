@@ -116,7 +116,7 @@ class ApiController extends \BaseController
     }
 
     /**
-     * Return a listing of the events based on the organisation id
+     * Return a listing of the events based on the calendar id
      * @param $id int the calendar ID
      * @return jSon Response with events
      */
@@ -132,23 +132,22 @@ class ApiController extends \BaseController
     }
 
     /**
-     * Return a listing of the events based on the organisation id
+     * Return a listing of the events based on the calendar id
      * @param $id int the calendar ID
      * @return jSon Response with events
      */
     public function calendarEvents($id)
     {
 
-        $calendar = Calendar::find($id);
-        $calendar->load('appointments');
-        $appointments = [];
-        // Loop through calendars to get all appointments
-        foreach ($calendar->appointments as $appointment) {
-            array_push($appointments, $appointment);
+        if (Input::has("start") && Input::has("end")) {
+            $appQuery = Appointment::where('calendar_id', $id)->where('start', '>=',
+                Input::get('start') . ' 00:00:00')->where('start', '<=', Input::get('end') . ' 00:00:00')->get();
+        } else {
+            $appQuery = Appointment::where('calendar_id', $id)->get();
         }
 
         // Returns JSON response of the user
-        return Response::json($appointments)->setCallback(Input::get('callback'));
+        return Response::json($appQuery)->setCallback(Input::get('callback'));
 
     }
 
