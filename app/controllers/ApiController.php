@@ -22,6 +22,7 @@ class ApiController extends \BaseController
         $user->load('school.calendars.appointments.calendar.school');
         // Loop through calendars to get all appointments
         foreach ($user->school->calendars as $calendar) {
+            $calendar->url = route("api.orgCalendarEvents", [$calendar->id]);
             foreach ($calendar->appointments as $appointment) {
                 array_push($appointments, $appointment);
             }
@@ -62,9 +63,8 @@ class ApiController extends \BaseController
 
         // Loop through calendars to get all appointments
         foreach ($school->calendars as $calendar) {
+            $calendar->url = route("api.orgCalendarEvents", [$calendar->id]);
             foreach ($calendar->appointments as $event) {
-                $event->start = $event->start_date;
-                $event->end = $event->end_date;
                 array_push($events, $event);
             }
         }
@@ -106,6 +106,7 @@ class ApiController extends \BaseController
 
         // Loop through calendars to get all appointments
         foreach ($orgCalendars as $calendar) {
+            $calendar->url = route("api.orgCalendarEvents", [$calendar->id]);
             array_push($calendars, $calendar);
         }
 
@@ -119,7 +120,7 @@ class ApiController extends \BaseController
      * @param $id int the calendar ID
      * @return jSon Response with events
      */
-    public function calendarEvents($id)
+    public function calendarWithEvents($id)
     {
 
         $calendar = Calendar::find($id);
@@ -127,6 +128,27 @@ class ApiController extends \BaseController
 
         // Returns JSON response of the user
         return Response::json($calendar)->setCallback(Input::get('callback'));
+
+    }
+
+    /**
+     * Return a listing of the events based on the organisation id
+     * @param $id int the calendar ID
+     * @return jSon Response with events
+     */
+    public function calendarEvents($id)
+    {
+
+        $calendar = Calendar::find($id);
+        $calendar->load('appointments');
+        $appointments = [];
+        // Loop through calendars to get all appointments
+        foreach ($calendar->appointments as $appointment) {
+            array_push($appointments, $appointment);
+        }
+
+        // Returns JSON response of the user
+        return Response::json($appointments)->setCallback(Input::get('callback'));
 
     }
 
