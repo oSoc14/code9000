@@ -2,7 +2,7 @@
 
 var calnav = (function() {
 
-  var nav = $('.nav-main>section');
+  var nav = $('.nav-cals');
 
   var renderCal = function(cal, level) {
     var input = document.createElement('input');

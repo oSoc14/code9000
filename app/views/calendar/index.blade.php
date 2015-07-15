@@ -11,7 +11,7 @@
 @stop
 
 @section('nav')
-<section class="flex--1">
+<section class="nav-cals">
 </section>
 @if(Sentry::check() && Sentry::getUser()->hasAccess('admin'))
 <ul>
