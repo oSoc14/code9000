@@ -152,16 +152,33 @@ class ApiController extends \BaseController
     }
 
     /**
+     * Handle a calendar post to the API
+     */
+    public function handleAppointment()
+    {
+        if (Input::has('id')) {
+            $this->updateAppointment();
+        } else {
+            $this->storeAppointment();
+        }
+    }
+
+    /**
      * Update the specified appointment in storage.
      *
      * @param  int $id
      * @return Response
      */
-    public function updateEvent($id)
+    public function updateAppointment($id = 0)
     {
         if (!Sentry::check()) {
             return ApiController::createApiAccessError('You have to login first');;
         }
+
+        if ($id == 0) {
+            $id = Input::get('id');
+        }
+
         // Find active user
         $user = Sentry::getUser();
         $event = Appointment::find($id);
@@ -172,7 +189,7 @@ class ApiController extends \BaseController
             // If no permissions, redirect the user to the calendar index page
             return ApiController::createApiAccessError('You do not have the right to perform this action');
         }
-        $endDate = new DateTime();
+
         // Check if endDate isn't blank
         if (Input::get('end') == '') {
             $endDate = null;
@@ -268,7 +285,7 @@ class ApiController extends \BaseController
      * Store a new event
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function storeEvent()
+    public function storeAppointment()
     {
         if (!Sentry::check()) {
             return ApiController::createApiAccessError('You have to login first');
@@ -413,11 +430,16 @@ class ApiController extends \BaseController
      * @param  int $id
      * @return Response
      */
-    public function destroyAppointment($id)
+    public function destroyAppointment($id = 0)
     {
         if (!Sentry::check()) {
             return ApiController::createApiAccessError('You have to login first');
         }
+
+        if ($id == 0) {
+            $id = Input::get('id');
+        }
+
         // Find active user
         $user = Sentry::getUser();
         $event = Appointment::find($id);
@@ -432,6 +454,17 @@ class ApiController extends \BaseController
         return ApiController::createApiAccessError('You do not have the right to perform this action');
     }
 
+    /**
+     * Handle a calendar post to the API
+     */
+    public function handleCalendar()
+    {
+        if (Input::has('id')) {
+            $this->updateCalendar();
+        } else {
+            $this->storeCalendar();
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -444,6 +477,7 @@ class ApiController extends \BaseController
             // If no permissions, redirect to calendar index
             return ApiController::createApiAccessError('You have to login first');
         }
+
         // Find active user
         $user = Sentry::getUser();
 
@@ -489,12 +523,16 @@ class ApiController extends \BaseController
      * @param  int $id
      * @return Response
      */
-    public function updateCalendar($id)
+    public function updateCalendar($id = 0)
     {
 
         if (!Sentry::check()) {
             // If no permissions, redirect to calendar index
             return ApiController::createApiAccessError('You have to login first');
+        }
+
+        if ($id == 0) {
+            $id = Input::get('id');
         }
 
         // Find active user and calendar information
@@ -549,7 +587,32 @@ class ApiController extends \BaseController
 
             return ApiController::createApiOk('Changes saved');
         }
+    }
 
+    /**
+     * Remove the specified calendar from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id = 0)
+    {
+        if (!Sentry::check()) {
+            return;
+        }
+
+        if ($id == 0) {
+            $id = Input::get('id');
+        }
+
+        // Find active user and calendar information
+        $user = Sentry::getUser();
+        $calendar = Calendar::find($id);
+
+        // Permission checks
+        if ($user->hasAccess('superadmin') || ($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
+            $calendar->delete();
+        }
 
     }
 

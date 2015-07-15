@@ -118,27 +118,7 @@ class CalendarController extends \BaseController
         $user->calendars()->detach($calendar);
     }
 
-    /**
-     * Remove the specified calendar from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        if (!Sentry::check()) {
-            return;
-        }
-        // Find active user and calendar information
-        $user = Sentry::getUser();
-        $calendar = Calendar::find($id);
 
-        // Permission checks
-        if ($user->hasAccess('superadmin') || ($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
-            $calendar->delete();
-        }
-
-    }
 
     /**
      * Get all appointments from a calendar, including parent calendars
