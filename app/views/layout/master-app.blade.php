@@ -72,6 +72,15 @@
       <ul class="nav-list">
         <li><a href="{{ route('help') }}">Help!</a></li>
         <li><a href="{{ route('user.edit') }}">Profiel</a></li>
+          @if(Sentry::check())
+              <li>
+                  <a href="{{ route('user.logout') }}"
+                          {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
+                      <i class="glyphicon glyphicon-folder-close"></i>
+                      Logout
+                  </a>
+              </li>
+          @endif
       </ul>
       <p class="text-muted">
         @if(Sentry::getUser()->first_name != "")
