@@ -14,35 +14,25 @@ nav {
   label {
     position: relative;
     display: block;
-    padding: 5px 5px 5px 20px;
+    padding: 5px 5px 5px 0;
     margin: 0;
     font-weight: 400;
     cursor: pointer;
-  }
-  label::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 9px;
-    left: 0;
-    width: 12px;
-    height: 12px;
-    background: #bbb;
-    border-radius: 2px;
-    border: 1px solid rgba(0,0,0,.2);
-  }
-  label:hover::before {
-    background: #0f0;
+    opacity: 0.8;
+    &.active {
+      opacity: 1;
+    }
   }
   input[type=checkbox] {
-    display: none;
+    padding: 0;
+    /* padding: 13px; */
+    float: left;
+    /* display: block; */
+    height: 20px;
+    margin-right: 0.5em;
   }
-  input[type=checkbox]:checked + label::before {
-    background: #f00;
-  }
-  input[type=checkbox]:checked::before {
-    background: #f00;
-    position: absolute;
+  .level--2 {
+    padding-left: 20px;
   }
 }
 .dtpicker {

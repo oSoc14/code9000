@@ -12,27 +12,6 @@
 
 @section('nav')
 <section class="flex--1">
-  <button type="button" name="button">School</button>
-  <button type="button" name="button">Leerjaar</button>
-  <input type="checkbox" value="1" id="y1">
-  <label for="y1">1</label>
-  <input type="checkbox" value="1" id="y2">
-  <label for="y2">2</label>
-  <input type="checkbox" value="1" id="y3">
-  <label for="y3">3</label>
-  <input type="checkbox" value="1" id="y4">
-  <label for="y4">4</label>
-  <input type="checkbox" value="1" id="y5">
-  <label for="y5">5</label>
-  <input type="checkbox" value="1" id="y6">
-  <label for="y6">6</label>
-  <button type="button" name="button">Klassen</button>
-  <input type="checkbox" value="1" id="c1">
-  <label for="c1">1A</label>
-  <input type="checkbox" value="1" id="c2">
-  <label for="c2">1B</label>
-  <input type="checkbox" value="1" id="c3">
-  <label for="c3">1C</label>
 </section>
 @if(Sentry::check() && Sentry::getUser()->hasAccess('admin'))
 <ul>
@@ -167,6 +146,7 @@
   {{ HTML::script("bower_components/fullcalendar/dist/lang/de.js") }}
 @endif
 
+{{ HTML::script('js/calnav.js') }}
 {{ HTML::script('js/api.js') }}
 {{ HTML::script('js/render.js') }}
 {{ HTML::script('js/editor.js') }}

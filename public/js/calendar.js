@@ -26,6 +26,7 @@
     })
 
     editor.init();
+    calnav.render(sources)
   };
 
   api.get('api/1/orgs/1/calendars', addSources);
