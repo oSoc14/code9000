@@ -20,6 +20,7 @@
   var addSources = function(sources) {
     console.log(sources)
     $.each(sources, function(index, source) {
+      source.color = 'hsl(' + (index%6)*60 + ', 100%, 30%)';
       calendar.fullCalendar('addEventSource', source);
     })
   };
