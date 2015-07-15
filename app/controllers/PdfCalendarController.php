@@ -63,8 +63,8 @@ class PdfCalendarController extends \BaseController
             $app = [];
             $app['title'] = $appointment['attributes']['title'];
             $app['description'] = $appointment['attributes']['description'];
-            $app['start_date'] = $appointment['attributes']['start_date'];
-            $app['end_date'] = $appointment['attributes']['end_date'];
+            $app['start_date'] = $appointment['attributes']['start'];
+            $app['end_date'] = $appointment['attributes']['end'];
             $app['allday'] = $appointment['attributes']['allday'];
 
             // Recurence option (e.g. New Year happens every year)

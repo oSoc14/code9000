@@ -50,8 +50,8 @@ class IcalCalendarController extends \BaseController
             $event = new \Eluceo\iCal\Component\Event();
             $event->setSummary($appointment['attributes']['title']);
             $event->setDescription(str_replace("\r\n", " ", $appointment['attributes']['description']));
-            $event->setDtStart(new \DateTime($appointment['attributes']['start_date']));
-            $event->setDtEnd(new \DateTime($appointment['attributes']['end_date']));
+            $event->setDtStart(new \DateTime($appointment['attributes']['start']));
+            $event->setDtEnd(new \DateTime($appointment['attributes']['end']));
             $event->setNoTime($appointment['attributes']['allday']);
 
             // Generate unique ID apIDed
