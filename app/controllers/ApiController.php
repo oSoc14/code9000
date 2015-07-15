@@ -190,8 +190,8 @@ class ApiController extends \BaseController
                 'calendar' => 'required',
                 'start' => 'required',
                 'end' => 'required',
-                'start-time' => 'required|date_format:H:i',
-                'end-time' => 'required|date_format:H:i',
+                'start' => 'required|date_format:H:i',
+                'end' => 'required|date_format:H:i',
                 'title' => 'required'
             ]
         );
@@ -296,8 +296,8 @@ class ApiController extends \BaseController
                 'calendar' => 'required',
                 'start' => 'required',
                 'end' => 'required',
-                'start-time' => 'required|date_format:H:i',
-                'end-time' => 'required|date_format:H:i',
+                'start' => 'required|date_format:H:i',
+                'end' => 'required|date_format:H:i',
                 'title' => 'required'
             ]
         );

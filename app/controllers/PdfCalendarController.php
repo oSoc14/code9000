@@ -63,8 +63,8 @@ class PdfCalendarController extends \BaseController
             $app = [];
             $app['title'] = $appointment['attributes']['title'];
             $app['description'] = $appointment['attributes']['description'];
-            $app['start_date'] = $appointment['attributes']['start'];
-            $app['end_date'] = $appointment['attributes']['end'];
+            $app['start'] = $appointment['attributes']['start'];
+            $app['end'] = $appointment['attributes']['end'];
             $app['allday'] = $appointment['attributes']['allday'];
 
             // Recurence option (e.g. New Year happens every year)
@@ -120,12 +120,12 @@ class PdfCalendarController extends \BaseController
             {
 
                 // If there is no recurrence rule, just format the start and enddate gotten from the database
-                $dateString = new DateTime($appointment['attributes']['start_date']);
-                $app['start_date'] = $dateString->format('d-m-Y H:i');
+                $dateString = new DateTime($appointment['attributes']['start']);
+                $app['start'] = $dateString->format('d-m-Y H:i');
                 // Extra dateTime field to sort the array by later
                 $app['dateTime'] = $dateString->format('YmdHi');
-                $dateString2 = new DateTime($appointment['attributes']['end_date']);
-                $app['end_date'] = $dateString2->format('d-m-Y H:i');
+                $dateString2 = new DateTime($appointment['attributes']['end']);
+                $app['end'] = $dateString2->format('d-m-Y H:i');
                 $da = new DateTime($appointment->start_date);
 
                 // Set the limits for which appointments to get (1 month in past till 1 month in future)
@@ -147,11 +147,11 @@ class PdfCalendarController extends \BaseController
 
         // Loop through $listAppointments and add these to the pdf html
         foreach ($listAppointments as $apps) {
-            $html .= '<tr><td width="20%">' . ucfirst(trans('educal.starts')) . '  ' . $apps['start_date'];
+            $html .= '<tr><td width="20%">' . ucfirst(trans('educal.starts')) . '  ' . $apps['start'];
 
             // Only show this if the end date is specified
             if ($apps['end_date']) {
-                $html .= '<br>' . ucfirst(trans('educal.ends')) . ' ' . $apps['end_date'] . '</td>';
+                $html .= '<br>' . ucfirst(trans('educal.ends')) . ' ' . $apps['end'] . '</td>';
             }
 
             $html .= '</td>'
