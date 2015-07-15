@@ -63,6 +63,8 @@ class ApiController extends \BaseController
         // Loop through calendars to get all appointments
         foreach ($school->calendars as $calendar) {
             foreach ($calendar->appointments as $event) {
+                $event->start = $event->start_date;
+                $event->end = $event->end_date;
                 array_push($events, $event);
             }
         }
