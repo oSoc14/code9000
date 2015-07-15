@@ -55,7 +55,7 @@
             {{ucfirst(trans('educal.calendar'))}}
           </a>
         </li>
-        @if(Sentry::getUser()->hasAccess('admin'))
+        @if(Sentry::check() && Sentry::getUser()->hasAccess('admin'))
         <li>
           <a href="{{ route('admin.dashboard') }}"
           {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>

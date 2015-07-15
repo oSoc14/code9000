@@ -33,7 +33,7 @@
   <input type="checkbox" value="1" id="c3">
   <label for="c3">1C</label>
 </section>
-@if(Sentry::getUser()->hasAccess('admin'))
+@if(Sentry::check() && Sentry::getUser()->hasAccess('admin'))
 <ul>
   <li>
     <a href="{{ route('admin.dashboard', [$org->slug]) }}"
@@ -72,7 +72,7 @@
             <strong>{{ucfirst(trans('educal.ends'))}}:</strong>
             <span id="eventEnd"></span>
           </p>
-          @if(Sentry::getUser()->hasAnyAccess(['admin','editor']))
+            @if(Sentry::check() && Sentry::getUser()->hasAnyAccess(['admin','editor']))
           <a type="button" class="btn btn-default btn-educal-warning" href="" id="editEvent">
             <i class="fa fa-edit"></i> {{ucfirst(trans('educal.editevent'))}}
           </a>
@@ -80,7 +80,7 @@
           <a type="button" class="btn btn-default btn-educal-primary" href="" id="icalEvent">
             <i class="fa fa-share"></i> {{ucfirst(trans('educal.export'))}}
           </a>
-          @if(Sentry::getUser()->hasAnyAccess(array('admin','editor')))
+            @if(Sentry::check() && Sentry::getUser()->hasAnyAccess(array('admin','editor')))
           <a type="button" class="btn btn-default btn-educal-danger pull-right" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="" title="Remove" id="deleteEvent">
             <i class="fa fa-times-circle"></i> {{ucfirst(trans('educal.deleteevent'))}}
           </a>
