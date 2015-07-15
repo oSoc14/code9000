@@ -148,7 +148,7 @@ class DatabaseSeeder extends Seeder
             }
         }
         $count = 4*6*3+4*6;
-        $count = 0;
+        $count /= 40;
 
         for ($i=0; $i < $count*2; $i++) {
             $app = new Appointment();
