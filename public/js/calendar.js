@@ -9,15 +9,22 @@
       left: 'prev,next title today',
       right: 'month,agendaWeek,agendaDay'
     },
-    eventSources: [{
-            url: 'api/1/orgs/1/events',
-            textColor: 'black'  // an option!
-        }],
     editable: true,
     firstDay: 1,
     eventClick: renderer.renderEvent,
     dayClick: editor.open
   });
+
+
+  // Adaptive view based on window width
+  var addSources = function(sources) {
+    console.log(sources)
+    $.each(sources, function(index, source) {
+      calendar.fullCalendar('addEventSource', source);
+    })
+  };
+
+  api.get('api/1/orgs/1/calendars', addSources);
 
   // Adaptive view based on window width
   var adaptView = function() {
@@ -32,7 +39,7 @@
       calendar.fullCalendar('changeView', 'month');
       calendar.fullCalendar('option', 'height', h);
     };
-  }
+  };
 
   // When resizing the window, get the correct view.
   $(window).resize(adaptView);
