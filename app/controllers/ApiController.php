@@ -182,18 +182,15 @@ class ApiController extends \BaseController
             [
                 'calendar' => Input::get('calendar'),
                 'description' => Input::get('description'),
-                'start-date' => Input::get('start-date'),
-                'end-date' => $endDate,
-                'start-time' => Input::get('start-time'),
-                'end-time' => Input::get('end-time'),
+                'start' => Input::get('start'),
+                'end' => Input::get('end'),
                 'title' => Input::get('title'),
                 'day' => Input::get('day')
             ],
             [
                 'calendar' => 'required',
-                'description' => 'required',
-                'start-date' => 'date',
-                'end-date' => 'date',
+                'start' => 'required',
+                'end' => 'required',
                 'start-time' => 'required|date_format:H:i',
                 'end-time' => 'required|date_format:H:i',
                 'title' => 'required'
@@ -206,17 +203,15 @@ class ApiController extends \BaseController
         $description = e(Input::get('description'));
         $location = e(Input::get('location'));
         $calendar_id = Input::get('calendar'); // TODO: REFACTORED INPUT, REFACTOR VIEW!
-        $start_date = e(Input::get('start-date'));
-        $end_date = e(Input::get('end-date'));
-        $start_time = e(Input::get('start-time'));
-        $end_time = e(Input::get('end-time'));
+        $start = e(Input::get('start'));
+        $end = e(Input::get('end'));
         $parents = Input::get('par');
         // TODO: Handle All day events, or decide to remove it alltogether
         // TODO: Update date/time if needed
         // If the event isn't the whole day, determine the end date/time
         //$event->allday = false;
         // Handle datetime
-        if (!$start_date) {
+        if (!$start) {
             $validator->getMessageBag()->add(
                 'end',
                 Lang::get('validation.required', ['attribute ' => 'start-date '])
@@ -224,11 +219,8 @@ class ApiController extends \BaseController
 
             return ApiController::createApiValidationError($validator->errors());
         }
-        $sd = new DateTime($start_date . ' ' . $start_time);
-        if ($end_date == '') {
-            $end_date = $start_date;
-        }
-        $ed = new DateTime($end_date . ' ' . $end_time);
+        $sd = new DateTime($start);
+        $ed = new DateTime($end);
         // Check if end date is before start date, if so, return with error
         if ($sd >= $ed) {
             $validator->getMessageBag()->add(
@@ -266,8 +258,8 @@ class ApiController extends \BaseController
         $event->description = $description;
         $event->location = $location;
         $event->calendar_id = $calendar_id;
-        $event->start_date = $sd;
-        $event->end_date = $ed;
+        $event->start = $sd;
+        $event->end = $ed;
         $event->save();
 
         return ApiController::createApiOk('Changes saved');
@@ -292,29 +284,19 @@ class ApiController extends \BaseController
             return ApiController::createApiAccessError('You do not have the right to perform this action');
         }
 
-
-        $endDate = new DateTime();
-        // Check if endDate isn't blank
-        if (Input::get('end-date') == '') {
-            $endDate = null;
-        }
-
         $validator = Validator::make(
             [
                 'calendar' => Input::get('calendar'),
                 'description' => Input::get('description'),
-                'start-date' => Input::get('start-date'),
-                'end-date' => $endDate,
-                'start-time' => Input::get('start-time'),
-                'end-time' => Input::get('end-time'),
+                'start' => Input::get('start'),
+                'end' => Input::get('end'),
                 'title' => Input::get('title'),
                 'day' => Input::get('day')
             ],
             [
                 'calendar' => 'required',
-                'description' => 'required',
-                'start-date' => 'date',
-                'end-date' => 'date',
+                'start' => 'required',
+                'end' => 'required',
                 'start-time' => 'required|date_format:H:i',
                 'end-time' => 'required|date_format:H:i',
                 'title' => 'required'
@@ -329,10 +311,8 @@ class ApiController extends \BaseController
         $description = e(Input::get('description'));
         $location = e(Input::get('location'));
         $calendar_id = Input::get('calendar');
-        $start_date = e(Input::get('start-date'));
-        $end_date = e(Input::get('end-date'));
-        $start_time = e(Input::get('start-time'));
-        $end_time = e(Input::get('end-time'));
+        $start = e(Input::get('start'));
+        $end = e(Input::get('end'));
 
         // TODO: Handle All day events, or decide to remove it alltogether
         // If the event isn't the whole day, determine the end date/time
@@ -382,8 +362,10 @@ class ApiController extends \BaseController
                 $event->description = $description;
                 $event->location = $location;
                 $event->calendar_id = $calendar_id;
-                $event->start_date = new DateTime($da . ' ' . $start_time);
-                $event->end_date = new DateTime($da . ' ' . $end_time);
+                $sd = new DateTime($start);
+                $ed = new DateTime($end);
+                $event->start = new DateTime($da . ' ' . date("H:i", $sd));
+                $event->end = new DateTime($da . ' ' . date("H:i", $ed));
                 $event->parent_id = $parent->id;
                 $event->save();
             }
@@ -391,7 +373,7 @@ class ApiController extends \BaseController
             return ApiController::createApiOk('Changes saved');
         }
 
-        if (!$start_date) {
+        if (!$start) {
             $validator->getMessageBag()->add(
                 'end',
                 Lang::get('validation.required', ['attribute ' => 'start-date '])
@@ -399,13 +381,8 @@ class ApiController extends \BaseController
 
             return ApiController::createApiValidationError($validator->errors());
         }
-        $sd = new DateTime($start_date . ' ' . $start_time);
-
-        if ($end_date == '') {
-            $end_date = $start_date;
-        }
-        $ed = new DateTime($end_date . ' ' . $end_time);
-
+        $sd = new DateTime($start);
+        $ed = new DateTime($end);
         // Check if end date is before start date, if so, return with error
         if ($sd >= $ed) {
 
@@ -424,8 +401,8 @@ class ApiController extends \BaseController
         $event->description = $description;
         $event->location = $location;
         $event->calendar_id = $calendar_id;
-        $event->start_date = $sd;
-        $event->end_date = $ed;
+        $event->start = $sd;
+        $event->end = $ed;
         $event->save();
 
         return ApiController::createApiOk('Changes saved');
