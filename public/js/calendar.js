@@ -11,6 +11,7 @@
     },
     editable: true,
     firstDay: 1,
+    timeFormat:'H:mm',
     eventClick: renderer.renderEvent,
     dayClick: editor.open
   });
