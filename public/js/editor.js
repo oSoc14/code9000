@@ -157,6 +157,10 @@ var editor = (function() {
     $('.popover .btn-success').on('click', create);
     $('.popover .btn-cancel').on('click', close);
     $('.popover .btn-danger').on('click', remove);
+
+    if(!active.id){
+      $('.popover .btn-danger').addClass('invisible');
+    }
   }
 
   return {
