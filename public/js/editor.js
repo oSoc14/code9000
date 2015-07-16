@@ -87,7 +87,7 @@ var editor = (function() {
     var options = {
       container: '#calendar',
       html: true,
-      placement: 'auto left',
+      placement: 'auto bottom',
       content: $('.new-event').html()
     };
     active = $(event.target);
