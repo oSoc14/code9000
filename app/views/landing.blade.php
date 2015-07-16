@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <title>{{ HTML::entities('EduCal') }}</title>
   <!-- Bootstrap core CSS -->
-  {{ HTML::style("css/bootstrap.min.css") }}
-  {{ HTML::style("css/bootstrap-theme.min.css") }}
+  {{ HTML::style("bower_components/bootstrap/dist/css/bootstrap.min.css") }}
   <!-- FontAwesome icons -->
   {{ HTML::style("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css") }}
   <!-- Google Webfont -->
