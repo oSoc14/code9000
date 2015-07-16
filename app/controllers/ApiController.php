@@ -31,7 +31,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::JsonResponse($appointments)->setCallback(Input::get('callback'));
+        return Response::Json($appointments)->setCallback(Input::get('callback'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::JsonResponse($schools)->setCallback(Input::get('callback'));
+        return Response::Json($schools)->setCallback(Input::get('callback'));
     }
 
     /**
@@ -72,7 +72,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::JsonResponse($events)->setCallback(Input::get('callback'));
+        return Response::Json($events)->setCallback(Input::get('callback'));
 
     }
 
@@ -99,7 +99,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::JsonResponse($users)->setCallback(Input::get('callback'));
+        return Response::Json($users)->setCallback(Input::get('callback'));
 
     }
 
@@ -129,7 +129,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::JsonResponse($calendars)->setCallback(Input::get('callback'));
+        return Response::Json($calendars)->setCallback(Input::get('callback'));
 
     }
 
@@ -145,7 +145,7 @@ class ApiController extends \BaseController
         $calendar->load('appointments');
 
         // Returns JsonResponse response of the user
-        return Response::JsonResponse($calendar)->setCallback(Input::get('callback'));
+        return Response::Json($calendar)->setCallback(Input::get('callback'));
 
     }
 
@@ -165,7 +165,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::JsonResponse($appQuery)->setCallback(Input::get('callback'));
+        return Response::Json($appQuery)->setCallback(Input::get('callback'));
 
     }
 
@@ -629,7 +629,7 @@ class ApiController extends \BaseController
      */
     private static function createApiValidationError($error)
     {
-        return Response::JsonResponse(array('succes' => false, 'type' => 'validation', 'feedback' => $error),
+        return Response::Json(array('succes' => false, 'type' => 'validation', 'feedback' => $error),
             400)->setCallback(Input::get('callback'));
     }
 
@@ -641,7 +641,7 @@ class ApiController extends \BaseController
      */
     private static function createApiAccessError($msg = '')
     {
-        return Response::JsonResponse(array('succes' => false, 'type' => 'access', 'feedback' => $msg),
+        return Response::Json(array('succes' => false, 'type' => 'access', 'feedback' => $msg),
             403)->setCallback(Input::get('callback'));
     }
 
@@ -653,7 +653,7 @@ class ApiController extends \BaseController
      */
     private static function createApiError($msg)
     {
-        return Response::JsonResponse(array('succes' => false, 'type' => 'generic', 'feedback' => $msg),
+        return Response::Json(array('succes' => false, 'type' => 'generic', 'feedback' => $msg),
             400)->setCallback(Input::get('callback'));
     }
 
@@ -665,7 +665,7 @@ class ApiController extends \BaseController
      */
     private static function createApiOk($msg = '')
     {
-        return Response::JsonResponse(array('succes' => true, 'type' => '', 'feedback' => $msg),
+        return Response::Json(array('succes' => true, 'type' => '', 'feedback' => $msg),
             200)->setCallback(Input::get('callback'));
     }
 
