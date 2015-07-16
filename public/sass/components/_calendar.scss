@@ -44,3 +44,36 @@ nav {
   background: none;
   border: 0;
 }
+.fc-sat,
+.fc-sun {
+  background-color: #eee;
+}
+.fc.fc {
+  .fc-toolbar {
+    line-height: 40px;
+    .fc-left {
+      float: none;
+    }
+    .fc-button-group {
+      margin-left: -1em;
+      margin-right: -.5em;
+    }
+  }
+  h2 {
+    text-align: left;
+    float: none!important;
+    display: block;
+  }
+  .fc-button {
+    height: auto;
+    background: none;
+    border: 0;
+    font-weight: 500;
+    text-transform: lowercase;
+    box-shadow: none;
+    color: #999;
+    &.fc-state-active {
+      color: #000;
+    }
+  }
+}

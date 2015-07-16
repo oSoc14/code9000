@@ -6,7 +6,7 @@
   var calendar = $('#calendar');
   calendar.fullCalendar({
     header: {
-      left: 'prev,next title today',
+      left: 'title prev,next today',
       right: 'month,agendaWeek,agendaDay'
     },
     editable: true,
