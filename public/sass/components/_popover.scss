@@ -1,3 +1,8 @@
+// Variables
+$gutter-popover: 15px !default;
+$line-color: #ccc !default;
+
+// Component
 .popover {
   position: absolute;
   top: 0;
@@ -6,7 +11,7 @@
   display: none;
   width: 25em;
   max-width: 25em;
-  padding: 1px;
+  padding: 0;
   text-align: left;
   white-space: normal;
   background-color: #fff;
@@ -14,20 +19,27 @@
   border-radius: 0;
   -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.6);
   box-shadow: 0 5px 40px rgba(0,0,0,.5);
-  input[type=text] {
-    padding: 10px 15px;
-  }
   label {
-    padding: 10px 15px;
+    padding: 10px $gutter-popover;
     margin: 0;
     line-height: 20px;
-    font-weight: 500;
+    font-weight: 700;
     flex: 0 0 auto;
   }
-  button {
-    color: #090;
+  .has-input {
     display: block;
-    padding: 15px;
+    padding: 10px $gutter-popover 0;
+    .input {
+      padding: 0 0 10px;
+      height: auto;
+      line-height: 20px;
+      outline: none;
+      font-weight: 400;
+    }
+  }
+  button {
+    display: block;
+    padding: 15px $gutter-popover;
     line-height: 25px;
     height: 50px;
     margin: 0;
@@ -40,24 +52,54 @@
     text-transform: uppercase;
     font-weight: 500;
   }
-  .dtpicker-dt {
-    .input-date {
+  .btn-success {
+    color: #090;
+  }
+  .btn-cancel {
+    color: #666;
+  }
+  .btn-danger {
+    color: #900;
+  }
+  .dtpicker {
+    label {
+      padding: 0 15px;
+      line-height: 30px;
+    }
+    .input-date,
+    .input-time {
       padding-bottom: 0;
       height: 30px;
       outline: none;
-    }
-    .input-time {
-      padding-top: 0;
-      height: 30px;
-      outline: none;
+      max-width: 140px;
+      position: relative;
+      z-index: 5;
     }
   }
+}
+.dtpicker-start {
+  position: relative;
+  margin-right: $gutter-popover;
+}
+.dtpicker-start::after {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  content: "";
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  border-right: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  transform: rotate(45deg);
+  margin-right: 0.5em;
+  pointer-events: none;
 }
 .popover-content {
   padding: 0;
 }
 .divider-btm {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid $line-color;
   margin: 0;
   padding: 0;
 }
