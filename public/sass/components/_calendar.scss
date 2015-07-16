@@ -35,15 +35,6 @@ nav {
     padding-left: 20px;
   }
 }
-.select-cal,
-.select-year {
-  @include flexbox;
-  justify-content: space-between;
-  align-items: center;
-}
-.radio-minimal {
-  display: block;
-}
 .input {
   display: block;
   width: 100%;

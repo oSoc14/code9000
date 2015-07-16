@@ -20,15 +20,15 @@ var editor = (function() {
       active.el.popover('destroy');
       active.el = null;
     }
-  }
+  };
 
   var calById = function(id) {
     for (var i = 0, len = calendars.length; i < len; i++) {
-        if (calendars[i].id === id)
-            return calendars[i];
+      if (calendars[i].id === id)
+        return calendars[i];
     }
     return null;
-}
+  };
 
   // Fixes impossible date ranges
   var logic = function() {
@@ -42,7 +42,7 @@ var editor = (function() {
       x.find('.d2').val(d1);
       d2 = d1;
     }
-  }
+  };
 
   // Initialize popover
   var init = function(callback) {
@@ -61,7 +61,7 @@ var editor = (function() {
       })
       $year.append($y);
     });
-  }
+  };
 
   // Delete event by id
   var remove = function() {
@@ -73,10 +73,11 @@ var editor = (function() {
     }).error(function(data) {
       close();
     });
-  }
+  };
 
   // Hide currently open popover
-  var create = function(callback) {
+  var create = function(e) {
+    e.preventDefault();
     if (!active.id == 0) return;
     var x = $('.popover');
     var event = {
@@ -88,16 +89,14 @@ var editor = (function() {
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
       calendar: x.find('.input-cals').val(),
     };
-    api.postEvent(event).success(function(data) {
-      console.log(data)
-      close();
+    api.postEvent(event).success(function(event) {
+      console.log(event)
       $('#calendar').fullCalendar('addEventSource', [event]);
-    }).error(function(data) {
-      console.log(data)
       close();
-      $('#calendar').fullCalendar('addEventSource', [event]);
+    }).error(function(error) {
+      console.log(error)
     });
-  }
+  };
 
   var open = function(clicked, event, view) {
 
@@ -130,7 +129,7 @@ var editor = (function() {
       d1Options.value = clicked.format('YYYY-MM-DD');
       t1Options.value = moment().format('HH:00');
       d2Options.value = clicked.format('YYYY-MM-DD');
-      t2Options.value = moment().format('HH:00');
+      t2Options.value = moment().add(1, 'hour').format('HH:00');
     } else {
       d1Options.value = clicked.start.format('YYYY-MM-DD');
       t1Options.value = clicked.start.format('HH:mm');
@@ -153,18 +152,26 @@ var editor = (function() {
     $('.input-time.t2').datetimepicker(t2Options);
     $('.input-time.t1').datetimepicker(t1Options);
 
-    // Button eventhandlers
-    $('.popover .btn-success').on('click', create);
-    $('.popover .btn-cancel').on('click', close);
-    $('.popover .btn-danger').on('click', remove);
-
-    if(!active.id){
+    if (!active.id) {
       $('.popover .btn-danger').addClass('invisible');
     }
-  }
+    else{
+      $('.input-title').val(active.ev.title);
+      $('.input-descr').val(active.ev.description);
+      $('.input-location').val(active.ev.location);
+      $('.input-cals option[value="'+active.ev.calendar_id+'"]').prop('selected', true);
+      console.log(active.ev.calendar_id)
+      console.log(
+      $('.input-cals option[value="'+active.ev.calendar_id+'"]'))
+    }
+  };
+
+  window.addEventListener('submit', create);
 
   return {
     open: open,
+    remove: remove,
+    close: close,
     active: active,
     init: init,
     logic: logic
