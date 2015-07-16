@@ -79,8 +79,15 @@ class ApiController extends \BaseController
      * @param $id int the organisation ID
      * @return jSon Response with users
      */
-    public function orgUsers($id)
+    public function orgUsers($id = 0)
     {
+        if ($id == 0) {
+            if (!Sentry::check()) {
+                return ApiController::createApiAccessError('You have to be logged in, or provide an organisation ID');
+            }
+            $id = Sentry::getUser()->school->id;
+        }
+
         $users = [];
         $orgUsers = User::where('school_id', $id)->get();
 
@@ -99,8 +106,16 @@ class ApiController extends \BaseController
      * @param $id int the organisation ID
      * @return jSon Response with calendars
      */
-    public function orgCalendars($id)
+    public function orgCalendars($id = 0)
     {
+
+        if ($id == 0) {
+            if (!Sentry::check()) {
+                return ApiController::createApiAccessError('You have to be logged in, or provide an organisation ID');
+            }
+            $id = Sentry::getUser()->school->id;
+        }
+
         $calendars = [];
         $orgCalendars = Calendar::where('school_id', $id)->get();
 

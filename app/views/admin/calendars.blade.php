@@ -58,7 +58,7 @@ angular.module('calendars', ['ngResource'])
   .controller('CalendarController', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
 
     // Resources
-    var Cals = $resource('{{ route('api.calendars') }}');
+          var Cals = $resource('{{ route('api.currentOrgCalendars') }}');
     $scope.cals = Cals.query();
 
   }]);

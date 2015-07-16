@@ -179,6 +179,12 @@ Route::group(['prefix' => 'api/1'], function () {
         'uses' => 'ApiController@destroyAppointment'
     ]);
 
+
+    Route::get('/calendars/', [
+        'as' => 'api.currentOrgCalendars',
+        'uses' => 'ApiController@orgCalendars'
+    ]);
+
     // Returns all events for a calendar
     Route::get('/calendars/{id}', [
         'as' => 'api.orgCalendarWithEvents',
@@ -193,15 +199,22 @@ Route::group(['prefix' => 'api/1'], function () {
 
     // Returns all events for a calendar
     Route::post('/calendars/', [
-        'as' => 'api.calendar',
+        'as' => 'api.handleCalendar',
         'uses' => 'ApiController@handleCalendar'
     ]);
 
     // Returns all events for a calendar
     Route::delete('/calendars/', [
-        'as' => 'api.calendar',
+        'as' => 'api.deleteCalendar',
         'uses' => 'ApiController@destroyCalendar'
     ]);
+
+
+    Route::get('/users/', [
+        'as' => 'api.currentOrgUsers',
+        'uses' => 'ApiController@orgUsers'
+    ]);
+
 
     /**
      * Returns all events for the users organisation
