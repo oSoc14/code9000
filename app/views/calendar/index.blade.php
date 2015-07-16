@@ -6,7 +6,10 @@
 <script type="text/javascript">
     var org = {{ $school }};
     var user = {{ $user }};
-    var calendars = {{ $calendars }}
+    var calendars = {{ $calendars }};
+    var urls = {{ [
+      'events' => route('api.events')
+    ] }};
 </script>
 @stop
 

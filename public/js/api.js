@@ -23,7 +23,7 @@ var api = (function() {
     }).done();
   }
   var postEvent = function(event) {
-    return $.post('api/1/orgs/' + org.id + '/events', event);
+    return $.post(urls.events, event);
   }
   return {
     get: get,
