@@ -91,6 +91,12 @@
   </div>
 
 <div class="hidden new-event">
+<p class="divider-btm">
+  <label class="has-input">
+    Titel
+    <input class="input input-title" type="text" placeholder="Voeg een titel voor het event toe">
+  </label>
+</p>
   <div class="divider-btm dtpicker">
     <label for="d1">Tijd</label>
     <div class="dtpicker-dt dtpicker-start">
@@ -102,12 +108,6 @@
       <input class="input input-time t2" type="text" placeholder="time">
     </div>
   </div>
-  <p class="divider-btm">
-    <label class="has-input">
-      Titel
-      <input class="input input-title" type="text" placeholder="Voeg een titel voor het event toe">
-    </label>
-  </p>
   <p class="divider-btm">
     <label class="has-input">
       Locatie
