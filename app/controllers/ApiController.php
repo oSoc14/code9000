@@ -285,6 +285,10 @@ class ApiController extends \BaseController
         $event->end = $ed;
         $event->save();
 
+        // format as ISO before returning to Angular
+        $event->start = date('c', $event->start);
+        $event->end = date('c', $event->end);
+
         return Response::Json($event)->setCallback(Input::get('callback'));
     }
 
@@ -426,6 +430,10 @@ class ApiController extends \BaseController
         $event->start = $sd;
         $event->end = $ed;
         $event->save();
+
+        // format as ISO before returning to Angular
+        $event->start = date('c', $event->start);
+        $event->end = date('c', $event->end);
 
         return Response::Json($event)->setCallback(Input::get('callback'));
     }
