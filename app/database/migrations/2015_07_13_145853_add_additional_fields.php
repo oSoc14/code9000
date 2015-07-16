@@ -25,14 +25,14 @@ class AddAdditionalFields extends Migration
         });
 
         Schema::table('appointments', function ($table) {
-            $table->integer('color');
+            $table->string('color');
             $table->string('image');
             $table->string('organiser');
             $table->boolean('cancelled');
         });
 
         Schema::table('calendars', function ($table) {
-            $table->boolean('color');
+            $table->string('color');
         });
 
 

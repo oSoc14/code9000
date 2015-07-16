@@ -102,7 +102,7 @@
         @endif
         @if(Sentry::getUser()->hasAnyAccess(array('school','user')))
         <li class="panel-heading">
-          <a href="{{ route('user.index') }}">
+          <a href="#">
             <p class="panel-title {{ (Route::currentRouteName()=='user.index' ? 'active' : '') }}">
               <i class="fa fa-users fa-lg"></i>
               {{ucfirst(trans('educal.users'))}}
@@ -112,7 +112,7 @@
         @endif
         <div class="bottom-options">
           <li class="panel-heading">
-            <a href="{{ route('user.edit') }}">
+            <a href="#">
               <p class="panel-title">
                 <i class="fa fa-cogs fa-lg"></i>
                 {{ucfirst(trans('educal.settings'))}}
