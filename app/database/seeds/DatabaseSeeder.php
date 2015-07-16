@@ -174,13 +174,13 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 1; $i < 100; $i++) {
             $app = new Appointment();
 
             $app->title ='School event ' . $i;
             $app->description = 'we are going to test ' . rand() . ' something';
             $app->location = 'Gent';
-            $app->calendar_id = $i % 20 + 1;
+            $app->calendar_id = $i % 52 + 1;
             $date = date('Y-m-d', strtotime( '+'.mt_rand(-10,30).' days'));
             $app->start = new DateTime($date . ' 13:00');
             $app->end = new DateTime($date . ' 16:00');
