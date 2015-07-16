@@ -42,7 +42,7 @@ nav {
   }
 }
 .dtpicker-dt {
-  flex: 1 0 25%;
+  flex: 1 0 auto;
   input {
     display: block;
   }
@@ -55,14 +55,6 @@ nav {
 }
 .radio-minimal {
   display: block;
-}
-.event-description {
-  label {
-    display: block;
-  }
-  input {
-    width: 100%;
-  }
 }
 .input {
   display: block;

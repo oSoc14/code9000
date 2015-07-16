@@ -91,10 +91,6 @@
   </div>
 
 <div class="hidden new-event">
-  <p class="divider-btm">
-    <label for="" class="hidden">Event naam</label>
-    <input class="input input-title" type="text" placeholder="Event naam">
-  </p>
   <div class="divider-btm dtpicker">
     <label for="d1">Tijd</label>
     <div class="dtpicker-dt dtpicker-start">
@@ -107,34 +103,36 @@
     </div>
   </div>
   <p class="divider-btm">
-    <input class="input input-location" type="text" placeholder="Locatie">
+    <label class="has-input">
+      Titel
+      <input class="input input-title" type="text" placeholder="Voeg een titel voor het event toe">
+    </label>
   </p>
   <p class="divider-btm">
-    <label class="checkbox-minimal">
-      <input type="checkbox"> Herhaal event
+    <label class="has-input">
+      Locatie
+      <input class="input input-location" type="text" placeholder="Voeg een locatie toe">
     </label>
   </p>
-  <p class="divider-btm event-description">
-    <label for="description">Omschrijving</label>
-    <input class="input input-descr" type="text" id="desctiption" placeholder="Voeg omschrijving toe">
-  </p>
-  <div>
-    <label class="radio-minimal">
-      <input type="radio" name="t"> School
+  <p class="divider-btm">
+    <label class="has-input">
+      Omschrijving
+      <textarea class="input input-descr" type="text" id="description" placeholder="Voeg omschrijving toe"></textarea>
     </label>
-    <div class="select-year">
-      <label class="radio-minimal">
-        <input type="radio" name="t"> Leerjaar:
-      </label>
-    </div>
-    <div class="select-cal">
-      <label class="radio-minimal">
-        <input type="radio" name="t"> Klassen
-      </label>
-      <input class="input input-cals" type="text" placeholder="klassen gescheiden door komma">
-    </div>
-    <button type="button" class="event-create" name="button">Toevoegen</button>
-  </div>
+  </p>
+  <p class="divider-btm">
+    <label class="has-input" for="cal-select">
+      Kalender
+      <select class="input" id="cal-select">
+        <option>test</option>
+      </select>
+    </label>
+  </p>
+  <p class="btnbar">
+    <button type="button" class="btn-danger" name="button">Verwijderen</button>
+    <button type="button" class="btn-cancel" name="button">Annuleren</button>
+    <button type="button" class="btn-success" name="button">Toevoegen</button>
+  </p>
 </div>
 @stop
 
