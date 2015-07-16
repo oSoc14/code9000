@@ -286,8 +286,8 @@ class ApiController extends \BaseController
         $event->save();
 
         // format as ISO before returning to Angular
-        $event->start = date('c', $event->start);
-        $event->end = date('c', $event->end);
+        $event->start = date('c', $event->start->getTimestamp());
+        $event->end = date('c', $event->end->getTimestamp());
 
         return Response::Json($event)->setCallback(Input::get('callback'));
     }
@@ -395,6 +395,9 @@ class ApiController extends \BaseController
                 $event->save();
             }
 
+            // format as ISO before returning to Angular
+            $event->start = date('c', $event->start->getTimestamp());
+            $event->end = date('c', $event->end->getTimestamp());
 
             return Response::Json($event)->setCallback(Input::get('callback'));
         }
@@ -432,8 +435,8 @@ class ApiController extends \BaseController
         $event->save();
 
         // format as ISO before returning to Angular
-        $event->start = date('c', $event->start);
-        $event->end = date('c', $event->end);
+        $event->start = date('c', $event->start->getTimestamp());
+        $event->end = date('c', $event->end->getTimestamp());
 
         return Response::Json($event)->setCallback(Input::get('callback'));
     }
