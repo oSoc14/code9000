@@ -30,53 +30,54 @@
 @stop
 
 @section('content')
-  <div id="calendar"></div>
+<div id="calendar"></div>
 
 <div class="hidden new-event">
-<p class="divider-btm">
-  <label class="has-input">
-    Titel
-    <input class="input input-title" type="text" placeholder="Voeg een titel voor het event toe">
-  </label>
-</p>
-  <div class="divider-btm dtpicker">
-    <label for="d1">Tijd</label>
-    <div class="dtpicker-dt dtpicker-start">
-      <input class="input input-date d1" type="text" placeholder="date">
-      <input class="input input-time t1" type="text" placeholder="time">
+  <form>
+    <p class="divider-btm">
+      <label class="has-input">
+        Titel
+        <input class="input input-title" type="text" placeholder="Voeg een titel voor het event toe" required>
+      </label>
+    </p>
+    <div class="divider-btm dtpicker">
+      <label for="d1">Tijd</label>
+      <div class="dtpicker-dt dtpicker-start">
+        <input class="input input-date d1" type="text" placeholder="date">
+        <input class="input input-time t1" type="text" placeholder="time">
+      </div>
+      <svg height="60" stroke="#ccc" width="60" viewBox="0 0 30 60" xmlns="http://www.w3.org/2000/svg">
+        <line x2="30" y2="30" />
+        <line x2="30" y1="60" y2="30" />
+      </svg>
+      <div class="dtpicker-dt dtpicker-end">
+        <input class="input input-date d2" type="text" placeholder="date">
+        <input class="input input-time t2" type="text" placeholder="time">
+      </div>
     </div>
-    <svg height="60" stroke="#ccc" width="60" viewBox="0 0 30 60" xmlns="http://www.w3.org/2000/svg">
-      <line x2="30" y2="30"/>
-      <line x2="30" y1="60" y2="30"/>
-    </svg>
-    <div class="dtpicker-dt dtpicker-end">
-      <input class="input input-date d2" type="text" placeholder="date">
-      <input class="input input-time t2" type="text" placeholder="time">
-    </div>
-  </div>
-  <p class="divider-btm">
-    <label class="has-input">
-      Locatie
-      <input class="input input-location" type="text" placeholder="Voeg een locatie toe">
-    </label>
-  </p>
-  <p class="divider-btm">
-    <label class="has-input">
-      Omschrijving
-      <textarea class="input input-descr" type="text" id="description" placeholder="Voeg omschrijving toe"></textarea>
-    </label>
-  </p>
-  <p class="divider-btm">
-    <label class="has-input" for="cal-select">
-      Kalender
-      {{ Form::select('calendar',$editableCalendars,null,array('class' => "input input-cals")); }}
-    </label>
-  </p>
-  <p class="btnbar">
-    <button type="button" class="btn-danger" name="button">Verwijderen</button>
-    <button type="button" class="btn-cancel" name="button">Annuleren</button>
-    <button type="button" class="btn-success" name="button">Toevoegen</button>
-  </p>
+    <p class="divider-btm">
+      <label class="has-input">
+        Locatie
+        <input class="input input-location" type="text" placeholder="Voeg een locatie toe" required>
+      </label>
+    </p>
+    <p class="divider-btm">
+      <label class="has-input">
+        Omschrijving
+        <textarea class="input input-descr" type="text" id="description" placeholder="Voeg omschrijving toe" required></textarea>
+      </label>
+    </p>
+    <p class="divider-btm">
+      <label class="has-input" for="input-cals">
+        Kalender {{ Form::select('calendar',$editableCalendars,null,array('class' => "input input-cals")); }}
+      </label>
+    </p>
+    <p class="btnbar">
+      <button type="submit" class="btn-danger" onclick="editor.remove()">Verwijderen</button>
+      <button type="submit" class="btn-cancel" onclick="editor.close()">Annuleren</button>
+      <button type="submit" class="btn-success" name="create">Toevoegen</button>
+    </p>
+  </form>
 </div>
 @stop
 
