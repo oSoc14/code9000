@@ -2,6 +2,7 @@
 
 var editor = (function() {
   var active = {
+    ev: {},
     id: 0
   };
   var saving = false;
@@ -75,12 +76,11 @@ var editor = (function() {
     });
   };
 
-  // Hide currently open popover
+  // Create new event
   var create = function(e) {
     e.preventDefault();
-    if (!active.id == 0) return;
     var x = $('.popover');
-    var event = {
+    var values = {
       title: x.find('.input-title').val(),
       name: x.find('.input-title').val(),
       description: x.find('.input-descr').val(),
@@ -89,10 +89,22 @@ var editor = (function() {
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
       calendar: x.find('.input-cals').val(),
     };
-    api.postEvent(event).success(function(event) {
-      console.log(event)
-      $('#calendar').fullCalendar('addEventSource', [event]);
+
+    if (active.id) {
+      values.id = active.id;
+    }
+
+    // Apply to backend
+    api.postEvent(values).success(function(data) {
       close();
+      if (active.id) {
+        $.extend(active.ev, data);
+        $('#calendar').fullCalendar('updateEvent', active.ev);
+      }
+      else{
+      active.id = data.id;
+        $('#calendar').fullCalendar('renderEvent', data);
+      }
     }).error(function(error) {
       console.log(error)
     });
@@ -154,15 +166,11 @@ var editor = (function() {
 
     if (!active.id) {
       $('.popover .btn-danger').addClass('invisible');
-    }
-    else{
+    } else {
       $('.input-title').val(active.ev.title);
       $('.input-descr').val(active.ev.description);
       $('.input-location').val(active.ev.location);
-      $('.input-cals option[value="'+active.ev.calendar_id+'"]').prop('selected', true);
-      console.log(active.ev.calendar_id)
-      console.log(
-      $('.input-cals option[value="'+active.ev.calendar_id+'"]'))
+      $('.input-cals option[value="' + active.ev.calendar_id + '"]').prop('selected', true);
     }
   };
 
