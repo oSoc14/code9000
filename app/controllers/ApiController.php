@@ -172,9 +172,9 @@ class ApiController extends \BaseController
     public function handleAppointment()
     {
         if (Input::has('id')) {
-            $this->updateAppointment();
+            return $this->updateAppointment();
         } else {
-            $this->storeAppointment();
+            return $this->storeAppointment();
         }
     }
 
@@ -222,8 +222,8 @@ class ApiController extends \BaseController
                 'calendar' => 'required',
                 'start' => 'required',
                 'end' => 'required',
-                'start' => 'required|date_format:H:i',
-                'end' => 'required|date_format:H:i',
+                'start' => 'required|date_format:Y-m-d H:i',
+                'end' => 'required|date_format:Y-m-d H:i',
                 'title' => 'required'
             ]
         );
@@ -328,8 +328,8 @@ class ApiController extends \BaseController
                 'calendar' => 'required',
                 'start' => 'required',
                 'end' => 'required',
-                'start' => 'required|date_format:H:i',
-                'end' => 'required|date_format:H:i',
+                'start' => 'required|date_format:Y-m-d H:i',
+                'end' => 'required|date_format:Y-m-d H:i',
                 'title' => 'required'
             ]
         );
