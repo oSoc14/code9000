@@ -23,22 +23,21 @@ class CalendarViewController extends \BaseController
 
 
         $logged = Sentry::check();
-        $sentry_user = Sentry::getUser();
+        $user = Sentry::getUser();
 
         $uid = 0;
         if ($logged) {
-            $uid == $sentry_user->id;
+            $uid == $user->getId();
         }
 
         $write = false;
         $admin = false;
-        if ($logged && $sentry_user->school_id == $school->id) {
+        if ($logged && $user->school_id == $school->id) {
             $write = true;
-            if ($sentry_user->hasAccess('admin')) {
+            if (Sentry::getUser()->hasAccess('admin')) {
                 $admin = true;
             }
         }
-
         $calendars = [];
         $orgCalendars = Calendar::where('school_id', $school->id)->get();
         // Loop through calendars to get all appointments
@@ -48,6 +47,12 @@ class CalendarViewController extends \BaseController
             array_push($calendars, $calendar);
         }
 
+        $userCalendars = [];
+        if ($logged) {
+            foreach ($user->calendars as $calendar) {
+                $userCalendars[$calendar->id] = $calendar->name;
+            }
+        }
 
         return View::make('calendar.index')->with([
             "school" => json_encode($school),
@@ -61,6 +66,7 @@ class CalendarViewController extends \BaseController
             ]),
             "org" => $school,
             "calendars" => json_encode($calendars),
+            "editableCalendars" => $userCalendars,
         ]);
     }
 

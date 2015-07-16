@@ -92,7 +92,7 @@ class DatabaseSeeder extends Seeder
             $o->description = 'events for everyone in school';
             $o->school_id = $i;
             $o->save();
-
+            $user2->calendars()->attach($o);
             // Add year calendars
             for ($j=1; $j <= 6; $j++) {
                 $color = randomColor('j' . $j . $o->school_id);
@@ -162,6 +162,54 @@ class DatabaseSeeder extends Seeder
             $app->end = new DateTime($date . ' 16:00');
             $app->save();
         }
+
+
+        $school = new School();
+        $school->name = "usertest";
+        $school->city = "Gent";
+        $school->slug = "usertest";
+        $school->save();
+
+        $user = Sentry::createUser([
+            'email' => 'usertest@educal.dev',
+            'password' => 'password',
+            'activated' => true,
+            'school_id' => $school->id,
+            'first_name' => 'usertest',
+            'last_name' => 'usertest',
+        ]);
+        $user->save();
+        $user->addGroup($editorRole);
+
+
+        for ($j = 1; $j <= 6; $j++) {
+            $color = randomColor('j' . $j . $school->id);
+            $y = new Calendar();
+            $y->name = $j . (($j == 1) ? 'ste' : 'de') . ' jaar';
+            $y->slug = 'j' . $j . $school->id;
+            $y->description = 'events voor kindjes in jaar ' . $j;
+            $y->color = $color;
+            $y->school_id = $school->id;
+            $y->save();
+            $user->calendars()->attach($y);
+            for ($i = 0; $i < 3; $i++) {
+                $app = new Appointment();
+
+                $app->title = 'School event ' . $i;
+                $app->description = 'we are going to test ' . rand() . ' something';
+                $app->location = 'Gent';
+                $app->calendar_id = $y->id;
+                $date = date('Y-m-d', strtotime('+' . mt_rand(-10, 30) . ' days'));
+                $app->start = new DateTime($date . ' 13:00');
+                $app->end = new DateTime($date . ' 16:00');
+                $app->save();
+            }
+        }
+
+        $user->save();
+
+
+
     }
 }
 

@@ -119,19 +119,8 @@
     <input class="input input-descr" type="text" id="desctiption" placeholder="Voeg omschrijving toe">
   </p>
   <div>
-    <label class="radio-minimal">
-      <input type="radio" name="t"> School
-    </label>
-    <div class="select-year">
-      <label class="radio-minimal">
-        <input type="radio" name="t"> Leerjaar:
-      </label>
-    </div>
     <div class="select-cal">
-      <label class="radio-minimal">
-        <input type="radio" name="t"> Klassen
-      </label>
-      <input class="input input-cals" type="text" placeholder="klassen gescheiden door komma">
+        {{ Form::select('calendar',$editableCalendars,null,array('class' => "input input-cals")); }}
     </div>
     <button type="button" class="event-create" name="button">Toevoegen</button>
   </div>
