@@ -1,18 +1,34 @@
 'use strict';
 
 var editor = (function() {
-  var active;
+  var active = {
+    id: 0
+  };
   var saving = false;
   var success = false;
+  var popoverOptions = {
+    container: '#calendar',
+    html: true,
+    placement: 'auto bottom',
+    content: $('.new-event').html()
+  };
 
   // Hide currently open popover
   var close = function() {
-    if (active) {
-      active.removeClass('event-editing');
-      active.popover('hide');
-      active = null;
+    if (active.el) {
+      active.el.removeClass('event-editing');
+      active.el.popover('destroy');
+      active.el = null;
     }
   }
+
+  var calById = function(id) {
+    for (var i = 0, len = calendars.length; i < len; i++) {
+        if (calendars[i].id === id)
+            return calendars[i];
+    }
+    return null;
+}
 
   // Fixes impossible date ranges
   var logic = function() {
@@ -25,10 +41,6 @@ var editor = (function() {
     if (!d2 || moment(d1 + 'T00:00').isAfter(d2 + 'T00:00')) {
       x.find('.d2').val(d1);
       d2 = d1;
-    }
-    if (!t2 || moment(d1 + 'T' + t1).isAfter(d2 + 'T' + t2)) {
-      x.find('.t2').val(t1);
-      t2 = t1;
     }
   }
 
@@ -51,9 +63,21 @@ var editor = (function() {
     });
   }
 
+  // Delete event by id
+  var remove = function() {
+    if (!active.id) return;
+    api.deleteEvent(active.id).success(function(data) {
+      close();
+      console.log()
+      $('#calendar').fullCalendar('removeEvents', active.ev.id);
+    }).error(function(data) {
+      close();
+    });
+  }
+
   // Hide currently open popover
   var create = function(callback) {
-    if (!active) return;
+    if (!active.id == 0) return;
     var x = $('.popover');
     var event = {
       title: x.find('.input-title').val(),
@@ -75,48 +99,66 @@ var editor = (function() {
     });
   }
 
-  var open = function(date, event, view) {
-    console.log(date)
+  var open = function(clicked, event, view) {
+
+    // Close current popover
     close();
 
+    // Only show popover in month view
     if (!view.type == 'month') {
       return;
     }
 
-    // Create new popover
-    var options = {
-      container: '#calendar',
-      html: true,
-      placement: 'auto bottom',
-      content: $('.new-event').html()
-    };
-    active = $(event.target);
-    active.addClass('event-editing');
-    if (!active) {
-      return;
-    }
-    active.popover(options);
-    active.popover('show');
-    $('#backdrop').addClass('visible');
-
-    $('.input-date').datetimepicker({
+    // Default options
+    var d1Options = {
       format: 'Y-m-d',
-      value: date.format('YYYY-MM-DD'),
       timepicker: false,
       onChangeDateTime: logic,
       onShow: logic
-    });
-    $('.input-time').datetimepicker({
+    };
+    var d2Options = $.extend({}, d1Options);
+    var t1Options = {
       format: 'H:i',
-      value: moment().format('HH:00'),
       datepicker: false,
       onChangeDateTime: logic,
       onShow: logic
-    });
+    };
+    var t2Options = $.extend({}, t1Options);
+
+    // Create new event or edit existing event
+    if (clicked._isAMomentObject) {
+      d1Options.value = clicked.format('YYYY-MM-DD');
+      t1Options.value = moment().format('HH:00');
+      d2Options.value = clicked.format('YYYY-MM-DD');
+      t2Options.value = moment().format('HH:00');
+    } else {
+      d1Options.value = clicked.start.format('YYYY-MM-DD');
+      t1Options.value = clicked.start.format('HH:mm');
+      d2Options.value = clicked.end.format('YYYY-MM-DD');
+      t2Options.value = clicked.end.format('HH:mm');
+      active.ev = clicked;
+    }
+
+    // Launch popover
+    active.el = $(event.target);
+    if (!active.el) return;
+    active.el.popover(popoverOptions);
+    active.el.popover('show');
+    active.el.addClass('event-editing');
+    active.id = clicked.id || 0;
+
+    // Launch datetimepicker
+    $('.input-date.d2').datetimepicker(d2Options);
+    $('.input-date.d1').datetimepicker(d1Options);
+    $('.input-time.t2').datetimepicker(t2Options);
+    $('.input-time.t1').datetimepicker(t1Options);
+
+    // Button eventhandlers
     $('.popover .btn-success').on('click', create);
     $('.popover .btn-cancel').on('click', close);
     $('.popover .btn-danger').on('click', remove);
   }
+
   return {
     open: open,
     active: active,

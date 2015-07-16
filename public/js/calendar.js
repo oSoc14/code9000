@@ -12,7 +12,7 @@
     editable: true,
     firstDay: 1,
     timeFormat:'H:mm',
-    eventClick: renderer.renderEvent,
+    eventClick: editor.open,
     dayClick: editor.open
   });
 

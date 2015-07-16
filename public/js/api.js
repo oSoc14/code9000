@@ -25,8 +25,19 @@ var api = (function() {
   var postEvent = function(event) {
     return $.post(urls.events, event);
   }
+
+  var deleteEvent = function(id) {
+    return $.ajax({
+      url: urls.events,
+      type: 'DELETE',
+      data: {
+        id: id
+      }
+    });
+  }
   return {
     get: get,
-    postEvent: postEvent
+    postEvent: postEvent,
+    deleteEvent: deleteEvent
   };
 })();
