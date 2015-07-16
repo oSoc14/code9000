@@ -113,7 +113,9 @@ var editor = (function() {
       onChangeDateTime: logic,
       onShow: logic
     });
-    $('.event-create').on('click', create);
+    $('.popover .btn-success').on('click', create);
+    $('.popover .btn-cancel').on('click', close);
+    $('.popover .btn-danger').on('click', remove);
   }
   return {
     open: open,
