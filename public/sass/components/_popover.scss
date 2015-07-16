@@ -24,7 +24,7 @@ $line-color: #ccc !default;
     margin: 0;
     line-height: 20px;
     font-weight: 700;
-    flex: 0 0 auto;
+    @include flex(0, 0, auto);
   }
   .has-input {
     display: block;
@@ -61,39 +61,23 @@ $line-color: #ccc !default;
   .btn-danger {
     color: #900;
   }
-  .dtpicker {
-    label {
-      padding: 0 15px;
-      line-height: 30px;
-    }
-    .input-date,
-    .input-time {
-      padding-bottom: 0;
-      height: 30px;
-      outline: none;
-      max-width: 140px;
-      position: relative;
-      z-index: 5;
-    }
+}
+.dtpicker {
+  @include flexbox;
+  svg,
+  label {
+    @include flex(0, 0, auto);
+    padding: 0 15px;
+    line-height: 30px;
   }
-}
-.dtpicker-start {
-  position: relative;
-  margin-right: $gutter-popover;
-}
-.dtpicker-start::after {
-  position: absolute;
-  top: 8px;
-  right: 0;
-  content: "";
-  display: inline-block;
-  width: 44px;
-  height: 44px;
-  border-right: 1px solid #ccc;
-  border-top: 1px solid #ccc;
-  transform: rotate(45deg);
-  margin-right: 0.5em;
-  pointer-events: none;
+  .input-date,
+  .input-time {
+    padding: 0;
+    height: 30px;
+    outline: none;
+    position: relative;
+    z-index: 5;
+  }
 }
 .popover-content {
   padding: 0;
