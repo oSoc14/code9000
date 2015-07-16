@@ -73,8 +73,8 @@
       </label>
     </p>
     <p class="btnbar">
-      <button type="submit" class="btn-danger" onclick="editor.remove()">Verwijderen</button>
-      <button type="submit" class="btn-cancel" onclick="editor.close()">Annuleren</button>
+      <button type="button" class="btn-danger" onclick="editor.remove()">Verwijderen</button>
+      <button type="button" class="btn-cancel" onclick="editor.close()">Annuleren</button>
       <button type="submit" class="btn-success" name="create">Toevoegen</button>
     </p>
   </form>
