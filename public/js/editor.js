@@ -170,6 +170,8 @@ var editor = (function() {
 
   return {
     open: open,
+    remove: remove,
+    close: close,
     active: active,
     init: init,
     logic: logic
