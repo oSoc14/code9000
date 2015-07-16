@@ -7,9 +7,9 @@
     var org = {{ $school }};
     var user = {{ $user }};
     var calendars = {{ $calendars }};
-    var urls = {{ [
+    var urls = {{ json_encode([
       'events' => route('api.events')
-    ] }};
+    ]) }};
 </script>
 @stop
 
