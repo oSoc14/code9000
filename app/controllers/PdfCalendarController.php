@@ -30,7 +30,7 @@ class PdfCalendarController extends \BaseController
         // Compose the PDF with the help of the Dompdf plugin
         $calendar = self::composePdf($appointments, $school->name, $calendar->name);
 
-        return PDF::load($calendar, 'A4', 'landscape')->download($school->name . ' - calendar');
+        PDF::load($calendar, 'A4', 'landscape')->download($school->name . ' - calendar');
     }
 
     // TODO: FIX THE SORTING
