@@ -10,3 +10,11 @@
 .text-muted{
   opacity: .6;
 }
+
+.fade {
+  opacity: 0;
+  @include transition(opacity .15s linear);
+  &.in {
+    opacity: 1;
+  }
+}

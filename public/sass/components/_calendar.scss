@@ -35,18 +35,6 @@ nav {
     padding-left: 20px;
   }
 }
-.dtpicker {
-  @include flexbox;
-  &>label {
-    @include flex(1, 0, auto);
-  }
-}
-.dtpicker-dt {
-  @include flex(1, 0, auto);
-  input {
-    display: block;
-  }
-}
 .select-cal,
 .select-year {
   @include flexbox;
