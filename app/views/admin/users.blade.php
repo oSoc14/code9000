@@ -52,7 +52,7 @@ angular.module('users', ['ngResource'])
   .controller('UserController', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
 
     // Resources
-    var users = $resource('{{ route('api.users') }}');
+          var users = $resource('{{ route('api.currentOrgUsers') }}');
     $scope.users = users.query();
 
   }]);

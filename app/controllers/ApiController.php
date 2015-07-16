@@ -79,8 +79,15 @@ class ApiController extends \BaseController
      * @param $id int the organisation ID
      * @return jSon Response with users
      */
-    public function orgUsers($id)
+    public function orgUsers($id = 0)
     {
+        if ($id == 0) {
+            if (!Sentry::check()) {
+                return ApiController::createApiAccessError('You have to be logged in, or provide an organisation ID');
+            }
+            $id = Sentry::getUser()->school->id;
+        }
+
         $users = [];
         $orgUsers = User::where('school_id', $id)->get();
 
@@ -99,8 +106,16 @@ class ApiController extends \BaseController
      * @param $id int the organisation ID
      * @return jSon Response with calendars
      */
-    public function orgCalendars($id)
+    public function orgCalendars($id = 0)
     {
+
+        if ($id == 0) {
+            if (!Sentry::check()) {
+                return ApiController::createApiAccessError('You have to be logged in, or provide an organisation ID');
+            }
+            $id = Sentry::getUser()->school->id;
+        }
+
         $calendars = [];
         $orgCalendars = Calendar::where('school_id', $id)->get();
 
@@ -157,9 +172,9 @@ class ApiController extends \BaseController
     public function handleAppointment()
     {
         if (Input::has('id')) {
-            $this->updateAppointment();
+            return $this->updateAppointment();
         } else {
-            $this->storeAppointment();
+            return $this->storeAppointment();
         }
     }
 
@@ -171,17 +186,18 @@ class ApiController extends \BaseController
      */
     public function updateAppointment($id = 0)
     {
-        if (!Sentry::check()) {
-            return ApiController::createApiAccessError('You have to login first');;
-        }
-
         if ($id == 0) {
             $id = Input::get('id');
+        }
+
+        if (!Sentry::check()) {
+            return ApiController::createApiAccessError('You have to login first');
         }
 
         // Find active user
         $user = Sentry::getUser();
         $event = Appointment::find($id);
+
         // Check if User belongs to calendar/school which the appointment is from
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('editor')
                 && $user->school_id == $event->calendar->school_id)
@@ -190,10 +206,6 @@ class ApiController extends \BaseController
             return ApiController::createApiAccessError('You do not have the right to perform this action');
         }
 
-        // Check if endDate isn't blank
-        if (Input::get('end') == '') {
-            $endDate = null;
-        }
         $validator = Validator::make(
             [
                 'calendar' => Input::get('calendar'),
@@ -205,36 +217,27 @@ class ApiController extends \BaseController
             ],
             [
                 'calendar' => 'required',
-                'start' => 'required',
-                'end' => 'required',
-                'start' => 'required|date_format:H:i',
-                'end' => 'required|date_format:H:i',
+                'start' => 'required|date_format:Y-m-d H:i',
+                'end' => 'required|date_format:Y-m-d H:i',
                 'title' => 'required'
             ]
         );
         if ($validator->fails()) {
             return ApiController::createApiValidationError($validator->errors());
         }
+
         $title = e(Input::get('title'));
         $description = e(Input::get('description'));
         $location = e(Input::get('location'));
-        $calendar_id = Input::get('calendar'); // TODO: REFACTORED INPUT, REFACTOR VIEW!
+        $calendar_id = Input::get('calendar');
         $start = e(Input::get('start'));
         $end = e(Input::get('end'));
         $parents = Input::get('par');
         // TODO: Handle All day events, or decide to remove it alltogether
-        // TODO: Update date/time if needed
         // If the event isn't the whole day, determine the end date/time
         //$event->allday = false;
         // Handle datetime
-        if (!$start) {
-            $validator->getMessageBag()->add(
-                'end',
-                Lang::get('validation.required', ['attribute ' => 'start '])
-            );
 
-            return ApiController::createApiValidationError($validator->errors());
-        }
         $sd = new DateTime($start);
         $ed = new DateTime($end);
         // Check if end date is before start date, if so, return with error
@@ -311,10 +314,8 @@ class ApiController extends \BaseController
             ],
             [
                 'calendar' => 'required',
-                'start' => 'required',
-                'end' => 'required',
-                'start' => 'required|date_format:H:i',
-                'end' => 'required|date_format:H:i',
+                'start' => 'required|date_format:Y-m-d H:i',
+                'end' => 'required|date_format:Y-m-d H:i',
                 'title' => 'required'
             ]
         );
@@ -640,10 +641,9 @@ class ApiController extends \BaseController
             200)->setCallback(Input::get('callback'));
     }
 
-    public function validateDate($date)
+    private static function validateDate($date)
     {
         $d = DateTime::createFromFormat('m/d/Y', $date);
-
         return $d && $d->format('m/d/Y') == $date;
     }
 }
