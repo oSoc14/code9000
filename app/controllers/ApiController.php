@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Http\JsonResponse;
+
 
 /**
  * Class ApiController
@@ -9,8 +11,8 @@ class ApiController extends \BaseController
 
     /**
      * Get all events for logged in user
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @deprecated
+     * @return JsonResponse
+     * @deprecated this method is outdated and will be removed for final release
      */
     public function allUserEvents()
     {
@@ -28,13 +30,13 @@ class ApiController extends \BaseController
             }
         }
 
-        // Returns JSON response of the user
-        return Response::json($appointments)->setCallback(Input::get('callback'));
+        // Returns JsonResponse response of the user
+        return Response::JsonResponse($appointments)->setCallback(Input::get('callback'));
     }
 
     /**
-     * Return a listing of the organisations
-     * @return jSon Response with appointments
+     * Return a listing of all organisations in the database
+     * @return JsonResponse Response with appointments
      */
     public function orgs()
     {
@@ -45,14 +47,14 @@ class ApiController extends \BaseController
             array_push($schools, $school);
         }
 
-        // Returns JSON response of the user
-        return Response::json($schools)->setCallback(Input::get('callback'));
+        // Returns JsonResponse response of the user
+        return Response::JsonResponse($schools)->setCallback(Input::get('callback'));
     }
 
     /**
      * Return a listing of the events based on the organisation id
-     * @param $id int the organisation ID
-     * @return jSon Response with events
+     * @param int $id the organisation ID
+     * @return JsonResponse Response with events
      */
     public function orgEvents($id)
     {
@@ -69,15 +71,15 @@ class ApiController extends \BaseController
             }
         }
 
-        // Returns JSON response of the user
-        return Response::json($events)->setCallback(Input::get('callback'));
+        // Returns JsonResponse response of the user
+        return Response::JsonResponse($events)->setCallback(Input::get('callback'));
 
     }
 
     /**
      * Return a listing of the users based on the organisation id
-     * @param $id int the organisation ID
-     * @return jSon Response with users
+     * @param int $id the organisation ID
+     * @return JsonResponse Response with users
      */
     public function orgUsers($id = 0)
     {
@@ -96,15 +98,16 @@ class ApiController extends \BaseController
             array_push($users, $user);
         }
 
-        // Returns JSON response of the user
-        return Response::json($users)->setCallback(Input::get('callback'));
+        // Returns JsonResponse response of the user
+        return Response::JsonResponse($users)->setCallback(Input::get('callback'));
 
     }
 
     /**
-     * Return a listing of the calendars based on the logged in user.
-     * @param $id int the organisation ID
-     * @return jSon Response with calendars
+     * Return a listing of the calendars for a given school
+     * @param int $id the Id of the organisation for which you want to view events.
+     * If empty, calendars will be shown for the organisation of the currently logged user.
+     * @return JsonResponse Response with calendars
      */
     public function orgCalendars($id = 0)
     {
@@ -125,15 +128,15 @@ class ApiController extends \BaseController
             array_push($calendars, $calendar);
         }
 
-        // Returns JSON response of the user
-        return Response::json($calendars)->setCallback(Input::get('callback'));
+        // Returns JsonResponse response of the user
+        return Response::JsonResponse($calendars)->setCallback(Input::get('callback'));
 
     }
 
     /**
-     * Return a listing of the events based on the calendar id
-     * @param $id int the calendar ID
-     * @return jSon Response with events
+     * Return a calendar including all it's events
+     * @param int $id the calendar ID
+     * @return JsonResponse Response with events
      */
     public function calendarWithEvents($id)
     {
@@ -141,15 +144,15 @@ class ApiController extends \BaseController
         $calendar = Calendar::find($id);
         $calendar->load('appointments');
 
-        // Returns JSON response of the user
-        return Response::json($calendar)->setCallback(Input::get('callback'));
+        // Returns JsonResponse response of the user
+        return Response::JsonResponse($calendar)->setCallback(Input::get('callback'));
 
     }
 
     /**
      * Return a listing of the events based on the calendar id
-     * @param $id int the calendar ID
-     * @return jSon Response with events
+     * @param int $id the calendar ID
+     * @return JsonResponse Response with events
      */
     public function calendarEvents($id)
     {
@@ -161,13 +164,14 @@ class ApiController extends \BaseController
             $appQuery = Appointment::where('calendar_id', $id)->get();
         }
 
-        // Returns JSON response of the user
-        return Response::json($appQuery)->setCallback(Input::get('callback'));
+        // Returns JsonResponse response of the user
+        return Response::JsonResponse($appQuery)->setCallback(Input::get('callback'));
 
     }
 
     /**
-     * Handle a calendar post to the API
+     * Handle a calendar post to the API. Check if it's either a create or update request.
+     * @return JsonResponse
      */
     public function handleAppointment()
     {
@@ -182,7 +186,7 @@ class ApiController extends \BaseController
      * Update the specified appointment in storage.
      *
      * @param  int $id
-     * @return Response
+     * @return JsonResponse
      */
     public function updateAppointment($id = 0)
     {
@@ -286,7 +290,7 @@ class ApiController extends \BaseController
 
     /**
      * Store a new event
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function storeAppointment()
     {
@@ -429,7 +433,7 @@ class ApiController extends \BaseController
      * Remove the specified appointment from storage.
      *
      * @param  int $id
-     * @return Response
+     * @return JsonResponse
      */
     public function destroyAppointment($id = 0)
     {
@@ -456,21 +460,22 @@ class ApiController extends \BaseController
     }
 
     /**
-     * Handle a calendar post to the API
+     * Handle a calendar post to the API. Check if it's either a create or update request.
+     * @return JsonResponse
      */
     public function handleCalendar()
     {
         if (Input::has('id')) {
-            $this->updateCalendar();
+            return $this->updateCalendar();
         } else {
-            $this->storeCalendar();
+            return $this->storeCalendar();
         }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function storeCalendar()
     {
@@ -521,8 +526,8 @@ class ApiController extends \BaseController
     /**
      * Update the specified calendar in storage.
      *
-     * @param  int $id
-     * @return Response
+     * @param  int $id the calendar to update. If not provided or zero, id will be read from input.
+     * @return JsonResponse
      */
     public function updateCalendar($id = 0)
     {
@@ -593,8 +598,8 @@ class ApiController extends \BaseController
     /**
      * Remove the specified calendar from storage.
      *
-     * @param  int $id
-     * @return Response
+     * @param  int $id the calendar to update. If not provided or zero, id will be read from input.
+     * @return JsonResponse status response
      */
     public function destroyCalendar($id = 0)
     {
@@ -614,36 +619,65 @@ class ApiController extends \BaseController
         if ($user->hasAccess('superadmin') || ($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
             $calendar->delete();
         }
-
     }
 
+    /**
+     * Create a JSON response for API calls with invalid parameters
+     * Using this method ensures consistent replies,no matter what method was called.
+     * @param $error \Illuminate\Support\MessageBag the validator errors
+     * @return JsonResponse
+     */
     private static function createApiValidationError($error)
     {
-        return Response::json(array('succes' => false, 'type' => 'validation', 'feedback' => $error),
+        return Response::JsonResponse(array('succes' => false, 'type' => 'validation', 'feedback' => $error),
             400)->setCallback(Input::get('callback'));
     }
 
+    /**
+     * Create a JSON response for API calls that fail due to insufficient permissions
+     * Using this method ensures consistent replies,no matter what method was called.
+     * @param string $msg an optional feedback message
+     * @return JsonResponse
+     */
     private static function createApiAccessError($msg = '')
     {
-        return Response::json(array('succes' => false, 'type' => 'access', 'feedback' => $msg),
+        return Response::JsonResponse(array('succes' => false, 'type' => 'access', 'feedback' => $msg),
             403)->setCallback(Input::get('callback'));
     }
 
+    /**
+     * Create a JSON response for API calls where something went wrong, when no more specific error message can be sent.
+     * Using this method ensures consistent replies,no matter what method was called.
+     * @param string $msg a feedback message
+     * @return JsonResponse
+     */
     private static function createApiError($msg)
     {
-        return Response::json(array('succes' => false, 'type' => 'generic', 'feedback' => $msg),
+        return Response::JsonResponse(array('succes' => false, 'type' => 'generic', 'feedback' => $msg),
             400)->setCallback(Input::get('callback'));
     }
 
+    /**
+     * Create a JSON response for successful API calls.
+     * Using this method ensures consistent replies,no matter what method was called.
+     * @param string $msg an optional feedback message
+     * @return JsonResponse
+     */
     private static function createApiOk($msg = '')
     {
-        return Response::json(array('succes' => true, 'type' => '', 'feedback' => $msg),
+        return Response::JsonResponse(array('succes' => true, 'type' => '', 'feedback' => $msg),
             200)->setCallback(Input::get('callback'));
     }
 
+    /**
+     * Check if a date matches the m/d/Y format
+     * @param $date the date to check
+     * @return bool wheter or not this date complies with the m/d/Y format
+     */
     private static function validateDate($date)
     {
         $d = DateTime::createFromFormat('m/d/Y', $date);
+
         return $d && $d->format('m/d/Y') == $date;
     }
 }
