@@ -29,7 +29,7 @@
     calnav.render(sources)
   };
 
-  api.get('api/1/orgs/1/calendars', addSources);
+  addSources(calendars);
 
   // Adaptive view based on window width
   var adaptView = function() {
