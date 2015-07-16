@@ -51,4 +51,14 @@ class Calendar extends Eloquent
         return $this->hasOne('Calendar', 'parent_id', 'id');
     }
 
+    /**
+     * Get the school with this slug
+     * @param string $slug the slug to search
+     * @return $this the result
+     */
+    public static function getBySlug($slug)
+    {
+        return Calendar::where('slug', $slug)->first();
+    }
+
 }

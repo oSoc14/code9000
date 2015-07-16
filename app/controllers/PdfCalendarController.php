@@ -14,17 +14,19 @@ class PdfCalendarController extends \BaseController
      * Additionally add the appointments from the "global" calendar
      * Process these appointments and render them to an .pdf file which will be returned for download
      *
-     * @param  string $calendar_id
-     * @param  string $school
+     * @param  string $school_slug the school slug
+     * @param  string $calendar_slug the calendar slug
      * @return pdf downloadable file
      *
      */
 
     // TODO: Decide if we will keep using a PDF export, or instead just make a printer friendly view
-    public function index($calendar_id, $school)
+    public function index($school_slug, $calendar_slug)
     {
-        $appointments = CalendarController::getAppointments($calendar_id);
-        $calendar = Calendar::find($calendar_id);
+        $appointments = CalendarController::getAppointmentsBySlugs($school_slug, $calendar_slug);
+        $calendar = CalendarController::getCalendar($school_slug, $calendar_slug);
+        $school = School::getBySlug($school_slug);
+
         // Compose the PDF with the help of the Dompdf plugin
         $calendar = self::composePdf($appointments, $school->name, $calendar->name);
 
@@ -65,7 +67,7 @@ class PdfCalendarController extends \BaseController
             $app['description'] = $appointment['attributes']['description'];
             $app['start'] = $appointment['attributes']['start'];
             $app['end'] = $appointment['attributes']['end'];
-            $app['allday'] = $appointment['attributes']['allday'];
+            $app['allday'] = $appointment['attributes']['allDay'];
 
             // Recurence option (e.g. New Year happens every year)
             // Set recurrence rule
@@ -74,17 +76,17 @@ class PdfCalendarController extends \BaseController
                  $rep_freq = $appointment['attributes']['repeat_freq'];
 
                  // Create DateTime objects to be able to do math with days.
-                 $dtStart = new DateTime($appointment['attributes']['start_date']);
+                 $dtStart = new DateTime($appointment['attributes']['start']);
                  $dtStart->format('d-m-Y H:i');
-                 $dtEnd = new DateTime($appointment['attributes']['end_date']);
+                 $dtEnd = new DateTime($appointment['attributes']['end']);
                  $dtEnd->format('d-m-Y H:i');
 
                  // Calculate recurring appointments
                  for ($i = 0; $i < $appointment['attributes']['nr_repeat']; $i++) {
 
                      // Format dates in readable strings
-                     $app['start_date'] = $dtStart->format('d-m-Y H:i');
-                     $app['end_date']   = $dtEnd->format('d-m-Y H:i');
+                     $app['start'] = $dtStart->format('d-m-Y H:i');
+                     $app['end']   = $dtEnd->format('d-m-Y H:i');
 
                      // Extra dateTime field to sort the array by later
                      $app['dateTime']   = $dtStart->format('YmdHi');
@@ -126,7 +128,7 @@ class PdfCalendarController extends \BaseController
                 $app['dateTime'] = $dateString->format('YmdHi');
                 $dateString2 = new DateTime($appointment['attributes']['end']);
                 $app['end'] = $dateString2->format('d-m-Y H:i');
-                $da = new DateTime($appointment->start_date);
+                $da = new DateTime($appointment->start);
 
                 // Set the limits for which appointments to get (1 month in past till 1 month in future)
                 if ($da > $dsta && $da < $dend) {
@@ -150,7 +152,7 @@ class PdfCalendarController extends \BaseController
             $html .= '<tr><td width="20%">' . ucfirst(trans('educal.starts')) . '  ' . $apps['start'];
 
             // Only show this if the end date is specified
-            if ($apps['end_date']) {
+            if ($apps['end']) {
                 $html .= '<br>' . ucfirst(trans('educal.ends')) . ' ' . $apps['end'] . '</td>';
             }
 

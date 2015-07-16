@@ -271,6 +271,11 @@ Route::group(['prefix' => 'export'], function()
     ])->where('id', '[0-9]+');
 });
 
+Route::group(['prefix' => 'calendars'], function () {
+
+});
+
+
 Route::group(['prefix' => 'admin'], function () {
     // Index, lists all groups
     Route::get('/', [
@@ -308,7 +313,6 @@ Route::group(['prefix' => '{org_slug}'], function () {
         }
     ]);
 
-
     // Show the admin interface to manage calendars
     Route::get('/calendars', [
         'as' => 'admin.calendars',
@@ -317,6 +321,21 @@ Route::group(['prefix' => '{org_slug}'], function () {
             return View::make('admin.calendars')->with('org', SchoolController::getSchoolBySlug($slug));
         }
     ]);
+
+    Route::get('/{calendar_slug}.pdf', [
+        'as' => 'export.pdf',
+        'uses' => 'PdfCalendarController@index'
+    ])->where('calendar_slug', '[A-Za-z0-9\-]+');
+
+    Route::get('/{calendar_slug}.ics', [
+        'as' => 'export.ics',
+        'uses' => 'IcalCalendarController@index'
+    ])->where('calendar_slug', '[A-Za-z0-9\-]+');
+
+    Route::get('/{calendar_slug}', [
+        'as' => 'export.overview',
+        'uses' => 'IcalCalendarController@show'
+    ])->where('calendar_slug', '[A-Za-z0-9\-]+');
 
     // Create a new school
     Route::post('/register', [

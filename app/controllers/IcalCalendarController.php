@@ -16,10 +16,11 @@ class IcalCalendarController extends \BaseController
      * @return mixed cal.ics download file
      *
      */
-    public function index($calendar_id)
+    public function index($school_slug, $calendar_slug)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
-        $appointments = CalendarController::getAppointments($calendar_id);
+
+        $appointments = CalendarController::getAppointmentsBySlugs($school_slug, $calendar_slug);
         // Compose iCal with the help of the eluceo plugin
         $calendar = self::composeIcal($appointments);
 
@@ -52,7 +53,7 @@ class IcalCalendarController extends \BaseController
             $event->setDescription(str_replace("\r\n", " ", $appointment['attributes']['description']));
             $event->setDtStart(new \DateTime($appointment['attributes']['start']));
             $event->setDtEnd(new \DateTime($appointment['attributes']['end']));
-            $event->setNoTime($appointment['attributes']['allday']);
+            $event->setNoTime($appointment['attributes']['allDay']);
 
             // Generate unique ID apIDed
             $uid = 'ap' . $appointment['attributes']['id'] . 'ed';

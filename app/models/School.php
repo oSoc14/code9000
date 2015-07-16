@@ -30,4 +30,14 @@ class School extends Eloquent
         return $this->hasMany('Calendar','school_id','id');
     }
 
+    /**
+     * Get the school with this slug
+     * @param string $slug the slug to search
+     * @return $this the result
+     */
+    public static function getBySlug($slug)
+    {
+        return School::where('slug', $slug)->first();
+    }
+
 }

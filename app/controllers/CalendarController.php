@@ -119,13 +119,36 @@ class CalendarController extends \BaseController
     }
 
 
+    /**
+     * Get a calendar based on school and calendar slug
+     * @param string $school_slug the school slug
+     * @param string $calendar_slug the calendar slug
+     * @return Calendar
+     */
+    public static function getCalendar($school_slug, $calendar_slug)
+    {
+        $school = School::getBySlug($school_slug);
+
+        return Calendar::where('school_id', $school->id)->where('slug', $calendar_slug)->firstOrFail();
+    }
 
     /**
      * Get all appointments from a calendar, including parent calendars
-     * @param $calendar_id the id of the calendar to export
+     * @param string $school_slug the slug of the school
+     * @param string $calendar_slug the slug of the calendar
      * @return array all appointments
      */
-    public static function getAppointments($calendar_id)
+    public static function getAppointmentsBySlugs($school_slug, $calendar_slug)
+    {
+        return CalendarController::getAppointments(CalendarController::getCalendar($school_slug, $calendar_slug));
+    }
+
+    /**
+     * Get all appointments from a calendar, including parent calendars
+     * @param Calendar $calendar the calendar to get the appointments for
+     * @return array all appointments
+     */
+    public static function getAppointments($calendar)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
         $appointments = [];
@@ -133,8 +156,7 @@ class CalendarController extends \BaseController
         // TODO: Change calendar handling, base it off calendar and school ID
         // TODO: Add support for entire school export (all calendars)
         // Load appointments based on calendar
-        $calendar = Calendar::where('id', $calendar_id)->first();
-        $calendar->load('appointments', 'school');
+        $calendar->load('appointments');
 
         // Set the limitations for which appointments to get
         $dsta = new DateTime();
@@ -169,7 +191,8 @@ class CalendarController extends \BaseController
                     array_push($appointments, $appointment);
                 }
             }
-
+            $calendar = $calendar::find($calendar->parent_id);
+            $calendar->load('appointments');
         }
 
         return $appointments;
