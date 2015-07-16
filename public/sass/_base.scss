@@ -10,7 +10,7 @@ html {
 
 // Type
 h1 {
-  flex: 1 0 auto;
+  @include flex(1, 0, auto);
   font-size: 1.5em;
   margin-bottom: 1em;
 }
@@ -37,10 +37,9 @@ main {
   background-color: #fff;
   color: #000;
 }
-
-.flex--1{
-  flex: 10 0 auto;
+.flex--1 {
+  @include flex(10, 0, auto);
 }
-.flex--0{
-  flex: 0 0 auto;
+.flex--0 {
+  @include flex(0, 0, auto);
 }

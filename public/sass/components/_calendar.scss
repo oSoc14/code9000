@@ -36,20 +36,20 @@ nav {
   }
 }
 .dtpicker {
-  display: flex;
+  @include flexbox;
   &>label {
-    flex: 1 0 auto;
+    @include flex(1, 0, auto);
   }
 }
 .dtpicker-dt {
-  flex: 1 0 auto;
+  @include flex(1, 0, auto);
   input {
     display: block;
   }
 }
 .select-cal,
 .select-year {
-  display: flex;
+  @include flexbox;
   justify-content: space-between;
   align-items: center;
 }
