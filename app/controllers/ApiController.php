@@ -285,7 +285,7 @@ class ApiController extends \BaseController
         $event->end = $ed;
         $event->save();
 
-        return ApiController::createApiOk('Changes saved');
+        return Response::Json($event)->setCallback(Input::get('callback'));
     }
 
     /**
@@ -391,7 +391,8 @@ class ApiController extends \BaseController
                 $event->save();
             }
 
-            return ApiController::createApiOk('Changes saved');
+
+            return Response::Json($event)->setCallback(Input::get('callback'));
         }
 
         if (!$start) {
@@ -426,7 +427,7 @@ class ApiController extends \BaseController
         $event->end = $ed;
         $event->save();
 
-        return ApiController::createApiOk('Changes saved');
+        return Response::Json($event)->setCallback(Input::get('callback'));
     }
 
     /**
