@@ -180,7 +180,7 @@ class DatabaseSeeder extends Seeder
             $app->title ='School event ' . $i;
             $app->description = 'we are going to test ' . rand() . ' something';
             $app->location = 'Gent';
-            $app->calendar_id = $i % 52 + 1;
+            $app->calendar_id = $i % 74 + 1;
             $date = date('Y-m-d', strtotime( '+'.mt_rand(-10,30).' days'));
             $app->start = new DateTime($date . ' 13:00');
             $app->end = new DateTime($date . ' 16:00');
