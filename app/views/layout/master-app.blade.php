@@ -45,7 +45,7 @@
 
 <body>
   <nav class="nav nav-main">
-    <h1>Trappenhuis</h1>
+      <h1>{{ $org->name }}</h1>
     <section class="flex--1">
       @section('nav')
       <ul class="nav-list">
