@@ -36,12 +36,6 @@ class DatabaseSeeder extends Seeder
         DB::statement("SET foreign_key_checks=1");
 
         $school = new School();
-        $school->name = "Sint-Janscollege";
-        $school->city = "Sint-Amandsberg";
-        $school->slug = "sjc-gent";
-        $school->save();
-
-        $school = new School();
         $school->name = "Don Bosco";
         $school->city = "Halle";
         $school->slug = "donbosco-halle";
@@ -61,10 +55,13 @@ class DatabaseSeeder extends Seeder
 
         // make sure the roles exist
         UserController::checkCreateRoles();
+        $superRole = Sentry::findGroupByName('superadmin');
+        $adminRole = Sentry::findGroupByName('admin');
+        $editorRole = Sentry::findGroupByName('editor');
 
-        $user2 = Sentry::createUser(
+        $super_user = Sentry::createUser(
             [
-                'email' => 'a@a.a',
+                'email' => 'super@osoc',
                 'password' => 'password',
                 'activated' => true,
                 'school_id' => $school->id,
@@ -73,26 +70,46 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Get roles
-        $superRole = Sentry::findGroupByName('superadmin');
-        $adminRole = Sentry::findGroupByName('admin');
-        $editorRole = Sentry::findGroupByName('editor');
+        $admin_user = Sentry::createUser(
+            [
+                'email' => 'admin@osoc',
+                'password' => 'password',
+                'activated' => true,
+                'school_id' => $school->id,
+                'first_name' => 'Admin',
+                'last_name' => 'Bar',
+            ]
+        );
+
+        $editor_user = Sentry::createUser(
+            [
+                'email' => 'editor@osoc',
+                'password' => 'password',
+                'activated' => true,
+                'school_id' => $school->id,
+                'first_name' => 'Editor',
+                'last_name' => 'Bar',
+            ]
+        );
 
         // Assign the calendar to the user
-        $user2->addGroup($superRole);
+        $super_user->addGroup($superRole);
+        $admin_user->addGroup($superRole);
+        $editor_user->addGroup($superRole);
 
         $letter = ['A', 'B', 'C', 'D'];
         $uCount = 1001;
 
         // Add org calendars
-        for ($i=1; $i <= 4; $i++) {
+        for ($i = 1; $i <= 3; $i++) {
             $o = new Calendar();
-            $o->name = 'Algemeen';
-            $o->name = 'glob';
+            $o->name = School::find($i)->slug;
             $o->description = 'events for everyone in school';
             $o->school_id = $i;
             $o->save();
-            $user2->calendars()->attach($o);
+            if ($i == 3) {
+                $admin_user->calendars()->attach($o);
+            }
             // Add year calendars
             for ($j=1; $j <= 6; $j++) {
                 $color = randomColor('j' . $j . $o->school_id);
@@ -106,8 +123,8 @@ class DatabaseSeeder extends Seeder
                 $y->save();
 
                 $user = Sentry::createUser([
-                    'email' => $uCount . '@a.a',
-                    'password' => 'a',
+                    'email' => $j . '@' . School::find($i)->slug,
+                    'password' => 'password',
                     'activated' => true,
                     'school_id' => $o->school_id,
                     'first_name' => 'Foo' . $uCount,
@@ -119,6 +136,14 @@ class DatabaseSeeder extends Seeder
                 $user->calendars()->attach($y);
                 $user->calendars()->attach($o);
                 $user->save();
+
+                if ($i == 3) {
+                    $admin_user->calendars()->attach($y);
+
+                    if ($j == 4) {
+                        $editor_user->calendars()->attach($y);
+                    }
+                }
 
                 // Add class calendars
                 for ($k=0; $k < 3; $k++) {
@@ -132,13 +157,14 @@ class DatabaseSeeder extends Seeder
                     $c->save();
 
                     $user = Sentry::createUser([
-                        'email' => $uCount . '@a.a',
-                        'password' => 'a',
+                        'email' => $j . $letter[$k] . '@' . School::find($i)->slug,
+                        'password' => 'password',
                         'activated' => true,
                         'school_id' => $o->school_id,
                         'first_name' => 'Foo' . $uCount,
                         'last_name' => 'Bar' . $uCount,
                     ]);
+
                     $user->save();
                     $uCount++;
                     $user->addGroup($editorRole);
@@ -147,69 +173,19 @@ class DatabaseSeeder extends Seeder
                 }
             }
         }
-        $count = 4*6*3+4*6;
-        $count /= 40;
 
-        for ($i=0; $i < $count*2; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $app = new Appointment();
 
             $app->title ='School event ' . $i;
             $app->description = 'we are going to test ' . rand() . ' something';
             $app->location = 'Gent';
-            $app->calendar_id = $i%$count+1;
+            $app->calendar_id = $i % 20 + 1;
             $date = date('Y-m-d', strtotime( '+'.mt_rand(-10,30).' days'));
             $app->start = new DateTime($date . ' 13:00');
             $app->end = new DateTime($date . ' 16:00');
             $app->save();
         }
-
-
-        $school = new School();
-        $school->name = "usertest";
-        $school->city = "Gent";
-        $school->slug = "usertest";
-        $school->save();
-
-        $user = Sentry::createUser([
-            'email' => 'usertest@educal.dev',
-            'password' => 'password',
-            'activated' => true,
-            'school_id' => $school->id,
-            'first_name' => 'usertest',
-            'last_name' => 'usertest',
-        ]);
-        $user->save();
-        $user->addGroup($editorRole);
-
-
-        for ($j = 1; $j <= 6; $j++) {
-            $color = randomColor('j' . $j . $school->id);
-            $y = new Calendar();
-            $y->name = $j . (($j == 1) ? 'ste' : 'de') . ' jaar';
-            $y->slug = 'j' . $j . $school->id;
-            $y->description = 'events voor kindjes in jaar ' . $j;
-            $y->color = $color;
-            $y->school_id = $school->id;
-            $y->save();
-            $user->calendars()->attach($y);
-            for ($i = 0; $i < 3; $i++) {
-                $app = new Appointment();
-
-                $app->title = 'School event ' . $i;
-                $app->description = 'we are going to test ' . rand() . ' something';
-                $app->location = 'Gent';
-                $app->calendar_id = $y->id;
-                $date = date('Y-m-d', strtotime('+' . mt_rand(-10, 30) . ' days'));
-                $app->start = new DateTime($date . ' 13:00');
-                $app->end = new DateTime($date . ' 16:00');
-                $app->save();
-            }
-        }
-
-        $user->save();
-
-
-
     }
 }
 
