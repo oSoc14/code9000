@@ -14,25 +14,15 @@
     unselectCancel: '.popover',
     firstDay: 1,
     timeFormat: 'H:mm',
+    eventSources: [root],
     eventClick: editor.open,
     select: editor.select,
     unselect: editor.close
   });
 
+  editor.init();
+  calnav.init();
 
-  // Adaptive view based on window width
-  var addSources = function(sources) {
-    org.cals = sources;
-    $.each(sources, function(index, source) {
-      calendar.fullCalendar('addEventSource', source);
-    })
-
-    editor.init();
-    calnav.render(sources)
-  };
-
-  //api.get('api/1/orgs/''/calendars', addSources);
-  addSources(calendars);
   // Adaptive view based on window width
   var adaptView = function() {
     var h = $('main').height();

@@ -44,7 +44,8 @@ class CalendarViewController extends \BaseController
         foreach ($orgCalendars as $calendar) {
             $calendar->url = route("api.orgCalendarEvents", [$calendar->id]);
             $calendar->load("appointments");
-            array_push($calendars, $calendar);
+            $calendars[$calendar->id] = $calendar;
+            if(!$calendar->parent_id) $root = $calendar;
         }
 
         $userCalendars = [];
@@ -65,6 +66,7 @@ class CalendarViewController extends \BaseController
                 ]
             ]),
             "org" => $school,
+            "root" => $root,
             "calendars" => json_encode($calendars),
             "calendars_raw" => $calendars,
             "editableCalendars" => $userCalendars,

@@ -46,21 +46,8 @@ var editor = (function() {
   };
 
   // Initialize popover
-  var init = function(callback) {
-    var $year = $('.select-year');
-    var $cals = $('.select-cals');
-    var $glob = org.cals[0].id
-    $.each(org.cals, function(index, cal) {
-      if (cal.parent_id !== $glob) return;
-      var y = document.createElement('span');
-      var $y = $(y);
-      $y.text(cal.name.substring(0, 1))
-      $y.data('slug', cal.slug)
-      $y.on('click', function() {
-        console.log('wut')
-      })
-      $year.append($y);
-    });
+  var init = function() {
+
   };
 
   // Delete event by id
