@@ -260,6 +260,13 @@ button.btn.align-ol {
   width: 360px;
 }
 
+.btn.btn-fullwidth {
+  position: relative;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
 .btn-switch, .btn-switch:link {
 
   background-color: $button-switch-inactive;
@@ -277,6 +284,50 @@ button.btn.align-ol {
     background-color: $button-switch-active;
     color: $button-switch-text;
   }
+}
+
+.modal-content {
+  border-radius: 0;
+  padding: 40px;
+  .modal-header {
+    border: none;
+    padding: 0;
+    h2 {
+      font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      margin: 0 0 20px;
+      span {
+        color: #8e8e8e;
+      }
+    }
+  }
+  .modal-body {
+    padding: 0;
+  }
+
+  .form-group {
+    label {
+      width: calc(30% - 10px);
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      font-weight: 400;
+    }
+    input {
+      width: calc(70% - 10px);;
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+      font-weight: 400;
+      border: none;
+      border-bottom: 1px solid #909090;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+    }
+  }
+
 }
 
 .right {

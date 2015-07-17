@@ -50,7 +50,7 @@
             <li><a class="nav " href="#school">Educal voor mijn school</a></li>
         </ul>
         <ul class="nav right">
-            <li><a class="nav-login" href="#login">Log in</a></li>
+            <li><a class="nav-login" href="#login" data-toggle="modal" data-target="#loginmodal">Log in</a></li>
         </ul>
     </div>
 </nav>
@@ -158,57 +158,49 @@
     </div>
 </section>
 
-<!-- Login Modal -->
-@if(Session::has('errorMessage'))
-    <div class="modal fade" data-dismiss="modal" id="loginModal" tabindex="-1" data-errors="true" role="dialog"
-         aria-labelledby="loginModal" aria-hidden="true">
-        @else
-            <div class="modal fade" id="loginModal" tabindex="-1" data-errors="false" role="dialog"
-                 aria-labelledby="loginModal" aria-hidden="true">
+<div class="modal fade" id="loginmodal" role="dialog" aria-labelledby="Log in">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h2>Log in<span> - voor medewerkers</span></h2>
+            </div>
+            <div class="modal-body">
+                @if(Session::has('errorMessage'))
+                    <div class="alert alert-danger" role="alert">
+                        <strong>{{ucfirst(trans('educal.errors'))}}</strong>
+                        <ul>
+                            <li>{{ Session::get('errorMessage') }}</li>
+                        </ul>
+                    </div>
                 @endif
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">{{ucfirst(trans('educal.loginaccount'))}}</h4>
-                </div>
-                <div class="modal-body">
-                    @if(Session::has('errorMessage'))
-                        <div class="alert alert-danger" role="alert">
-                            <strong>{{ucfirst(trans('educal.errors'))}}</strong>
-                            <ul>
-                                <li>{{ Session::get('errorMessage') }}</li>
-                            </ul>
-                        </div>
-                    @endif
                     {{ Form::open([
-                    'route' => 'user.auth',
-                    'data-ajax' => 'false',
-                    ]), PHP_EOL }}
+                       'route' => 'user.auth',
+                       'data-ajax' => 'false',
+                       ]), PHP_EOL }}
                     <div class="form-group">
                         {{Form::label('lemail', ucfirst(trans('educal.email')))}}
-                        {{Form::email('lemail', null , ['class'=>'form-control'])}}
+                        {{Form::email('lemail', null , ['class'=>'form-control right', 'required' => true])}}
                     </div>
                     <div class="form-group">
                         <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
-                        <input type="password" class="form-control" id="login-password" name="password">
+                        <input type="password" class="form-control right" id="login-password" name="password" required>
                     </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="login-remember"
-                                   id="login-remember">{{ ucfirst(trans('educal.remember'))}}
-                        </label>
-                    </div>
-                    <button type="submit"
-                            class="btn btn-default btn-educal-danger">{{ ucfirst(trans('educal.login'))}}</button>
-                    <a href="#" data-dismiss="modal" class="btn btn-default" data-toggle="modal"
-                       data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
-                </div>
-                {{ Form::close(), PHP_EOL }}
-            </div>
 
+                    <button type="submit"
+                            class="btn btn-info btn-fullwidth">{{ ucfirst(trans('educal.login'))}}</button>
+                <a href="#" data-dismiss="modal" data-toggle="modal"
+                       data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
+            </div>
+            {{ Form::close(), PHP_EOL }}
         </div>
     </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="/js/landing.js" type="text/javascript"></script>
 </body>
