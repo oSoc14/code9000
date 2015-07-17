@@ -6,14 +6,17 @@
   var calendar = $('#calendar');
   calendar.fullCalendar({
     header: {
-      left: 'prev,next title today',
+      left: 'title prev,next today',
       right: 'month,agendaWeek,agendaDay'
     },
     editable: true,
+    selectable: true,
+    unselectCancel: '.popover',
     firstDay: 1,
-    timeFormat:'H:mm',
+    timeFormat: 'H:mm',
     eventClick: editor.open,
-    dayClick: editor.open
+    select: editor.select,
+    unselect: editor.close
   });
 
 
