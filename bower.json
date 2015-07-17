@@ -15,11 +15,8 @@
   ],
   "dependencies": {
     "fullcalendar": "~2.3.2",
-    "datatables-responsive": "~1.0.6",
-    "datatables": "~1.10.7",
     "jquery": "~2.1.4",
     "bootstrap-sass": "~3.3.5",
-    "compass-mixins": "~1.0.2",
     "datetimepicker": "~2.4.5",
     "angular": "~1.4.2",
     "angular-resource": "~1.4.2"
