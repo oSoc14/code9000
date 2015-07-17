@@ -2,7 +2,7 @@
 <html lang="{{ Config::get('app.locale') }}" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <title>{{ HTML::entities('EduCal') }}</title>
+    <title>{{ HTML::entities('educal') }}</title>
 
     <!-- Global styles for this template -->
     {{ HTML::style("css/landing.css") }}
