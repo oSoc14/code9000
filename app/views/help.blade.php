@@ -13,13 +13,13 @@
       <ul>
         <li>
           <h3>Kalendar</h3>
-          <p>De kalender is eigenlijk de centrale hub van EduCal. Alle events binnenin je groepen en school zijn hier terug te vinden. Je kan ook nieuwe events aanmaken en toevoegen tot de kalender (als je daar gerechtigd voor bent). De kalender op zich kan in drie verschillende modussen bekeken worden: maandelijks, wekelijks of dagelijks.</p>
+          <p>De kalender is eigenlijk de centrale hub van educal. Alle events binnenin je groepen en school zijn hier terug te vinden. Je kan ook nieuwe events aanmaken en toevoegen tot de kalender (als je daar gerechtigd voor bent). De kalender op zich kan in drie verschillende modussen bekeken worden: maandelijks, wekelijks of dagelijks.</p>
           <p>Wanneer je op een event klikt verschijnt er een apart venster dat alle details over dat event toont, zoals de omschrijving en de begin- en einddatum. Onderaan dat venster vind je ook opties terug om dat evenement te exporteren, z'n details te wijzigen of om het te verwijderen uit de kalender, afhankelijk van je groepsrechten.</p>
         </li>
         <li>
           <h3>Scholen</h3>
-          <p><mark>Opgelet: deze pagina is enkel zichtbaar als u superadmin bent binnen EduCal !</mark></p>
-          <p>Hier vind je een overzicht van alle scholen die momenteel geregistreerd zijn binnen EduCal. Als een superadmin heb je de opties om ze te wijzigen of verwijderen via de acties-kolom, aan de rechterkant.</p>
+          <p><mark>Opgelet: deze pagina is enkel zichtbaar als u superadmin bent binnen educal!</mark></p>
+          <p>Hier vind je een overzicht van alle scholen die momenteel geregistreerd zijn binnen educal. Als een superadmin heb je de opties om ze te wijzigen of verwijderen via de acties-kolom, aan de rechterkant.</p>
           <p>Alle kolommen zijn sorteerbaar en er is ook een zoekfunctie geïntegreerd that snel kan zoeken in de tabel naar een match. Wanneer u klikt op een schoolnaam wordt u doorverwezen naar de groepen binnenin die school.</p>
         </li>
         <li>
@@ -60,16 +60,16 @@
         </li>
         <li>
             <h3>Feedback</h3>
-            <p>Wil je bijdragen aan de vooruitgang van EduCal? Heb je een goed idee dat je wil delen? Contacteer ons dan, we stellen feedback ten zeerste op prijs. :)</p>
+            <p>Wil je bijdragen aan de vooruitgang van educal? Heb je een goed idee dat je wil delen? Contacteer ons dan, we stellen feedback ten zeerste op prijs. :)</p>
         </li>
         <li>
             <h3>FAQ</h3>
             <p><b>Ik heb me net geregistreerd maar ik kan niet inloggen. Waarom niet?</b></p>
             <p>Als je je eerst registreert bij een school, dan moet iemand van de schooladministratie uw account activeren. Dit is nodig voor veiligheidsredenen.</p>
             <p><b>Mijn organisatie is geen school. Kan ik dit platform dan nog steeds gebruiken?</b></p>
-            <p>Natuurlijk! EduCal kan gebruikt worden door elke organisatie die er baat bij heeft van een centrale kalender te hebben die ze gemakkelijk kunnen delen.</p>
+            <p>Natuurlijk! Educal kan gebruikt worden door elke organisatie die er baat bij heeft van een centrale kalender te hebben die ze gemakkelijk kunnen delen.</p>
             <p><b>Wat is het verschil tussen scholen en groepen?</b></p>
-            <p>Scholen zijn de organisaties die zich op het EduCal platform registreren. Elke school heeft dan verschillende groepen waar ze gebruikers aan kunnen toekennen. De kalenders worden gegenereerd op basis van de groepen, niet op basis van de school.</p>
+            <p>Scholen zijn de organisaties die zich op het educal platform registreren. Elke school heeft dan verschillende groepen waar ze gebruikers aan kunnen toekennen. De kalenders worden gegenereerd op basis van de groepen, niet op basis van de school.</p>
             <p><b>Kan ik uitzonderingen toevoegen voor herhalende events?</b></p>
             <p>Helaas niet. Dit is een feature die hoog op de ToDo-lijst staat, maar we waren niet in staat om dit af te leveren met deze versie. Voorlopig zal je dus manueel rekening moeten houden met uitzonderingen.</p>
             <p><b>Kan een gebruiker in meer dan 1 school zitten tegelijk?</b></p>
@@ -78,8 +78,8 @@
             <p>Neen! De exports zijn gebaseerd op groepen. Dus je laadt enkel de events in van de groep waarvan je de link hebt, alsook de globale events die tellen voor alle groepen. Ook zal je enkel events binnenhalen van 1 jaar terug t.e.m. 1 jaar in de toekomst.</p>
             <p><b>Moet ik me inloggen of registreren om de iCal of PDF files te kunnen downloaden?</b></p>
             <p>Neen. Zolang je de link hebt, kan je deze bestanden op eender welk moment raadplegen.</p>
-            <p><b>EduCal is net gecrasht, hoe komt dit?</b></p>
-            <p>EduCal is zeer recent gemaakt en er is nog veel ruimte voor verbetering, alsook zijn er waarschijnlijk nog enkele bugs die zich verschuilen hier en daar. We hopen op feedback als je ervaring niet optimaal was zodat we verbeteringen kunnen uitvoeren. Je kan ons contacteren met de feedback link in het linker menu.</p>
+            <p><b>Educal is net gecrasht, hoe komt dit?</b></p>
+            <p>Educal is zeer recent gemaakt en er is nog veel ruimte voor verbetering, alsook zijn er waarschijnlijk nog enkele bugs die zich verschuilen hier en daar. We hopen op feedback als je ervaring niet optimaal was zodat we verbeteringen kunnen uitvoeren. Je kan ons contacteren met de feedback link in het linker menu.</p>
         </li>
       </ul>
     </div>

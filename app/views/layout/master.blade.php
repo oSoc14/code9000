@@ -2,7 +2,7 @@
 <html lang="{{ Config::get('app.locale') }}" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>{{ HTML::entities('EduCal') }}</title>
+  <title>{{ HTML::entities('educal') }}</title>
   <!-- Bootstrap core CSS -->
   {{ HTML::style("css/bootstrap.min.css") }}
   {{ HTML::style("css/bootstrap-theme.min.css") }}
@@ -59,7 +59,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <h1 id="navbar-logo"><span class="hidden">EduCal</span></h1>
+        <h1 id="navbar-logo"><span class="hidden">educal</span></h1>
       </div>
     </div>
   </div>
@@ -68,7 +68,7 @@
     <!-- Navigation sidebar -->
     <div id="sidebar" class="sidebar-wrapper">
       <div class="logo-container">
-        <a href="{{ route('calendar.redirect') }}"><h1 id="navbar-logo-sidebar"><span class="hidden">EduCal</span></h1>
+        <a href="{{ route('calendar.redirect') }}"><h1 id="navbar-logo-sidebar"><span class="hidden">educal</span></h1>
         </a>
       </div>
       <ul class="panel-group accordions" id="accordion">

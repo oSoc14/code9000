@@ -11,7 +11,7 @@ return array(
     |
     */
 
-    'lead' => 'EduCal est une application pour les écoles à créer facilement et de gérer des calendriers qui peuvent être partagés avec les parents.',
+    'lead' => 'Educal est une application pour les écoles à créer facilement et de gérer des calendriers qui peuvent être partagés avec les parents.',
     'login' => 'Login',
     'loginaccount' => 'Connectez-vous à votre compte',
     'register' => 'enregistrer',
