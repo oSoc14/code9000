@@ -175,7 +175,7 @@ class ApiController extends \BaseController
      */
     public function handleAppointment()
     {
-        if (Input::has('id')) {
+        if (Input::has('id') && Input::get('id') > 0) {
             return $this->updateAppointment();
         } else {
             return $this->storeAppointment();
@@ -474,7 +474,7 @@ class ApiController extends \BaseController
      */
     public function handleCalendar()
     {
-        if (Input::has('id')) {
+        if (Input::has('id') && Input::get('id') > 0) {
             return $this->updateCalendar();
         } else {
             return $this->storeCalendar();
