@@ -1,0 +1,292 @@
+$blue: #8fafc6;
+$blue-darken: #6e8899;
+
+$bg-input: #f7f7f7;
+
+$button-switch-text: #475966;
+$button-switch-active: #adc8da;
+$button-switch-active-line: $blue;
+$button-switch-text-inactive: $button-switch-active;
+$button-switch-inactive: #dae6ee;
+
+$nav-height: 60px;
+$pullup: 60px;
+
+@import "normalize";
+@import "bootstrap_landing";
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,300,700);
+@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
+
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  font-weight: 400;
+  font-size: 17px;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+nav {
+  height: $nav-height;
+  background-color: rgba($blue, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  .container {
+    height: $nav-height;
+  }
+
+  ul.nav {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    height: $nav-height;
+    line-height: $nav-height;
+
+    li {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      height: $nav-height;
+      list-style: none;
+
+      a {
+        display: inline-block;
+        margin: 0 10px;
+        padding: 5px;
+        height: $nav-height;
+
+        color: #ffffff;
+        text-transform: uppercase;
+        font-weight: 700;
+
+        &:hover {
+          border-bottom: 3px solid #ffffff;
+          background-color: transparent;
+        }
+        &.brand:hover {
+          border-bottom: none;
+        }
+      }
+
+      img {
+        padding: 0 0 10px;
+        max-height: $nav-height - 10px;
+      }
+    }
+  }
+}
+
+section.page {
+  padding-top: 2* $nav-height;
+  min-height: 100%;
+  background-color: #ffffff;
+
+  .col-pullup {
+    background-color: #ffffff;
+  }
+  &:nth-of-type(odd), &:nth-of-type(odd).col-pullup {
+    background: #f3f3f3;
+  }
+
+  &:first-of-type {
+    background-color: $blue;
+  }
+
+  h2 {
+    margin: 0 0 30px;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 60px;
+    line-height: 60px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin-bottom: 20px;
+      padding-left: 1em;
+      text-indent: -1em;
+      line-height: 24px;
+    }
+
+    li:before {
+      position: relative;
+      top: 0.16em; /* or whatever color you prefer */
+      color: $button-switch-text;
+      content: "\002022";
+      font-size: 2em;
+    }
+  }
+
+  ol {
+    counter-reset: li; /* Initiate a counter */
+    margin-left: 0; /* Remove the default left margin */
+    padding-left: 0; /* Remove the default left padding */
+
+    & > li {
+      position: relative; /* Create a positioning context */
+      margin: 0 0 40px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding: 4px 8px; /* Add some spacing around the content */
+      list-style: none; /* Disable the normal item numbering */
+    }
+    & > li:before {
+      content: counter(li); /* Use the counter as content */
+      counter-increment: li; /* Increment the counter by 1 */
+      /* Position and style the number */
+      position: absolute;
+      top: -2px;
+      left: -2em;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      width: 2em;
+      /* Some space between the number and the content in browsers that support
+         generated content but not positioning it (Camino 2 is one example) */
+      margin-right: 8px;
+      padding: 4px;
+
+      color: $blue;
+      font-size: 32px;
+      font-weight: 700;
+
+      text-align: center;
+    }
+  }
+
+}
+
+section.splash {
+  //margin-top: -$nav-height;
+  padding-top: calc(60px + 8%); // TODO: fix hardcoded navbar height
+  h1, h2 {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 200;
+  }
+
+  h1 {
+    font-size: 72px;
+    line-height: 72px;
+  }
+
+  h2 {
+    margin: 0 0 20px;
+    font-size: 42px;
+    line-height: 50px;
+  }
+
+  .splash-img {
+    max-width: 100%;
+  }
+
+  form.splash-search {
+    input {
+      padding: 5px;
+      height: 35px;
+      border: none;
+      border-radius: 0;
+    }
+    input[type=text] {
+      margin-right: 10px;
+      width: calc(90% - 30px);
+      background-color: $bg-input;
+    }
+    input[type=submit] {
+      width: 10%;
+      background-color: $blue-darken;
+      color: $bg-input;
+      text-decoration: inherit;
+      font-weight: normal;
+      font-style: normal;
+      font-family: FontAwesome;
+    }
+  }
+
+  .arrow-readon {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    display: block;
+    margin-left: -25px;
+    width: 50px;
+    height: 30px;
+    color: #ffffff;
+    text-align: center;
+  }
+
+}
+
+.col-why {
+  img {
+    max-width: 55%;
+  }
+}
+
+button.btn.align-ol {
+  margin: 0 0 0 40px; /* Give each list item a left margin to make room for the numbers */
+  padding: 4px 8px;
+}
+
+.btn {
+  display: inline-block;
+  margin: 0 0 30px 0;
+  padding: 0;
+  height: 50px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 45px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  border: none;
+}
+
+.btn.btn-info {
+  color: #ffffff;
+  background-color: $blue-darken;
+  width: 360px;
+}
+
+.btn-switch, .btn-switch:link {
+
+  background-color: $button-switch-inactive;
+  color: $button-switch-text-inactive;
+  text-align: center;
+  text-transform: uppercase;
+
+  &:hover {
+    color: $button-switch-text;
+    text-decoration: none;
+  }
+
+  &.btn-switch-active, .btn-switch-active:link {
+    border-bottom: 8px solid $button-switch-active-line;
+    background-color: $button-switch-active;
+    color: $button-switch-text;
+  }
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.clear {
+  float: none;
+}
