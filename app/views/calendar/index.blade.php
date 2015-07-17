@@ -15,6 +15,12 @@
 
 @section('nav')
 <section class="nav-cals">
+
+    @foreach($calendars_raw as $calendar)
+        <label class="level--{{ $calendar->parent_id > 0 ? '2' : '1' }} active"><input
+                    type="checkbox">{{$calendar->name}}</label>
+    @endforeach
+
 </section>
 @if(Sentry::check() && Sentry::getUser()->hasAccess('admin'))
 <ul>

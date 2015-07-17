@@ -66,6 +66,7 @@ class CalendarViewController extends \BaseController
             ]),
             "org" => $school,
             "calendars" => json_encode($calendars),
+            "calendars_raw" => $calendars,
             "editableCalendars" => $userCalendars,
         ]);
     }
