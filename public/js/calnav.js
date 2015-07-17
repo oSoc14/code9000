@@ -29,22 +29,6 @@ var calnav = (function() {
   };
 
   var render = function(sources) {
-    var levels = {
-      1: 1
-    };
-    var glob = sources[0];
-    $.each(sources, function(index, cal) {
-      if (!levels[cal.parent_id]) {
-        levels[cal.id] = 1;
-      } else {
-        levels[cal.id] = levels[levels[cal.parent_id]] + 1;
-      }
-    })
-
-    $.each(sources, function(index, cal) {
-      renderCal(cal, levels[cal.parent_id]);
-    })
-
   };
 
   return {
