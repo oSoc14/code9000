@@ -10,10 +10,13 @@
       right: 'month,agendaWeek,agendaDay'
     },
     editable: true,
+    selectable: true,
+    unselectCancel: '.popover',
     firstDay: 1,
-    timeFormat:'H:mm',
+    timeFormat: 'H:mm',
     eventClick: editor.open,
-    dayClick: editor.open
+    select: editor.select,
+    unselect: editor.close
   });
 
 

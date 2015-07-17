@@ -10,17 +10,17 @@ var editor = (function() {
   var popoverOptions = {
     container: '#calendar',
     html: true,
-    placement: 'auto bottom',
+    placement: 'auto right',
     content: $('.new-event').html()
   };
 
   // Hide currently open popover
   var close = function() {
-    if (active.el) {
-      active.el.removeClass('event-editing');
-      active.el.popover('destroy');
-      active.el = null;
-    }
+    $('.input-date.d2').datetimepicker('destroy');
+    $('.input-date.d1').datetimepicker('destroy');
+    $('.input-time.t2').datetimepicker('destroy');
+    $('.input-time.t1').datetimepicker('destroy');
+    $('.popover').remove();
   };
 
   var calById = function(id) {
@@ -49,7 +49,6 @@ var editor = (function() {
   var init = function(callback) {
     var $year = $('.select-year');
     var $cals = $('.select-cals');
-    console.log(org.cals)
     var $glob = org.cals[0].id
     $.each(org.cals, function(index, cal) {
       if (cal.parent_id !== $glob) return;
@@ -100,9 +99,8 @@ var editor = (function() {
       if (active.id) {
         $.extend(active.ev, data);
         $('#calendar').fullCalendar('updateEvent', active.ev);
-      }
-      else{
-      active.id = data.id;
+      } else {
+        active.id = data.id;
         $('#calendar').fullCalendar('renderEvent', data);
       }
     }).error(function(error) {
@@ -110,53 +108,41 @@ var editor = (function() {
     });
   };
 
-  var open = function(clicked, event, view) {
+  // Default options
+  var d1Options = {
+    format: 'Y-m-d',
+    timepicker: false,
+    onChangeDateTime: logic,
+    onShow: logic
+  };
+  var d2Options = $.extend({}, d1Options);
+  var t1Options = {
+    format: 'H:i',
+    datepicker: false,
+    onChangeDateTime: logic,
+    onShow: logic
+  };
+  var t2Options = $.extend({}, t1Options);
+
+  // Show popover to create event
+  var select = function(start, end, jsEvent, view) {
 
     // Close current popover
     close();
 
-    // Only show popover in month view
-    if (!view.type == 'month') {
-      return;
-    }
-
-    // Default options
-    var d1Options = {
-      format: 'Y-m-d',
-      timepicker: false,
-      onChangeDateTime: logic,
-      onShow: logic
-    };
-    var d2Options = $.extend({}, d1Options);
-    var t1Options = {
-      format: 'H:i',
-      datepicker: false,
-      onChangeDateTime: logic,
-      onShow: logic
-    };
-    var t2Options = $.extend({}, t1Options);
-
     // Create new event or edit existing event
-    if (clicked._isAMomentObject) {
-      d1Options.value = clicked.format('YYYY-MM-DD');
-      t1Options.value = moment().format('HH:00');
-      d2Options.value = clicked.format('YYYY-MM-DD');
-      t2Options.value = moment().add(1, 'hour').format('HH:00');
-    } else {
-      d1Options.value = clicked.start.format('YYYY-MM-DD');
-      t1Options.value = clicked.start.format('HH:mm');
-      d2Options.value = clicked.end.format('YYYY-MM-DD');
-      t2Options.value = clicked.end.format('HH:mm');
-      active.ev = clicked;
-    }
+    d1Options.value = start.format('YYYY-MM-DD');
+    t1Options.value = start.format('HH:mm');
+    d2Options.value = end.format('YYYY-MM-DD');
+    t2Options.value = end.format('HH:mm');
 
     // Launch popover
-    active.el = $(event.target);
-    if (!active.el) return;
-    active.el.popover(popoverOptions);
-    active.el.popover('show');
-    active.el.addClass('event-editing');
-    active.id = clicked.id || 0;
+    var $target = $(jsEvent.target);
+    $target.popover(popoverOptions);
+    $target.popover('show');
+    $('.popover').on('click', function(e) {
+      e.stopPropagation();
+    });
 
     // Launch datetimepicker
     $('.input-date.d2').datetimepicker(d2Options);
@@ -164,14 +150,37 @@ var editor = (function() {
     $('.input-time.t2').datetimepicker(t2Options);
     $('.input-time.t1').datetimepicker(t1Options);
 
-    if (!active.id) {
-      $('.popover .btn-danger').addClass('invisible');
-    } else {
-      $('.input-title').val(active.ev.title);
-      $('.input-descr').val(active.ev.description);
-      $('.input-location').val(active.ev.location);
-      $('.input-cals option[value="' + active.ev.calendar_id + '"]').prop('selected', true);
-    }
+    $('.popover .btn-danger').addClass('invisible');
+  };
+
+  var open = function(ev, jsEvent, view) {
+
+    // Close current popover
+    close();
+
+    d1Options.value = ev.start.format('YYYY-MM-DD');
+    t1Options.value = ev.start.format('HH:mm');
+    d2Options.value = ev.end.format('YYYY-MM-DD');
+    t2Options.value = ev.end.format('HH:mm');
+    active.ev = ev;
+
+    // Launch popover
+    var $target = $(jsEvent.target);
+    $target.popover(popoverOptions);
+    $target.popover('show');
+    active.id = ev.id || 0;
+
+    // Launch datetimepicker
+    $('.input-date.d2').datetimepicker(d2Options);
+    $('.input-date.d1').datetimepicker(d1Options);
+    $('.input-time.t2').datetimepicker(t2Options);
+    $('.input-time.t1').datetimepicker(t1Options);
+
+    // Set input fields
+    $('.input-title').val(ev.title);
+    $('.input-descr').val(ev.description);
+    $('.input-location').val(ev.location);
+    $('.input-cals option[value="' + ev.calendar_id + '"]').prop('selected', true);
   };
 
   window.addEventListener('submit', create);
@@ -181,6 +190,7 @@ var editor = (function() {
     remove: remove,
     close: close,
     active: active,
+    select: select,
     init: init,
     logic: logic
   };
