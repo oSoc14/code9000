@@ -95,9 +95,7 @@
         <div class="col-md-8 col-md-offset-1">
             <a class="col-md-6 btn btn-switch btn-switch-active" href="#">Ik ben een leerkracht</a>
             <a class="col-md-6 btn btn-switch" href="#">Ik ben een ouder</a>
-            <iframe style="height:400px; width:100%;"
-                    src="https://www.youtube.com/embed/E1ODC0W9g1s?list=PLa2a9FJY91_0x1s4eq6mf9b91m3Pahv0G"
-                    frameborder="0" allowfullscreen></iframe>
+            <img src="/images/landing/video-placeholder.jpg" style="height:400px; width:100%;">
         </div>
     </div>
 </section>
