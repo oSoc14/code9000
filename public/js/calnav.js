@@ -2,7 +2,7 @@
 
 var calnav = (function() {
 
-  var nav = $('.nav-cals');
+  var nav = $('.navcals');
 
   var renderCal = function(cal, level) {
     var input = document.createElement('input');
@@ -28,10 +28,42 @@ var calnav = (function() {
     nav.append($label);
   };
 
-  var render = function(sources) {
+  var toggle = function(e) {
+    e.stopPropagation();
+    var $target = $(e.target);
+    if ($target.hasClass('level--1')) {
+      console.log('toggle')
+      nav.find('.level--0[data-parent="' + $target.data('cal') + '"]').toggle();
+    }
+  };
+
+  var change = function(e) {
+    e.stopPropagation();
+    var $target = $(e.target);
+    var id = $target.parent('label').data('cal');
+      console.log('change', id)
+
+    // Apply to calendar
+    if ($target.is(":checked")) {
+      $('#calendar').fullCalendar('addEventSource', calendars[id]);
+      $target.parent('label').addClass('active');
+    } else {
+      $('#calendar').fullCalendar('removeEventSource', calendars[id].url);
+      $target.parent('label').removeClass('active');
+    }
+  };
+
+  var init = function(e) {
+
+    // Toggle by year
+    nav.on('click', toggle);
+
+    // Toggle visibility
+    nav.find('input').on('change', change);
+
   };
 
   return {
-    render: render
+    init: init
   };
 })();

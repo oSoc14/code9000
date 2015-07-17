@@ -1,0 +1,23 @@
+.navcals {
+  margin: $gutter (-$gutter);
+  &>.level--0{
+    border-left: 10px solid transparent;
+    margin: 5px 0;
+    padding: 10px;
+    line-height: 20px;
+    opacity: 1;
+    &.active {
+      opacity: 1;
+    }
+  }
+  &>.level--1{
+    border-left: 10px solid transparent!important;
+    margin: 5px 0;
+    padding: 10px;
+    line-height: 20px;
+    opacity: .7;
+    &.active {
+      opacity: 1;
+    }
+  }
+}

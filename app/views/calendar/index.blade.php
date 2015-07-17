@@ -6,6 +6,7 @@
 <script type="text/javascript">
     var org = {{ $school }};
     var user = {{ $user }};
+    var root = {{ $root }};
     var calendars = {{ $calendars }};
     var urls = {{ json_encode([
       'events' => route('api.events')
@@ -14,12 +15,21 @@
 @stop
 
 @section('nav')
-<section class="nav-cals">
+<section class="navcals">
 
-    @foreach($calendars_raw as $calendar)
-        <label class="level--{{ $calendar->parent_id > 0 ? '2' : '1' }} active"><input
-                    type="checkbox">{{$calendar->name}}</label>
-    @endforeach
+  @foreach($calendars_raw as $cal)
+    @if(!$cal->id == $root->id)
+    <p>
+      <button type="button" name="button">Alleen schoolkalender</button>
+    </p>
+    @elseif($cal->parent_id == $root->id)
+    <button class="level--1" type="button" style="border-color:{{$cal->color}}" data-cal="{{$cal->id}}">{{$cal->name}}</button>
+    @else
+    <label class="level--0" style="border-color:{{$cal->color}};display:none;" data-cal="{{$cal->id}}" data-parent="{{$cal->parent_id}}">
+      <input type="checkbox">{{$cal->name}}
+    </label>
+    @endif
+  @endforeach
 
 </section>
 @if(Sentry::check() && Sentry::getUser()->hasAccess('admin'))
