@@ -125,3 +125,14 @@ if ("undefined" == typeof jQuery)throw new Error("Bootstrap's JavaScript require
         }), e.call(n, r, this)
     })
 }(jQuery);
+
+
+$(document).ready(function () {
+    $('#toggle-menu-collapse').click(function () {
+        $('#menu-collapse').toggle();
+    });
+
+    if ($(window).width() < 827) {
+        $('#menu-collapse').hide();
+    }
+});

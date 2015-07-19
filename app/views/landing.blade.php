@@ -42,15 +42,18 @@
 <body id="top">
 <nav id="topnav">
     <div class="container">
-        <ul class="nav">
+        <a class="mobile-header" id="toggle-menu-collapse" href="#"><img class="nav" src="images/landing/logo_white.png"
+                                                                         alt="educal"><i
+                    class="fa fa-bars right fa-2x"></i>
+        </a>
+        <ul class="nav" id="menu-collapse">
             <li class="brand"><a class="nav brand" href="#top"><img class="nav" src="images/landing/logo_white.png"
                                                                     alt="educal"></a></li>
             <li><a class="nav " href="#werking">Hoe werkt het</a></li>
             <li><a class="nav " href="#waarom">Waarom educal</a></li>
             <li><a class="nav " href="#school">Educal voor mijn school</a></li>
-        </ul>
-        <ul class="nav right">
-            <li><a class="nav-login" href="#login" data-toggle="modal" data-target="#loginmodal">Log in</a></li>
+            <li class="right"><a class="nav-login" href="#login" data-toggle="modal" data-target="#loginmodal">Log
+                    in</a></li>
         </ul>
     </div>
 </nav>
@@ -93,8 +96,8 @@
         </div>
 
         <div class="col-md-8 col-md-offset-1">
-            <a class="col-md-6 btn btn-switch btn-switch-active" href="#">Ik ben een leerkracht</a>
-            <a class="col-md-6 btn btn-switch" href="#">Ik ben een ouder</a>
+            <a class="btn btn-switch btn-switch-active" href="#">Ik ben een leerkracht</a>
+            <a class="btn btn-switch" href="#">Ik ben een ouder</a>
             <img src="/images/landing/video-placeholder.jpg" style="height:400px; width:100%;">
         </div>
     </div>
@@ -106,7 +109,7 @@
             <h2>Waarom educal</h2>
         </div>
 
-        <div class="col-md-4 col-why">
+        <div class="col-md-4 col-sm-4 col-sm-offset-4 col-why">
             <img src="images/landing/checkmark.svg" alt="checkmark">
 
             <h3>Makkelijk in gebruik</h3>
@@ -116,7 +119,7 @@
             </p>
         </div>
 
-        <div class="col-md-4 col-why">
+        <div class="col-md-4 col-sm-4 col-sm-offset-4 col-why">
             <img src="images/landing/money.svg" alt="checkmark">
 
             <h3>Gratis</h3>
@@ -126,7 +129,7 @@
             </p>
         </div>
 
-        <div class="col-md-4 col-why">
+        <div class="col-md-4  col-sm-4 col-sm-offset-4  col-why">
             <img src="images/landing/link.svg" alt="checkmark">
 
             <h3>Blijf verbonden</h3>
@@ -189,7 +192,7 @@
                     <button type="submit"
                             class="btn btn-info btn-fullwidth">{{ ucfirst(trans('educal.login'))}}</button>
                 <a href="#" data-dismiss="modal" data-toggle="modal"
-                       data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
+                   data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
             </div>
             {{ Form::close(), PHP_EOL }}
         </div>
