@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>{{ HTML::entities('EduCal') }}</title>
+  <title>{{ HTML::entities('educal') }}</title>
   <!-- Google Webfont -->
   {{ HTML::style("http://fonts.googleapis.com/css?family=Roboto:400,500") }}
   <!-- Global styles for this template -->
