@@ -1,0 +1,107 @@
+$nav-height: 60px;
+$blue: #8fafc6;
+
+nav {
+  height: $nav-height;
+  background-color: rgba($blue, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  @media screen and(max-width: 827px) {
+    height: auto;
+    min-height: $nav-height;
+  }
+
+  .container {
+    height: $nav-height;
+
+    @media screen and (max-width: 992px) {
+      width: 100%;
+    }
+
+    .mobile-header {
+      display: none;
+      height: $nav-height;
+
+      width: 100%;
+      i, i:hover {
+        height: 50px;
+        margin: 0;
+        line-height: 38px;
+        padding: 5px 0 10px;
+        color: #ffffff
+      }
+    }
+    @media screen and(max-width: 827px) {
+      height: auto;
+      min-height: $nav-height;
+      .mobile-header {
+        display: block;
+      }
+    }
+
+  }
+
+  ul.nav {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: $nav-height;
+    line-height: $nav-height;
+
+    li {
+      display: inline-block;
+      @media screen and (max-width: 827px) {
+        display: block;
+        width: 100%;
+
+        &.brand {
+          // hide logo in menu
+          display: none;
+        }
+      }
+
+      margin: 0;
+      padding: 0;
+      height: $nav-height;
+      list-style: none;
+
+    }
+  }
+  a {
+    display: inline-block;
+    @media screen and (max-width: 827px) {
+      display: block;
+      width: 100%;
+      margin: 0;
+    }
+    margin: 0 10px;
+    padding: 5px;
+    height: $nav-height;
+
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+
+    &:hover {
+      border-bottom: 3px solid #ffffff;
+      background: none;
+      text-decoration: none;
+      color: #ffffff;
+      @media screen and (max-width: 827px) {
+        border-bottom: none;
+      }
+    }
+    &.brand:hover {
+      border-bottom: none;
+    }
+  }
+  img {
+    padding: 0 0 10px;
+    max-height: $nav-height - 10px;
+  }
+}

@@ -9,11 +9,6 @@ $button-switch-active-line: $blue;
 $button-switch-text-inactive: $button-switch-active;
 $button-switch-inactive: #dae6ee;
 
-$nav-height: 60px;
-$pullup: 60px;
-
-$input-valid: #007b8a;
-$input-invalid: #c83233;
 
 @import "normalize";
 @import "bootstrap_landing";
@@ -36,120 +31,14 @@ body {
   font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-nav {
-  height: $nav-height;
-  background-color: rgba($blue, 0.8);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-
-  @media screen and(max-width: 827px) {
-    height: auto;
-    min-height: $nav-height;
-  }
-
-  .container {
-    height: $nav-height;
-
-    @media screen and (max-width: 992px) {
-      width: 100%;
-    }
-
-    .mobile-header {
-      display: none;
-      height: $nav-height;
-
-      width: 100%;
-      i, i:hover {
-        height: 50px;
-        margin: 0;
-        line-height: 38px;
-        padding: 5px 0 10px;
-        color: #ffffff
-      }
-    }
-    @media screen and(max-width: 827px) {
-      height: auto;
-      min-height: $nav-height;
-      .mobile-header {
-        display: block;
-      }
-    }
-
-  }
-
-  ul.nav {
-    display: block;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    height: $nav-height;
-    line-height: $nav-height;
-
-    li {
-      display: inline-block;
-      @media screen and (max-width: 827px) {
-        display: block;
-        width: 100%;
-
-        &.brand {
-          // hide logo in menu
-          display: none;
-        }
-      }
-
-      margin: 0;
-      padding: 0;
-      height: $nav-height;
-      list-style: none;
-
-    }
-  }
-  a {
-    display: inline-block;
-    @media screen and (max-width: 827px) {
-      display: block;
-      width: 100%;
-      margin: 0;
-    }
-    margin: 0 10px;
-    padding: 5px;
-    height: $nav-height;
-
-    color: #ffffff;
-    text-transform: uppercase;
-    font-weight: 700;
-
-    &:hover {
-      border-bottom: 3px solid #ffffff;
-      background: none;
-      text-decoration: none;
-      color: #ffffff;
-      @media screen and (max-width: 827px) {
-        border-bottom: none;
-      }
-    }
-    &.brand:hover {
-      border-bottom: none;
-    }
-  }
-  img {
-    padding: 0 0 10px;
-    max-height: $nav-height - 10px;
-  }
-}
+@import "staticnav";
 
 section.page {
   padding-top: 2* $nav-height;
   min-height: 100%;
   background-color: #ffffff;
 
-  .col-pullup {
-    background-color: #ffffff;
-  }
-  &:nth-of-type(odd), &:nth-of-type(odd).col-pullup {
+  &:nth-of-type(odd) {
     background: #f3f3f3;
   }
 
@@ -353,70 +242,9 @@ button.btn.align-ol {
   }
 }
 
-.modal-content {
-  border-radius: 0;
-  padding: 40px;
-  .modal-header {
-    border: none;
-    padding: 0;
-    h2 {
-      font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-weight: 400;
-      margin: 0 0 20px;
-      span {
-        color: #8e8e8e;
-      }
-    }
-  }
-  .modal-body {
-    padding: 0;
-  }
+@import "loginmodal";
 
-  .form-group {
-    margin: 20px 0;
-    label {
-      width: calc(30% - 10px);
-      display: inline-block;
-      margin: 0;
-      padding: 0;
-      font-weight: 400;
-      height: 34px;
-      line-height: 34px;
-    }
-    input {
-      width: calc(70% - 10px);;
-      display: inline-block;
-      margin: 0;
-      padding: 0;
-      box-shadow: none;
-      font-weight: 400;
-      border: none;
-      border-bottom: 1px solid #909090;
-      -webkit-border-radius: 0;
-      -moz-border-radius: 0;
-      border-radius: 0;
-      height: 34px;
-
-      &:invalid {
-        border-bottom: 1px solid $input-invalid;
-
-        &:after {
-          color: $input-invalid;
-          text-decoration: inherit;
-          font-weight: 200;
-          font-style: normal;
-          content: '\00d7';
-        }
-      }
-      &:valid {
-        border-bottom: 1px solid $input-valid;
-      }
-    }
-  }
-
-}
-
-.alert{
+.alert {
   margin-left: 29%;
   background: none;
   border: 0;

@@ -236,6 +236,12 @@ Route::get('/calendar', [
     'uses' => 'CalendarViewController@goToCalendar'
 ]);
 
+// Create a new school
+Route::get('/register', [
+    'as' => 'school.register',
+    'uses' => 'SchoolController@showRegisterForm'
+]);
+
 Route::group(['prefix' => 'admin'], function () {
     // Index, lists all groups
     Route::get('/', [
@@ -292,7 +298,6 @@ Route::group(['prefix' => '{org_slug}'], function () {
         'as' => 'export.index',
         'uses' => 'IcalCalendarController@index'
     ])->where('calendar_slug', '[0-9A-Za-z_\-/ ]+');
-
 
     // Create a new school
     Route::post('/register', [

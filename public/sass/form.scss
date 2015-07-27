@@ -1,0 +1,114 @@
+@import "normalize";
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,300,700);
+@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
+@import "bootstrap_landing";
+
+$blue: #8fafc6;
+
+$input-valid: #007b8a;
+$input-invalid: #c83233;
+
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  position: relative;
+
+  font-weight: 400;
+  font-size: 17px;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+@import "staticnav";
+.background {
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background-color: $blue;
+}
+
+section.form {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 768px;
+  margin-left: -384px;
+  height: 498px;
+  margin-top: -166px;
+
+  background-color: #ffffff;
+  padding: 40px;
+
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.60);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.60);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.60);
+
+  .form-group {
+    margin: 20px 0;
+    label {
+      width: calc(30% - 10px);
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      font-weight: 400;
+      height: 34px;
+      line-height: 34px;
+    }
+    input {
+      width: calc(70% - 10px);;
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+      font-weight: 400;
+      border: none;
+      border-bottom: 1px solid #909090;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+      height: 34px;
+
+      &:invalid {
+        border-bottom: 1px solid $input-invalid;
+
+        &:after {
+          color: $input-invalid;
+          text-decoration: inherit;
+          font-weight: 200;
+          font-style: normal;
+          content: '\00d7';
+        }
+      }
+      &:valid {
+        border-bottom: 1px solid $input-valid;
+      }
+    }
+  }
+
+}
+
+@import "loginmodal";
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.clear {
+  float: none;
+}

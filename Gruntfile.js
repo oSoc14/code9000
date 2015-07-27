@@ -19,7 +19,8 @@ module.exports = function(grunt) {
             files: {
                 'public/css/calendar.css': 'public/sass/screen.scss',
                 'public/css/admin.css': 'public/sass/admin.scss',
-                'public/css/landing.css': 'public/sass/landing.scss'
+                'public/css/landing.css': 'public/sass/landing.scss',
+                'public/css/form.css': 'public/sass/form.scss'
             }
         }
     },
