@@ -371,4 +371,9 @@ class SchoolController extends \BaseController
     {
         return School::where('slug', $school_slug)->firstOrFail();
     }
+
+    public static function showRegisterForm()
+    {
+        return View::make('register');
+    }
 }

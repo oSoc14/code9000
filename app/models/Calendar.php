@@ -75,8 +75,6 @@ class Calendar extends Eloquent
                 }
             }
         } catch (Exception $e) {
-            dd($e);
-
             return false;
         }
 
