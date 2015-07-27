@@ -168,25 +168,22 @@
                 <h2>Log in<span> - voor medewerkers</span></h2>
             </div>
             <div class="modal-body">
-                @if(Session::has('errorMessage'))
-                    <div class="alert alert-danger" role="alert">
-                        <strong>{{ucfirst(trans('educal.errors'))}}</strong>
-                        <ul>
-                            <li>{{ Session::get('errorMessage') }}</li>
-                        </ul>
-                    </div>
-                @endif
                     {{ Form::open([
                        'route' => 'user.auth',
                        'data-ajax' => 'false',
                        ]), PHP_EOL }}
                     <div class="form-group">
                         {{Form::label('lemail', ucfirst(trans('educal.email')))}}
-                        {{Form::email('lemail', null , ['class'=>'form-control right', 'required' => true])}}
+                        {{Form::email('lemail', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer e-mailadres in'])}}
                     </div>
                     <div class="form-group">
                         <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
-                        <input type="password" class="form-control right" id="login-password" name="password" required>
+                        <input type="password" class="form-control right" id="login-password" name="password" placeholder="Voer wachtwoord in" required>
+                        @if(Session::has('errorMessage'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ Session::get('errorMessage') }}
+                        </div>
+                        @endif
                     </div>
 
                     <button type="submit"
