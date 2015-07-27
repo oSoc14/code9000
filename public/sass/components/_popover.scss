@@ -61,6 +61,11 @@ $line-color: #ccc !default;
   .btn-danger {
     color: #900;
   }
+  .close{
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 }
 .dtpicker {
   @include flexbox;
@@ -100,5 +105,11 @@ $line-color: #ccc !default;
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,.3);
+  }
+}
+.read-event {
+  h1,
+  p {
+    padding: 10px $gutter-popover;
   }
 }

@@ -52,6 +52,17 @@
   </div>
 </div>
 
+<div class="hidden read-event-template">
+  <div class="read-event">
+    <div class="close">&times;</div>
+    <h1 class="read-title divider-btm"></h1>
+    <p class="divider-btm">
+      <time class="read-dt"></time>
+    </p>
+    <p class="read-location divider-btm"></p>
+    <p class="read-descr divider-btm"></p>
+  </div>
+</div>
 <div class="hidden new-event">
   <form>
     <p class="divider-btm">

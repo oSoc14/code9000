@@ -118,7 +118,7 @@ var editor = (function() {
     // Close current popover
     close();
 
-    if(!user.logged_in) return;
+    if (!user.logged_in) return;
 
     // Create new event or edit existing event
     d1Options.value = start.format('YYYY-MM-DD');
@@ -148,31 +148,71 @@ var editor = (function() {
     // Close current popover
     close();
 
-    d1Options.value = ev.start.format('YYYY-MM-DD');
-    t1Options.value = ev.start.format('HH:mm');
-    d2Options.value = ev.end.format('YYYY-MM-DD');
-    t2Options.value = ev.end.format('HH:mm');
-    active.ev = ev;
-
-    $(body).toggleClass('ev-editable', ev.editable);
-
-    // Launch popover
     var $target = $(jsEvent.target);
-    $target.popover(popoverOptions);
-    $target.popover('show');
-    active.id = ev.id || 0;
 
-    // Launch datetimepicker
-    $('.input-date.d2').datetimepicker(d2Options);
-    $('.input-date.d1').datetimepicker(d1Options);
-    $('.input-time.t2').datetimepicker(t2Options);
-    $('.input-time.t1').datetimepicker(t1Options);
+    if (ev.editable) {
 
-    // Set input fields
-    $('.input-title').val(ev.title);
-    $('.input-descr').val(ev.description);
-    $('.input-location').val(ev.location);
-    $('.input-cals option[value="' + ev.calendar_id + '"]').prop('selected', true);
+      d1Options.value = ev.start.format('YYYY-MM-DD');
+      t1Options.value = ev.start.format('HH:mm');
+      d2Options.value = ev.end.format('YYYY-MM-DD');
+      t2Options.value = ev.end.format('HH:mm');
+      active.ev = ev;
+      active.id = ev.id || 0;
+
+      // Launch popover
+      $target.popover(popoverOptions);
+      $target.popover('show');
+
+      // Launch datetimepicker
+      $('.input-date.d2').datetimepicker(d2Options);
+      $('.input-date.d1').datetimepicker(d1Options);
+      $('.input-time.t2').datetimepicker(t2Options);
+      $('.input-time.t1').datetimepicker(t1Options);
+
+      // Set input fields
+      $('.input-title').val(ev.title);
+      $('.input-descr').val(ev.description);
+      $('.input-location').val(ev.location);
+      $('.input-cals option[value="' + ev.calendar_id + '"]').prop('selected', true);
+    } else {
+
+      // Set input fields
+      $('.read-title').text(ev.title);
+      $('.read-descr').text(ev.description);
+      $('.read-location').text(ev.location);
+
+      var a = ev.start.format('MMM');
+      var b = ev.start.format('DD');
+      var c = ev.end.format('MMM');
+      var d = ev.end.format('DD');
+
+      // Create readable date
+      var readableDate = b;
+      if (ev.allDay || ev.start.format('HHmm') === '0000') {
+        if (a === c && b == d - 1) {
+          readableDate += ev.end.format(' MMMM');
+        } else if (a === c) {
+          readableDate += ev.end.format(' - DD MMMM');
+        } else {
+          readableDate += ev.start.format(' MMMM') + ev.end.format(' - DD MMMM');
+        }
+      } else {
+        readableDate += ev.start.format(' MMMM HH:mm');
+        if (a === c && b === d) {
+          readableDate += ev.end.format(' - HH:mm');
+        } else {
+          readableDate += ev.end.format(' - DD MMMM HH:mm');
+        }
+      }
+      $('.read-dt').text(readableDate);
+      $target.popover({
+        container: '#calendar',
+        html: true,
+        placement: 'auto right',
+        content: $('.read-event-template').html()
+      });
+      $target.popover('show');
+    }
   };
 
   window.addEventListener('submit', create);
