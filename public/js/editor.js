@@ -154,6 +154,8 @@ var editor = (function() {
     t2Options.value = ev.end.format('HH:mm');
     active.ev = ev;
 
+    $(body).toggleClass('ev-editable', ev.editable);
+
     // Launch popover
     var $target = $(jsEvent.target);
     $target.popover(popoverOptions);
