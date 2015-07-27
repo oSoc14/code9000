@@ -140,15 +140,17 @@ class CalendarController extends \BaseController
      */
     public static function getAppointmentsBySlugs($school_slug, $calendar_slugs)
     {
-        $slugs = explode('/', $calendar_slugs);
-        $appointments = [];
+        $calendar_slugs_array = explode('/', $calendar_slugs);
+        $appointments = array();
 
-        foreach ($slugs as $slug) {
+        foreach ($calendar_slugs_array as $slug) {
 
             try {
+                $calendar = CalendarController::getCalendar($school_slug,
+                    $slug);
 
-                $appointments += CalendarController::getAppointments(CalendarController::getCalendar($school_slug,
-                    $slug));
+                $appointments += CalendarController::getAppointments($calendar);
+
             } catch (Illuminate\Database\Eloquent\ModelNotFoundException $e) {
                 // ignore invalid calendars
             }
@@ -165,10 +167,8 @@ class CalendarController extends \BaseController
     public static function getAppointments($calendar)
     {
         // Create an empty appointments array, which we will fill with appointments to render later
-        $appointments = [];
+        $appointments = array();
 
-        // TODO: Change calendar handling, base it off calendar and school ID
-        // TODO: Add support for entire school export (all calendars)
         // Load appointments based on calendar, attach calendar information to appointment
         $calendar->load('appointments.calendar');
 
@@ -184,29 +184,28 @@ class CalendarController extends \BaseController
         // TODO: fix code duplication!
 
         foreach ($calendar->appointments as $appointment) {
-            $da = new DateTime($appointment->start_date);
+            $da = new DateTime($appointment->start);
 
             // Set the limits for what appointments to get (1y in past till 1y in future)
             // If the appointment is within the limits, add it to the $appointments array
             if ($da > $dsta && $da < $dend) {
-                array_push($appointments, $appointment);
+                $appointments[$appointment->id] = $appointment;
             }
         }
 
         // Add all parent calendars
         while ($calendar->parent_id > 0) {
-
+            $calendar = $calendar::find($calendar->parent_id);
+            $calendar->load('appointments');
             foreach ($calendar->appointments as $appointment) {
-                $da = new DateTime($appointment->start_date);
-
+                $da = new DateTime($appointment->start);
                 // Set the limits for what appointments to get (1y in past till 1y in future)
                 // If the appointment is within the limits, add it to the $appointments array
                 if ($da > $dsta && $da < $dend) {
-                    array_push($appointments, $appointment);
+                    $appointments[$appointment->id] = $appointment;
+
                 }
             }
-            $calendar = $calendar::find($calendar->parent_id);
-            $calendar->load('appointments');
         }
 
         return $appointments;

@@ -11,13 +11,13 @@
 |
 */
 
-if(Session::has('lang')){
+if (Session::has('lang')) {
     //Set the language
     App::setLocale(Session::get('lang'));
 }
 
 Route::get('/', [
-    'as'   => 'landing',
+    'as' => 'landing',
     'uses' => 'HomeController@showWelcome'
 ]);
 
@@ -25,17 +25,17 @@ Route::get('/', [
 Route::get('about', [
     'as' => 'about',
     function () {
-    return View::make('about');
-}]);
+        return View::make('about');
+    }
+]);
 
 // Info page
 Route::get('help', [
     'as' => 'help',
     function () {
-  return View::make('help');
-}]);
-
-
+        return View::make('help');
+    }
+]);
 
 
 Route::group(['prefix' => 'profile'], function () {
@@ -49,7 +49,7 @@ Route::group(['prefix' => 'profile'], function () {
 
     // Log user out TODO: post?
     Route::get('/logout', [
-        'as'   => 'user.logout',
+        'as' => 'user.logout',
         'before' => 'guest',
         'uses' => 'UserController@logout'
     ]);
@@ -77,7 +77,7 @@ Route::group(['prefix' => 'profile'], function () {
 
     // Update a user
     Route::post('/{id}', [
-        'as'   => 'user.update',
+        'as' => 'user.update',
         'before' => 'auth',
         'uses' => 'UserController@updateUser'
     ])->where('id', '[0-9]+');
@@ -104,7 +104,7 @@ Route::group(['prefix' => 'profile'], function () {
 
     // Destroy a user
     Route::delete('/{id}', [
-        'as'   => 'user.removeUserFromSchool',
+        'as' => 'user.removeUserFromSchool',
         'before' => 'auth',
         'uses' => 'UserController@removeUserFromSchool'
     ])->where('id', '[0-9]+');
@@ -282,6 +282,7 @@ Route::group(['prefix' => '{org_slug}'], function () {
         }
     ]);
 
+    // e.g. educal.dev/school/calendar1/calendar2.ics to compile an ics file for calendar 1 and 2
     Route::get('/{calendar_slug}.ics', [
         'as' => 'export.ics',
         'uses' => 'IcalCalendarController@index'
