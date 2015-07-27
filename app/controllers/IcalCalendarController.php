@@ -18,11 +18,10 @@ class IcalCalendarController extends \BaseController
      */
     public function index($school_slug, $calendar_slug)
     {
-        // Create an empty appointments array, which we will fill with appointments to render later
-
         $appointments = CalendarController::getAppointmentsBySlugs($school_slug, $calendar_slug);
         // Compose iCal with the help of the eluceo plugin
-        $calendar = self::composeIcal($appointments);
+        $title = 'kalender' . '-' . $school_slug . '-' . str_replace('/', '-', $calendar_slug);
+        $calendar = self::composeIcal($title, $appointments);
 
         return $calendar->render();
     }
@@ -33,7 +32,7 @@ class IcalCalendarController extends \BaseController
      * @param $appointments
      * @return \Eluceo\iCal\Component\Calendar
      */
-    public function composeIcal($appointments)
+    public function composeIcal($title, $appointments)
     {
         // Set default timezone (PHP 5.4)
         date_default_timezone_set('Europe/Berlin');
@@ -97,8 +96,8 @@ class IcalCalendarController extends \BaseController
         }
 
         // Set headers
-        header('Content-Type: text/calendar; charset=utf-8');
-        header('Content-Disposition: attachment; filename="cal.ics"');
+        header("Content-Type: text/calendar; charset=utf-8");
+        header("Content-Disposition: attachment; filename=\"$title.ics\"");
 
         // Output
         return $calendar;
