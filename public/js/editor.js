@@ -21,6 +21,7 @@ var editor = (function() {
     $('.input-time.t2').datetimepicker('destroy');
     $('.input-time.t1').datetimepicker('destroy');
     $('.popover').remove();
+    active.id = 0;
   };
 
   var calById = function(id) {
