@@ -23,10 +23,10 @@
       <button type="button" name="button">Alleen schoolkalender</button>
     </p>
     @elseif($cal->parent_id == $root->id)
-    <button class="level--1" type="button" style="border-color:{{$cal->color}}" data-cal="{{$cal->id}}">{{$cal->name}}</button>
+    <button class="level--1" type="button" data-cal="{{$cal->id}}">{{$cal->name}}</button>
     @else
-    <label class="level--0" style="border-color:{{$cal->color}};display:none;" data-cal="{{$cal->id}}" data-parent="{{$cal->parent_id}}">
-      <input type="checkbox">{{$cal->name}}
+    <label class="level--0" style="display:none;" data-color="{{$cal->color}}" data-cal="{{$cal->id}}" data-parent="{{$cal->parent_id}}">
+      <span class="checkbox"><input type="checkbox"></span>{{$cal->name}}
     </label>
     @endif
   @endforeach
