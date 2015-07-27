@@ -1,22 +1,42 @@
 .navcals {
+  @include user-select(none);
   margin: $gutter (-$gutter);
   &>.level--0{
-    border-left: 10px solid transparent;
-    margin: 5px 0;
-    padding: 10px;
+    padding: 10px $gutter;
     line-height: 20px;
-    opacity: 1;
+    opacity: .7;
+    &.active {
+      opacity: 1;
+    }
+    &:hover{
+      background: rgba(0,0,0,.5);
+    }
+  }
+  &>.level--1{
+    margin: 5px 0;
+    padding: 10px $gutter;
+    line-height: 20px;
+    opacity: .7;
     &.active {
       opacity: 1;
     }
   }
-  &>.level--1{
-    border-left: 10px solid transparent!important;
-    margin: 5px 0;
-    padding: 10px;
-    line-height: 20px;
-    opacity: .7;
-    &.active {
+  .checkbox{
+    transition: background .3s;
+    vertical-align: middle;
+    height: 16px;
+    width: 16px;
+    border-radius: 2px;
+    display: inline-block;
+    text-align: center;
+    margin-right: .5em;
+  }
+  input[type='checkbox']{
+    transition: opacity .3s;
+    opacity: 0;
+  }
+  &:hover{
+    input[type='checkbox']{
       opacity: 1;
     }
   }

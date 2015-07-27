@@ -40,16 +40,19 @@ var calnav = (function() {
   var change = function(e) {
     e.stopPropagation();
     var $target = $(e.target);
-    var id = $target.parent('label').data('cal');
+    var $label = $target.closest('label');
+    var id = $label.data('cal');
       console.log('change', id)
 
     // Apply to calendar
     if ($target.is(":checked")) {
       $('#calendar').fullCalendar('addEventSource', calendars[id]);
-      $target.parent('label').addClass('active');
+      $label.addClass('active');
+      $label.find('.checkbox').css('background', $label.data('color'));
     } else {
       $('#calendar').fullCalendar('removeEventSource', calendars[id].url);
-      $target.parent('label').removeClass('active');
+      $label.removeClass('active');
+      $label.find('.checkbox').css('background', 'rgba(0,0,0,0)');
     }
   };
 
