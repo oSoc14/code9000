@@ -127,6 +127,9 @@ nav {
       background: none;
       text-decoration: none;
       color: #ffffff;
+      @media screen and (max-width: 827px) {
+        border-bottom: none;
+      }
     }
     &.brand:hover {
       border-bottom: none;
@@ -291,6 +294,7 @@ section.splash {
 button.btn.align-ol {
   margin: 0 0 0 40px; /* Give each list item a left margin to make room for the numbers */
   padding: 4px 8px;
+  max-width: calc(100% - 40px); // set maximum for responsive view
 }
 
 .btn {
@@ -328,8 +332,8 @@ button.btn.align-ol {
   text-align: center;
   text-transform: uppercase;
   width: 50%;
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 0;
+  margin-right: 0;
   display: inline-block;
   float: left;
 
@@ -342,6 +346,10 @@ button.btn.align-ol {
     border-bottom: 8px solid $button-switch-active-line;
     background-color: $button-switch-active;
     color: $button-switch-text;
+  }
+
+  @media screen and (max-width: 540px) {
+    font-size: 12px;
   }
 }
 
