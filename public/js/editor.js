@@ -180,6 +180,7 @@ var editor = (function() {
       $('.read-title').text(ev.title);
       $('.read-descr').text(ev.description);
       $('.read-location').text(ev.location);
+      $('.read-cal').text('Kalender ' + calendars[ev.calendar_id].name);
 
       var a = ev.start.format('MMM');
       var b = ev.start.format('DD');

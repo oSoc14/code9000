@@ -61,6 +61,7 @@
     </p>
     <p class="read-location divider-btm"></p>
     <p class="read-descr divider-btm"></p>
+    <p class="read-cal divider-btm"></p>
   </div>
 </div>
 <div class="hidden new-event">
