@@ -135,4 +135,11 @@ $(document).ready(function () {
     if ($(window).width() < 827) {
         $('#menu-collapse').hide();
     }
+
+
+
+    // Hacky way of persisting the login modal on failed login
+    if ($(".modal-body .alert").length) {
+        $('#loginmodal').modal('show');
+    }
 });
