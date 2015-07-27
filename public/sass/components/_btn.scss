@@ -1,0 +1,10 @@
+.btn{
+  display: inline-block;
+  background: none;
+  text-decoration: none;
+  padding: .5rem 1rem;
+}
+.btn-primary{
+  color: #fff;
+  background: $brand;
+}
