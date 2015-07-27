@@ -7,7 +7,7 @@
     var org = {{ $school }};
     var user = {{ $user }};
     var root = {{ $root }};
-    var calendars = {{ $calendars }};
+    var calendars = {{ json_encode($calendars) }};
     var urls = {{ json_encode([
       'events' => route('api.events')
     ]) }};
@@ -17,7 +17,7 @@
 @section('nav')
 <section class="navcals">
 
-  @foreach($calendars_raw as $cal)
+    @foreach($calendars as $cal)
     @if(!$cal->id == $root->id)
     <p>
       <button type="button" name="button">Alleen schoolkalender</button>

@@ -42,7 +42,6 @@ class CalendarViewController extends \BaseController
         $orgCalendars = Calendar::where('school_id', $school->id)->get();
         // Loop through calendars to get all appointments
         foreach ($orgCalendars as $calendar) {
-            $calendar->url = route("api.orgCalendarEvents", [$calendar->id]);
             $calendar->load("appointments");
             $calendars[$calendar->id] = $calendar;
             if(!$calendar->parent_id) $root = $calendar;
@@ -67,8 +66,7 @@ class CalendarViewController extends \BaseController
             ]),
             "org" => $school,
             "root" => $root,
-            "calendars" => json_encode($calendars),
-            "calendars_raw" => $calendars,
+            "calendars" => $calendars,
             "editableCalendars" => $userCalendars,
         ]);
     }

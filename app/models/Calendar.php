@@ -10,6 +10,7 @@
  */
 class Calendar extends Eloquent
 {
+    protected $appends = array('url', 'editable');
 
     /**
      * Returns the group's School.
@@ -18,7 +19,7 @@ class Calendar extends Eloquent
      */
     public function school()
     {
-        return $this->belongsTo('School','school_id','id');
+        return $this->belongsTo('School', 'school_id', 'id');
     }
 
     /**
@@ -28,7 +29,7 @@ class Calendar extends Eloquent
      */
     public function appointments()
     {
-        return $this->hasMany('Appointment','calendar_id','id');
+        return $this->hasMany('Appointment', 'calendar_id', 'id');
     }
 
     /**
@@ -61,4 +62,29 @@ class Calendar extends Eloquent
         return Calendar::where('slug', $slug)->first();
     }
 
+
+    public function getEditableAttribute()
+    {
+        try {
+            if (!Sentry::check()) {
+                return false;
+            }
+            foreach (Sentry::getUser()->Calendars as $calendar) {
+                if ($calendar->id == $this->id) {
+                    return true;
+                }
+            }
+        } catch (Exception $e) {
+            dd($e);
+
+            return false;
+        }
+
+        return false;
+    }
+
+    public function getUrlAttribute()
+    {
+        return route("api.orgCalendarEvents", [$this->id]);
+    }
 }
