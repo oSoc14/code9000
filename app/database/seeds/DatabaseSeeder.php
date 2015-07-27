@@ -115,7 +115,7 @@ class DatabaseSeeder extends Seeder
                 $color = randomColor('j' . $j . $o->school_id);
                 $y = new Calendar();
                 $y->name = $j . (($j == 1) ? 'ste' : 'de') . ' jaar';
-                $y->slug = 'j' . $j . $o->school_id;
+                $y->slug = 'j' . $j;
                 $y->description = 'events voor kindjes die even oud zijn';
                 $y->color = $color;
                 $y->school_id = $o->school_id;
@@ -149,7 +149,7 @@ class DatabaseSeeder extends Seeder
                 for ($k=0; $k < 3; $k++) {
                     $c = new Calendar();
                     $c->name = 'Klas ' . $j . $letter[$k];
-                    $c->slug = $j . $letter[$k] . $o->school_id;
+                    $c->slug = $j . $letter[$k];
                     $c->description = 'events voor onze klas';
                     $c->color = $color;
                     $c->school_id = $o->school_id;

@@ -11,8 +11,8 @@ class IcalCalendarController extends \BaseController
     /**
      * Find correct appointments depending on $school and $calendar
      * Process these appointments and render them to an .ics file which will be returned for download
-     *
-     * @param  $calendar_id int the calendar ID
+     * @param  $school_slug int the school slug
+     * @param  $calendar_slug int the calendar slug
      * @return mixed cal.ics download file
      *
      */
@@ -41,7 +41,7 @@ class IcalCalendarController extends \BaseController
         // Create new calendar object
         $calendar = new \Eluceo\iCal\Component\Calendar('-//Open Knowledge//EduCal//NL');
         // TODO: Define a good name for the Calendar (calendar name or smth)
-        $calendar->setName("EduCal Calendar");
+        $calendar->setName("educal Calendar");
 
         // Loop through appointments and add them to the calendar.
         foreach ($appointments as $appointment) {
@@ -104,22 +104,4 @@ class IcalCalendarController extends \BaseController
         return $calendar;
     }
 
-    /**
-     * Return only a single event in the .ics file
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        // Find selected appointment and push it to an array with a single element which will be sent to the
-        // composeIcal function (in this controller as well)
-        $appointment = Appointment::find($id);
-        $appointments = [];
-        array_push($appointments, $appointment);
-
-        $calendar = self::composeIcal($appointments);
-
-        return $calendar->render();
-    }
 }

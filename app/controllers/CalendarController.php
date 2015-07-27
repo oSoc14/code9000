@@ -135,12 +135,26 @@ class CalendarController extends \BaseController
     /**
      * Get all appointments from a calendar, including parent calendars
      * @param string $school_slug the slug of the school
-     * @param string $calendar_slug the slug of the calendar
+     * @param string $calendar_slugs the slug of the calendar
      * @return array all appointments
      */
-    public static function getAppointmentsBySlugs($school_slug, $calendar_slug)
+    public static function getAppointmentsBySlugs($school_slug, $calendar_slugs)
     {
-        return CalendarController::getAppointments(CalendarController::getCalendar($school_slug, $calendar_slug));
+        $slugs = explode('/', $calendar_slugs);
+        $appointments = [];
+
+        foreach ($slugs as $slug) {
+
+            try {
+
+                $appointments += CalendarController::getAppointments(CalendarController::getCalendar($school_slug,
+                    $slug));
+            } catch (Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                // ignore invalid calendars
+            }
+        }
+
+        return $appointments;
     }
 
     /**
@@ -155,8 +169,8 @@ class CalendarController extends \BaseController
 
         // TODO: Change calendar handling, base it off calendar and school ID
         // TODO: Add support for entire school export (all calendars)
-        // Load appointments based on calendar
-        $calendar->load('appointments');
+        // Load appointments based on calendar, attach calendar information to appointment
+        $calendar->load('appointments.calendar');
 
         // Set the limitations for which appointments to get
         $dsta = new DateTime();

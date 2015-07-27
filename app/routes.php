@@ -236,46 +236,6 @@ Route::get('/calendar', [
     'uses' => 'CalendarViewController@goToCalendar'
 ]);
 
-/**
- * iCal routes and pdf-routes
- * returns iCal, .ics file or .pdf file
- */
-Route::group(['prefix' => 'export'], function()
-{
-    // iCal Export route for a certain class
-    // id = calendar
-    Route::get('/{id}/{school}/{calendar}', [
-        'as'   => 'export.group',
-        'uses' => 'IcalCalendarController@index'
-    ])->where(['id' => '[0-9]+', 'school' => '[0-9A-Za-z_\- ]+', 'class' => '[0-9A-Za-z_\- ]+']);
-
-    // iCal Export route for a single appointment
-    // id = appointment
-    Route::get('/appointment/find/{id}', [
-        'as'   => 'export.single',
-        'uses' => 'IcalCalendarController@show'
-    ])->where('id', '[0-9]+');
-
-    // PDF Export route for a certain class
-    // id = calendar
-    Route::get('/pdf/{id}/{school}/{class}', [
-        'as'   => 'export.group',
-        'uses' => 'PdfCalendarController@index'
-    ])->where(['id' => '[0-9]+', 'school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
-
-    // PDF Export route for a single appointment
-    // id = appointment
-    Route::get('/appointment/pdf/{id}', [
-        'as'   => 'export.singlepdf',
-        'uses' => 'PdfCalendarController@show'
-    ])->where('id', '[0-9]+');
-});
-
-Route::group(['prefix' => 'calendars'], function () {
-
-});
-
-
 Route::group(['prefix' => 'admin'], function () {
     // Index, lists all groups
     Route::get('/', [
@@ -322,20 +282,16 @@ Route::group(['prefix' => '{org_slug}'], function () {
         }
     ]);
 
-    Route::get('/{calendar_slug}.pdf', [
-        'as' => 'export.pdf',
-        'uses' => 'PdfCalendarController@index'
-    ])->where('calendar_slug', '[A-Za-z0-9\-]+');
-
     Route::get('/{calendar_slug}.ics', [
         'as' => 'export.ics',
         'uses' => 'IcalCalendarController@index'
-    ])->where('calendar_slug', '[A-Za-z0-9\-]+');
+    ])->where('calendar_slug', '[0-9A-Za-z_\-/ ]+');
 
     Route::get('/{calendar_slug}', [
-        'as' => 'export.overview',
-        'uses' => 'IcalCalendarController@show'
-    ])->where('calendar_slug', '[A-Za-z0-9\-]+');
+        'as' => 'export.index',
+        'uses' => 'IcalCalendarController@index'
+    ])->where('calendar_slug', '[0-9A-Za-z_\-/ ]+');
+
 
     // Create a new school
     Route::post('/register', [
