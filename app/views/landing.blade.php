@@ -42,12 +42,12 @@
 <body id="top">
 <nav id="topnav">
     <div class="container">
-        <a class="mobile-header" id="toggle-menu-collapse" href="#"><img class="nav" src="images/landing/logo_white.png"
+        <a class="mobile-header" id="toggle-menu-collapse" href="#"><img class="nav" src="{{ asset('images/landing/logo_white.png') }}"
                                                                          alt="educal"><i
                     class="fa fa-bars right fa-2x"></i>
         </a>
         <ul class="nav" id="menu-collapse">
-            <li class="brand"><a class="nav brand" href="#top"><img class="nav" src="images/landing/logo_white.png"
+            <li class="brand"><a class="nav brand" href="#top"><img class="nav" src="{{ asset('images/landing/logo_white.png') }}"
                                                                     alt="educal"></a></li>
             <li><a class="nav " href="#werking">Hoe werkt het</a></li>
             <li><a class="nav " href="#waarom">Waarom educal</a></li>
@@ -72,7 +72,7 @@
             </form>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-4 hidden-xs">
-            <img src="/images/landing/splashimg.jpg" class="splash-img">
+            <img src="{{ asset('images/landing/splashimg.jpg') }}" class="splash-img">
         </div>
         <a class="arrow-readon" href="#werking"><i class="fa fa-angle-down fa-4x"></i></a>
     </div>
@@ -98,7 +98,7 @@
         <div class="col-md-8 col-md-offset-1">
             <a class="btn btn-switch btn-switch-active" href="#">Ik ben een leerkracht</a>
             <a class="btn btn-switch" href="#">Ik ben een ouder</a>
-            <img src="/images/landing/video-placeholder.jpg" style="height:400px; width:100%;">
+            <img src="{{ asset('images/landing/video-placeholder.jpg') }}" style="height:400px; width:100%;">
         </div>
     </div>
 </section>
@@ -110,7 +110,7 @@
         </div>
 
         <div class="col-md-4 col-sm-4 col-sm-offset-4 col-why">
-            <img src="images/landing/checkmark.svg" alt="checkmark">
+            <img src="{{ asset('images/landing/checkmark.svg') }}" alt="checkmark">
 
             <h3>Makkelijk in gebruik</h3>
 
@@ -120,7 +120,7 @@
         </div>
 
         <div class="col-md-4 col-sm-4 col-sm-offset-4 col-why">
-            <img src="images/landing/money.svg" alt="checkmark">
+            <img src="{{ asset('images/landing/money.svg') }}" alt="checkmark">
 
             <h3>Gratis</h3>
 
@@ -130,7 +130,7 @@
         </div>
 
         <div class="col-md-4  col-sm-4 col-sm-offset-4  col-why">
-            <img src="images/landing/link.svg" alt="checkmark">
+            <img src="{{ asset('images/landing/link.svg') }}" alt="checkmark">
 
             <h3>Blijf verbonden</h3>
 
@@ -203,5 +203,5 @@
 </div><!-- /.modal -->
 
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="/js/landing.js" type="text/javascript"></script>
+{{ HTML::script('js/landing.js') }}
 </body>
