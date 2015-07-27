@@ -43,3 +43,8 @@ main {
 .flex--0 {
   @include flex(0, 0, auto);
 }
+.top-right {
+  position: absolute;
+  top:0;
+  right:0;
+}

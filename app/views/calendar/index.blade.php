@@ -46,7 +46,11 @@
 @stop
 
 @section('content')
-<div id="calendar"></div>
+<div id="calendar">
+  <div class="top-right">
+    <a href="{{ route('export.index', [$org->slug, '']) }}" class="btn btn-primary">Abonneren op deze kalender</a>
+  </div>
+</div>
 
 <div class="hidden new-event">
   <form>
