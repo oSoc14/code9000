@@ -118,6 +118,8 @@ var editor = (function() {
     // Close current popover
     close();
 
+    if(!user.logged_in) return;
+
     // Create new event or edit existing event
     d1Options.value = start.format('YYYY-MM-DD');
     t1Options.value = start.format('HH:mm');
