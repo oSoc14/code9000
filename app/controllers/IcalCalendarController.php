@@ -20,7 +20,7 @@ class IcalCalendarController extends \BaseController
     {
         $appointments = CalendarController::getAppointmentsBySlugs($school_slug, $calendar_slug);
         // Compose iCal with the help of the eluceo plugin
-        $title = 'kalender' . '-' . $school_slug . '-' . str_replace('/', '-', $calendar_slug);
+        $title = 'kalender' . ' ' . $school_slug . '-' . str_replace('/', '-', $calendar_slug);
         $calendar = self::composeIcal($title, $appointments);
 
         return $calendar->render();
@@ -39,8 +39,8 @@ class IcalCalendarController extends \BaseController
 
         // Create new calendar object
         $calendar = new \Eluceo\iCal\Component\Calendar('-//Open Knowledge//EduCal//NL');
-        // TODO: Define a good name for the Calendar (calendar name or smth)
-        $calendar->setName("educal Calendar");
+
+        $calendar->setName($title . ' (educal)');
 
         // Loop through appointments and add them to the calendar.
         foreach ($appointments as $appointment) {
@@ -97,7 +97,7 @@ class IcalCalendarController extends \BaseController
 
         // Set headers
         header("Content-Type: text/calendar; charset=utf-8");
-        header("Content-Disposition: attachment; filename=\"$title.ics\"");
+        header('Content-Disposition: attachment; filename="' . str_replace(' ', '_', $title) . '.ics"');
 
         // Output
         return $calendar;
