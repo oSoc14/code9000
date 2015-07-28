@@ -5,6 +5,7 @@ var editor = (function() {
     ev: {},
     id: 0
   };
+  var $cal = $('#calendar');
   var saving = false;
   var success = false;
   var popoverOptions = {
@@ -57,9 +58,34 @@ var editor = (function() {
     api.deleteEvent(active.id).success(function(data) {
       close();
       console.log()
-      $('#calendar').fullCalendar('removeEvents', active.ev.id);
+      $cal.fullCalendar('removeEvents', active.ev.id);
     }).error(function(data) {
       close();
+    });
+  };
+
+  // Update existing event
+  var update = function(data) {
+    console.log(active.ev);
+
+    // Update existing event
+    active.ev.title = data.title;
+    active.ev.description = data.description;
+    active.ev.location = data.location;
+    active.ev.start = Date.parse(data.start);
+    active.ev.end = Date.parse(data.end);
+    active.ev.calendar_id = data.calendar_id;
+    active.ev.allDay = data.allDay;
+
+    // Render
+    $cal.fullCalendar('updateEvent', active.ev);
+
+    // Sync with backend
+    data.id = active.ev.id;
+    api.postEvent(data).success(function(data) {
+      $cal.fullCalendar('refetchEvents');
+    }).error(function(error) {
+      console.log(error)
     });
   };
 
@@ -67,30 +93,34 @@ var editor = (function() {
   var create = function(e) {
     e.preventDefault();
     var x = $('.popover');
-    var values = {
+
+    // Retrieve form values
+    var formdata = {
       title: x.find('.input-title').val(),
-      name: x.find('.input-title').val(),
       description: x.find('.input-descr').val(),
       location: x.find('.input-location').val(),
       start: x.find('.d1').val() + ' ' + x.find('.t1').val() || '00:00',
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
+      allDay: x.find('.t1').val() === '00:00' && x.find('.t2').val() === '00:00',
       calendar: x.find('.input-cals').val(),
     };
 
-    if (active.id) {
-      values.id = active.id;
+    // Validate input?
+
+    // Update
+    if (active.ev._id) {
+      close();
+      update(formdata);
+      return;
     }
 
+    // Open calendar that event was added to
+
+
     // Apply to backend
-    api.postEvent(values).success(function(data) {
+    api.postEvent(formdata).success(function(data) {
       close();
-      if (active.id) {
-        $.extend(active.ev, data);
-        $('#calendar').fullCalendar('updateEvent', active.ev);
-      } else {
-        active.id = data.id;
-        $('#calendar').fullCalendar('renderEvent', data);
-      }
+      $cal.fullCalendar('refetchEvents');
     }).error(function(error) {
       console.log(error)
     });
