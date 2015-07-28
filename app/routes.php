@@ -292,8 +292,8 @@ Route::group(['prefix' => '{org_slug}'], function () {
 
     Route::get('/{calendar_slug}', [
         'as' => 'export.index',
-        function ($slug) {
-            return View::make('calendar.export')->with('calendars', $slug);
+        function ($org, $calendar_slug) {
+            return View::make('calendar.export')->with(['org' => $org, 'calendars' => $calendar_slug]);
         }
     ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
 
