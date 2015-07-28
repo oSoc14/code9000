@@ -62,9 +62,9 @@
 <section class="page splash">
     <div class="container">
         <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-            <h1>Jouw school kalender</h1>
+            <h1>Mijn school kalender</h1>
 
-            <h2>Zoek je school</h2>
+            <h2>Zoek mijn school</h2>
 
             <form class="splash-search">
                 <label for="schoolsearch" class="sr-only">Naam van school</label>
@@ -114,7 +114,7 @@
             <h3>Makkelijk in gebruik</h3>
 
             <p>
-                Zo gemakkelijk dat je grootmoeder het kan gebruiken. Dat is ons motto.
+                Zo gemakkelijk dat grootmoeder het kan gebruiken. Dat is het&nbsp;motto.
             </p>
         </div>
 
@@ -124,7 +124,7 @@
             <h3>Gratis &amp; Open Source</h3>
 
             <p>
-                De open source versie van educal is 100% gratis, voor altijd.
+                De open source versie van educal is 100% gratis, voor&nbsp;altijd.
             </p>
         </div>
 
@@ -134,7 +134,7 @@
             <h3>Blijf verbonden</h3>
 
             <p>
-                Uw kalender altijd op zak: exporteer educal naar uw smartphone, tablet of computer.
+                Educal altijd op zak: exporteer educal naar een smartphone, tablet of&nbsp;computer.
             </p>
         </div>
     </div>
@@ -142,12 +142,12 @@
 <section class="page register" id="school">
     <div class="container">
         <div class="col-md-6 col-md-offset-3">
-            <h2>Start met educal op jouw school</h2>
+            <h2>Start met educal op mijn school</h2>
 
             <ol>
-                <li>Registreer je, <strong>gratis</strong></li>
+                <li>Start <strong>100% gratis</strong></li>
                 <li><strong>Maak evenementen aan</strong> op school-, jaar- en klasniveau</li>
-                <li>Geniet van <strong>blije, betrokken ouders</strong></li>
+                <li><strong>Deel kalenders</strong> met ouders en leerkrachten</li>
             </ol>
 
             <button class="btn btn-info">Start nu gratis</button>
