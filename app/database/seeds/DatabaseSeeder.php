@@ -186,42 +186,17 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        for ($i = 1; $i < 100; $i++) {
+        for ($i = 1; $i < 200; $i++) {
             $app = new Appointment();
 
             $app->title ='School event ' . $i;
             $app->description = 'we are going to test ' . rand() . ' something';
             $app->location = 'Gent';
             $app->calendar_id = $i % 74 + 1;
-            $date = date('Y-m-d', strtotime( '+'.mt_rand(-10,30).' days'));
+            $date = date('Y-m-d', strtotime('+' . mt_rand(-30, 30) . ' days'));
             $app->start = new DateTime($date . ' 13:00');
             $app->end = new DateTime($date . ' 16:00');
             $app->save();
         }
     }
-}
-
-
-define( "COL_MIN_AVG", 64 );
-define( "COL_MAX_AVG", 192 );
-define( "COL_STEP", 16 );
-
-// (192 - 64) / 16 = 8
-// 8 ^ 3 = 512 colors
-
-function randomColor( $username ) {
-        $range = COL_MAX_AVG - COL_MIN_AVG;
-        $factor = $range / 256;
-        $offset = COL_MIN_AVG;
-
-        $base_hash = substr(md5($username), 0, 6);
-        $b_R = hexdec(substr($base_hash,0,2));
-        $b_G = hexdec(substr($base_hash,2,2));
-        $b_B = hexdec(substr($base_hash,4,2));
-
-        $f_R = floor((floor($b_R * $factor) + $offset) / COL_STEP) * COL_STEP;
-        $f_G = floor((floor($b_G * $factor) + $offset) / COL_STEP) * COL_STEP;
-        $f_B = floor((floor($b_B * $factor) + $offset) / COL_STEP) * COL_STEP;
-
-        return sprintf('#%02x%02x%02x', $f_R, $f_G, $f_B);
 }
