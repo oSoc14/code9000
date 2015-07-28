@@ -19,11 +19,14 @@ $input-invalid: #c83233;
   .modal-body {
     padding: 0;
   }
+}
+
+.educal-form {
 
   .form-group {
     margin: 20px 0;
     label {
-      width: calc(30% - 10px);
+      width: 30%;
       display: inline-block;
       margin: 0;
       padding: 0;
@@ -31,35 +34,36 @@ $input-invalid: #c83233;
       height: 34px;
       line-height: 34px;
     }
-    input {
-      width: calc(70% - 10px);;
-      display: inline-block;
-      margin: 0;
-      padding: 0;
-      box-shadow: none;
-      font-weight: 400;
-      border: none;
-      border-bottom: 1px solid #909090;
-      -webkit-border-radius: 0;
-      -moz-border-radius: 0;
-      border-radius: 0;
-      height: 34px;
 
-      &:invalid {
-        border-bottom: 1px solid $input-invalid;
+  }
+  input, button {
+    width: 70%;
+    float: right;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    font-weight: 400;
+    border: none;
+    border-bottom: 1px solid #909090;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    height: 34px;
 
-        &:after {
-          color: $input-invalid;
-          text-decoration: inherit;
-          font-weight: 200;
-          font-style: normal;
-          content: '\00d7';
-        }
-      }
-      &:valid {
-        border-bottom: 1px solid $input-valid;
+    &:invalid {
+      border-bottom: 1px solid $input-invalid;
+
+      &:after {
+        color: $input-invalid;
+        text-decoration: inherit;
+        font-weight: 200;
+        font-style: normal;
+        content: '\00d7';
       }
     }
+    &:valid {
+      border-bottom: 1px solid $input-valid;
+    }
   }
-
 }

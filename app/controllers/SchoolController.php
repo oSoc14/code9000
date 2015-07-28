@@ -40,12 +40,11 @@ class SchoolController extends \BaseController
      * Store a newly created school in storage.
      * Create default calendars.
      * Store new user (schooladmin) as well.
-     * @param $slug string the slug of the school to be created
      * @return Response
      */
 
     // TODO: Get rid of short (reoccuring)
-    public function store($slug)
+    public function store()
     {
         // If user is logged in, redirect to calendar index
         if (!Sentry::check()) {
@@ -55,25 +54,21 @@ class SchoolController extends \BaseController
         // Validation rules for input fields
         $validator = Validator::make(
             [
-                'per-name' => Input::get('per-name'),
-                'per-surname' => Input::get('per-surname'),
-                'name' => Input::get('sname'),
-                'email' => Input::get('semail'),
-                'city' => Input::get('city'),
-                'password' => Input::get('password'),
-                'password_confirmation' => Input::get('password_confirmation'),
-                'tos' => Input::get('tos'),
-                'honey' => 'honeypot',
-                'honey_time' => 'required|honeytime:5'
+                'user-firstname' => Input::get('user-firstname'),
+                'user-lastname' => Input::get('user-lastname'),
+                'school-name' => Input::get('school-name'),
+                'user-email' => Input::get('user-email'),
+                'school-city' => Input::get('school-city'),
+                'user-password' => Input::get('user-password'),
+                'user-password-confirm' => Input::get('user-password-confirm'),
             ],
             [
-                'per-name' => 'required',
-                'per-surname' => 'required',
-                'name' => 'required|unique:schools,name',
-                'city' => 'required',
-                'email' => 'required|email|unique:users,email',
+                'user-firstname' => 'required',
+                'user-lastname' => 'required',
+                'school-name' => 'required|unique:schools,name',
+                'school-city' => 'required',
+                'user-email' => 'required|email|unique:users,email',
                 'password' => 'required|min:8|confirmed',
-                'tos' => 'required'
             ]
         );
 
@@ -81,31 +76,30 @@ class SchoolController extends \BaseController
         if ($validator->fails()) {
             $validator->getMessageBag()->add('schoolerror', 'Failed to make a school');
 
-            return Redirect::route('landing')->withInput()
+            return Redirect::route('school.register')->withInput()
                 ->withErrors($validator);
 
         }
         // If there are no errors, prepare a new School object to be inserted in the database
         $school = new School();
-        $nn = self::clean(e(Input::get("sname")));
+        $nn = self::clean(e(Input::get("school-name")));
         $school->name = $nn;
         $school->city = e(Input::get("city"));
-        $school->slug = $slug;
+        $school->slug = preg_replace('[^a-zA-Z0-9\-]', '', $nn);
         $school->save();
 
         // Create the default calendars "global" and "admin"
         // TODO: create new "calendars" instead of the calendars
-        // TODO: add this user to the people who can edit the newly created calendars
 
         // Store the newly created user along with the school
         $user = Sentry::createUser(
             [
-                'email' => e(Input::get("semail")),
-                'password' => Input::get("password"),
+                'email' => e(Input::get("user-email")),
+                'password' => Input::get("userpassword"),
                 'activated' => true,
                 'school_id' => $school->id,
-                'first_name' => e(Input::get("per-name")),
-                'last_name' => e(Input::get("per-surname")),
+                'first_name' => e(Input::get("user-firstname")),
+                'last_name' => e(Input::get("user-lastname")),
             ]
         );
 

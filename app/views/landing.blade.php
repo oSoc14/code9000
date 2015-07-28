@@ -169,7 +169,7 @@
                             aria-hidden="true">&times;</span></button>
                 <h2>Log in<span> - voor medewerkers</span></h2>
             </div>
-            <div class="modal-body">
+            <div class="modal-body educal-form">
                 {{ Form::open([
                    'route' => 'user.auth',
                    'data-ajax' => 'false',
@@ -190,7 +190,7 @@
                 </div>
 
                 <button type="submit"
-                        class="btn btn-info btn-fullwidth">{{ ucfirst(trans('educal.login'))}}</button>
+                        class="btn btn-info">{{ ucfirst(trans('educal.login'))}}</button>
                 <a href="#" data-dismiss="modal" data-toggle="modal"
                    data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
             </div>

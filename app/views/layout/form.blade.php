@@ -53,7 +53,7 @@
                     class="fa fa-bars right fa-2x"></i>
         </a>
         <ul class="nav" id="menu-collapse">
-            <li class="brand"><a class="nav brand" href="#top"><img class="nav"
+            <li class="brand"><a class="nav brand" href="{{URL::to('/')}}"><img class="nav"
                                                                     src="{{ asset('images/landing/logo_white.png') }}"
                                                                     alt="educal"></a></li>
             <li class="right"><a class="nav-login" href="#login" data-toggle="modal" data-target="#loginmodal">Log
@@ -62,7 +62,7 @@
     </div>
 </nav>
 
-<section class="form">
+<section class="form educal-form">
     @yield('form')
 </section>
 
