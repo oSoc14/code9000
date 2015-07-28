@@ -594,7 +594,7 @@ class UserController extends \BaseController
     {
         if (!Sentry::check()) {
             // If not logged in, redirect to the login screen
-            return Redirect::route('landing');
+            return ApiController::createApiAccessError("You have to be logged in!");
         }
 
         // Select users
@@ -605,7 +605,7 @@ class UserController extends \BaseController
             $selectedUser = Sentry::findUserById($id);
 
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return Redirect::route('calendar.redirect');
+            return ApiController::createApiError("User not found!");
         }
 
         // Check if the user that wants to do the update is either the user himself,
@@ -614,7 +614,7 @@ class UserController extends \BaseController
                 && $user->school_id == $selectedUser->school_id)
         ) {
             // If no permissions, redirect to calendar index
-            return Redirect::route('calendar.redirect');
+            return ApiController::createApiAccessError("You don't have the permission to do that!");
         }
         // Validate the inputs
         $validator = Validator::make(
@@ -658,37 +658,33 @@ class UserController extends \BaseController
 
         // If the validation fails, go to previous page with errors
         if ($validator->fails()) {
-            return Redirect::back()->withInput()->withErrors($validator);
-
-        } else {
-
-            // Check if the user tried to change his password, if so, update it
-            if (Input::get('password')) {
-                $selectedUser->password = Input::get('password');
-            }
-
-            // Update $selectedUser fields
-            $selectedUser->first_name = e(Input::get('name'));
-            $selectedUser->last_name = e(Input::get('surname'));
-
-            // If the user is editing himself, update current language
-            if ($user->id == $selectedUser->id) {
-
-                $selectedUser->lang = e(Input::get('lang'));
-
-                Session::forget('lang');
-                Session::put('lang', Input::get('lang'));
-                //Set the language
-                App::setLocale(Session::get('lang'));
-            }
-
-            // Store updated user in the database
-            $selectedUser->save();
-
-            return Redirect::route('calendar.redirect');
+            return ApiController::createApiValidationError($validator->errors());
         }
 
-        return Redirect::back();
+        // Check if the user tried to change his password, if so, update it
+        if (Input::get('password')) {
+            $selectedUser->password = Input::get('password');
+        }
+
+        // Update $selectedUser fields
+        $selectedUser->first_name = e(Input::get('name'));
+        $selectedUser->last_name = e(Input::get('surname'));
+
+        // If the user is editing himself, update current language
+        if ($user->id == $selectedUser->id) {
+
+            $selectedUser->lang = e(Input::get('lang'));
+
+            Session::forget('lang');
+            Session::put('lang', Input::get('lang'));
+            //Set the language
+            App::setLocale(Session::get('lang'));
+        }
+
+        // Store updated user in the database
+        $selectedUser->save();
+
+        return ApiController::createApiOk("User updated");
 
     }
 

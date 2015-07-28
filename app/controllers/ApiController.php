@@ -607,13 +607,14 @@ class ApiController extends \BaseController
         }
     }
 
+
     /**
      * Create a JSON response for API calls with invalid parameters
      * Using this method ensures consistent replies,no matter what method was called.
      * @param $error \Illuminate\Support\MessageBag the validator errors
      * @return JsonResponse
      */
-    private static function createApiValidationError($error)
+    public static function createApiValidationError($error)
     {
         return Response::Json(array('success' => false, 'type' => 'validation', 'feedback' => $error),
             400)->setCallback(Input::get('callback'));
@@ -625,7 +626,7 @@ class ApiController extends \BaseController
      * @param string $msg an optional feedback message
      * @return JsonResponse
      */
-    private static function createApiAccessError($msg = '')
+    public static function createApiAccessError($msg = '')
     {
         return Response::Json(array('success' => false, 'type' => 'access', 'feedback' => $msg),
             403)->setCallback(Input::get('callback'));
@@ -637,7 +638,7 @@ class ApiController extends \BaseController
      * @param string $msg a feedback message
      * @return JsonResponse
      */
-    private static function createApiError($msg)
+    public static function createApiError($msg)
     {
         return Response::Json(array('success' => false, 'type' => 'generic', 'feedback' => $msg),
             400)->setCallback(Input::get('callback'));
@@ -649,7 +650,7 @@ class ApiController extends \BaseController
      * @param string $msg an optional feedback message
      * @return JsonResponse
      */
-    private static function createApiOk($msg = '')
+    public static function createApiOk($msg = '')
     {
         return Response::Json(array('success' => true, 'type' => '', 'feedback' => $msg),
             200)->setCallback(Input::get('callback'));
