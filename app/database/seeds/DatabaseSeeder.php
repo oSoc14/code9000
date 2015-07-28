@@ -206,6 +206,10 @@ class DatabaseSeeder extends Seeder
                     $user->addGroup($editorRole);
                     $user->calendars()->attach($c);
                     $user->save();
+
+                    if ($i == 3) {
+                        $admin_user->calendars()->attach($c);
+                    }
                 }
             }
         }
