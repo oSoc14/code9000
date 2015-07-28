@@ -78,7 +78,7 @@
         <input class="input input-date d1" type="text" placeholder="date">
         <input class="input input-time t1" type="text" placeholder="time">
       </div>
-      <svg height="60" stroke="#ccc" width="60" viewBox="0 0 30 60" xmlns="http://www.w3.org/2000/svg">
+      <svg height="61" stroke="#ccc" width="35" viewBox="0 0 30 60" xmlns="http://www.w3.org/2000/svg">
         <line x2="30" y2="30" />
         <line x2="30" y1="60" y2="30" />
       </svg>
