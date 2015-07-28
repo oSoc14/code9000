@@ -9,7 +9,7 @@ var editor = (function() {
   var saving = false;
   var success = false;
   var popoverOptions = {
-    container: '#calendar',
+    container: 'body',
     html: true,
     placement: 'auto right',
     content: $('.new-event').html()
@@ -160,9 +160,14 @@ var editor = (function() {
     var $target = $(jsEvent.target);
     $target.popover(popoverOptions);
     $target.popover('show');
-    $('.popover').on('click', function(e) {
+
+    var $popover = $('.popover');
+    $popover.on('click', function(e) {
       e.stopPropagation();
     });
+    if ($popover.css('left').replace('px','') < 0) {
+      $popover.css('left', '30px');
+    }
 
     // Launch datetimepicker
     $('.input-date.d2').datetimepicker(d2Options);
@@ -237,7 +242,7 @@ var editor = (function() {
       }
       $('.read-dt').text(readableDate);
       $target.popover({
-        container: '#calendar',
+        container: 'body',
         html: true,
         placement: 'auto right',
         content: $('.read-event-template').html()
