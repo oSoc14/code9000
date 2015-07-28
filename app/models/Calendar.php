@@ -85,4 +85,17 @@ class Calendar extends Eloquent
     {
         return route("api.orgCalendarEvents", [$this->id]);
     }
+
+    public function getParentCalendarAppointments()
+    {
+        $calendar = $this;
+        // Add all parent calendars
+        while ($calendar->parent_id > 0) {
+            $calendar = $calendar::find($calendar->parent_id);
+            $calendar->load('appointments');
+            foreach ($calendar->appointments as $appointment) {
+                array_push($this->appointments, $appointment);
+            }
+        }
+    }
 }

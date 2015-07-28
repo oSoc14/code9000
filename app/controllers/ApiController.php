@@ -10,31 +10,6 @@ class ApiController extends \BaseController
 {
 
     /**
-     * Get all events for logged in user
-     * @return JsonResponse
-     * @deprecated this method is outdated and will be removed for final release
-     */
-    public function allUserEvents()
-    {
-        if (!Sentry::check()) {
-            return;
-        }
-        $user = Sentry::getUser();
-        $appointments = [];
-        $user->load('school.calendars.appointments.calendar.school');
-        // Loop through calendars to get all appointments
-        foreach ($user->school->calendars as $calendar) {
-            $calendar->url = route("api.orgCalendarEvents", [$calendar->id]);
-            foreach ($calendar->appointments as $appointment) {
-                array_push($appointments, $appointment);
-            }
-        }
-
-        // Returns JsonResponse response of the user
-        return Response::Json($appointments, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
-    }
-
-    /**
      * Return a listing of all organisations in the database
      * @return JsonResponse Response with appointments
      */
@@ -143,7 +118,7 @@ class ApiController extends \BaseController
 
         $calendar = Calendar::find($id);
         $calendar->load('appointments');
-
+        $calendar->getParentCalendarAppointments();
         // Returns JsonResponse response of the user
         return Response::Json($calendar, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
