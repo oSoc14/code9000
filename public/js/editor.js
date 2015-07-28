@@ -64,9 +64,40 @@ var editor = (function() {
     });
   };
 
+  // Sync with backend
+  var sync = function(data, revert) {
+    data.id = data.id || active.ev.id;
+    data.title = data.title || active.ev.title;
+    data.calendar = data.calendar_id || active.ev.calendar_id; // TODO: fix API and remove this line
+    data.calendar_id = data.calendar_id || active.ev.calendar_id;
+
+    api.postEvent(data).success(function(data) {
+      $cal.fullCalendar('refetchEvents');
+    }).error(function(error) {
+      console.log(error)
+    });
+  };
+
+  // Move or resize event
+  var drop = function(ev, delta, revert) {
+    console.log(ev)
+    active.ev = ev;
+    var data = {
+      start: ev.start.format('YYYY-MM-DD HH:mm'),
+      allDay: !ev.start.hasTime()
+    };
+    if (ev.end) {
+      data.end = ev.end.format('YYYY-MM-DD HH:mm');
+    } else {
+      data.end = ev.start.add(1, 'day').format('YYYY-MM-DD HH:mm');
+    }
+
+    sync(data, revert);
+  };
+
   // Update existing event
   var update = function(data) {
-    console.log(active.ev);
+    sync(data);
 
     // Update existing event
     active.ev.title = data.title;
@@ -79,14 +110,6 @@ var editor = (function() {
 
     // Render
     $cal.fullCalendar('updateEvent', active.ev);
-
-    // Sync with backend
-    data.id = active.ev.id;
-    api.postEvent(data).success(function(data) {
-      $cal.fullCalendar('refetchEvents');
-    }).error(function(error) {
-      console.log(error)
-    });
   };
 
   // Create new event
@@ -165,7 +188,7 @@ var editor = (function() {
     $popover.on('click', function(e) {
       e.stopPropagation();
     });
-    if ($popover.css('left').replace('px','') < 0) {
+    if ($popover.css('left').replace('px', '') < 0) {
       $popover.css('left', '30px');
     }
 
@@ -255,6 +278,7 @@ var editor = (function() {
 
   return {
     open: open,
+    drop: drop,
     remove: remove,
     close: close,
     active: active,

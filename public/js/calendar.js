@@ -16,6 +16,7 @@
     timeFormat: 'H:mm',
     eventSources: [root],
     eventClick: editor.open,
+    eventDrop: editor.drop,
     select: editor.select,
     unselect: editor.close
   });
@@ -37,6 +38,10 @@
       calendar.fullCalendar('option', 'height', h);
     };
   };
+
+  // Close editor on blur
+  $(document.body).on('click', editor.close);
+  calendar.on('click', function(e){e.stopPropagation();});
 
   // When resizing the window, get the correct view.
   $(window).resize(adaptView);
