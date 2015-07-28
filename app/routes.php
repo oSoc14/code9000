@@ -225,8 +225,6 @@ Route::group(['prefix' => 'api/1'], function () {
         'uses' => 'ApiController@allUserEvents'
     ]);
 
-
-    // TODO: post API
 });
 
 
@@ -303,7 +301,9 @@ Route::group(['prefix' => '{org_slug}'], function () {
 
     Route::get('/{calendar_slug}', [
         'as' => 'export.index',
-        'uses' => 'IcalCalendarController@index'
+        function ($slug) {
+            return View::make('calendar.export')->with('calendars', $slug);
+        }
     ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
 
     // Update a school

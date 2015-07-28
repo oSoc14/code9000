@@ -31,7 +31,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::Json($appointments)->setCallback(Input::get('callback'));
+        return Response::Json($appointments, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::Json($schools)->setCallback(Input::get('callback'));
+        return Response::Json($schools, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
 
     /**
@@ -72,7 +72,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::Json($events)->setCallback(Input::get('callback'));
+        return Response::Json($events, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
     }
 
@@ -99,7 +99,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::Json($users)->setCallback(Input::get('callback'));
+        return Response::Json($users, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
     }
 
@@ -129,7 +129,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::Json($calendars)->setCallback(Input::get('callback'));
+        return Response::Json($calendars, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
     }
 
@@ -145,7 +145,7 @@ class ApiController extends \BaseController
         $calendar->load('appointments');
 
         // Returns JsonResponse response of the user
-        return Response::Json($calendar)->setCallback(Input::get('callback'));
+        return Response::Json($calendar, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
     }
 
@@ -165,7 +165,7 @@ class ApiController extends \BaseController
         }
 
         // Returns JsonResponse response of the user
-        return Response::Json($appQuery)->setCallback(Input::get('callback'));
+        return Response::Json($appQuery, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
     }
 
@@ -288,7 +288,8 @@ class ApiController extends \BaseController
         // make sure the FULL object is returned
         $event = Appointment::find($event->id);
         $event->color = $event->calendar->color;
-        return Response::Json($event)->setCallback(Input::get('callback'));
+
+        return Response::Json($event, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
 
     /**
@@ -397,7 +398,8 @@ class ApiController extends \BaseController
             // make sure the FULL object is returned
             $event = Appointment::find($event->id);
             $event->color = $event->calendar->color;
-            return Response::Json($event)->setCallback(Input::get('callback'));
+
+            return Response::Json($event, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
         }
 
         if (!$start) {
@@ -435,7 +437,8 @@ class ApiController extends \BaseController
         // make sure the FULL object is returned
         $event = Appointment::find($event->id);
         $event->color = $event->calendar->color;
-        return Response::Json($event)->setCallback(Input::get('callback'));
+
+        return Response::Json($event, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
 
     /**

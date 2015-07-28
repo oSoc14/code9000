@@ -14,6 +14,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class Appointment extends Eloquent
 {
 
+    protected $appends = array('editable');
 
     /**
      * The database table used by the model.
@@ -30,7 +31,25 @@ class Appointment extends Eloquent
 
     public function parent()
     {
-        return $this->belongsTo('Appointment','parent_id','id');
+        return $this->belongsTo('Appointment', 'parent_id', 'id');
+    }
+
+    public function getEditableAttribute()
+    {
+        try {
+            if (!Sentry::check()) {
+                return false;
+            }
+            foreach (Sentry::getUser()->Calendars as $calendar) {
+                if ($calendar->id == $this->Calendar->id) {
+                    return true;
+                }
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return false;
     }
 
 }
