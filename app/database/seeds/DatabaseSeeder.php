@@ -146,7 +146,9 @@ class DatabaseSeeder extends Seeder
                 $y->school_id = $o->school_id;
                 $y->parent_id = $o->id;
                 $y->save();
-
+                if ($i == 3) {
+                    $admin_user->calendars()->attach($y);
+                }
                 $app = new Appointment();
 
                 $app->title = 'Year event ' . $i;
