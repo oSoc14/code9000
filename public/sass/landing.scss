@@ -6,6 +6,9 @@ $blue: #8fafc6;
 $blue-darken: #6e8899;
 $blue-light: mix(#fff,$blue,7%);
 
+$cta-color: #FF6B6B;
+$text-color: mix(#000,$blue);
+
 $bg-input: #f7f7f7;
 
 $button-switch-text: #475966;
@@ -23,7 +26,7 @@ $input-invalid: #c83233;
 
 @import "normalize";
 @import "bootstrap_landing";
-@import url(http://fonts.googleapis.com/css?family=Roboto:100,300,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,400,700);
 @import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
 
 /**
@@ -62,16 +65,17 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-
   font-weight: 400;
   font-size: 17px;
   font-family: Roboto, sans-serif;
+  color: $text-color;
 }
 
 @import "staticnav";
 
 .page {
   min-height: 100%;
+  padding: 20px 0;
   background-color: #fff;
   display: -webkit-box;
   display: -webkit-flex;
@@ -97,10 +101,14 @@ body {
 
   h2 {
     margin: 0 0 30px;
-    // text-transform: uppercase;
-    font-weight: 200;
-    font-size: 60px;
-    line-height: 60px;
+    font-weight: 100;
+    font-size: 40px;
+    line-height: 1;
+
+    @media (min-width: 40em) {
+      margin: 0 0 50px;
+      font-size: 60px;
+    }
   }
 
   ul {
@@ -122,7 +130,7 @@ body {
 
     & > li {
       position: relative; /* Create a positioning context */
-      margin: 0 0 40px 2em; /* Give each list item a left margin to make room for the numbers */
+      margin: 0 0 30px 2em; /* Give each list item a left margin to make room for the numbers */
       padding: 4px 8px; /* Add some spacing around the content */
       list-style: none; /* Disable the normal item numbering */
     }
@@ -148,20 +156,22 @@ body {
 }
 
 .splash {
-  //margin-top: -$nav-height;
+  // margin-top: -$nav-height;
   // padding-top: calc(60px + 8%); // @TODO: fix hardcoded navbar height
   h1, h2 {
     color: #fff;
-    font-weight: 200;
+    font-weight: 100;
   }
 
   h1 {
     font-size: 72px;
     line-height: 72px;
+    text-indent: -3px;
   }
 
   h2 {
-    margin: 0 0 20px;
+    margin: 15px 0;
+    padding-top: 10px;
     font-size: 42px;
     line-height: 50px;
   }
@@ -223,19 +233,18 @@ body {
   }
 }
 
-button.btn.align-ol {
-  margin: 0 0 0 40px; /* Give each list item a left margin to make room for the numbers */
-  padding: 4px 8px;
-  max-width: calc(100% - 40px); // set maximum for responsive view
-}
+// button.btn.align-ol {
+//   margin: 0 0 0 40px; /* Give each list item a left margin to make room for the numbers */
+//   padding: 4px 8px;
+//   max-width: calc(100% - 40px); // set maximum for responsive view
+// }
 
 .btn {
   display: inline-block;
   margin: 0 0 30px 0;
   padding: 0;
   height: 50px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 19px;
   line-height: 45px;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -245,12 +254,13 @@ button.btn.align-ol {
 
 .btn.btn-info {
   color: #fff;
-  background-color: $blue-darken;
-  width: 360px;
+  background-color: $cta-color;
+  width: 100%;
+  margin-bottom: 10px;
 
   &:hover,
   &:focus {
-    background-color: mix(#fff,$blue-darken,10%);
+    background-color: mix(#fff,$cta-color,10%);
   }
 }
 
@@ -262,12 +272,12 @@ button.btn.align-ol {
   width: 100%;
 }
 
-.btn-switch, .btn-switch:link {
+.btn-switch,
+.btn-switch:link {
 
   background-color: $button-switch-inactive;
   color: $button-switch-text-inactive;
   text-align: center;
-  text-transform: uppercase;
   width: 50%;
   margin-left: 0;
   margin-right: 0;
@@ -279,7 +289,8 @@ button.btn.align-ol {
     text-decoration: none;
   }
 
-  &.btn-switch-active, .btn-switch-active:link {
+  &.btn-switch-active,
+  .btn-switch-active:link {
     border-bottom: 8px solid $button-switch-active-line;
     background-color: $button-switch-active;
     color: $button-switch-text;
@@ -307,6 +318,13 @@ button.btn.align-ol {
 
 .text-center {
   text-align: center;
+}
+
+.help-text {
+  display: block;
+  text-align: center;
+  color: #777;
+  font-size: .85em;
 }
 
 .clear {
