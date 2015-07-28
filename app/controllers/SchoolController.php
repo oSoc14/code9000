@@ -46,11 +46,6 @@ class SchoolController extends \BaseController
     // TODO: Get rid of short (reoccuring)
     public function store()
     {
-        // If user is logged in, redirect to calendar index
-        if (!Sentry::check()) {
-            return Redirect::route('calendar.redirect');
-        }
-
         // Validation rules for input fields
         $validator = Validator::make(
             [
@@ -60,7 +55,7 @@ class SchoolController extends \BaseController
                 'user-email' => Input::get('user-email'),
                 'school-city' => Input::get('school-city'),
                 'user-password' => Input::get('user-password'),
-                'user-password-confirm' => Input::get('user-password-confirm'),
+                'user-password_confirmation' => Input::get('user-password-confirm'),
             ],
             [
                 'user-firstname' => 'required',
@@ -68,13 +63,13 @@ class SchoolController extends \BaseController
                 'school-name' => 'required|unique:schools,name',
                 'school-city' => 'required',
                 'user-email' => 'required|email|unique:users,email',
-                'password' => 'required|min:8|confirmed',
+                'user-password' => 'required|min:8|confirmed',
             ]
         );
 
         // If validator fails, go back and show errors
         if ($validator->fails()) {
-            $validator->getMessageBag()->add('schoolerror', 'Failed to make a school');
+            $validator->getMessageBag()->add('errorMessage', 'Failed to make a school');
 
             return Redirect::route('school.register')->withInput()
                 ->withErrors($validator);
@@ -84,7 +79,7 @@ class SchoolController extends \BaseController
         $school = new School();
         $nn = self::clean(e(Input::get("school-name")));
         $school->name = $nn;
-        $school->city = e(Input::get("city"));
+        $school->city = e(Input::get("school-city"));
         $school->slug = preg_replace('[^a-zA-Z0-9\-]', '', $nn);
         $school->save();
 
@@ -95,7 +90,7 @@ class SchoolController extends \BaseController
         $user = Sentry::createUser(
             [
                 'email' => e(Input::get("user-email")),
-                'password' => Input::get("userpassword"),
+                'password' => Input::get("user-password"),
                 'activated' => true,
                 'school_id' => $school->id,
                 'first_name' => e(Input::get("user-firstname")),
@@ -129,47 +124,9 @@ class SchoolController extends \BaseController
         Sentry::login($user, false);
 
         return Redirect::route('calendar.redirect');
-
-
     }
 
 
-    /**
-     * Display the specified school.
-     *
-     * @param  int $id the Id of the school to show
-     * @return Response
-     */
-    public function showSchoolById($id)
-    {
-        showSchool(School::find($id));
-    }
-
-    /**
-     * Display the specified school.
-     *
-     * @param  \School $school the school to show
-     * @return Response
-     */
-    public function showSchool($school)
-    {
-        // If user is logged in, redirect to calendar index
-        if (!Sentry::check()) {
-            return Redirect::route('landing');
-        }
-
-        $user = Sentry::getUser();
-
-        // Check if user is a superAdmin (only he can see this page)
-        if ($user->hasAccess('superadmin')) {
-            $school->load("calendars");
-            return View::make('school.detail')->with('school', $school);
-        } else {
-            // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.redirect');
-        }
-
-    }
 
 
     /**

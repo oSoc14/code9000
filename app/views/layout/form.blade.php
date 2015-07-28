@@ -63,6 +63,11 @@
 </nav>
 
 <section class="form educal-form">
+    @if(Session::has('errorMessage'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('errorMessage') }}
+        </div>
+    @endif
     @yield('form')
 </section>
 

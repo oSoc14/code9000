@@ -3,7 +3,7 @@
 @section('form')
 
     {{ Form::open([
-                 'route' => 'user.auth',
+                 'route' => 'school.store',
                  'data-ajax' => 'false',
                  ]), PHP_EOL }}
     <div class="form-group">
