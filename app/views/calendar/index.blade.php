@@ -7,10 +7,10 @@
     var org = {{ $school }};
     var user = {{ $user }};
     var root = {{ $root }};
-    var calendars = {{ json_encode($calendars) }};
+    var calendars = {{ json_encode($calendars,JSON_NUMERIC_CHECK) }};
     var urls = {{ json_encode([
       'events' => route('api.events')
-    ]) }};
+    ],JSON_NUMERIC_CHECK) }};
 </script>
 @stop
 

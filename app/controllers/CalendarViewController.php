@@ -55,7 +55,7 @@ class CalendarViewController extends \BaseController
         }
 
         return View::make('calendar.index')->with([
-            "school" => json_encode($school),
+            "school" => json_encode($school, JSON_NUMERIC_CHECK),
             "user" => json_encode([
                 "id" => $uid,
                 "logged_in" => $logged,
@@ -63,7 +63,7 @@ class CalendarViewController extends \BaseController
                     "editor" => $write,
                     "admin" => $admin,
                 ]
-            ]),
+            ], JSON_NUMERIC_CHECK),
             "org" => $school,
             "root" => $root,
             "calendars" => $calendars,
