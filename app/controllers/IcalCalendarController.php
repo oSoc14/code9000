@@ -20,7 +20,7 @@ class IcalCalendarController extends \BaseController
     {
         $appointments = CalendarController::getAppointmentsBySlugs($school_slug, $calendar_slug);
         // Compose iCal with the help of the eluceo plugin
-        $title = 'kalender' . ' ' . $school_slug . '-' . str_replace('/', '-', $calendar_slug);
+        $title = 'kalender' . ' ' . $school_slug . '-' . str_replace('+', '-', $calendar_slug);
         $calendar = self::composeIcal($title, $appointments);
 
         return $calendar->render();

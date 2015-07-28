@@ -292,12 +292,12 @@ Route::group(['prefix' => '{org_slug}'], function () {
     Route::get('/{calendar_slug}.ics', [
         'as' => 'export.ics',
         'uses' => 'IcalCalendarController@index'
-    ])->where('calendar_slug', '[0-9A-Za-z_\-/ ]+');
+    ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
 
     Route::get('/{calendar_slug}', [
         'as' => 'export.index',
         'uses' => 'IcalCalendarController@index'
-    ])->where('calendar_slug', '[0-9A-Za-z_\-/ ]+');
+    ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
 
     // Create a new school
     Route::post('/register', [

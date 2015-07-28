@@ -140,7 +140,7 @@ class CalendarController extends \BaseController
      */
     public static function getAppointmentsBySlugs($school_slug, $calendar_slugs)
     {
-        $calendar_slugs_array = explode('/', $calendar_slugs);
+        $calendar_slugs_array = explode('+', $calendar_slugs);
         $appointments = array();
 
         foreach ($calendar_slugs_array as $slug) {
