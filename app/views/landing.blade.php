@@ -42,12 +42,14 @@
 <body id="top">
 <nav id="topnav">
     <div class="container">
-        <a class="mobile-header" id="toggle-menu-collapse" href="#"><img class="nav" src="{{ asset('images/landing/logo_white.png') }}"
+        <a class="mobile-header" id="toggle-menu-collapse" href="#"><img class="nav"
+                                                                         src="{{ asset('images/landing/logo_white.png') }}"
                                                                          alt="educal"><i
                     class="fa fa-bars right fa-2x"></i>
         </a>
         <ul class="nav" id="menu-collapse">
-            <li class="brand"><a class="nav brand" href="#top"><img class="nav" src="{{ asset('images/landing/logo_white.png') }}"
+            <li class="brand"><a class="nav brand" href="#top"><img class="nav"
+                                                                    src="{{ asset('images/landing/logo_white.png') }}"
                                                                     alt="educal"></a></li>
             <li><a class="nav " href="#werking">Hoe werkt het</a></li>
             <li><a class="nav " href="#waarom">Waarom educal</a></li>
@@ -109,7 +111,7 @@
             <h2>Waarom educal</h2>
         </div>
 
-        <div class="col-md-4 col-sm-4 col-sm-offset-4 col-why">
+        <div class=" col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-0 col-why">
             <img src="{{ asset('images/landing/checkmark.svg') }}" alt="checkmark">
 
             <h3>Makkelijk in gebruik</h3>
@@ -119,7 +121,7 @@
             </p>
         </div>
 
-        <div class="col-md-4 col-sm-4 col-sm-offset-4 col-why">
+        <div class="col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-0 col-why">
             <img src="{{ asset('images/landing/money.svg') }}" alt="checkmark">
 
             <h3>Gratis</h3>
@@ -129,7 +131,7 @@
             </p>
         </div>
 
-        <div class="col-md-4  col-sm-4 col-sm-offset-4  col-why">
+        <div class="col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-0 col-why">
             <img src="{{ asset('images/landing/link.svg') }}" alt="checkmark">
 
             <h3>Blijf verbonden</h3>
@@ -168,26 +170,27 @@
                 <h2>Log in<span> - voor medewerkers</span></h2>
             </div>
             <div class="modal-body">
-                    {{ Form::open([
-                       'route' => 'user.auth',
-                       'data-ajax' => 'false',
-                       ]), PHP_EOL }}
-                    <div class="form-group">
-                        {{Form::label('lemail', ucfirst(trans('educal.email')))}}
-                        {{Form::email('lemail', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer e-mailadres in'])}}
-                    </div>
-                    <div class="form-group">
-                        <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
-                        <input type="password" class="form-control right" id="login-password" name="password" placeholder="Voer wachtwoord in" required>
-                        @if(Session::has('errorMessage'))
+                {{ Form::open([
+                   'route' => 'user.auth',
+                   'data-ajax' => 'false',
+                   ]), PHP_EOL }}
+                <div class="form-group">
+                    {{Form::label('lemail', ucfirst(trans('educal.email')))}}
+                    {{Form::email('lemail', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer e-mailadres in'])}}
+                </div>
+                <div class="form-group">
+                    <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
+                    <input type="password" class="form-control right" id="login-password" name="password"
+                           placeholder="Voer wachtwoord in" required>
+                    @if(Session::has('errorMessage'))
                         <div class="alert alert-danger" role="alert">
                             {{ Session::get('errorMessage') }}
                         </div>
-                        @endif
-                    </div>
+                    @endif
+                </div>
 
-                    <button type="submit"
-                            class="btn btn-info btn-fullwidth">{{ ucfirst(trans('educal.login'))}}</button>
+                <button type="submit"
+                        class="btn btn-info btn-fullwidth">{{ ucfirst(trans('educal.login'))}}</button>
                 <a href="#" data-dismiss="modal" data-toggle="modal"
                    data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
             </div>
