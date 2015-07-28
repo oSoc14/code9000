@@ -28,6 +28,18 @@ var calnav = (function() {
     nav.append($label);
   };
 
+  var active = function() {
+    var list = [];
+    for (var cal in calendars) {
+      if (calendars.hasOwnProperty(cal)) {
+        var c = calendars[cal];
+        if (c.active)
+          list.push(c.slug);
+      }
+    }
+    return list.length ? list : ['all'];
+  };
+
   var toggle = function(e) {
     e.stopPropagation();
     var $target = $(e.target);
@@ -86,6 +98,7 @@ var calnav = (function() {
   };
 
   return {
-    init: init
+    init: init,
+    active: active
   };
 })();

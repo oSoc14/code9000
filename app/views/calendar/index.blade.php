@@ -53,13 +53,13 @@
 @section('content')
 <div id="calendar">
   <div class="top-right">
-    <a href="{{ route('export.index', [$org->slug, '']) }}" class="btn btn-primary">Abonneren op deze kalender</a>
+    <button data-base="{{ route('export.index', [$org->slug, '']) }}" class="btn btn-primary btn-export">Abonneren op deze kalender</button>
   </div>
 </div>
 
 <div class="hidden read-event-template">
   <div class="read-event">
-    <div class="close">&times;</div>
+    <button type="button" onclick="editor.close()" class="close">&times;</button>
     <h1 class="read-title divider-btm"></h1>
     <p class="divider-btm">
       <time class="read-dt"></time>

@@ -17,6 +17,7 @@
     eventSources: [root],
     eventClick: editor.open,
     eventDrop: editor.drop,
+    eventResize: editor.drop,
     select: editor.select,
     unselect: editor.close
   });
@@ -39,9 +40,16 @@
     };
   };
 
+  // Generate export
+  $('.btn-export').on('click', function(e) {;
+    window.location.href = $(this).data('base') + '/' + calnav.active().join('+');
+  });
+
   // Close editor on blur
   $(document.body).on('click', editor.close);
-  calendar.on('click', function(e){e.stopPropagation();});
+  $('.fc-body').on('click', function(e) {
+    e.stopPropagation();
+  });
 
   // When resizing the window, get the correct view.
   $(window).resize(adaptView);

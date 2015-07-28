@@ -67,10 +67,17 @@ $line-color: #ccc !default;
   .btn-danger {
     color: #900;
   }
-  .close{
+  .close {
     position: absolute;
     right: 0;
     top: 0;
+    width: 50px;
+    text-align: center;
+    font-size: 25px;
+    color: #999;
+    &:hover {
+      color: #000;
+    }
   }
 }
 .dtpicker {
