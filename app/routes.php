@@ -52,7 +52,12 @@ Route::group(['prefix' => 'profile'], function () {
         'uses' => 'UserController@demoteUserAdmin'
     ])->where('id', '[0-9]+');
 
-
+    // Show the view to edit a user
+    Route::get('/{id?}', [
+        'as' => 'user.edit',
+        'before' => 'auth',
+        'uses' => 'UserController@editUser'
+    ])->where('id', '[0-9]+');
 
     // Register as a new user
     Route::post('/register', [
