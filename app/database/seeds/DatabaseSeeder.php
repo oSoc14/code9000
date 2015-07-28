@@ -25,6 +25,17 @@ class DatabaseSeeder extends Seeder
         $keyName = $keys[0];
         $keyType = $keys[1];
 
+        $colors = [
+            1 => ' 34ce45',
+            2 => ' 3a8bce',
+            3 => ' c13838',
+            4 => ' 2cdbca',
+            5 => ' e5c12c',
+            6 => ' 7548cc',
+            7 => ' e08a00',
+            8 => ' d66ae5',
+        ];
+
         foreach ($tables as $name) {
             //if you don't want to truncate migrations
             if (in_array($name[$keyName], $excepts))
@@ -106,13 +117,14 @@ class DatabaseSeeder extends Seeder
             $o->name = School::find($i)->slug;
             $o->description = 'events for everyone in school';
             $o->school_id = $i;
+            $o->color = $colors[8];
             $o->save();
             if ($i == 3) {
                 $admin_user->calendars()->attach($o);
             }
             // Add year calendars
             for ($j=1; $j <= 6; $j++) {
-                $color = randomColor('j' . $j . $o->school_id);
+                $color = $colors[$j];
                 $y = new Calendar();
                 $y->name = $j . (($j == 1) ? 'ste' : 'de') . ' jaar';
                 $y->slug = 'j' . $j;
