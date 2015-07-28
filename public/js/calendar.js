@@ -16,6 +16,7 @@
     timeFormat: 'H:mm',
     eventSources: [root],
     eventClick: editor.open,
+    eventDrop: editor.drop,
     select: editor.select,
     unselect: editor.close
   });
