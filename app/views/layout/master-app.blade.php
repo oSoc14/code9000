@@ -70,7 +70,7 @@
     @if(Sentry::check())
     <section class="flex--0">
       <ul class="nav-list">
-        <li><a href="{{ route('help') }}">Help!</a></li>
+        <li><a href="#">Help!</a></li>
         <li><a href="{{ route('user.edit') }}">Profiel</a></li>
           @if(Sentry::check())
               <li>
