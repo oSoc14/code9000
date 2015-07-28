@@ -62,6 +62,8 @@
     </div>
 </nav>
 
+@yield('header')
+
 <section class="form educal-form">
     @if(Session::has('errorMessage'))
         <div class="alert alert-danger" role="alert">
