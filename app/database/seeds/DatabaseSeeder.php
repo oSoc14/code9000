@@ -135,6 +135,7 @@ class DatabaseSeeder extends Seeder
             if ($i == 3) {
                 $admin_user->calendars()->attach($o);
             }
+
             // Add year calendars
             for ($j = 1; $j <= 6; $j++) {
                 $color = $colors[$j];
@@ -175,12 +176,9 @@ class DatabaseSeeder extends Seeder
                 $user->calendars()->attach($o);
                 $user->save();
 
-                if ($i == 3) {
-                    $admin_user->calendars()->attach($y);
-
-                    if ($j == 4) {
+                if ($i == 3 && $j == 4) {
                         $editor_user->calendars()->attach($y);
-                    }
+
                 }
 
                 // Add class calendars
