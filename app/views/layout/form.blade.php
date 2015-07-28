@@ -65,9 +65,14 @@
 @yield('header')
 
 <section class="form educal-form">
-    @if(Session::has('errorMessage'))
+    @if($errors->has('errorMessage'))
         <div class="alert alert-danger" role="alert">
-            {{ Session::get('errorMessage') }}
+            <strong>{{ucfirst(trans('educal.errors'))}}</strong>
+            <ul>
+                @foreach ($errors->all() as $message)
+                    <li>{{$message}}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
     @yield('form')

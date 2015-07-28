@@ -50,11 +50,6 @@
         <label for="school-city">Stad</label>
         <input type="text" class="form-control right" id="school-city" name="school-city"
                placeholder="Voer stad in" required>
-        @if(Session::has('errorMessage'))
-            <div class="alert alert-danger" role="alert">
-                {{ Session::get('errorMessage') }}
-            </div>
-        @endif
     </div>
     <button type="submit"
             class="btn btn-info">Start met plannen
