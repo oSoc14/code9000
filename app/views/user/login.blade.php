@@ -1,11 +1,11 @@
 @extends('layout.form')
 
 @section('header')
-    <h2 class="form-header">Log in<span class="form-header-mute"> - voor medewerkers</span></h2>
+
 @stop
 
 @section('form')
-
+    <h2 class="form-header">Log in<span class="form-header-mute"> - voor medewerkers</span></h2>
     {{ Form::open([
        'route' => 'user.auth',
        'data-ajax' => 'false',

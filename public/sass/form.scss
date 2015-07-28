@@ -46,7 +46,7 @@ section.form {
   top: 50%;
   width: 660px;
   margin-left: -330px;
-  min-height: 498px;
+  min-height: 250px;
   margin-top: -166px;
 
   background-color: #ffffff;
@@ -128,4 +128,9 @@ section.form {
   span {
     color: #8e8e8e;
   }
+}
+
+.educal-form .form-header {
+  color: #000000;
+  text-align: left;
 }
