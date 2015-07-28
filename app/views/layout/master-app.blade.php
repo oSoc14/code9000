@@ -56,33 +56,32 @@
             {{ucfirst(trans('educal.calendar'))}}
           </a>
         </li>
-        @if(Sentry::check() && Sentry::getUser()->hasAccess('admin'))
-        <li>
-          <a href="{{ route('admin.dashboard',[$org->slug]) }}"
-          {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
-            <i class="icon icon--home"></i>
-            Dashboard
-          </a>
-        </li>
-        @endif
       </ul>
       @show
     </section>
-    @if(Sentry::check())
     <section class="flex--0">
       <ul class="nav-list">
-        <li><a href="{{ route('user.edit') }}"><i class="icon icon--cog"></i>Profiel</a></li>
-          @if(Sentry::check())
-              <li>
-                  <a href="{{ route('user.logout') }}"
-                          {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
-                      <i class="icon icon--logout"></i>Uitloggen
-                  </a>
-              </li>
+        @if(Sentry::check())
+          @if(Sentry::getUser()->hasAccess('admin'))
+          <li>
+            <a href="{{ route('admin.dashboard',[$org->slug]) }}"
+            {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
+              <i class="icon icon--home"></i>
+              Dashboard
+            </a>
+          </li>
           @endif
+          <li><a href="{{ route('user.edit') }}"><i class="icon icon--cog"></i>Profiel</a></li>
+          <li>
+            <a href="{{ route('user.logout') }}" {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
+              <i class="icon icon--logout"></i>Uitloggen
+            </a>
+          </li>
+        @else
+        <li><a href="{{ route('user.edit') }}"><i class="icon icon--cog"></i>Login</a></li>
+        @endif
       </ul>
     </section>
-    @endif
   </nav>
   <main class="main">
     @yield('content')
