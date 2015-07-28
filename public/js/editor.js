@@ -165,6 +165,16 @@ var editor = (function() {
   };
   var t2Options = $.extend({}, t1Options);
 
+  var fixPopup = function() {
+    var $popover = $('.popover');
+    $popover.on('click', function(e) {
+      e.stopPropagation();
+    });
+    if ($popover.css('left').replace('px', '') < 0) {
+      $popover.css('left', '30px');
+    }
+  };
+
   // Show popover to create event
   var select = function(start, end, jsEvent, view) {
 
@@ -184,13 +194,7 @@ var editor = (function() {
     $target.popover(popoverOptions);
     $target.popover('show');
 
-    var $popover = $('.popover');
-    $popover.on('click', function(e) {
-      e.stopPropagation();
-    });
-    if ($popover.css('left').replace('px', '') < 0) {
-      $popover.css('left', '30px');
-    }
+    fixPopup();
 
     // Launch datetimepicker
     $('.input-date.d2').datetimepicker(d2Options);
@@ -272,6 +276,7 @@ var editor = (function() {
       });
       $target.popover('show');
     }
+    fixPopup();
   };
 
   window.addEventListener('submit', create);

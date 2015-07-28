@@ -47,7 +47,7 @@
 
   // Close editor on blur
   $(document.body).on('click', editor.close);
-  calendar.on('click', function(e) {
+  $('.fc-body').on('click', function(e) {
     e.stopPropagation();
   });
 
