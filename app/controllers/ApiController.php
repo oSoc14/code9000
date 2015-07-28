@@ -118,7 +118,6 @@ class ApiController extends \BaseController
 
         $calendar = Calendar::find($id);
         $calendar->load('appointments');
-        $calendar->getParentCalendarAppointments();
 
         // Returns JsonResponse response of the user
         return Response::Json($calendar, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
@@ -132,18 +131,13 @@ class ApiController extends \BaseController
      */
     public function calendarEvents($id)
     {
-        $ids = [$id];
-        $calendar = Calendar::find($id);
-        while ($calendar->parent_id > 0) {
-            $calendar = $calendar::find($calendar->parent_id);
-            array_push($ids, $calendar->id);
-        }
+
 
         if (Input::has("start") && Input::has("end")) {
-            $appQuery = Appointment::whereIn('calendar_id', $ids)->where('start', '>=',
+            $appQuery = Appointment::where('calendar_id', $id)->where('start', '>=',
                 Input::get('start') . ' 00:00:00')->where('start', '<=', Input::get('end') . ' 00:00:00')->get();
         } else {
-            $appQuery = Appointment::whereIn('calendar_id', $ids)->get();
+            $appQuery = Appointment::where('calendar_id', $id)->get();
         }
 
         // Returns JsonResponse response of the user
