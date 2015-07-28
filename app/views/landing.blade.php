@@ -52,10 +52,9 @@
                                                                     src="{{ asset('images/landing/logo_white.png') }}"
                                                                     alt="educal"></a></li>
             <li><a class="nav " href="#werking">Hoe werkt het</a></li>
-            <li><a class="nav " href="#waarom">Waarom educal</a></li>
-            <li><a class="nav " href="#school">Educal voor mijn school</a></li>
-            <li class="right"><a class="nav-login" href="{{route('user.login')}}">Log
-                    in</a></li>
+            <li><a class="nav " href="#waarom">Waarom educal?</a></li>
+            <li><a class="nav " href="#school">Start met educal</a></li>
+            <li class="right"><a class="nav-login" href="{{route('user.login')}}">Log in</a></li>
         </ul>
     </div>
 </nav>
@@ -96,9 +95,9 @@
         </div>
 
         <div class="col-md-8 col-md-offset-1">
-            <a class="btn btn-switch btn-switch-active" href="#">Ik ben een leerkracht</a>
-            <a class="btn btn-switch" href="#">Ik ben een ouder</a>
-            <img src="{{ asset('images/landing/video-placeholder.jpg') }}" style="height:400px; width:100%;">
+            <a class="btn btn-switch btn-switch-active" href="#">Ik ben leerkracht</a>
+            <a class="btn btn-switch" href="#">Ik ben ouder</a>
+            <img src="{{ asset('images/landing/video-placeholder.jpg') }}" style="width:100%;">
         </div>
     </div>
 </section>
@@ -106,7 +105,7 @@
 <section class="page" id="waarom">
     <div class="container">
         <div class="col-md-12 text-center">
-            <h2>Waarom educal</h2>
+            <h2>Voordelen van educal</h2>
         </div>
 
         <div class=" col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-0 col-why">
@@ -140,20 +139,19 @@
         </div>
     </div>
 </section>
-<section class="page" id="school">
+<section class="page register" id="school">
     <div class="container">
-        <div class="col-md-4">
-            <h2>Educal voor mijn school?</h2>
-        </div>
+        <div class="col-md-6 col-md-offset-3">
+            <h2>Start met educal op jouw school</h2>
 
-        <div class="col-md-6 col-md-offset-2">
             <ol>
-                <li>Registreer via onderstaande knop</li>
-                <li>Beheer je school via het dashboard</li>
-                <li>Maak events aan op school-, jaar- en klasniveau</li>
+                <li>Registreer je, <strong>gratis</strong></li>
+                <li><strong>Maak evenementen aan</strong> op school-, jaar- en klasniveau</li>
+                <li>Geniet van <strong>blije, betrokken ouders</strong></li>
             </ol>
 
-            <button class="btn btn-info align-ol">Registreer</button>
+            <button class="btn btn-info">Start nu gratis</button>
+            <span class="help-text">na 2 minuten ben je aan de slag :-)</span>
         </div>
     </div>
 </section>
