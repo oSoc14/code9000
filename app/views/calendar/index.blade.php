@@ -23,7 +23,12 @@
       <button type="button" name="button">Alleen schoolkalender</button>
     </p>
     @elseif($cal->parent_id == $root->id)
-    <button class="level--1" type="button" data-cal="{{$cal->id}}">{{$cal->name}}</button>
+    <button class="level--1" type="button" data-cal="{{$cal->id}}">
+      {{$cal->name}}
+      <svg height="20" stroke="#ccc" width="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="2" stroke-linecap="round">
+        <path d="M1 7 L8 14 L15 7"></path>
+      </svg>
+    </button>
     @else
     <label class="level--0" style="display:none;" data-color="{{$cal->color}}" data-cal="{{$cal->id}}" data-parent="{{$cal->parent_id}}">
       <span class="checkbox"><input type="checkbox"></span>{{$cal->name}}

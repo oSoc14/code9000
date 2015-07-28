@@ -17,8 +17,14 @@
     padding: 10px $gutter;
     line-height: 20px;
     opacity: .7;
+    vertical-align: top;
+    &:hover,
     &.active {
       opacity: 1;
+    }
+    svg{
+      float: right;
+      pointer-events: none;
     }
   }
   .checkbox{
