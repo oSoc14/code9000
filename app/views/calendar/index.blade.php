@@ -37,17 +37,6 @@
   @endforeach
 
 </section>
-@if(Sentry::check() && Sentry::getUser()->hasAccess('admin'))
-<ul>
-  <li>
-    <a href="{{ route('admin.dashboard', [$org->slug]) }}"
-    {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
-      <i class="glyphicon glyphicon-folder-close"></i>
-      Dashboard
-    </a>
-  </li>
-</ul>
-@endif
 @stop
 
 @section('content')
