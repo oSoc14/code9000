@@ -87,12 +87,10 @@
 
             <ul>
                 <li>
-                    Educal is een kalender enkel de activiteiten waar jij geïnteresseerd in bent in een oogopslag laat
-                    zien.
+                    Educal is een kalender die enkel de activiteiten waar jij geïnteresseerd in bent in een oogopslag laat zien.
                 </li>
                 <li>
-                    Exporteer de kalender naar je eigen agenda zodat je altijd het beste op de hoogte bent van de
-                    activiteiten van je kind!
+                    Exporteer de kalender naar je eigen agenda, zo ben je altijd op de hoogte van de activiteiten van je kind.
                 </li>
             </ul>
         </div>
@@ -107,7 +105,7 @@
 
 <section class="page" id="waarom">
     <div class="container">
-        <div class="col-md-4 col-md-offset-8">
+        <div class="col-md-12 text-center">
             <h2>Waarom educal</h2>
         </div>
 
@@ -117,17 +115,17 @@
             <h3>Makkelijk in gebruik</h3>
 
             <p>
-                Educal is enorm gebruiksvriendelijk
+                Zo gemakkelijk dat je grootmoeder het kan gebruiken. Dat is ons motto.
             </p>
         </div>
 
         <div class="col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-0 col-why">
             <img src="{{ asset('images/landing/money.svg') }}" alt="checkmark">
 
-            <h3>Gratis</h3>
+            <h3>Gratis &amp; Open Source</h3>
 
             <p>
-                Educal is 100% gratis
+                De open source versie van educal is 100% gratis, voor altijd.
             </p>
         </div>
 
@@ -137,8 +135,7 @@
             <h3>Blijf verbonden</h3>
 
             <p>
-                Uw kalender altijd op zak: U kan uw kalender exporteren en toevoegen aan u eigen agenda, of importeren
-                op u gsm
+                Uw kalender altijd op zak: exporteer educal naar uw smartphone, tablet of computer.
             </p>
         </div>
     </div>
