@@ -19,13 +19,21 @@ $gutter: 2em !default;
   }
   a {
     display: block;
-    padding: 0 $gutter;
-    line-height: 40px;
+    padding: 10px $gutter;
+    line-height: 20px;
     color: #fff;
     text-decoration: none;
     &:hover,
     &:focus {
       background: rgba(0,0,0,0.5);
     }
+    &>.icon {
+      float: left;
+      margin-right: 0.5em;
+    }
+  }
+  .logo{
+    height: 80px;
+    background: url(../images/logo_white.svg) no-repeat center;
   }
 }

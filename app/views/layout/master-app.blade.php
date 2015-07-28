@@ -45,13 +45,14 @@
 
 <body>
   <nav class="nav nav-main">
-      <h1>{{ $org->name }}</h1>
+    <h1 class="logo text-hide">educal</h1>
+    <h1>{{ $org->name }}</h1>
     <section class="flex--1">
       @section('nav')
       <ul class="nav-list">
         <li>
           <a href="{{ route('orgs.index',[$org->slug]) }}" {{ Route::currentRouteName()=='calendar.redirect' ? ' class="active"' : '' }}>
-            <i class="glyphicon glyphicon-calendar"></i>
+            <i class="icon icon--calendar"></i>
             {{ucfirst(trans('educal.calendar'))}}
           </a>
         </li>
@@ -59,7 +60,7 @@
         <li>
           <a href="{{ route('admin.dashboard',[$org->slug]) }}"
           {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
-            <i class="glyphicon glyphicon-folder-close"></i>
+            <i class="icon icon--home"></i>
             Dashboard
           </a>
         </li>
@@ -70,28 +71,17 @@
     @if(Sentry::check())
     <section class="flex--0">
       <ul class="nav-list">
-        <li><a href="{{ route('help') }}">Help!</a></li>
-        <li><a href="{{ route('user.edit') }}">Profiel</a></li>
+        <li><a href="{{ route('help') }}"><i class="icon icon--help"></i>Help!</a></li>
+        <li><a href="{{ route('user.edit') }}"><i class="icon icon--cog"></i>Profiel</a></li>
           @if(Sentry::check())
               <li>
                   <a href="{{ route('user.logout') }}"
                           {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
-                      <i class="glyphicon glyphicon-folder-close"></i>
-                      Logout
+                      <i class="icon icon--logout"></i>Uitloggen
                   </a>
               </li>
           @endif
       </ul>
-      <p class="text-muted">
-        @if(Sentry::getUser()->first_name != "")
-        <span>{{Sentry::getUser()->first_name}} {{Sentry::getUser()->last_name}}</span>
-        @else
-        <span>{{Sentry::getUser()->email}}</span>
-        @endif
-        @if(Sentry::getUser()->school != null)
-        <br><small>{{Sentry::getUser()->school->name}}</small>
-        @endif
-      </p>
     </section>
     @endif
   </nav>

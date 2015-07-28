@@ -1,0 +1,22 @@
+.icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  float: left;
+  &--calendar {
+    background-image: url("../images/calendar.png");
+  }
+  &--cog {
+    background-image: url("../images/cog.png");
+  }
+  &--help {
+    background-image: url("../images/help.png");
+  }
+  &--home {
+    background-image: url("../images/home.png");
+  }
+  &--logout {
+    background-image: url("../images/logout.png");
+  }
+}
