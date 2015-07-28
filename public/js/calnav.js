@@ -42,17 +42,36 @@ var calnav = (function() {
     var $target = $(e.target);
     var $label = $target.closest('label');
     var id = $label.data('cal');
-      console.log('change', id)
+    var activate = $target.is(":checked");
+    var parent = calendars[calendars[id].parent_id];
+    console.log('change', id)
 
     // Apply to calendar
-    if ($target.is(":checked")) {
+    if (activate) {
+      calendars[id].active = true;
       $('#calendar').fullCalendar('addEventSource', calendars[id]);
       $label.addClass('active');
       $label.find('.checkbox').css('background', $label.data('color'));
     } else {
+      calendars[id].active = false;
       $('#calendar').fullCalendar('removeEventSource', calendars[id].url);
       $label.removeClass('active');
       $label.find('.checkbox').css('background', 'rgba(0,0,0,0)');
+    }
+
+    // Toggle year eventsource
+    var activeSiblings = 0;
+    for (var cal in calendars) {
+      if (calendars.hasOwnProperty(cal)) {
+        var c = calendars[cal];
+        if (c.parent_id === calendars[id].parent_id && c.active)
+          activeSiblings++;
+      }
+    }
+    if (activate && activeSiblings === 1) {
+      $('#calendar').fullCalendar('addEventSource', parent);
+    } else if (!activate && !activeSiblings) {
+      $('#calendar').fullCalendar('removeEventSource', parent.url);
     }
   };
 
