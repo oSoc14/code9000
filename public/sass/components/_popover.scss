@@ -29,13 +29,18 @@ $line-color: #ccc !default;
   .has-input {
     display: block;
     padding: 10px $gutter-popover 0;
-    .input {
-      padding: 0 0 10px;
-      height: auto;
-      line-height: 20px;
-      outline: none;
-      font-weight: 400;
-    }
+  }
+  .input {
+    padding: 0 0 10px;
+    height: auto;
+    line-height: 20px;
+    outline: none;
+    font-weight: 400;
+  }
+  .input-cals {
+    padding: 0;
+    margin-bottom: 10px;
+    background: #fff;
   }
   button {
     display: block;
@@ -71,7 +76,7 @@ $line-color: #ccc !default;
   @include flexbox;
   svg,
   label {
-    @include flex(0, 0, auto);
+    @include flex(1, 0, auto);
     padding: 0 15px;
     line-height: 30px;
   }
@@ -82,6 +87,7 @@ $line-color: #ccc !default;
     outline: none;
     position: relative;
     z-index: 5;
+    width: 90px;
   }
 }
 .popover-content {
