@@ -26,14 +26,14 @@ class DatabaseSeeder extends Seeder
         $keyType = $keys[1];
 
         $colors = [
-            1 => ' 34ce45',
-            2 => ' 3a8bce',
-            3 => ' c13838',
-            4 => ' 2cdbca',
-            5 => ' e5c12c',
-            6 => ' 7548cc',
-            7 => ' e08a00',
-            8 => ' d66ae5',
+            1 => '#34ce45',
+            2 => '#3a8bce',
+            3 => '#c13838',
+            4 => '#2cdbca',
+            5 => '#e5c12c',
+            6 => '#7548cc',
+            7 => '#e08a00',
+            8 => '#d66ae5',
         ];
 
         foreach ($tables as $name) {

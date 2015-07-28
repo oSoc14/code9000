@@ -216,15 +216,6 @@ Route::group(['prefix' => 'api/1'], function () {
     ]);
 
 
-    /**
-     * Returns all events for the users organisation
-     * @deprecated
-     */
-    Route::get('/user/events', [
-        'as' => 'api.allUserEvents',
-        'uses' => 'ApiController@allUserEvents'
-    ]);
-
 });
 
 

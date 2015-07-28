@@ -119,6 +119,7 @@ class ApiController extends \BaseController
         $calendar = Calendar::find($id);
         $calendar->load('appointments');
         $calendar->getParentCalendarAppointments();
+
         // Returns JsonResponse response of the user
         return Response::Json($calendar, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
@@ -262,7 +263,6 @@ class ApiController extends \BaseController
 
         // make sure the FULL object is returned
         $event = Appointment::find($event->id);
-        $event->color = $event->calendar->color;
 
         return Response::Json($event, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
@@ -313,10 +313,7 @@ class ApiController extends \BaseController
         $calendar_id = Input::get('calendar');
         $start = e(Input::get('start'));
         $end = e(Input::get('end'));
-
-        // TODO: Handle All day events, or decide to remove it alltogether
-        // If the event isn't the whole day, determine the end date/time
-        //$event->allday = false;
+        $allday = e(Input::get('allDay'));
 
         // Recurring events handling
         if (Input::get('repeat')) {
@@ -372,7 +369,6 @@ class ApiController extends \BaseController
 
             // make sure the FULL object is returned
             $event = Appointment::find($event->id);
-            $event->color = $event->calendar->color;
 
             return Response::Json($event, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
         }
@@ -407,11 +403,11 @@ class ApiController extends \BaseController
         $event->calendar_id = $calendar_id;
         $event->start = $sd;
         $event->end = $ed;
+        $event->allday = $allday;
         $event->save();
 
         // make sure the FULL object is returned
         $event = Appointment::find($event->id);
-        $event->color = $event->calendar->color;
 
         return Response::Json($event, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }

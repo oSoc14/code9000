@@ -14,7 +14,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class Appointment extends Eloquent
 {
 
-    protected $appends = array('editable');
+    protected $appends = array('editable', 'color');
 
     /**
      * The database table used by the model.
@@ -50,6 +50,11 @@ class Appointment extends Eloquent
         }
 
         return false;
+    }
+
+    public function getColorAttribute()
+    {
+        return $this->calendar->color;
     }
 
 }
