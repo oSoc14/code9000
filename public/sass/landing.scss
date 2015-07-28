@@ -1,5 +1,10 @@
+/**
+ * Colours
+ */
+
 $blue: #8fafc6;
 $blue-darken: #6e8899;
+$blue-light: mix(#fff,$blue,7%);
 
 $bg-input: #f7f7f7;
 
@@ -12,15 +17,45 @@ $button-switch-inactive: #dae6ee;
 $input-valid: #007b8a;
 $input-invalid: #c83233;
 
+/**
+ * Imports
+ */
+
 @import "normalize";
 @import "bootstrap_landing";
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300,700);
 @import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
 
+/**
+ * Styles
+ */
+
+// Clearfix.
+// @extend %cf;
+%cf {
+  *zoom : 1;
+
+  &:before,
+  &:after {
+    display: table;
+    content : "";
+  }
+
+  &:after {
+    clear : both;
+  }
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 html {
+  height: 100%;
   margin: 0;
   padding: 0;
-  height: 100%;
 }
 
 body {
@@ -30,15 +65,27 @@ body {
 
   font-weight: 400;
   font-size: 17px;
-  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Roboto, sans-serif;
 }
 
 @import "staticnav";
 
-section.page {
-  padding-top: 2* $nav-height;
+.page {
   min-height: 100%;
-  background-color: #ffffff;
+  background-color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+
+  .container {
+    margin: auto;
+  }
 
   &:nth-of-type(odd) {
     background: #f3f3f3;
@@ -50,7 +97,7 @@ section.page {
 
   h2 {
     margin: 0 0 30px;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     font-weight: 200;
     font-size: 60px;
     line-height: 60px;
@@ -60,20 +107,11 @@ section.page {
     margin: 0;
     padding: 0;
     list-style: none;
+    color: mix(#fff,$button-switch-text,21%);
 
     li {
       margin-bottom: 20px;
-      padding-left: 1em;
-      text-indent: -1em;
       line-height: 24px;
-    }
-
-    li:before {
-      position: relative;
-      top: 0.16em; /* or whatever color you prefer */
-      color: $button-switch-text;
-      content: "\002022";
-      font-size: 2em;
     }
   }
 
@@ -93,19 +131,14 @@ section.page {
       counter-increment: li; /* Increment the counter by 1 */
       /* Position and style the number */
       position: absolute;
-      top: -2px;
-      left: -2em;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      width: 2em;
+      top: -.35em;
+      left: -.75em;
       /* Some space between the number and the content in browsers that support
          generated content but not positioning it (Camino 2 is one example) */
       margin-right: 8px;
-      padding: 4px;
 
       color: $blue;
-      font-size: 32px;
+      font-size: 2.5em;
       font-weight: 700;
 
       text-align: center;
@@ -114,13 +147,11 @@ section.page {
 
 }
 
-section.splash {
+.splash {
   //margin-top: -$nav-height;
-  padding-top: calc(60px + 8%); // TODO: fix hardcoded navbar height
+  // padding-top: calc(60px + 8%); // @TODO: fix hardcoded navbar height
   h1, h2 {
-    color: #ffffff;
-    //text-transform: uppercase;
-    text-transform: none;
+    color: #fff;
     font-weight: 200;
   }
 
@@ -139,44 +170,54 @@ section.splash {
     max-width: 100%;
   }
 
-  form.splash-search {
+  .splash-search {
+    @extend %cf;
     input {
       padding: 5px;
       height: 35px;
       border: none;
       border-radius: 0;
+      display: block;
+      float: left;
     }
     input[type=text] {
-      margin-right: 10px;
-      width: calc(90% - 30px);
+      margin: 0;
+      width: 85%;
       background-color: $bg-input;
     }
     input[type=submit] {
-      width: 10%;
+      margin: 0;
+      width: 15%;
       background-color: $blue-darken;
       color: $bg-input;
       text-decoration: inherit;
       font-weight: normal;
       font-style: normal;
       font-family: FontAwesome;
+
+      &:hover,
+      &:focus {
+        background-color: mix(#fff,$blue-darken,10%);
+      }
     }
   }
 
   .arrow-readon {
     position: absolute;
-    bottom: 30px;
+    bottom: 50px;
     left: 50%;
     display: block;
     margin-left: -25px;
     width: 50px;
     height: 30px;
-    color: #ffffff;
+    color: #fff;
     text-align: center;
   }
 
 }
 
 .col-why {
+  text-align: center;
   img {
     max-width: 156px;
   }
@@ -203,9 +244,14 @@ button.btn.align-ol {
 }
 
 .btn.btn-info {
-  color: #ffffff;
+  color: #fff;
   background-color: $blue-darken;
   width: 360px;
+
+  &:hover,
+  &:focus {
+    background-color: mix(#fff,$blue-darken,10%);
+  }
 }
 
 .btn.btn-fullwidth {
@@ -259,6 +305,10 @@ button.btn.align-ol {
   float: left;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .clear {
-  float: none;
+  clear: both;
 }
