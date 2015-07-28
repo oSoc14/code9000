@@ -12,7 +12,7 @@
   @include('admin/navbar')
 
   <p>
-    <input type="text" ng-model="search.name" class="inp" placeholder="Zoeken op naam">
+    <input type="text" ng-model="search" class="inp" placeholder="Zoeken">
     <button ng-click="search=null" ng-disabled="!search" class="btn">Reset</button>
   </p>
 
