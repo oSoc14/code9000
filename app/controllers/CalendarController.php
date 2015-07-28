@@ -146,6 +146,9 @@ class CalendarController extends \BaseController
         foreach ($calendar_slugs_array as $slug) {
 
             try {
+                if ($slug == 'all') {
+                    $appointments += Appointment::all();
+                }
                 $calendar = CalendarController::getCalendar($school_slug,
                     $slug);
 
