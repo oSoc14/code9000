@@ -21,22 +21,6 @@ Route::get('/', [
     'uses' => 'HomeController@showWelcome'
 ]);
 
-// About page
-Route::get('about', [
-    'as' => 'about',
-    function () {
-        return View::make('about');
-    }
-]);
-
-// Info page
-Route::get('help', [
-    'as' => 'help',
-    function () {
-        return View::make('help');
-    }
-]);
-
 
 Route::group(['prefix' => 'profile'], function () {
     /*

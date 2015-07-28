@@ -1,5 +1,13 @@
 @extends('layout.form')
 
+@section('header')
+    <h1 class="form-header">De eerste stap in de goede richting!</h1>
+    <h3 class="form-header">Registreer je school hier. Heb je al een account? <a class="nav-login" href="#login"
+                                                                                 data-toggle="modal"
+                                                                                 data-target="#loginmodal"><strong>Log
+                hier in</strong></a></h3>
+@stop
+
 @section('form')
 
     {{ Form::open([
@@ -42,11 +50,6 @@
         <label for="school-city">Stad</label>
         <input type="text" class="form-control right" id="school-city" name="school-city"
                placeholder="Voer stad in" required>
-        @if(Session::has('errorMessage'))
-            <div class="alert alert-danger" role="alert">
-                {{ Session::get('errorMessage') }}
-            </div>
-        @endif
     </div>
     <button type="submit"
             class="btn btn-info">Start met plannen

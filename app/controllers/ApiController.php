@@ -615,7 +615,7 @@ class ApiController extends \BaseController
      */
     private static function createApiValidationError($error)
     {
-        return Response::Json(array('succes' => false, 'type' => 'validation', 'feedback' => $error),
+        return Response::Json(array('success' => false, 'type' => 'validation', 'feedback' => $error),
             400)->setCallback(Input::get('callback'));
     }
 
@@ -627,7 +627,7 @@ class ApiController extends \BaseController
      */
     private static function createApiAccessError($msg = '')
     {
-        return Response::Json(array('succes' => false, 'type' => 'access', 'feedback' => $msg),
+        return Response::Json(array('success' => false, 'type' => 'access', 'feedback' => $msg),
             403)->setCallback(Input::get('callback'));
     }
 
@@ -639,7 +639,7 @@ class ApiController extends \BaseController
      */
     private static function createApiError($msg)
     {
-        return Response::Json(array('succes' => false, 'type' => 'generic', 'feedback' => $msg),
+        return Response::Json(array('success' => false, 'type' => 'generic', 'feedback' => $msg),
             400)->setCallback(Input::get('callback'));
     }
 
@@ -651,7 +651,7 @@ class ApiController extends \BaseController
      */
     private static function createApiOk($msg = '')
     {
-        return Response::Json(array('succes' => true, 'type' => '', 'feedback' => $msg),
+        return Response::Json(array('success' => true, 'type' => '', 'feedback' => $msg),
             200)->setCallback(Input::get('callback'));
     }
 

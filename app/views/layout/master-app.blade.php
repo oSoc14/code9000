@@ -71,7 +71,6 @@
     @if(Sentry::check())
     <section class="flex--0">
       <ul class="nav-list">
-        <li><a href="{{ route('help') }}"><i class="icon icon--help"></i>Help!</a></li>
         <li><a href="{{ route('user.edit') }}"><i class="icon icon--cog"></i>Profiel</a></li>
           @if(Sentry::check())
               <li>
