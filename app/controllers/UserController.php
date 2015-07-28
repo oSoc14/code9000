@@ -342,7 +342,7 @@ class UserController extends \BaseController
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == Input::get('school'))) {
             return Redirect::back()
                 ->withInput()
-                ->withErrors("You don't have the right to do that!");
+                ->withErrors("Je hebt niet de benodigde rechten om dit te doen!");
         }
 
         // Validate inputted data

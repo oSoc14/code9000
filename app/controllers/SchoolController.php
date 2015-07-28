@@ -138,7 +138,7 @@ class SchoolController extends \BaseController
     public function dashboard($slug)
     {
         if (!Sentry::check()) {
-            return Redirect::route('landing')->withErrors("You have to be logged in to use this function!");
+            return Redirect::route('landing')->withErrors("Je moet ingelogd zijn om van deze functie gebruikt te maken!");
         }
 
         $user = Sentry::getUser();
@@ -149,7 +149,7 @@ class SchoolController extends \BaseController
             return View::make('admin.dashboard')->with('org', $school);
         } else {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.redirect')->withErrors("You have to be logged in as admin to use this function!");
+            return Redirect::route('calendar.redirect')->withErrors("Je moet ingelogd zijn om van deze functie gebruikt te maken!");
         }
 
     }

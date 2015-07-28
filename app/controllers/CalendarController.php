@@ -51,7 +51,7 @@ class CalendarController extends \BaseController
 
 
     /**
-     * Add a user to the calendar of people who can edit this calendar.
+     * Add a user to the group of people who can edit this calendar.
      *
      * @param  int $user_id
      * @return Response
@@ -81,14 +81,14 @@ class CalendarController extends \BaseController
         $school = $calendar->school;
         if ($selectedUser->school_id != $school->id) {
             // If no permissions, redirect the user to the calendar index page
-            return Redirect::route('calendar.redirect')->withErrors("This user does not belong to this school!");
+            return Redirect::route('calendar.redirect')->withErrors("Deze gebruiker behoort niet tot deze school!");
         }
 
         $user->calendars()->attach($calendar);
     }
 
     /**
-     * Remove a user from the calendar of people who can edit this calendar.
+     * Remove a user from the group of people who can edit this calendar.
      *
      * @param  int $user_id
      * @return Response
