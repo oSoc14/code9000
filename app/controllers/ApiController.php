@@ -213,9 +213,8 @@ class ApiController extends \BaseController
         $start = e(Input::get('start'));
         $end = e(Input::get('end'));
         $parents = Input::get('par');
-        // TODO: Handle All day events, or decide to remove it alltogether
-        // If the event isn't the whole day, determine the end date/time
-        //$event->allday = false;
+        $allday = e(Input::get('allDay'));
+
         // Handle datetime
 
         $sd = new DateTime($start);
@@ -241,6 +240,7 @@ class ApiController extends \BaseController
                 $parent->description = $description;
                 $parent->location = $location;
                 $parent->calendar_id = $calendar_id;
+                $parent->allday = $allday;
                 $parent->save();
                 Appointment::where('parent_id', $parent->id)->update([
                     'title' => $title,
@@ -259,6 +259,7 @@ class ApiController extends \BaseController
         $event->calendar_id = $calendar_id;
         $event->start = $sd;
         $event->end = $ed;
+        $event->allday = $allday;
         $event->save();
 
         // make sure the FULL object is returned
@@ -351,6 +352,7 @@ class ApiController extends \BaseController
             $parent->description = $description;
             $parent->location = $location;
             $parent->calendar_id = $calendar_id;
+            $parent->allday = $allday;
             $parent->save();
 
             foreach ($dateArray as $da) {
@@ -364,6 +366,7 @@ class ApiController extends \BaseController
                 $event->start = new DateTime($da . ' ' . date("H:i", $sd));
                 $event->end = new DateTime($da . ' ' . date("H:i", $ed));
                 $event->parent_id = $parent->id;
+                $event->allday = $allday;
                 $event->save();
             }
 
