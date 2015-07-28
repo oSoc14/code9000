@@ -2,10 +2,9 @@
 
 @section('header')
     <h1 class="form-header">De eerste stap in de goede richting!</h1>
-    <h3 class="form-header">Registreer je school hier. Heb je al een account? <a class="nav-login" href="#login"
-                                                                                 data-toggle="modal"
-                                                                                 data-target="#loginmodal"><strong>Log
-                hier in</strong></a></h3>
+    <h3 class="form-header">Registreer je school hier. Heb je al een account? <a class="nav-login"
+                                                                                 href="{{route('user.login')}}">
+            <strong>Log hier in</strong></a></h3>
 @stop
 
 @section('form')

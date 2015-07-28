@@ -54,7 +54,7 @@
             <li><a class="nav " href="#werking">Hoe werkt het</a></li>
             <li><a class="nav " href="#waarom">Waarom educal</a></li>
             <li><a class="nav " href="#school">Educal voor mijn school</a></li>
-            <li class="right"><a class="nav-login" href="#login" data-toggle="modal" data-target="#loginmodal">Log
+            <li class="right"><a class="nav-login" href="{{route('user.login')}}">Log
                     in</a></li>
         </ul>
     </div>
@@ -160,47 +160,6 @@
         </div>
     </div>
 </section>
-
-<div class="modal fade" id="loginmodal" role="dialog" aria-labelledby="Log in">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h2>Log in<span> - voor medewerkers</span></h2>
-            </div>
-            <div class="modal-body educal-form">
-                {{ Form::open([
-                   'route' => 'user.auth',
-                   'data-ajax' => 'false',
-                   ]), PHP_EOL }}
-                <div class="form-group">
-                    {{Form::label('lemail', ucfirst(trans('educal.email')))}}
-                    {{Form::email('lemail', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer e-mailadres in'])}}
-                </div>
-                <div class="form-group">
-                    <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
-                    <input type="password" class="form-control right" id="login-password" name="password"
-                           placeholder="Voer wachtwoord in" required>
-                    @if(Session::has('errorMessage'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ Session::get('errorMessage') }}
-                        </div>
-                    @endif
-                </div>
-
-                <button type="submit"
-                        class="btn btn-info">{{ ucfirst(trans('educal.login'))}}</button>
-                <a href="#" data-dismiss="modal" data-toggle="modal"
-                   data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
-            </div>
-            {{ Form::close(), PHP_EOL }}
-        </div>
-    </div>
-    <!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 {{ HTML::script('js/landing.js') }}

@@ -9,6 +9,8 @@ $button-switch-active-line: $blue;
 $button-switch-text-inactive: $button-switch-active;
 $button-switch-inactive: #dae6ee;
 
+$input-valid: #007b8a;
+$input-invalid: #c83233;
 
 @import "normalize";
 @import "bootstrap_landing";
@@ -241,8 +243,6 @@ button.btn.align-ol {
     font-size: 12px;
   }
 }
-
-@import "loginmodal";
 
 .alert {
   margin-left: 29%;

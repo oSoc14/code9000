@@ -209,6 +209,13 @@ Route::get('/calendar', [
     'uses' => 'CalendarViewController@goToCalendar'
 ]);
 
+Route::get('/login', [
+    'as' => 'user.login',
+    function () {
+        return View::make('user.login');
+    }
+]);
+
 // Create a new school
 Route::get('/register', [
     'as' => 'school.register',
