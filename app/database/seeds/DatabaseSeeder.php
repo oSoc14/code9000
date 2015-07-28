@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
         // set tables don't want to trucate here
         $excepts = ['migrations'];
         $tables = DB::connection()
-        ->getPdo()
-        ->query("SHOW FULL TABLES")
-        ->fetchAll();
+            ->getPdo()
+            ->query("SHOW FULL TABLES")
+            ->fetchAll();
         $tableNames = [];
 
         $keys = array_keys($tables[0]);
@@ -38,10 +38,11 @@ class DatabaseSeeder extends Seeder
 
         foreach ($tables as $name) {
             //if you don't want to truncate migrations
-            if (in_array($name[$keyName], $excepts))
+            if (in_array($name[$keyName], $excepts)) {
                 continue;
+            }
 
-                  print($name[$keyName]."\n");
+            print($name[$keyName] . "\n");
             DB::table($name[$keyName])->truncate();
         }
         DB::statement("SET foreign_key_checks=1");
@@ -119,11 +120,23 @@ class DatabaseSeeder extends Seeder
             $o->school_id = $i;
             $o->color = $colors[8];
             $o->save();
+
+            $app = new Appointment();
+
+            $app->title = 'School event ' . $i;
+            $app->description = 'we are going to test ' . rand() . ' something';
+            $app->location = 'Gent';
+            $app->calendar_id = $o->id;
+            $date = date('Y-m-d', strtotime('2015-07-01 + ' . mt_rand(0, 31) . ' days'));
+            $app->start = new DateTime($date . ' 13:00');
+            $app->end = new DateTime($date . ' 16:00');
+            $app->save();
+
             if ($i == 3) {
                 $admin_user->calendars()->attach($o);
             }
             // Add year calendars
-            for ($j=1; $j <= 6; $j++) {
+            for ($j = 1; $j <= 6; $j++) {
                 $color = $colors[$j];
                 $y = new Calendar();
                 $y->name = $j . (($j == 1) ? 'ste' : 'de') . ' jaar';
@@ -133,6 +146,17 @@ class DatabaseSeeder extends Seeder
                 $y->school_id = $o->school_id;
                 $y->parent_id = $o->id;
                 $y->save();
+
+                $app = new Appointment();
+
+                $app->title = 'Year event ' . $i;
+                $app->description = 'we are going to test ' . rand() . ' something';
+                $app->location = 'Gent';
+                $app->calendar_id = $y->id;
+                $date = date('Y-m-d', strtotime('2015-07-01 + ' . mt_rand(0, 31) . ' days'));
+                $app->start = new DateTime($date . ' 13:00');
+                $app->end = new DateTime($date . ' 16:00');
+                $app->save();
 
                 $user = Sentry::createUser([
                     'email' => $j . '@' . School::find($i)->slug,
@@ -158,7 +182,7 @@ class DatabaseSeeder extends Seeder
                 }
 
                 // Add class calendars
-                for ($k=0; $k < 3; $k++) {
+                for ($k = 0; $k < 3; $k++) {
                     $c = new Calendar();
                     $c->name = 'Klas ' . $j . $letter[$k];
                     $c->slug = $j . $letter[$k];
@@ -189,7 +213,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 1; $i < 200; $i++) {
             $app = new Appointment();
 
-            $app->title ='School event ' . $i;
+            $app->title = 'random event ' . $i;
             $app->description = 'we are going to test ' . rand() . ' something';
             $app->location = 'Gent';
             $app->calendar_id = $i % 74 + 1;
