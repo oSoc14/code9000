@@ -17,6 +17,7 @@
     eventSources: [root],
     eventClick: editor.open,
     eventDrop: editor.drop,
+    eventResize: editor.drop,
     select: editor.select,
     unselect: editor.close
   });
