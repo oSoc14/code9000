@@ -1,9 +1,10 @@
 $nav-height: 60px;
 $blue: #8fafc6;
+$blue-light: mix(#fff,$blue,7%);
 
 nav {
   height: $nav-height;
-  background-color: rgba($blue, 0.8);
+  background-color: rgba($blue-light, .95);
   position: fixed;
   top: 0;
   left: 0;
@@ -80,7 +81,6 @@ nav {
       margin: 0;
     }
     margin: 0 10px;
-    padding: 5px;
     height: $nav-height;
 
     color: #ffffff;
