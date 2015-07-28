@@ -38,13 +38,6 @@ Route::group(['prefix' => 'profile'], function () {
         'uses' => 'UserController@logout'
     ]);
 
-    // Show the view to edit a user
-    Route::get('/{id?}', [
-        'as' => 'user.edit',
-        'before' => 'auth',
-        'uses' => 'UserController@editUser'
-    ])->where('id', '[0-9]+');
-
     // Add user to group
     Route::post('/{id}/roles', [
         'as' => 'user.addAdminRole',
@@ -59,12 +52,7 @@ Route::group(['prefix' => 'profile'], function () {
         'uses' => 'UserController@demoteUserAdmin'
     ])->where('id', '[0-9]+');
 
-    // Update a user
-    Route::post('/{id}', [
-        'as' => 'user.update',
-        'before' => 'auth',
-        'uses' => 'UserController@updateUser'
-    ])->where('id', '[0-9]+');
+
 
     // Register as a new user
     Route::post('/register', [
@@ -73,12 +61,7 @@ Route::group(['prefix' => 'profile'], function () {
         'uses' => 'UserController@store'
     ]);
 
-    // Create a new user (backoffice side)
-    Route::post('/create', [
-        'as' => 'user.create',
-        'before' => 'auth',
-        'uses' => 'UserController@create'
-    ]);
+
 
     // Authenticate user
     Route::post('/auth', [
@@ -199,7 +182,21 @@ Route::group(['prefix' => 'api/1'], function () {
         'uses' => 'ApiController@orgUsers'
     ]);
 
+    // TODO: get user?
 
+    // Update a user
+    Route::post('/users/{id}', [
+        'as' => 'user.update',
+        'before' => 'auth',
+        'uses' => 'UserController@updateUser'
+    ])->where('id', '[0-9]+');
+
+    // Create a new user (backoffice side)
+    Route::post('/users/', [
+        'as' => 'user.create',
+        'before' => 'auth',
+        'uses' => 'UserController@create'
+    ]);
 });
 
 
