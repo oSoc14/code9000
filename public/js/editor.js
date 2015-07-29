@@ -37,13 +37,12 @@ var editor = (function() {
   var logic = function() {
     var x = $('.popover');
     if (!x) return;
-    var d1 = x.find('.d1').val();
-    var t1 = x.find('.t1').val() || '00:00';
-    var d2 = x.find('.d2').val();
-    var t2 = x.find('.t2').val() || '00:00';
-    if (!d2 || moment(d1 + 'T00:00').isAfter(d2 + 'T00:00')) {
-      x.find('.d2').val(d1);
-      d2 = d1;
+    var start = moment(x.find('.d1').val() + 'T' + x.find('.t1').val());
+    var end = moment(x.find('.d2').val() + 'T' + x.find('.t2').val());
+    if(start.isAfter(end)){
+      start = start.add(1, 'hour');
+      $('.input-date.d2').val(start.format('YYYY-MM-DD'));
+      $('.input-time.t2').val(start.format('HH:mm'));
     }
   };
 
