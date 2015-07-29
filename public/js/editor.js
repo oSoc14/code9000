@@ -37,13 +37,12 @@ var editor = (function() {
   var logic = function() {
     var x = $('.popover');
     if (!x) return;
-    var d1 = x.find('.d1').val();
-    var t1 = x.find('.t1').val() || '00:00';
-    var d2 = x.find('.d2').val();
-    var t2 = x.find('.t2').val() || '00:00';
-    if (!d2 || moment(d1 + 'T00:00').isAfter(d2 + 'T00:00')) {
-      x.find('.d2').val(d1);
-      d2 = d1;
+    var start = moment(x.find('.d1').val() + 'T' + x.find('.t1').val());
+    var end = moment(x.find('.d2').val() + 'T' + x.find('.t2').val());
+    if(start.isAfter(end)){
+      start = start.add(1, 'hour');
+      $('.input-date.d2').val(start.format('YYYY-MM-DD'));
+      $('.input-time.t2').val(start.format('HH:mm'));
     }
   };
 
@@ -124,7 +123,7 @@ var editor = (function() {
       location: x.find('.input-location').val(),
       start: x.find('.d1').val() + ' ' + x.find('.t1').val() || '00:00',
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
-      allDay: x.find('.t1').val() === '00:00' && x.find('.t2').val() === '00:00',
+      allDay: x.find('.input-allday').val(),
       calendar: x.find('.input-cals').val(),
     };
 
@@ -175,6 +174,16 @@ var editor = (function() {
     }
   };
 
+  // Toggle allDay to reflect parameter active
+  var toggleAllDay = function(e, allDay) {
+    if (e) {
+      allDay = $(this).prop('checked');
+    } else {
+      $('.input-allday').prop('checked', allDay);
+    }
+    $('.input-time').prop('disabled', allDay);
+  };
+
   // Show popover to create event
   var select = function(start, end, jsEvent, view) {
 
@@ -185,9 +194,28 @@ var editor = (function() {
 
     // Create new event or edit existing event
     d1Options.value = start.format('YYYY-MM-DD');
-    t1Options.value = start.format('HH:mm');
-    d2Options.value = end.format('YYYY-MM-DD');
-    t2Options.value = end.format('HH:mm');
+
+    // If time is set, use it
+    if (start.hasTime()) {
+      t1Options.value = start.format('HH:mm');
+      d2Options.value = end.format('YYYY-MM-DD');
+      t2Options.value = end.format('HH:mm');
+    }
+
+    // If one day selected
+    else if (end.diff(start, 'days') === 1) {
+      t1Options.value = '08:00';
+      d2Options.value = start.format('YYYY-MM-DD');
+      t2Options.value = '09:00';
+    }
+
+    // If multiple days
+    else {
+      t1Options.value = '00:00';
+      d2Options.value = end.subtract(1, 'day').format('YYYY-MM-DD');
+      t2Options.value = '23:59';
+      var allDay = true;
+    }
 
     // Launch popover
     var $target = $(jsEvent.target);
@@ -195,6 +223,7 @@ var editor = (function() {
     $target.popover('show');
 
     fixPopup();
+    toggleAllDay(null, allDay);
 
     // Launch datetimepicker
     $('.input-date.d2').datetimepicker(d2Options);
@@ -202,6 +231,7 @@ var editor = (function() {
     $('.input-time.t2').datetimepicker(t2Options);
     $('.input-time.t1').datetimepicker(t1Options);
 
+    $('.input-allday').on('change', toggleAllDay);
     $('.popover .btn-danger').addClass('invisible');
   };
 
@@ -216,14 +246,22 @@ var editor = (function() {
 
       d1Options.value = ev.start.format('YYYY-MM-DD');
       t1Options.value = ev.start.format('HH:mm');
-      d2Options.value = ev.end.format('YYYY-MM-DD');
-      t2Options.value = ev.end.format('HH:mm');
+      if(ev.end){
+        d2Options.value = ev.end.format('YYYY-MM-DD');
+        t2Options.value = ev.end.format('HH:mm');
+      }
+      else{
+        d2Options.value = ev.start.format('YYYY-MM-DD');
+        t2Options.value = ev.start.format('HH:mm');
+      }
       active.ev = ev;
       active.id = ev.id || 0;
 
       // Launch popover
       $target.popover(popoverOptions);
       $target.popover('show');
+      $('.popover .btn-success').text('Opslaan');
+      toggleAllDay(null, active.ev.allDay);
 
       // Launch datetimepicker
       $('.input-date.d2').datetimepicker(d2Options);

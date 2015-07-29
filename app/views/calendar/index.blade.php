@@ -82,6 +82,11 @@
       </div>
     </div>
     <p class="divider-btm">
+      <label class="has-checkbox">
+        <input type="checkbox" class="input-allday" value="1"> Hele dag
+      </label>
+    </p>
+    <p class="divider-btm">
       <label class="has-input">
         Locatie
         <input class="input input-location" type="text" placeholder="Voeg een locatie toe" required>

@@ -27,6 +27,10 @@ $line-color: #ccc !default;
     font-weight: 700;
     @include flex(0, 0, auto);
   }
+  .has-checkbox {
+    display: block;
+    padding: 10px $gutter-popover;
+  }
   .has-input {
     display: block;
     padding: 10px $gutter-popover 0;
@@ -37,6 +41,10 @@ $line-color: #ccc !default;
     line-height: 20px;
     outline: none;
     font-weight: 400;
+    &:disabled{
+      opacity: 0;
+      pointer-events: none;
+    }
   }
   .input-cals {
     padding: 0;
