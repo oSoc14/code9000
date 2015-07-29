@@ -49,27 +49,28 @@ class SchoolController extends \BaseController
         // Validation rules for input fields
         $validator = Validator::make(
             [
-                'user-firstname' => Input::get('user-firstname'),
-                'user-lastname' => Input::get('user-lastname'),
-                'school-name' => Input::get('school-name'),
-                'user-email' => Input::get('user-email'),
-                'school-city' => Input::get('school-city'),
-                'user-password' => Input::get('user-password'),
-                'user-password_confirmation' => Input::get('user-password-confirm'),
+                'Voornaam' => Input::get('user-firstname'),
+                'Achternaam' => Input::get('user-lastname'),
+                'Schoolnaam' => Input::get('school-name'),
+                'E-mail adres' => Input::get('user-email'),
+                'Stad' => Input::get('school-city'),
+                'Wachtwoord' => Input::get('user-password'),
+                'Wachtwoord_confirmation' => Input::get('user-password-confirm'),
             ],
             [
-                'user-firstname' => 'required',
-                'user-lastname' => 'required',
-                'school-name' => 'required|unique:schools,name',
-                'school-city' => 'required',
-                'user-email' => 'required|email|unique:users,email',
-                'user-password' => 'required|min:8|confirmed',
+                'Voornaam' => 'required',
+                'Achternaam' => 'required',
+                'Schoolnaam' => 'required|unique:schools,name',
+                'Stad' => 'required',
+                'E-mail adres' => 'required|email|unique:users,email',
+                'Wachtwoord' => 'required|min:8|confirmed',
             ]
         );
 
         // If validator fails, go back and show errors
         if ($validator->fails()) {
-            $validator->getMessageBag()->add('errorMessage', 'Failed to make a school');
+            $validator->getMessageBag()->add('errorMessage',
+                'School kon niet geregistreerd worden. Corrigeer de fouten en probeer opnieuw.');
 
             return Redirect::route('school.register')->withInput()
                 ->withErrors($validator);

@@ -56,7 +56,7 @@
             <li class="brand"><a class="nav brand" href="{{URL::to('/')}}"><img class="nav"
                                                                     src="{{ asset('images/landing/logo_white.png') }}"
                                                                     alt="educal"></a></li>
-            <li class="right"><a class="nav-login" href="#login" data-toggle="modal" data-target="#loginmodal">Log
+            <li class="right"><a class="nav-login" href="{{ route('user.login') }}">Log
                     in</a></li>
         </ul>
     </div>
@@ -70,7 +70,7 @@
             <strong>{{ucfirst(trans('educal.errors'))}}</strong>
             <ul>
                 @foreach ($errors->all() as $message)
-                    <li>{{$message}}</li>
+                    <li>{{ ucfirst($message)}}</li>
                 @endforeach
             </ul>
         </div>

@@ -14,41 +14,38 @@
                  'data-ajax' => 'false',
                  ]), PHP_EOL }}
     <div class="form-group">
-        <label for="user-firstname">Voornaam</label>
-        <input type="text" class="form-control right" id="register-name" name="user-firstname"
-               placeholder="Voer voornaam in" required>
+        {{Form::label('user-firstname', 'Voornaam')}}
+        {{Form::text('user-firstname', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer voornaam in'])}}
     </div>
     <div class="form-group">
-        <label for=user-lastname">Achternaam</label>
-        <input type="text" class="form-control right" id="register-name" name="user-lastname"
-               placeholder="Voer achternaam in" required>
+        {{Form::label('user-lastname', 'Achternaam')}}
+        {{Form::text('user-lastname', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer achternaam in'])}}
     </div>
     <div class="form-group">
-        <label for="school-name">Naam van school</label>
-        <input type="text" class="form-control right" id="register-name" name="school-name"
-               placeholder="Voer naam van school in" required>
+        {{Form::label('school-name', 'Naam van school')}}
+        {{Form::text('school-name', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer naam van school in'])}}
     </div>
     <div class="form-group">
-        <label for="user-email">E-mail</label>
-        <input type="email" class="form-control right" id="register-mail" name="user-email"
-               placeholder="Voer e-mail in" required>
+        {{Form::label('user-email', 'E-mail adres')}}
+        {{Form::email('user-email', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer e-mail in'])}}
     </div>
     <div class="form-group">
-        <label for="user-password">Wachtwoord</label>
-        <input type="password" class="form-control right" id="user-password" name="user-password"
-               placeholder="Voer wachtwoord in" required>
+        {{Form::label('user-password', 'Wachtwoord')}}
+        {{Form::password('user-password', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer wachtwoord in'])}}
+    </div>
+    <div class="form-group">
+        {{Form::label('user-password-confirm', 'Herhaal wachtwoord')}}
+        {{Form::password('user-password-confirm', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Bevestig wachtwoord'])}}
+    </div>
+    <div class="form-group">
+        {{Form::label('school-city', 'Stad')}}
+        {{Form::text('school-city', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer locatie van school in'])}}
 
-    </div>
-    <div class="form-group">
-        <label for="user-password-confirm">Herhaal wachtwoord</label>
-        <input type="password" class="form-control right" id="user-password-confirm" name="user-password-confirm"
-               placeholder="Herhaal wachtwoord" required>
-
-    </div>
-    <div class="form-group">
-        <label for="school-city">Stad</label>
-        <input type="text" class="form-control right" id="school-city" name="school-city"
-               placeholder="Voer stad in" required>
+        @if(Session::has('errorMessage'))
+            <div class="alert alert-danger" role="alert">
+                {{ Session::get('errorMessage') }}
+            </div>
+        @endif
     </div>
     <button type="submit"
             class="btn btn-info">Start met plannen

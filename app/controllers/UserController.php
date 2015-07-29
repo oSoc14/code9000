@@ -290,7 +290,7 @@ class UserController extends \BaseController
         // If there is an errormessage, return to login page
         // With errorMessage
         if ($errorMessage) {
-            return Redirect::route('landing')
+            return Redirect::route('user.login')
                 ->withInput()
                 ->with('errorMessage', $errorMessage);
         }
