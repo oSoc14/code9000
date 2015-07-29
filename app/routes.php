@@ -203,8 +203,14 @@ Route::group(['prefix' => 'api/1'], function () {
         'uses' => 'ApiController@destroyCalendar'
     ]);
 
+    /**
+     * Get the currently logged in user
+     */
+    Route::get('/users/logged', [
+        'as' => 'api.users.status',
+        'uses' => 'UserApiController@getCurrentUser'
+    ]);
 
-    // TODO: get user?
     /**
      * Create a new user (done from the backoffice side)
      */
