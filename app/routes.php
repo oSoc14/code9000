@@ -38,19 +38,7 @@ Route::group(['prefix' => 'profile'], function () {
         'uses' => 'UserController@logout'
     ]);
 
-    // Add user to group
-    Route::post('/{id}/roles', [
-        'as' => 'user.addAdminRole',
-        'before' => 'admin',
-        'uses' => 'UserController@promoteUserAdmin'
-    ])->where('id', '[0-9]+');
 
-    // Remover a user from group
-    Route::delete('/{id}/roles', [
-        'as' => 'user.removeAdminRole',
-        'before' => 'admin',
-        'uses' => 'UserController@demoteUserAdmin'
-    ])->where('id', '[0-9]+');
 
     // Show the view to edit a user
     Route::get('/{id?}', [
@@ -65,8 +53,6 @@ Route::group(['prefix' => 'profile'], function () {
         'before' => 'guest',
         'uses' => 'UserController@store'
     ]);
-
-
 
     // Authenticate user
     Route::post('/auth', [
@@ -192,15 +178,44 @@ Route::group(['prefix' => 'api/1'], function () {
     // Update a user
     Route::post('/users/{id}', [
         'as' => 'user.update',
-        'before' => 'auth',
-        'uses' => 'UserController@updateUser'
+        'uses' => 'UserApiController@updateUser'
+    ])->where('id', '[0-9]+');
+
+    // Update a user
+    Route::delete('/users/{id}', [
+        'as' => 'user.update',
+        'uses' => 'UserApiController@deleteUser'
     ])->where('id', '[0-9]+');
 
     // Create a new user (backoffice side)
     Route::post('/users/', [
         'as' => 'user.create',
-        'before' => 'auth',
-        'uses' => 'UserController@create'
+        'uses' => 'UserApiController@createUser'
+    ]);
+
+    // Add user to group
+    Route::post('/users/{id}/roles', [
+        'as' => 'user.addAdminRole',
+        'uses' => 'UserApiController@addAdminRole'
+    ])->where('id', '[0-9]+');
+
+    // Remover a user from group
+    Route::delete('/users/{id}/roles', [
+        'as' => 'user.removeAdminRole',
+        'uses' => 'UserApiController@removeAdminRole'
+    ])->where('id', '[0-9]+');
+
+
+    // Add user to group
+    Route::post('/users/link', [
+        'as' => 'user.addToCalendar',
+        'uses' => 'UserApiController@addUserToCalendar'
+    ]);
+
+    // Remover a user from group
+    Route::delete('/users/link', [
+        'as' => 'user.removeFromCalendar',
+        'uses' => 'UserApiController@removeUserFromCalendar'
     ]);
 });
 
