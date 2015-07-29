@@ -39,7 +39,7 @@ var editor = (function() {
     if (!x) return;
     var start = moment(x.find('.d1').val() + 'T' + x.find('.t1').val());
     var end = moment(x.find('.d2').val() + 'T' + x.find('.t2').val());
-    if(start.isAfter(end)){
+    if (start.isAfter(end)) {
       start = start.add(1, 'hour');
       $('.input-date.d2').val(start.format('YYYY-MM-DD'));
       $('.input-time.t2').val(start.format('HH:mm'));
@@ -124,7 +124,7 @@ var editor = (function() {
       start: x.find('.d1').val() + ' ' + x.find('.t1').val() || '00:00',
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
       allDay: x.find('.input-allday').val(),
-        calendar_id: x.find('.input-cals').val(),
+      calendar_id: x.find('.input-cals').val(),
     };
 
     // Validate input?
@@ -160,35 +160,35 @@ var editor = (function() {
     format: 'H:i',
     datepicker: false,
     onChangeDateTime: logic,
-      onShow: logic,
-      allowTimes: [
-          '00:00', '00:30',
-          '01:00', '01:30',
-          '02:00', '02:30',
-          '03:00', '03:30',
-          '04:00', '04:30',
-          '05:00', '05:30',
-          '06:00', '06:30',
-          '07:00', '07:30',
-          '08:00', '08:30',
-          '09:00', '09:30',
-          '10:00', '10:30',
-          '11:00', '11:30',
-          '12:00', '12:30',
-          '13:00', '13:30',
-          '14:00', '14:30',
-          '15:00', '15:30',
-          '16:00', '16:30',
-          '17:00', '17:30',
-          '18:00', '18:30',
-          '19:00', '19:30',
-          '20:00', '20:30',
-          '21:00', '21:30',
-          '22:00', '22:30',
-          '23:00', '23:30',
+    onShow: logic,
+    allowTimes: [
+      '00:00', '00:30',
+      '01:00', '01:30',
+      '02:00', '02:30',
+      '03:00', '03:30',
+      '04:00', '04:30',
+      '05:00', '05:30',
+      '06:00', '06:30',
+      '07:00', '07:30',
+      '08:00', '08:30',
+      '09:00', '09:30',
+      '10:00', '10:30',
+      '11:00', '11:30',
+      '12:00', '12:30',
+      '13:00', '13:30',
+      '14:00', '14:30',
+      '15:00', '15:30',
+      '16:00', '16:30',
+      '17:00', '17:30',
+      '18:00', '18:30',
+      '19:00', '19:30',
+      '20:00', '20:30',
+      '21:00', '21:30',
+      '22:00', '22:30',
+      '23:00', '23:30',
 
 
-      ]
+    ]
   };
   var t2Options = $.extend({}, t1Options);
 
@@ -274,11 +274,10 @@ var editor = (function() {
 
       d1Options.value = ev.start.format('YYYY-MM-DD');
       t1Options.value = ev.start.format('HH:mm');
-      if(ev.end){
+      if (ev.end) {
         d2Options.value = ev.end.format('YYYY-MM-DD');
         t2Options.value = ev.end.format('HH:mm');
-      }
-      else{
+      } else {
         d2Options.value = ev.start.format('YYYY-MM-DD');
         t2Options.value = ev.start.format('HH:mm');
       }
@@ -312,8 +311,8 @@ var editor = (function() {
 
       var a = ev.start.format('MMM');
       var b = ev.start.format('DD');
-      var c = ev.end.format('MMM');
-      var d = ev.end.format('DD');
+      var c = ev.end ? ev.end.format('MMM') : ev.start.format('MMM');
+      var d = ev.end ? ev.end.format('DD') : ev.start.format('DD');
 
       // Create readable date
       var readableDate = b;
