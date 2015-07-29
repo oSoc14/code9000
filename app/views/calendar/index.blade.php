@@ -100,7 +100,7 @@
     </p>
     <p class="divider-btm">
       <label class="has-input" for="input-cals">
-        Kalender {{ Form::select('calendar',$editableCalendars,null,array('class' => "input input-cals")); }}
+        Voor wie {{ Form::select('calendar',$editableCalendars,null,array('class' => "input input-cals")); }}
       </label>
     </p>
     <p class="btnbar">
