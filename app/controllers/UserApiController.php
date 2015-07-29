@@ -258,7 +258,7 @@ class UserApiController extends \BaseController
         // Store updated user in the database
         $selectedUser->save();
 
-        return ApiController::createApiOk("User updated");
+        return Response::Json($selectedUser, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
     }
 
