@@ -41,9 +41,16 @@
   };
 
   // Generate export
-  $('.btn-export').on('click', function(e) {;
+    $('#btn-export').on('click', function (e) {
+        ;
     window.location.href = $(this).data('base') + '/' + calnav.active().join('+');
   });
+
+    // Generate export
+    $('#btn-addevent').on('click', function (e) {
+        ;
+        editor.open()
+    });
 
   // Close editor on blur
   $(document.body).on('click', editor.close);
