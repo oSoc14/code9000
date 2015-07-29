@@ -50,7 +50,7 @@
 
     // Close editor on blur
     $(document.body).on('click', editor.close);
-    $('.fc-body').on('click', function (e) {
+    $('.fc-view-container').on('click', function (e) {
         e.stopPropagation();
     });
 
