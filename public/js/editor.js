@@ -246,8 +246,14 @@ var editor = (function() {
 
       d1Options.value = ev.start.format('YYYY-MM-DD');
       t1Options.value = ev.start.format('HH:mm');
-      d2Options.value = ev.end.format('YYYY-MM-DD');
-      t2Options.value = ev.end.format('HH:mm');
+      if(ev.end){
+        d2Options.value = ev.end.format('YYYY-MM-DD');
+        t2Options.value = ev.end.format('HH:mm');
+      }
+      else{
+        d2Options.value = ev.start.format('YYYY-MM-DD');
+        t2Options.value = ev.start.format('HH:mm');
+      }
       active.ev = ev;
       active.id = ev.id || 0;
 
