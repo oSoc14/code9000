@@ -78,7 +78,7 @@
             </a>
           </li>
         @else
-        <li><a href="{{ route('user.edit') }}"><i class="icon icon--cog"></i>Login</a></li>
+          <li><a href="{{ route('user.login') }}"><i class="icon icon--cog"></i>Login</a></li>
         @endif
       </ul>
     </section>
