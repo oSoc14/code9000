@@ -233,27 +233,26 @@ var editor = (function() {
 
     // Create new event or edit existing event
     d1Options.value = start.format('YYYY-MM-DD');
+    t1Options.value = '08:00';
+    t2Options.value = '09:00';
 
     // If time is set, use it
+    var allDay = true;
     if (start.hasTime()) {
       t1Options.value = start.format('HH:mm');
       d2Options.value = end.format('YYYY-MM-DD');
       t2Options.value = end.format('HH:mm');
+      allDay = false;
     }
 
     // If one day selected
     else if (end.diff(start, 'days') === 1) {
-      t1Options.value = '08:00';
       d2Options.value = start.format('YYYY-MM-DD');
-      t2Options.value = '09:00';
     }
 
     // If multiple days
     else {
-      t1Options.value = '00:00';
       d2Options.value = end.subtract(1, 'day').format('YYYY-MM-DD');
-      t2Options.value = '23:59';
-      var allDay = true;
     }
 
     // Launch popover
