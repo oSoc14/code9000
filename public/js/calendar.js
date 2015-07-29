@@ -46,9 +46,7 @@
         window.location.href = $(this).data('base') + '/' + calnav.active().join('+');
     });
 
-    $('#btn-addevent').on('click', function (e) {
-        editor.open()
-    });
+    $('#btn-addevent').on('click', editor.add);
 
     // Close editor on blur
     $(document.body).on('click', editor.close);

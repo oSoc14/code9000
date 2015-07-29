@@ -165,13 +165,25 @@ var editor = (function() {
   };
   var t2Options = $.extend({}, t1Options);
 
-  var fixPopup = function() {
+  var fixPopup = function(editable) {
     var $popover = $('.popover');
     $popover.on('click', function(e) {
       e.stopPropagation();
     });
     if ($popover.css('left').replace('px', '') < 0) {
       $popover.css('left', '30px');
+    }
+
+    if (editable) {
+
+      // Launch datetimepicker
+      $('.input-date.d2').datetimepicker(d2Options);
+      $('.input-date.d1').datetimepicker(d1Options);
+      $('.input-time.t2').datetimepicker(t2Options);
+      $('.input-time.t1').datetimepicker(t1Options);
+
+      // Listen to allDay toggle
+      $('.input-allday').on('change', toggleAllDay);
     }
   };
 
@@ -183,6 +195,32 @@ var editor = (function() {
       $('.input-allday').prop('checked', allDay);
     }
     $('.input-time').prop('disabled', allDay);
+  };
+
+  // Add event from scratch
+  var add = function(jsEvent) {
+
+    jsEvent.stopPropagation();
+
+    // Close current popover
+    close();
+
+    if (!user.logged_in) return;
+
+    d1Options.value = moment().format('YYYY-MM-DD');
+    t1Options.value = '08:00';
+    d2Options.value = moment().format('YYYY-MM-DD');
+    t2Options.value = '09:00';
+
+    // Launch popover
+    var $target = $(jsEvent.target);
+    $target.popover(popoverOptions);
+    $target.popover('show');
+
+    fixPopup(true);
+    toggleAllDay(null, true);
+
+    $('.popover .btn-danger').addClass('invisible');
   };
 
   // Show popover to create event
@@ -223,16 +261,9 @@ var editor = (function() {
     $target.popover(popoverOptions);
     $target.popover('show');
 
-    fixPopup();
+    fixPopup(true);
     toggleAllDay(null, allDay);
 
-    // Launch datetimepicker
-    $('.input-date.d2').datetimepicker(d2Options);
-    $('.input-date.d1').datetimepicker(d1Options);
-    $('.input-time.t2').datetimepicker(t2Options);
-    $('.input-time.t1').datetimepicker(t1Options);
-
-    $('.input-allday').on('change', toggleAllDay);
     $('.popover .btn-danger').addClass('invisible');
   };
 
@@ -275,6 +306,7 @@ var editor = (function() {
       $('.input-descr').val(ev.description);
       $('.input-location').val(ev.location);
       $('.input-cals option[value="' + ev.calendar_id + '"]').prop('selected', true);
+      fixPopup(true);
     } else {
 
       // Set input fields
@@ -314,20 +346,21 @@ var editor = (function() {
         content: $('.read-event-template').html()
       });
       $target.popover('show');
+      fixPopup();
     }
-    fixPopup();
   };
 
   window.addEventListener('submit', create);
 
   return {
-    open: open,
-    drop: drop,
-    remove: remove,
-    close: close,
     active: active,
-    select: select,
+    add: add,
+    close: close,
+    drop: drop,
     init: init,
-    logic: logic
+    logic: logic,
+    open: open,
+    remove: remove,
+    select: select
   };
 })();
