@@ -186,7 +186,7 @@ class ApiController extends \BaseController
 
         $validator = Validator::make(
             [
-                'calendar' => Input::get('calendar'),
+                'calendar' => Input::get('calendar_id'),
                 'description' => Input::get('description'),
                 'start' => Input::get('start'),
                 'end' => Input::get('end'),
@@ -207,7 +207,7 @@ class ApiController extends \BaseController
         $title = e(Input::get('title'));
         $description = e(Input::get('description'));
         $location = e(Input::get('location'));
-        $calendar_id = Input::get('calendar');
+        $calendar_id = Input::get('calendar_id');
         $start = e(Input::get('start'));
         $end = e(Input::get('end'));
         $parents = Input::get('par');
@@ -287,7 +287,7 @@ class ApiController extends \BaseController
 
         $validator = Validator::make(
             [
-                'calendar' => Input::get('calendar'),
+                'calendar' => Input::get('calendar_id'),
                 'description' => Input::get('description'),
                 'start' => Input::get('start'),
                 'end' => Input::get('end'),
@@ -309,7 +309,7 @@ class ApiController extends \BaseController
         $title = e(Input::get('title'));
         $description = e(Input::get('description'));
         $location = e(Input::get('location'));
-        $calendar_id = Input::get('calendar');
+        $calendar_id = Input::get('calendar_id');
         $start = e(Input::get('start'));
         $end = e(Input::get('end'));
         $allday = e(Input::get('allDay'));
