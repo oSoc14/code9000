@@ -287,7 +287,7 @@ class ApiController extends \BaseController
 
         $validator = Validator::make(
             [
-                'calendar' => Input::get('calendar_id'),
+                'calendar_id' => Input::get('calendar_id'),
                 'description' => Input::get('description'),
                 'start' => Input::get('start'),
                 'end' => Input::get('end'),
@@ -295,7 +295,7 @@ class ApiController extends \BaseController
                 'day' => Input::get('day')
             ],
             [
-                'calendar' => 'required',
+                'calendar_id' => 'required',
                 'start' => 'required|date_format:Y-m-d H:i',
                 'end' => 'required|date_format:Y-m-d H:i',
                 'title' => 'required'

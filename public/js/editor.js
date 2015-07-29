@@ -124,7 +124,7 @@ var editor = (function() {
       start: x.find('.d1').val() + ' ' + x.find('.t1').val() || '00:00',
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
       allDay: x.find('.input-allday').val(),
-      calendar: x.find('.input-cals').val(),
+        calendar_id: x.find('.input-cals').val(),
     };
 
     // Validate input?
