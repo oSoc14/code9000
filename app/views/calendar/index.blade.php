@@ -42,7 +42,7 @@
 @section('content')
 <div id="calendar">
   <div class="top-right">
-    <button data-base="{{ route('export.index', [$org->slug, '']) }}" class="btn btn-primary btn-export">Abonneren op deze kalender</button>
+    <button data-base="{{ route('export.index', [$org->slug, '']) }}" class="btn btn-primary btn-export">Exporteer deze kalender</button>
   </div>
 </div>
 
