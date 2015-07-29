@@ -40,7 +40,6 @@ class ApiController extends \BaseController
 
         // Loop through calendars to get all appointments
         foreach ($school->calendars as $calendar) {
-            $calendar->url = route("api.orgCalendarEvents", [$calendar->id]);
             foreach ($calendar->appointments as $event) {
                 array_push($events, $event);
             }
@@ -99,7 +98,6 @@ class ApiController extends \BaseController
 
         // Loop through calendars to get all appointments
         foreach ($orgCalendars as $calendar) {
-            $calendar->url = route("api.orgCalendarEvents", [$calendar->id]);
             array_push($calendars, $calendar);
         }
 

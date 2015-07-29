@@ -9,7 +9,7 @@
     var root = {{ $root }};
     var calendars = {{ json_encode($calendars,JSON_NUMERIC_CHECK) }};
     var urls = {{ json_encode([
-      'events' => route('api.events')
+      'events' => route('api.event.handle')
     ],JSON_NUMERIC_CHECK) }};
 </script>
 @stop

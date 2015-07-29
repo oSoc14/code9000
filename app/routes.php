@@ -60,11 +60,11 @@ Route::group(['prefix' => 'profile'], function () {
         'uses' => 'UserController@auth'
     ]);
 
-    // Destroy a user
-    Route::delete('/{id}', [
-        'as' => 'user.removeUserFromSchool',
+    // Update a user
+    Route::post('/{id}', [
+        'as' => 'user.update',
         'before' => 'auth',
-        'uses' => 'UserController@removeUserFromSchool'
+        'uses' => 'UserController@updateUser'
     ])->where('id', '[0-9]+');
 
     // GET: Reset the user's password with a hash received by mail
@@ -92,7 +92,10 @@ Route::group(['prefix' => 'profile'], function () {
 
 });
 
-
+/**
+ * Api v1
+ * Used to show the calendar with AJAX
+ */
 Route::group(['prefix' => 'api/1'], function () {
 
     /**
@@ -101,120 +104,171 @@ Route::group(['prefix' => 'api/1'], function () {
      *  API methods have their own error responses and should not return empty 401 errors
      */
 
-    // Returns all events for the users organisation
+    /**
+     * Get all organisations
+     */
     Route::get('/orgs', [
-        'as' => 'api.orgs',
+        'as' => 'api.org.list',
         'uses' => 'ApiController@orgs'
     ]);
 
-    // Returns all events for the users organisation
+    /**
+     * Get all events for an organisation
+     */
     Route::get('/orgs/{id}/events', [
-        'as' => 'api.events',
+        'as' => 'api.org.events',
         'uses' => 'ApiController@orgEvents'
     ]);
 
-    // Returns all events for the users organisation
+    /**
+     * Get all users for an organisation
+     */
     Route::get('/orgs/{id}/users', [
-        'as' => 'api.orgUsers',
+        'as' => 'api.org.users',
         'uses' => 'ApiController@orgUsers'
     ]);
 
-    // Returns all events for the users organisation
+    /**
+     * Get all calendars for an organisation
+     */
     Route::get('/orgs/{id}/calendars', [
-        'as' => 'api.orgCalendars',
+        'as' => 'api.org.calendars',
         'uses' => 'ApiController@orgCalendars'
     ]);
 
-    // Returns all events for the users organisation
+
+    /**
+     * Get all users in an organisation
+     */
+    Route::get('/users/', [
+        'as' => 'api.currentorg.users',
+        'uses' => 'ApiController@orgUsers'
+    ]);
+
+    /**
+     * Handle an event creation/update
+     */
     Route::post('/events/', [
-        'as' => 'api.events',
+        'as' => 'api.event.handle',
         'uses' => 'ApiController@handleAppointment'
     ]);
 
-    // Returns all events for the users organisation
+    /**
+     * Delete an event
+     */
     Route::delete('/events/', [
-        'as' => 'api.events',
+        'as' => 'api.event.delete',
         'uses' => 'ApiController@destroyAppointment'
     ]);
 
-
+    /**
+     * Get all calendars for the currently logged in user's organisation
+     */
     Route::get('/calendars/', [
-        'as' => 'api.currentOrgCalendars',
+        'as' => 'api.currentorg.calendars',
         'uses' => 'ApiController@orgCalendars'
     ]);
 
-    // Returns all events for a calendar
+    /**
+     * Get a calendar, including all events
+     * id: calendar id
+     */
     Route::get('/calendars/{id}', [
-        'as' => 'api.orgCalendarWithEvents',
+        'as' => 'api.calendar.get',
         'uses' => 'ApiController@calendarWithEvents'
     ]);
 
-    // Returns all events for a calendar
+    /**
+     * Get an array of all events in a calendar
+     * id: calendar id
+     */
     Route::get('/calendars/{id}/events', [
-        'as' => 'api.orgCalendarEvents',
+        'as' => 'api.calendar.events',
         'uses' => 'ApiController@calendarEvents'
     ]);
 
-    // Returns all events for a calendar
+    /**
+     * Handle a calendar create/update
+     */
     Route::post('/calendars/', [
-        'as' => 'api.handleCalendar',
+        'as' => 'api.calendar.handle',
         'uses' => 'ApiController@handleCalendar'
     ]);
 
-    // Returns all events for a calendar
+    /**
+     * Delete a calendar
+     */
     Route::delete('/calendars/', [
-        'as' => 'api.deleteCalendar',
+        'as' => 'api.calendar.delete',
         'uses' => 'ApiController@destroyCalendar'
     ]);
 
 
-    Route::get('/users/', [
-        'as' => 'api.currentOrgUsers',
-        'uses' => 'ApiController@orgUsers'
-    ]);
-
     // TODO: get user?
+    /**
+     * Create a new user (done from the backoffice side)
+     */
+    Route::post('/users/', [
+        'as' => 'api.users.create',
+        'uses' => 'UserApiController@createUser'
+    ])->where('id', '[0-9]+');
 
-    // Update a user
+    /**
+     * Update an existing user
+     * id: the user id
+     */
     Route::post('/users/{id}', [
-        'as' => 'user.update',
+        'as' => 'api.users.update',
         'uses' => 'UserApiController@updateUser'
     ])->where('id', '[0-9]+');
 
-    // Update a user
+    /**
+     * Delete an existing user
+     * id: the user id
+     */
     Route::delete('/users/{id}', [
-        'as' => 'user.update',
+        'as' => 'api.users.delete',
         'uses' => 'UserApiController@deleteUser'
     ])->where('id', '[0-9]+');
 
-    // Create a new user (backoffice side)
-    Route::post('/users/', [
-        'as' => 'user.create',
-        'uses' => 'UserApiController@createUser'
-    ]);
-
-    // Add user to group
+    /**
+     * Promote a user from editor to admin
+     * id: the id of the user to promote
+     */
     Route::post('/users/{id}/roles', [
-        'as' => 'user.addAdminRole',
+        'as' => 'api.users.promote',
         'uses' => 'UserApiController@addAdminRole'
     ])->where('id', '[0-9]+');
 
-    // Remover a user from group
+    /**
+     * Demote a user from admin to editor
+     * id: the id of the user to demote
+     */
     Route::delete('/users/{id}/roles', [
-        'as' => 'user.removeAdminRole',
+        'as' => 'api.users.demote',
         'uses' => 'UserApiController@removeAdminRole'
     ])->where('id', '[0-9]+');
 
 
-    // Add user to group
+    /**
+     * Link a user to a calendar
+     * Post parameters:
+     * id: user id
+     * calendar_id: calendar id
+     */
     Route::post('/users/link', [
-        'as' => 'user.addToCalendar',
+        'as' => 'api.users.link',
         'uses' => 'UserApiController@addUserToCalendar'
     ]);
 
-    // Remover a user from group
+    /**
+     * Unlink a user from a calendar
+     * Post parameters:
+     * id: user id
+     * calendar_id: calendar id
+     */
     Route::delete('/users/link', [
-        'as' => 'user.removeFromCalendar',
+        'as' => 'api.users.unlink',
         'uses' => 'UserApiController@removeUserFromCalendar'
     ]);
 });

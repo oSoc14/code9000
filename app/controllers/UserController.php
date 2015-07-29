@@ -134,6 +134,98 @@ class UserController extends \BaseController
     }
 
     /**
+     * Update userSettings
+     * @param $id = userID
+     * @return mixed
+     *
+     * @deprecated use API instead. still used for compatibility with old profile editing
+     */
+    public function updateUser($id)
+    {
+        if (!Sentry::check()) {
+            // If not logged in, redirect to the login screen
+            return Redirect::route('landing');
+        }
+        // Select users
+        $user = Sentry::getUser();
+        // Try-catch block for trying to find the selected User (to prevent crashing)
+        try {
+            $selectedUser = Sentry::findUserById($id);
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            return Redirect::route('calendar.redirect');
+        }
+        // Check if the user that wants to do the update is either the user himself,
+        // or another user with the correct permissions (such as the superAdmin, or an administrator from the school)
+        if (!$user->hasAccess('superadmin') && !$user->id == $id && !($user->hasAccess('user')
+                && $user->school_id == $selectedUser->school_id)
+        ) {
+            // If no permissions, redirect to calendar index
+            return Redirect::route('calendar.redirect');
+        }
+        // Validate the inputs
+        $validator = Validator::make(
+            [
+                'name' => Input::get('name'),
+                'surname' => Input::get('surname'),
+                'email' => Input::get('email'),
+                'password' => Input::get('password'),
+                'password_confirmation' => Input::get('password_confirmation'),
+                'lang' => Input::get('lang')
+            ],
+            [
+                'name' => 'required',
+                'surname' => 'required',
+                'email' => 'required|email',
+                'password' => 'min:8|confirmed',
+                'lang' => 'required'
+            ]
+        );
+        // If the user tries to change his e-mail, check if there is already another user with that e-mail adress
+        // (this happens in the try-catch block, if the try fails, it means there is no other user with the same
+        // e-mail adress, which means that we can safely update the user's e-mail
+        if ($selectedUser->email != Input::get('email')) {
+            try {
+                // Attempt to find the user by the new e-mail adress
+                $user2 = Sentry::findUserByCredentials(['email' => Input::get('email')]);
+                // Add an error message in the message collection (MessageBag instance)
+                $validator->getMessageBag()->add(
+                    'email',
+                    Lang::get('validation.unique', ['attribute ' => 'email '])
+                );
+            } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+                // The e-mail adress wasn't found in the database, so we can safely change the e-mail adress
+                $selectedUser->email = Input::get('email');
+            }
+        }
+        // If the validation fails, go to previous page with errors
+        if ($validator->fails()) {
+            return Redirect::back()->withInput()->withErrors($validator);
+        } else {
+            // Check if the user tried to change his password, if so, update it
+            if (Input::get('password')) {
+                $selectedUser->password = Input::get('password');
+            }
+            // Update $selectedUser fields
+            $selectedUser->first_name = e(Input::get('name'));
+            $selectedUser->last_name = e(Input::get('surname'));
+            // If the user is editing himself, update current language
+            if ($user->id == $selectedUser->id) {
+                $selectedUser->lang = e(Input::get('lang'));
+                Session::forget('lang');
+                Session::put('lang', Input::get('lang'));
+                //Set the language
+                App::setLocale(Session::get('lang'));
+            }
+            // Store updated user in the database
+            $selectedUser->save();
+
+            return Redirect::route('calendar.redirect');
+        }
+
+        return Redirect::back();
+    }
+
+    /**
      * TODO: Custom variable error messages (multiple language support)
      * @return mixed
      */

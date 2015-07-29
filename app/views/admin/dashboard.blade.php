@@ -56,7 +56,7 @@ angular.module('orgs', ['ngResource'])
   .controller('OrgController', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
 
     // Resources
-    var Orgs = $resource('{{ route('api.orgs') }}');
+          var Orgs = $resource('{{ route('api.org.list') }}');
     $scope.orgs = Orgs.query();
 
   }]);

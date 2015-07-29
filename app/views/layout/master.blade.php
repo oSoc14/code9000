@@ -119,22 +119,7 @@
               </p>
             </a>
           </li>
-          <li class="panel-heading">
-            <a href="{{ route('about') }}">
-              <p class="panel-title">
-                <i class="fa fa-info-circle fa-lg"></i>
-                {{ucfirst(trans('educal.about'))}}
-              </p>
-            </a>
-          </li>
-          <li class="panel-heading">
-            <a href="{{ route('help') }}">
-              <p class="panel-title">
-                <i class="fa fa-question-circle fa-lg"></i>
-                {{ucfirst(trans('educal.help'))}}
-              </p>
-            </a>
-          </li>
+
           <li class="panel-heading">
             <a href="{{ route('user.logout') }}">
               <p class="panel-title">

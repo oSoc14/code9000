@@ -83,7 +83,7 @@ class Calendar extends Eloquent
 
     public function getUrlAttribute()
     {
-        return route("api.orgCalendarEvents", [$this->id]);
+        return route("api.calendar.events", [$this->id]);
     }
 
     public function getParentCalendarAppointments()

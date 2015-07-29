@@ -65,7 +65,7 @@ angular.module('users', ['ngResource'])
   .controller('UserController', ['$scope', '$resource', '$http', '$timeout', function($scope, $resource, $http, $timeout) {
 
     // Resources
-    var users = $resource('{{ route('api.currentOrgUsers') }}/:id', {
+          var users = $resource('{{ route('api.currentorg.users') }}/:id', {
         id: '@id'
       });
     $scope.users = users.query();
