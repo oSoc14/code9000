@@ -204,11 +204,11 @@ Route::group(['prefix' => 'api/1'], function () {
     ]);
 
     /**
-     * Get the currently logged in user
+     * Check if user is logged in
      */
     Route::get('/users/logged', [
         'as' => 'api.users.status',
-        'uses' => 'UserApiController@getCurrentUser'
+        'uses' => 'UserApiController@checkLoginState'
     ]);
 
     /**

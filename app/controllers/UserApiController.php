@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UserApiController extends \BaseController
 {
 
-    public function getCurrentUser()
+    public function checkLoginState()
     {
         if (!Sentry::check()) {
             return ApiController::createApiAccessError("You are not logged in");
         }
 
-        return Response::json(Sentry::getUser(), 200, null, JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
+        return ApiController::createApiOk('Logged in');
     }
 
     /**
