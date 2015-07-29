@@ -198,15 +198,12 @@ class UserApiController extends \BaseController
                 'first_name' => Input::get('first_name'),
                 'last_name' => Input::get('last_name'),
                 'email' => Input::get('email'),
-                'password' => Input::get('password'),
-                'password_confirmation' => Input::get('password_confirmation'),
                 'lang' => Input::get('lang')
             ],
             [
                 'first_name' => 'required',
                 'lastname' => 'required',
                 'email' => 'required|email',
-                'password' => 'min:8|confirmed',
                 'lang' => 'required'
             ]
         );
@@ -232,19 +229,20 @@ class UserApiController extends \BaseController
             }
         }
 
-        // If the validation fails, go to previous page with errors
-        if ($validator->fails()) {
-            return ApiController::createApiValidationError($validator->errors());
-        }
+        // TODO: run specific validation? Required does not apply and passwords don't have to be updated everytime
 
         // Check if the user tried to change his password, if so, update it
-        if (Input::get('password')) {
+        if (Input::has('password')) {
             $selectedUser->password = Input::get('password');
         }
+        if (Input::has('first_name')) {
+            // Update $selectedUser fields
+            $selectedUser->first_name = e(Input::get('first_name'));
+        }
+        if (Input::has('last_name')) {
+            $selectedUser->last_name = e(Input::get('last_name'));
+        }
 
-        // Update $selectedUser fields
-        $selectedUser->first_name = e(Input::get('first_name'));
-        $selectedUser->last_name = e(Input::get('last_name'));
 
         // If the user is editing himself, update current language
         if ($user->id == $selectedUser->id) {

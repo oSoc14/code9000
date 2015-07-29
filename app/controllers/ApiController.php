@@ -495,8 +495,17 @@ class ApiController extends \BaseController
 
         $calendar = new Calendar();
         $calendar->name = e(Input::get('name'));
-        $calendar->description = e(Input::get('name'));
-        $calendar->school_id = Input::get('school');
+
+        $calendar->school_id = Input::get('school_id');
+        if (Input::has('description')) {
+            $calendar->description = e(Input::get('description'));
+        }
+        if (Input::has('color')) {
+            $calendar->color = e(Input::get('color'));
+        }
+        if (Input::has('parent_id')) {
+            $calendar->parent_id = e(Input::get('parent_id'));
+        }
 
         $calendar->save();
 
@@ -535,48 +544,30 @@ class ApiController extends \BaseController
 
             return ApiController::createApiAccessError('You do not have the right to perform this action');
         }
-        // If permissions are met, get school info
-        $school = $calendar->school;
+
+        // TODO: input validation (no security risks, but feedback is always nice)
 
         // Generate full calendar name
-        if (Input::get('name') != null) {
+        if (Input::has('name')) {
             $calName = preg_replace('/[^A-Za-z0-9\-_ ]/', '', Input::get('name'));
         } else {
             $calName = $calendar->name;
         }
 
-        // Make a validator to see if the new calendar name is unique if it's not the same as before
-        // Validate input fields
-        $validator = Validator::make(
-            [
-                'name' => e($calName),
-                'school' => Input::get('school'),
-                'permissions' => Input::get('permissions')
-            ],
-            [
-                'school' => 'integer'
-            ]
-        );
+        if (Input::has('color')) {
+            $calendar->color = e(Input::get('color'));
+        }
+        if (Input::has('description')) {
+            $calendar->description = e(Input::get('description'));
+        }
+        if (Input::has('parent_id')) $calendar->parent_id = e(Input::get('parent_id'));
 
-        // Error handling
-        if ($validator->fails()) {
-
-            return ApiController::createApiValidationError($validator->errors());
-
-            // TODO: take a look at "protected" calendars
-        } elseif ($calName == $school->name || $calName == 'Administratie') {
-            // Do not allow default calendars to be renamed
-
-            return ApiController::createApiAccessError('You cannot rename this calendar');
-
-        } else {
-
-            $calendar->name = $calName;
+        if (Input::has('name')) $calendar->name = $calName;
             // Save/update the calendar
             $calendar->save();
 
             return ApiController::createApiOk('Changes saved');
-        }
+
     }
 
     /**
