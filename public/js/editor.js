@@ -161,7 +161,7 @@ var editor = (function() {
     datepicker: false,
     onChangeDateTime: logic,
     onShow: logic,
-
+    step: 30
   };
   var t2Options = $.extend({}, t1Options);
 
@@ -262,6 +262,7 @@ var editor = (function() {
       $target.popover('show');
       $('.popover .btn-success').text('Opslaan');
       toggleAllDay(null, active.ev.allDay);
+      $('.input-allday').on('change', toggleAllDay);
 
       // Launch datetimepicker
       $('.input-date.d2').datetimepicker(d2Options);
