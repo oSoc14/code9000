@@ -42,6 +42,8 @@
 @section('content')
 <div id="calendar">
   <div class="top-right">
+    @if(Sentry::check())
+      <button href="#" class="btn btn-success">Voeg event toe</button> @endif
     <button data-base="{{ route('export.index', [$org->slug, '']) }}" class="btn btn-primary btn-export">Exporteer deze kalender</button>
   </div>
 </div>
