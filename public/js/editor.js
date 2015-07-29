@@ -123,7 +123,7 @@ var editor = (function() {
       location: x.find('.input-location').val(),
       start: x.find('.d1').val() + ' ' + x.find('.t1').val() || '00:00',
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
-      allDay: x.find('.t1').val() === '00:00' && x.find('.t2').val() === '00:00',
+      allDay: x.find('.input-allday').val(),
       calendar: x.find('.input-cals').val(),
     };
 
@@ -174,6 +174,16 @@ var editor = (function() {
     }
   };
 
+  // Toggle allDay to reflect parameter active
+  var toggleAllDay = function(e, allDay) {
+    if (e) {
+      allDay = $(this).prop('checked');
+    } else {
+      $('.input-allday').prop('checked', allDay);
+    }
+    $('.input-time').prop('disabled', allDay);
+  };
+
   // Show popover to create event
   var select = function(start, end, jsEvent, view) {
 
@@ -213,6 +223,7 @@ var editor = (function() {
     $target.popover('show');
 
     fixPopup();
+    toggleAllDay(null, allDay);
 
     // Launch datetimepicker
     $('.input-date.d2').datetimepicker(d2Options);
@@ -220,6 +231,7 @@ var editor = (function() {
     $('.input-time.t2').datetimepicker(t2Options);
     $('.input-time.t1').datetimepicker(t1Options);
 
+    $('.input-allday').on('change', toggleAllDay);
     $('.popover .btn-danger').addClass('invisible');
   };
 
@@ -242,6 +254,8 @@ var editor = (function() {
       // Launch popover
       $target.popover(popoverOptions);
       $target.popover('show');
+      $('.popover .btn-success').text('Opslaan');
+      toggleAllDay(null, active.ev.allDay);
 
       // Launch datetimepicker
       $('.input-date.d2').datetimepicker(d2Options);
