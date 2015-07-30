@@ -237,11 +237,11 @@ Route::group(['prefix' => 'api/1'], function () {
     ])->where('id', '[0-9]+');
 
     /**
-     * Send an email to reset the password
+     * Resend an email to reset the password
      */
     Route::post('/users/{id}/mail', [
         'as' => 'api.users.mail',
-        'uses' => 'UserApiController@sendResetLink'
+        'uses' => 'UserApiController@sendPasswordLink'
     ])->where('id', '[0-9]+');
 
     /**

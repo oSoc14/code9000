@@ -493,6 +493,7 @@ class UserApiController extends \BaseController
         try {
 
             $user = User::find($id);
+            $user->load('school');
             if (Sentry::getUser()->school->id != $user->School->id || !Sentry::getUser()->hasAccess('admin')) {
                 return ApiController::createApiAccessError("You are not allowed to perform this action");
             }
