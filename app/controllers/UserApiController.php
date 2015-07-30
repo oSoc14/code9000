@@ -448,4 +448,42 @@ class UserApiController extends \BaseController
 
     }
 
+    /**
+     * Request a mail to be sent with a reset link
+     *
+     * @return boolean
+     */
+    public function sendResetLink($id)
+    {
+        try {
+
+            $user = User::find($id);
+            if (Sentry::getUser()->school->id != $user->School->id || !Sentry::getUser()->hasAccess('admin')) {
+                return ApiController::createApiAccessError("You are not allowed to perform this action");
+            }
+
+            $resetCode = $user->getResetPasswordCode();
+
+            $url = URL::route('user.resetPassword', [$resetCode]);
+
+            $message = '<html><body><p>Een admin heeft zonet een account voor jou gemaakt op educal.be, of het wachtwoord van je educal account is vervallen.
+Volg volgende link om je wachtwoord opnieuw in te stellen en aan te melden.: <a href="' . $url . '">' . $url . '</a></p></body></html>';
+
+            $headers = "MIME-Version: 1.0\n";
+            $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
+
+            $result = mail($user->email, 'Educal: Reset wachtwoord', $message, $headers);
+
+            \Log::info("Sent an email to $user->email, with the reset link: " . $url);
+
+
+        } catch (ModelNotFoundException $ex) {
+
+            return ApiController::createApiError("User not found");
+        }
+
+        return ApiController::createApiOk("Mail sent");
+
+    }
+
 }

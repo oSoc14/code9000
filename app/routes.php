@@ -227,6 +227,15 @@ Route::group(['prefix' => 'api/1'], function () {
         'as' => 'api.users.getUser',
         'uses' => 'UserApiController@getUser'
     ])->where('id', '[0-9]+');
+
+    /**
+     * Send an email to reset the password
+     */
+    Route::post('/users/{id}/mail', [
+        'as' => 'api.users.mail',
+        'uses' => 'UserApiController@sendResetLink'
+    ])->where('id', '[0-9]+');
+
     /**
      * Create a new user (done from the backoffice side)
      */
