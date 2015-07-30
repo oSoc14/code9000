@@ -79,7 +79,7 @@ Route::group(['prefix' => 'profile'], function () {
     ])->where('id', '[0-9]+');
 
     // POST: send an email with the reset link
-    Route::post('/sendReset/{mail}', [
+    Route::post('/sendReset', [
         'as' => 'user.sendResetLink',
         'uses' => 'UserController@sendResetLink'
     ]);

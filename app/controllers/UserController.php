@@ -101,22 +101,19 @@ class UserController extends \BaseController
      *
      * @return boolean
      */
-    public function sendResetLink($email)
+    public function sendResetLink()
     {
         try {
-
+            $email = Input::get('email');
             $user = User::where('email', $email)->firstOrFail();
 
             $resetCode = $user->getResetPasswordCode();
-
             $url = URL::route('user.resetPassword', [$resetCode]);
 
-            $message = '<html><body><p>' . ucfirst(trans('reminders.resetmail')) . ': <a href="' . $url . '">' . $url . '</a></p></body></html>';
-
-            $headers = "MIME-Version: 1.0\n";
-            $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
-
-            $result = mail($email, 'Educal: Reset wachtwoord', $message, $headers);
+            Mail::send('emails.passwordreset', array('url' => $url), function ($message) use ($user) {
+                $message->to($user->email,
+                    $user->firstname . ' ' . $user->lastname)->subject('Educal: reset wachtwoord');
+            });
 
             \Log::info("Sent an email to $email, with the reset link: " . $url);
 

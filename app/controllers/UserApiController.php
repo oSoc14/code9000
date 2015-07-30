@@ -480,19 +480,14 @@ class UserApiController extends \BaseController
             }
 
             $resetCode = $user->getResetPasswordCode();
-
             $url = URL::route('user.resetPassword', [$resetCode]);
 
-            $message = '<html><body><p>Een admin heeft zonet een account voor jou gemaakt op educal.be, of het wachtwoord van je educal account is vervallen.
-Volg volgende link om je wachtwoord opnieuw in te stellen en aan te melden.: <a href="' . $url . '">' . $url . '</a></p></body></html>';
+            Mail::send('emails.adminpasswordreset', array('url' => $url), function ($message) use ($user) {
+                $message->to($user->email,
+                    $user->firstname . ' ' . $user->lastname)->subject('Educal: reset wachtwoord');
+            });
 
-            $headers = "MIME-Version: 1.0\n";
-            $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
-
-            $result = mail($user->email, 'Educal: Reset wachtwoord', $message, $headers);
-
-            \Log::info("Sent an email to $user->email, with the reset link: " . $url);
-
+            \Log::info("Sent an email to $email, with the reset link: " . $url);
 
         } catch (ModelNotFoundException $ex) {
 
