@@ -292,7 +292,8 @@ var editor = (function() {
         t2Options.value = ev.end.format('HH:mm');
       } else {
         d2Options.value = ev.start.format('YYYY-MM-DD');
-        t2Options.value = ev.start.format('HH:mm');
+        t1Options.value = ev.start.format('08:00');
+        t2Options.value = ev.start.format('09:00');
       }
       active.ev = ev;
       active.id = ev.id || 0;
