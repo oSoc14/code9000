@@ -137,7 +137,11 @@ var editor = (function() {
     }
 
     // Open calendar that event was added to
-
+    var label = $('label[data-cal="' + formdata.calendar_id + '"]');
+    if(!label.find('input').prop('checked')){
+      label.click();
+      label.toggleClass('active', true);
+    }
 
     // Apply to backend
     api.postEvent(formdata).success(function(data) {
