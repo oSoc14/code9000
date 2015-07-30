@@ -103,7 +103,7 @@
             <p class="divider-btm">
                 <label class="has-input">
                     Locatie
-                    <input class="input input-location" type="text" placeholder="Voeg een locatie toe" required>
+                    <input class="input input-location" type="text" placeholder="Voeg een locatie toe">
                 </label>
             </p>
 
@@ -111,7 +111,7 @@
                 <label class="has-input">
                     Omschrijving
                     <textarea class="input input-descr" type="text" id="description" placeholder="Voeg omschrijving toe"
-                              required></textarea>
+                            ></textarea>
                 </label>
             </p>
 
