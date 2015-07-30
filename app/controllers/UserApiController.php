@@ -94,7 +94,7 @@ class UserApiController extends \BaseController
         $created = Sentry::createUser(
             [
                 'email' => Input::get('email'),
-                'password' => generateRandomString(24),
+                'password' => self::generateRandomString(24),
                 'activated' => true,
                 'school_id' => $schoolId,
                 'first_name' => Input::get('first_name'),
@@ -482,7 +482,7 @@ Volg volgende link om je wachtwoord opnieuw in te stellen en aan te melden.: <a 
 
     }
 
-    private function generateRandomString($length = 10)
+    private static function generateRandomString($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
