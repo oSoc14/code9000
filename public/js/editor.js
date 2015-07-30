@@ -123,11 +123,15 @@ var editor = (function() {
       location: x.find('.input-location').val(),
       start: x.find('.d1').val() + ' ' + x.find('.t1').val() || '00:00',
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
-      allDay: x.find('.input-allday').prop('checked')?'1':'0',
+      allDay: x.find('.input-allday').prop('checked') ? '1' : '0',
       calendar_id: x.find('.input-cals').val(),
     };
 
     // Validate input?
+    if (!formdata.title.length) {
+      $('.popover .input-title').parent().addClass('label--error').find('span').text('Titel verplicht!');
+      return false;
+    }
 
     // Update
     if (active.ev._id) {

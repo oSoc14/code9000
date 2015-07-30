@@ -69,3 +69,9 @@
   position: relative;
   top: 1px;
 }
+.label--error{
+  background: #fbb;
+  span{
+    color:#c00;
+  }
+}

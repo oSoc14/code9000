@@ -75,7 +75,7 @@
         <form>
             <p class="divider-btm">
                 <label class="has-input">
-                    Titel
+                    <span>Titel</span>
                     <input class="input input-title" type="text" placeholder="Voeg een titel voor het event toe"
                            required>
                 </label>
