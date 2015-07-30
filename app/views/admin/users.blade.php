@@ -121,13 +121,9 @@ angular.module('users', ['ngResource'])
     };
 
     $scope.toggleCal = function(user, cal, allow) {
-      $http({
-        method: allow ? 'POST' : 'DELETE',
-        url: '{{ route('api.users.link') }}',
-        data: {
-          id: user.id,
-          calendar_id: cal.id
-        }
+      $http.post(allow ? '{{ route('api.users.link') }}' : '{{ route('api.users.unlink') }}', {
+        id: user.id,
+        calendar_id: cal.id
       });
     }
 
