@@ -469,7 +469,7 @@ class UserController extends \BaseController
         }
 
         // Redirect to landing
-        return Redirect::route('landing');
+        return Redirect::back();
     }
 
 
