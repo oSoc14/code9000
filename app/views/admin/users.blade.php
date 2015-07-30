@@ -12,6 +12,7 @@
   @include('admin/navbar')
 
   <p>
+    <button type="button" ng-click="adding=1">Medewerker toevoegen</button>
     <input type="text" ng-model="search" class="inp" placeholder="Zoeken">
     <button ng-click="search=null" ng-disabled="!search" class="btn">Reset</button>
   </p>
@@ -27,6 +28,13 @@
       </tr>
     </thead>
     <tbody>
+      <tr ng-show="adding" class="dirty" ng-class="{saved:adduser.saved,error:adduser.error}">
+        <td class="td-checkbox" ng-class="{'td-checkbox--active':adduser.activated}"><label><input type="checkbox" name="name" ng-model="adduser.activated"></label></td>
+        <td class="td-inp"><label><input type="text" ng-model="adduser.first_name" placeholder="Vul voornaam in"></label></td>
+        <td class="td-inp"><label><input type="text" ng-model="adduser.last_name" placeholder="Vul naam in"></label></td>
+        <td class="td-inp"><label><input type="email" ng-model="adduser.email" placeholder="Vul e-mailadres in"></label></td>
+        <td class="td-btn" ng-click="addnew(user)">Bewaren</td>
+      </tr>
       <tr ng-repeat="(u, user) in users | filter:search" ng-class="{saved:user.saved,error:user.error,dirty:user.dirty}">
         <td class="td-checkbox" ng-class="{'td-checkbox--active':user.activated}"><label><input type="checkbox" name="name" ng-model="user.activated"></label></td>
         <td class="td-inp"><label><input type="text" ng-model="user.first_name" ng-blur="save(u, user)" ng-change="user.dirty=1"></label></td>
@@ -79,11 +87,15 @@ angular.module('users', ['ngResource'])
   .controller('UserController', ['$scope', '$resource', '$http', '$timeout', function($scope, $resource, $http, $timeout) {
 
     // Resources
-          var users = $resource('{{ route('api.currentorg.users') }}/:id', {
+          var Users = $resource('{{ route('api.currentorg.users') }}/:id', {
         id: '@id'
       });
-    $scope.users = users.query();
+    $scope.users = Users.query();
     $scope.overlay = 0;
+
+    $scope.addnew = function(user) {
+      Users.save(user);
+    }
 
     $scope.open = function(user) {
       $scope.user = user;
