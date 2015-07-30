@@ -1,6 +1,7 @@
 @extends('layout.form')
 
 @section('form')
+    <h2 class="form-header">Herstel wachtwoord<span class="form-header-mute"> - via email</span></h2>
     {{Form::open(array('route' => array('user.sendResetLink'), 'class'=>'form form-horizontal', 'method' => 'post')) }}
 
     @if($errors->count())
