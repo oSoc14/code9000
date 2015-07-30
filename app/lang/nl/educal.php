@@ -31,7 +31,7 @@ return array(
     'confirm' => 'bevestig',
     'confirmationmsg' => 'Bent u zeker dat u dit item wilt verwijderen?',
 
-    'email' => 'Email adres',
+    'email' => 'E-mailadres',
     'password' => 'Wachtwoord',
     'newpassword' => 'nieuw wachtwoord',
     'repeatpassword' => 'herhaal wachtwoord',
