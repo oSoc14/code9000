@@ -83,6 +83,9 @@ class UserApiController extends \BaseController
             $schoolId = Sentry::getUser()->school->id;
         }
 
+        if ($schoolId == null || $schoolId == 0) {
+            $schoolId = Sentry::getUser()->school->id;
+        }
 
         // If the superAdmin tries to make another superAdmin, then schoolId = null, because superadmins
         // don't belong to a school
@@ -112,7 +115,7 @@ class UserApiController extends \BaseController
         }
         $created->addGroup($role); // give role to user
 
-
+        $created = User::find($created->id);
         $created->load('calendars'); //provide extra information
         // Return to previous page after everything is done
         return Response::Json($created, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
