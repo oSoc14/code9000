@@ -132,7 +132,7 @@ class UserApiController extends \BaseController
         $created->addGroup($role); // give role to user
 
         $created = User::find($created->id);
-
+        $this->sendPasswordLink($created->id);
         // Return to previous page after everything is done
         return Response::Json($created, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
@@ -488,7 +488,7 @@ class UserApiController extends \BaseController
      *
      * @return boolean
      */
-    public function sendResetLink($id)
+    public function sendPasswordLink($id)
     {
         try {
 
@@ -502,10 +502,10 @@ class UserApiController extends \BaseController
 
             Mail::send('emails.adminpasswordreset', array('url' => $url), function ($message) use ($user) {
                 $message->to($user->email,
-                    $user->firstname . ' ' . $user->lastname)->subject('Educal: reset wachtwoord');
+                    $user->firstname . ' ' . $user->lastname)->subject('Educal: stel wachtwoord in');
             });
 
-            \Log::info("Sent an email to $email, with the reset link: " . $url);
+            \Log::info("Sent an email to " . $user->email . ", with the admin reset link: " . $url);
 
         } catch (ModelNotFoundException $ex) {
 
