@@ -64,7 +64,7 @@
         <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
             <h1>Plan.<br />Organiseer.<br />Deel.</h1>
 
-            <a href="/register" class="btn btn-default">Start nu gratis</a>
+            <a href="#werking" class="btn btn-default">Leer meer over Educal</a>
             <a href="{{route('user.login')}}" class="btn btn-subtle">Log in</a>
 
             {{-- <h2>Zoek mijn school</h2>
@@ -84,20 +84,23 @@
 
 <section class="page" id="werking">
     <div class="container">
-        <div class="col-md-3">
+        <div class="col-md-5">
             <h2>Wat is Educal?</h2>
 
             <ul>
                 <li>
-                    Educal is een kalender die enkel de activiteiten waar jij geïnteresseerd in bent in een oogopslag laat zien.
+                    <strong>Voor scholen</strong><br>
+                    Organiseer en plan evenementen op school-, jaar- en klasniveau met Educal. Deel de kalender met ouders en hun kinderen. Blije ouders, blije kinderen, top organisatie!
                 </li>
                 <li>
-                    Exporteer de kalender naar je eigen agenda, zo ben je altijd op de hoogte van de activiteiten van je kind.
+                    <strong>Voor ouders</strong><br>
+                    Bekijk alle activiteiten van je kind in een handig overzicht. Exporteer de activiteiten naar je eigen digitale agenda. Geef een zwembroek mee op zwemdag!
                 </li>
             </ul>
+            <p><a href="#waarom" title="Waarom Educal">Waarom Educal &rarr;</a></p>
         </div>
 
-        <div class="col-md-8 col-md-offset-1">
+        <div class="col-md-7">
             {{-- <a class="btn btn-switch btn-switch-active" href="#">Ik ben leerkracht</a> --}}
             {{-- <a class="btn btn-switch" href="#">Ik ben ouder</a> --}}
             <div class="video-16-9">
