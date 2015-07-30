@@ -381,7 +381,7 @@ class UserApiController extends \BaseController
         $selectedUser = Sentry::findUserById(Input::get('id'));
 
         // support for json
-        $data = Request::json()->all(); // workaround for Input::all not working
+        $data = Input::all(); // workaround for Input::all not working
         if (isset($data['calendar_id'])) {
             $calendar = Calendar::find($data['calendar_id']);
         }

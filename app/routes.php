@@ -306,7 +306,7 @@ Route::group(['prefix' => 'api/1'], function () {
      * id: user id
      * calendar_id: calendar id
      */
-    Route::delete('/users/link', [
+    Route::post('/users/unlink', [
         'as' => 'api.users.unlink',
         'uses' => 'UserApiController@removeUserFromCalendar'
     ]);
