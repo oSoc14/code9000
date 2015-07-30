@@ -123,7 +123,7 @@ var editor = (function() {
       location: x.find('.input-location').val(),
       start: x.find('.d1').val() + ' ' + x.find('.t1').val() || '00:00',
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
-      allDay: x.find('.input-allday').prop('checked'),
+      allDay: x.find('.input-allday').prop('checked')?'1':'0',
       calendar_id: x.find('.input-cals').val(),
     };
 
@@ -137,8 +137,14 @@ var editor = (function() {
     }
 
     // Open calendar that event was added to
-    var label = $('label[data-cal="' + formdata.calendar_id + '"]');
-    if(!label.find('input').prop('checked')){
+    var label = $('[data-cal="' + formdata.calendar_id + '"]');
+    if (label.hasClass('level--0') && !label.find('input').prop('checked')) {
+      label.click();
+      label.toggleClass('active', true);
+    } else if (label.hasClass('level--1')) {
+      label.click();
+      // Get child labels
+      label = $('label[data-parent="' + formdata.calendar_id + '"]');
       label.click();
       label.toggleClass('active', true);
     }
@@ -286,7 +292,8 @@ var editor = (function() {
         t2Options.value = ev.end.format('HH:mm');
       } else {
         d2Options.value = ev.start.format('YYYY-MM-DD');
-        t2Options.value = ev.start.format('HH:mm');
+        t1Options.value = ev.start.format('08:00');
+        t2Options.value = ev.start.format('09:00');
       }
       active.ev = ev;
       active.id = ev.id || 0;
@@ -326,8 +333,8 @@ var editor = (function() {
       // Create readable date
       var readableDate = b;
       if (ev.allDay || ev.start.format('HHmm') === '0000') {
-        if (a === c && b == d - 1) {
-          readableDate += ev.end.format(' MMMM');
+        if (a === c && b == d) {
+          readableDate += ev.start.format(' MMMM');
         } else if (a === c) {
           readableDate += ev.end.format(' - DD MMMM');
         } else {
