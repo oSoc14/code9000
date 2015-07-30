@@ -315,7 +315,6 @@ class UserApiController extends \BaseController
         }
 // JSON INPUT !!!
 
-        $data = Input::all();
 //        if (!Input::has('id')) {
 //            return ApiController::createApiError("Missing user id");
 //        }
@@ -327,8 +326,11 @@ class UserApiController extends \BaseController
         $user = Sentry::getUser();
 //        $calendar = Calendar::find(Input::get('calendar_id'));
 //        $selectedUser = Sentry::findUserById(Input::get('id'));
+
+        $data = Input::all();
         $calendar = Calendar::find($data['calendar_id']);
         $selectedUser = Sentry::findUserById($data['id']);
+
         // Permission checks
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
             // If no permissions, redirect the user to the calendar index page
@@ -363,7 +365,6 @@ class UserApiController extends \BaseController
         }
         // JSON DATA !!!
 
-        $data = Input::all();
 //        if (!Input::has('id')) {
 //            return ApiController::createApiError("Missing user id");
 //        }
@@ -376,6 +377,7 @@ class UserApiController extends \BaseController
 //        $calendar = Calendar::find(Input::get('calendar_id'));
 //        $selectedUser = Sentry::findUserById(Input::get('id'));
 
+        $data = Input::all();
         $calendar = Calendar::find($data['calendar_id']);
         $selectedUser = Sentry::findUserById($data['id']);
 
