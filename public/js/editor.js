@@ -123,7 +123,7 @@ var editor = (function() {
       location: x.find('.input-location').val(),
       start: x.find('.d1').val() + ' ' + x.find('.t1').val() || '00:00',
       end: x.find('.d2').val() + ' ' + x.find('.t2').val() || '00:00',
-      allDay: x.find('.input-allday').prop('checked'),
+      allDay: x.find('.input-allday').prop('checked')?'1':'0',
       calendar_id: x.find('.input-cals').val(),
     };
 
