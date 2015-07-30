@@ -9,7 +9,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserApiController extends \BaseController
 {
-
+    /**
+     * Check if a login
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function checkLoginState()
     {
         if (!Sentry::check()) {
@@ -17,6 +20,24 @@ class UserApiController extends \BaseController
         }
 
         return ApiController::createApiOk('Logged in');
+    }
+
+    /**
+     * Get a user by ID
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getUser($id)
+    {
+        try {
+            $user = User::find($id);
+        } catch (Exception $e) {
+            return ApiController::createApiError("User not found");
+        }
+        $user->load('calendars');
+
+        return Response::Json($user, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
 
     /**

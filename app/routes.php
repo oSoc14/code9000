@@ -67,22 +67,21 @@ Route::group(['prefix' => 'profile'], function () {
         'uses' => 'UserController@updateUser'
     ])->where('id', '[0-9]+');
 
-    // GET: Reset the user's password with a hash received by mail
-    Route::get('/reset/{hash}', [
-        'as' => 'user.resetPassword',
-        'uses' => 'UserController@resetPassword',
-    ])->where([
-        'hash' => '[a-zA-Z0-9]+'
-    ]);
-
     // POST: send an email with the reset link
-    Route::any('/sendReset/{mail}', [
+    Route::post('/sendReset/{mail}', [
         'as' => 'user.sendResetLink',
         'uses' => 'UserController@sendResetLink'
     ]);
 
-    // POST: Reset the user's password
-    // GET: Reset the user's password
+    Route::get('/reset/', [
+        'as' => 'user.requestResetMail',
+        function () {
+            return View::make('user.passwordforgotten');
+        }
+    ]);
+
+    // POST: Reset the user's password: handle form
+    // GET: Reset the user's password with hash received by mail
     Route::any('/reset/{hash}', [
         'as' => 'user.resetPassword',
         'uses' => 'UserController@resetPassword',
@@ -210,7 +209,13 @@ Route::group(['prefix' => 'api/1'], function () {
         'as' => 'api.users.status',
         'uses' => 'UserApiController@checkLoginState'
     ]);
-
+    /**
+     * Create a new user (done from the backoffice side)
+     */
+    Route::get('/users/{id}', [
+        'as' => 'api.users.getUser',
+        'uses' => 'UserApiController@getUser'
+    ])->where('id', '[0-9]+');
     /**
      * Create a new user (done from the backoffice side)
      */

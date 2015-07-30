@@ -31,8 +31,7 @@ class UserController extends \BaseController
 
                 // Check if the reset password code is valid
                 if ($user->checkResetPasswordCode($hash)) {
-
-                    return View::make('user.password')->with(['user' => $user, 'hash' => $hash]);
+                    return View::make('user.passwordreset')->with(['user' => $user, 'hash' => $hash]);
                 } else {
                     // The provided password reset code is Invalid
                     return Redirect::back()->withInput();
@@ -121,14 +120,11 @@ class UserController extends \BaseController
 
             \Log::info("Sent an email to $email, with the reset link: " . $url);
 
-            return Redirect::route('landing')
-                ->withInput(['email-success' => 'Er werd een mail gestuurd met verdere instructies.']);
+            return Redirect::route('landing');
 
         } catch (ModelNotFoundException $ex) {
 
-            return Redirect::route('landing')
-                ->withInput(['email-reset' => $email])
-                ->withErrors(["message" => "Het email adres werd niet gevonden."]);
+            return Redirect::route('landing');
         }
 
     }

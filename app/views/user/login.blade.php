@@ -27,8 +27,7 @@
 
     <button type="submit"
             class="btn btn-info">{{ ucfirst(trans('educal.login'))}}</button>
-    <a href="#" data-dismiss="modal" data-toggle="modal"
-       data-target="#requestResetPasswordLink">Wachtwoord vergeten</a>
+    <a href="{{ route( 'user.requestResetMail') }}">Wachtwoord vergeten</a>
     </div>
     {{ Form::close(), PHP_EOL }}
 

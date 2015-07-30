@@ -78,10 +78,9 @@ class SchoolController extends \BaseController
         }
         // If there are no errors, prepare a new School object to be inserted in the database
         $school = new School();
-        $nn = self::clean(e(Input::get("school-name")));
-        $school->name = $nn;
+        $school->name = e(Input::get("school-name"));
         $school->city = e(Input::get("school-city"));
-        $school->slug = preg_replace('[^a-zA-Z0-9\-]', '', $nn);
+        $school->slug = preg_replace('[^a-zA-Z0-9\-]', '-', e(Input::get("school-name")));
         $school->save();
 
         // Create the default calendars "global" and "admin"
@@ -126,8 +125,6 @@ class SchoolController extends \BaseController
 
         return Redirect::route('calendar.redirect');
     }
-
-
 
 
     /**
@@ -195,42 +192,19 @@ class SchoolController extends \BaseController
         if (!$user->hasAccess('admin') || $user->school_id != $school->id) { // If no permissions, redirect the user to the calendar index page
             return Redirect::route('calendar.redirect');
         }
-
-
-        $validator = Validator::make(
-            [
-                'name' => e(Input::get('name')),
-                'city' => e(Input::get('city')),
-            ],
-            [
-                'name' => 'required',
-                'city' => 'required',
-            ]
-        );
-
-        // If validator fails, go back and show errors
-        if ($validator->fails()) {
-            return Redirect::route('school.edit', $school->slug)
-                ->withInput()
-                ->withErrors($validator);
-        } else {
-            // Clean up inputted school name
-            $nn = self::clean(Input::get("name"));
-            // Select the first calendar of the school, if school name changes (should be the global calendar)
-            if ($nn != $school->name) {
-                $gg = $school->calendars->first();
-
-                $gg->name = $school->name; // TODO: check, is this correct?
-                $gg->save();
-            }
-
-            $school->name = $nn;
-            $school->city = e(Input::get("city"));
-            $school->opening = e(Input::get("opening"));
-            $school->save();
-
-            return Redirect::route('school.index');
+        
+        if (Input::has("name")) {
+            $school->name = e(Input::get("name"));
         }
+        if (Input::has("city")) {
+            $school->city = e(Input::get("city"));
+        }
+        if (Input::has("opening")) {
+            $school->opening = e(Input::get("opening"));
+        }
+        $school->save();
+
+        return Redirect::route('school.index');
 
 
     }
@@ -282,18 +256,6 @@ class SchoolController extends \BaseController
         return Redirect::route('school.index');
     }
 
-
-
-    /**
-     * Remove special characters from a string
-     * @param $string
-     * @return mixed
-     */
-    function clean($string)
-    {
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
-    }
-
     /**
      * Get all admins for a school
      * @param $school_id int the ID of the school
@@ -326,6 +288,6 @@ class SchoolController extends \BaseController
 
     public static function showRegisterForm()
     {
-        return View::make('register');
+        return View::make('user.register');
     }
 }
