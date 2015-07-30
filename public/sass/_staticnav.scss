@@ -83,20 +83,27 @@ nav {
     margin: 0 15px;
     height: $nav-height;
 
-    color: #fff;
+    color: rgba(#fff,.8);
     font-size: 19px;
+    border-bottom: 3px solid transparent;
+    transition: all .15s ease-in-out;
+
 
     &:hover {
-      border-bottom: 3px solid #fff;
+      color: #fff;
+      border-color: #fff;
       background: none;
       text-decoration: none;
       color: #fff;
       @media (max-width: 827px) {
-        border-bottom: none;
+        border: none;
       }
     }
+    &.brand {
+      border: none;
+    }
     &.brand:hover {
-      border-bottom: none;
+      border: none;
     }
   }
   img {
