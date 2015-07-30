@@ -95,9 +95,11 @@
         </div>
 
         <div class="col-md-8 col-md-offset-1">
-            <a class="btn btn-switch btn-switch-active" href="#">Ik ben leerkracht</a>
-            <a class="btn btn-switch" href="#">Ik ben ouder</a>
-            <img src="{{ asset('images/landing/video-placeholder.jpg') }}" style="width:100%;">
+            {{-- <a class="btn btn-switch btn-switch-active" href="#">Ik ben leerkracht</a> --}}
+            {{-- <a class="btn btn-switch" href="#">Ik ben ouder</a> --}}
+            <div class="video-16-9">
+                <iframe src="https://player.vimeo.com/video/134952726?color=8fafc6&title=0&byline=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 </section>
