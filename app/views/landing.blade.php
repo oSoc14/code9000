@@ -53,7 +53,7 @@
                                                                     alt="Educal"></a></li>
             <li><a class="nav " href="#werking">Wat is Educal?</a></li>
             <li><a class="nav " href="#waarom">Waarom Educal?</a></li>
-            <li><a class="nav " href="#school">Start met Educal</a></li>
+            <li><a class="nav " href="#start">Start met Educal</a></li>
             <li class="right"><a class="nav-login" href="{{route('user.login')}}">Log in</a></li>
         </ul>
     </div>
@@ -143,9 +143,13 @@
                 Educal altijd op zak: exporteer Educal naar een smartphone, tablet of&nbsp;computer.
             </p>
         </div>
+
+        <div class="col-md-12 text-center">
+            <p><a href="#start" title="Start met Educal">Start met Educal &rarr;</a></p>
+        </div>
     </div>
 </section>
-<section class="page register" id="school">
+<section class="page register" id="start">
     <div class="container">
         <div class="col-md-6 col-md-offset-3">
             <h2>Start met Educal op mijn school</h2>
