@@ -80,7 +80,7 @@ class SchoolController extends \BaseController
         $school = new School();
         $school->name = e(Input::get("school-name"));
         $school->city = e(Input::get("school-city"));
-        $school->slug = preg_replace('[^a-zA-Z0-9\-]', '-', e(Input::get("school-name")));
+        $school->slug = preg_replace('/[^a-zA-Z0-9]/', '-', e(strtolower(Input::get("school-name"))));
         $school->save();
 
         // Create the default calendars "global" and "admin"
@@ -192,7 +192,7 @@ class SchoolController extends \BaseController
         if (!$user->hasAccess('admin') || $user->school_id != $school->id) { // If no permissions, redirect the user to the calendar index page
             return Redirect::route('calendar.redirect');
         }
-        
+
         if (Input::has("name")) {
             $school->name = e(Input::get("name"));
         }
