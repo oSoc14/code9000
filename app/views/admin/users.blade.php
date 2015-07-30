@@ -11,9 +11,9 @@
   @include('admin/navbar')
 
   <p>
-    <button type="button" ng-click="adding=1">Medewerker toevoegen</button>
-    <input type="text" ng-model="search" class="inp" placeholder="Zoeken">
-    <button ng-click="search=null" ng-disabled="!search" class="btn">Reset</button>
+    <button type="button" ng-click="adding=1" class="btn btn--inline btn--default btn--sm">Medewerker toevoegen</button>
+    <input type="text" ng-model="search" class="inp btn--sm" placeholder="Zoeken">
+    <button ng-click="search=null" ng-disabled="!search" class="btn btn--inline btn--default btn--sm">Reset</button>
   </p>
 
   <table class="table">

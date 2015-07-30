@@ -1,6 +1,6 @@
 .btn {
   display: block;
-  padding: 15px;
+  padding: 14px 15px 11px;
   line-height: 25px;
   height: 50px;
   width: 100%;
@@ -30,6 +30,20 @@
 .btn-danger {
   color: #900;
 }
+.btn--default {
+  background: #555;
+  color: #eee;
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+}
+.btn--sm {
+  height: 30px;
+  padding: 4px 15px 1px;
+  font-size: 12px;
+  line-height: 25px;
+}
 .btn-inverse {
   &.btn-primary {
     border: 1px solid $brand;
@@ -50,4 +64,8 @@
   &:hover {
     color: #fff;
   }
+}
+.inp {
+  position: relative;
+  top: 1px;
 }
