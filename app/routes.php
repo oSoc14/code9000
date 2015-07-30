@@ -319,6 +319,13 @@ Route::get('/calendar', [
     'uses' => 'CalendarViewController@goToCalendar'
 ]);
 
+Route::get('/faq', [
+    'as' => 'static.faq',
+    function () {
+        return View::make('faq');
+    }
+]);
+
 Route::group(['prefix' => 'admin'], function () {
     // Index, lists all groups
     Route::get('/', [
@@ -374,7 +381,11 @@ Route::group(['prefix' => '{org_slug}'], function () {
     Route::get('/{calendar_slug}', [
         'as' => 'export.index',
         function ($org, $calendar_slug) {
-            return View::make('calendar.export')->with(['org' => $org, 'calendars' => $calendar_slug]);
+            return View::make('calendar.export')->with([
+                'org_slug' => $org,
+                'calendars' => $calendar_slug,
+                'org' => School::getBySlug($org)
+            ]);
         }
     ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
 

@@ -14,7 +14,7 @@
   <meta property="og:title" content="">
   <meta property="og:site_name" content="">
   <meta property="og:description" content="">
-  <meta property="og:image" content="{{ asset('') }}">
+    <meta property="og:image" content="{{ asset('favicons/favicon-196x196.png') }}">
   <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}">
   <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicons/apple-touch-icon-57x57.png') }}">
   <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicons/apple-touch-icon-114x114.png') }}">
@@ -43,10 +43,12 @@
 
 <body>
   <nav class="nav nav-main">
+
     <h1 class="logo text-hide">educal</h1>
-    <h1>{{ $org->name }}</h1>
+      @if(isset($org) && isset($org->name))<h1>{{ $org->name }}</h1>@endif
     <section class="flex--1">
       @section('nav')
+            @if(isset($org) && isset($org->name))
       <ul class="nav-list">
         <li>
           <a href="{{ route('orgs.index',[$org->slug]) }}" {{ Route::currentRouteName()=='calendar.redirect' ? ' class="active"' : '' }}>
@@ -55,12 +57,13 @@
           </a>
         </li>
       </ul>
+            @endif
       @show
     </section>
     <section class="flex--0">
       <ul class="nav-list">
-        @if(Sentry::check())
-          @if(Sentry::getUser()->hasAccess('admin'))
+          @if(Sentry::check() )
+              @if(Sentry::getUser()->hasAccess('admin') &&  isset($org) &&isset($org->slug))
           <li>
             <a href="{{ route('admin.dashboard',[$org->slug]) }}"
             {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
