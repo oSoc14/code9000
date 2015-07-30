@@ -33,17 +33,12 @@
     height: 16px;
     width: 16px;
     border-radius: 2px;
+    border:1px solid #888;
     display: inline-block;
     text-align: center;
     margin-right: .5em;
-  }
-  input[type='checkbox']{
-    transition: opacity .3s;
-    opacity: 0;
-  }
-  &:hover{
-    input[type='checkbox']{
-      opacity: 1;
+    &>input{
+      display: none;
     }
   }
 }

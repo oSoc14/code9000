@@ -63,12 +63,14 @@ var calnav = (function() {
       calendars[id].active = true;
       $('#calendar').fullCalendar('addEventSource', calendars[id]);
       $label.addClass('active');
+      $label.find('.checkbox').css('border-color', $label.data('color'));
       $label.find('.checkbox').css('background', $label.data('color'));
     } else {
       calendars[id].active = false;
       $('#calendar').fullCalendar('removeEventSource', calendars[id].url);
       $label.removeClass('active');
-      $label.find('.checkbox').css('background', 'rgba(0,0,0,0)');
+      $label.find('.checkbox').css('border-color', '');
+      $label.find('.checkbox').css('background', '');
     }
 
     // Toggle year eventsource
