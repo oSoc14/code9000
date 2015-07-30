@@ -17,9 +17,7 @@
 
     <div class="form-group">
         {{Form::label('email', 'E-mail adres')}}
-
         {{Form::email('email', '' , ['class'=>'form-control'])}}
-
     </div>
     <button type="submit"
             class="btn btn-info">Verstuur

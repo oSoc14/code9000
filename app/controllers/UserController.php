@@ -41,8 +41,7 @@ class UserController extends \BaseController
             } catch (ModelNotFoundException $ex) {
                 return Redirect::route('landing');
             }
-        } else {
-            if ($method == 'POST') {
+        } elseif ($method == 'POST') {
 
                 $user = User::where('reset_password_code', $hash)->first();
 
@@ -83,17 +82,17 @@ class UserController extends \BaseController
                         $user->password = $password;
 
                         $user->save();
-
+                        Sentry::login($user, false);
                         \Log::info("Successfully reset the password for user with id $user->id.");
 
-                        return Redirect::back()->withInput(['email' => $user->email]);
+                        return Redirect::route('calendar.redirect');
                     }
                 } else {
                     // The provided password reset code is invalid
                     return Redirect::route('landing');
                 }
             }
-        }
+
     }
 
     /**

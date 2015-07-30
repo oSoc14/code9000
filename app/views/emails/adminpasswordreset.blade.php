@@ -6,7 +6,7 @@
 <body>
 <p>
     Iemand heeft een wachtwoord reset aangevraagd via de website. Indien je je wachtwoord wilt wijzigen, kan dat via
-    deze link: <a href=" {{$url}} ">' . {{$url}} . '</a>
+    deze link: <a href="{{$url}}">{{$url}}</a>
 </p>
 </body>
 </html>

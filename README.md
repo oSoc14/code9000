@@ -32,12 +32,19 @@ You also need to install bower, and need to run grunt in order to compile the ne
     bower install
     grunt
     
-Next change your database credentials
+Next change your database credentials. This is necessary to store data.
 
 * Go to folder app/config
 * Copy the file database.php to app/config/local
 * Update the new database.php file with your own database credentials
 * [database credentials](http://laravel.com/docs/database)
+    
+Set up your mail server credentials. This is necessary to send password reset mails.
+    
+* Go to folder app/config
+* Copy the file mail.php to app/config/local
+* Update the new mail.php file with your own mail credentials
+* [database credentials](http://laravel.com/docs/4.2/mail#configuration)
     
 Finally run the migrations to create your database.
 

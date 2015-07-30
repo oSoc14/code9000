@@ -1,4 +1,7 @@
+@extends('layout.form')
+
 @section('form')
+    <h2 class="form-header">Reset wachtwoord</h2>
     @if(Session::has('errorMessage'))
         <div class="alert alert-danger" role="alert">
             <strong>{{ucfirst(trans('educal.errors'))}}</strong>
@@ -21,26 +24,20 @@
     @endif
 
     <div class="form-group">
-        <label for="password" class="col-md-2 control-label">{{ucfirst(trans('educal.newpassword'))}}</label>
+        <label for="password">{{ucfirst(trans('educal.newpassword'))}}</label>
 
-        <div class="col-md-8">
+
             <input type="password" class="form-control" id="password" name="password">
-        </div>
+
     </div>
     <div class="form-group">
-        <label for="password_confirmation"
-               class="col-md-2 control-label">{{ucfirst(trans('educal.repeatpassword'))}}</label>
-
-        <div class="col-md-8">
+        <label for="password_confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-            <button type="submit" class="btn btn-default btn-educal-primary"><i
-                        class="fa fa-save"></i> {{ucfirst(trans('educal.savechanges'))}}</button>
-        </div>
-    </div>
+    <button type="submit"
+            class="btn btn-info">Opslaan
+    </button>
     {{ Form::close(), PHP_EOL }}
     {{ Session::get('errorMessage') }}
 @stop
