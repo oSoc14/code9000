@@ -150,7 +150,7 @@
                 <li><strong>Deel kalenders</strong> met ouders en leerkrachten</li>
             </ol>
 
-            <button class="btn btn-info">Start nu gratis</button>
+            <a class="btn btn-info" href="{{ route('school.register') }}">Start nu gratis</a>
             <span class="help-text">na 2 minuten ben je aan de slag :-)</span>
         </div>
     </div>

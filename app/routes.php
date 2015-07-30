@@ -21,6 +21,24 @@ Route::get('/', [
     'uses' => 'HomeController@showWelcome'
 ]);
 
+// Create a new school
+Route::get('/register', [
+    'as' => 'school.register',
+    'uses' => 'SchoolController@showRegisterForm'
+]);
+
+// Create a new school
+Route::post('/register', [
+    'as' => 'school.store',
+    'uses' => 'SchoolController@store'
+]);
+
+Route::get('/login', [
+    'as' => 'user.login',
+    function () {
+        return View::make('user.login');
+    }
+]);
 
 Route::group(['prefix' => 'profile'], function () {
     /*
@@ -46,13 +64,6 @@ Route::group(['prefix' => 'profile'], function () {
         'before' => 'auth',
         'uses' => 'UserController@editUser'
     ])->where('id', '[0-9]+');
-
-    // Register as a new user
-    Route::post('/register', [
-        'as' => 'user.register',
-        'before' => 'guest',
-        'uses' => 'UserController@store'
-    ]);
 
     // Authenticate user
     Route::post('/auth', [
@@ -290,26 +301,6 @@ Route::get('/calendar', [
     'as' => 'calendar.redirect',
     'uses' => 'CalendarViewController@goToCalendar'
 ]);
-
-Route::get('/login', [
-    'as' => 'user.login',
-    function () {
-        return View::make('user.login');
-    }
-]);
-
-// Create a new school
-Route::get('/register', [
-    'as' => 'school.register',
-    'uses' => 'SchoolController@showRegisterForm'
-]);
-
-// Create a new school
-Route::post('/register', [
-    'as' => 'school.store',
-    'uses' => 'SchoolController@store'
-]);
-
 
 Route::group(['prefix' => 'admin'], function () {
     // Index, lists all groups
