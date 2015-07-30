@@ -22,6 +22,8 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
 {
 
 
+    protected $appends = array('calendar_ids');
+
     protected $table = 'users';
 
     protected static $groupModel = 'Role';
@@ -61,4 +63,15 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
     }
 
 
+    public function getCalendarIdsAttribute()
+    {
+        $array = array();
+        // load in a separate object, so we can only send this on json without sending the complete list of calendars
+        $user = User::find($this->id);
+        foreach ($user->calendars as $calendar) {
+            array_push($array, $calendar->id);
+        }
+
+        return $array;
+    }
 }

@@ -35,7 +35,6 @@ class UserApiController extends \BaseController
         } catch (Exception $e) {
             return ApiController::createApiError("User not found");
         }
-        $user->load('calendars');
 
         return Response::Json($user, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
@@ -116,7 +115,7 @@ class UserApiController extends \BaseController
         $created->addGroup($role); // give role to user
 
         $created = User::find($created->id);
-        $created->load('calendars'); //provide extra information
+
         // Return to previous page after everything is done
         return Response::Json($created, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
