@@ -313,19 +313,22 @@ class UserApiController extends \BaseController
             // If no permissions, redirect to calendar index
             return ApiController::createApiAccessError('You have to login first');
         }
+// JSON INPUT !!!
 
-        if (!Input::has('id')) {
-            return ApiController::createApiError("Missing user id");
-        }
-        if (!Input::has('calendar_id')) {
-            return ApiController::createApiError("Missing calendar id");
-        }
+        $data = Input::all();
+//        if (!Input::has('id')) {
+//            return ApiController::createApiError("Missing user id");
+//        }
+//        if (!Input::has('calendar_id')) {
+//            return ApiController::createApiError("Missing calendar id");
+//        }
 
         // Find active user and calendar information
         $user = Sentry::getUser();
-        $calendar = Calendar::find(Input::get('calendar_id'));
-        $selectedUser = Sentry::findUserById(Input::get('id'));
-
+//        $calendar = Calendar::find(Input::get('calendar_id'));
+//        $selectedUser = Sentry::findUserById(Input::get('id'));
+        $calendar = Calendar::find($data['calendar_id']);
+        $selectedUser = Sentry::findUserById($data['id']);
         // Permission checks
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
             // If no permissions, redirect the user to the calendar index page
@@ -358,18 +361,23 @@ class UserApiController extends \BaseController
             // If no permissions, redirect to calendar index
             return ApiController::createApiAccessError('You have to login first');
         }
+        // JSON DATA !!!
 
-        if (!Input::has('id')) {
-            return ApiController::createApiError("Missing user id");
-        }
-        if (!Input::has('calendar_id')) {
-            return ApiController::createApiError("Missing calendar id");
-        }
+        $data = Input::all();
+//        if (!Input::has('id')) {
+//            return ApiController::createApiError("Missing user id");
+//        }
+//        if (!Input::has('calendar_id')) {
+//            return ApiController::createApiError("Missing calendar id");
+//        }
 
         // Find active user and calendar information
         $user = Sentry::getUser();
-        $calendar = Calendar::find(Input::get('calendar_id'));
-        $selectedUser = Sentry::findUserById(Input::get('id'));
+//        $calendar = Calendar::find(Input::get('calendar_id'));
+//        $selectedUser = Sentry::findUserById(Input::get('id'));
+
+        $calendar = Calendar::find($data['calendar_id']);
+        $selectedUser = Sentry::findUserById($data['id']);
 
         // Permission checks
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
