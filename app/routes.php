@@ -229,6 +229,14 @@ Route::group(['prefix' => 'api/1'], function () {
     ])->where('id', '[0-9]+');
 
     /**
+     * Get the calendar id's for a specific user
+     */
+    Route::get('/users/{id}/calendars', [
+        'as' => 'api.users.getUserCalendarIds',
+        'uses' => 'UserApiController@getUserCalendarIds'
+    ])->where('id', '[0-9]+');
+
+    /**
      * Send an email to reset the password
      */
     Route::post('/users/{id}/mail', [

@@ -40,6 +40,23 @@ class UserApiController extends \BaseController
     }
 
     /**
+     * Get a user's calendar id's by the user ID
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getUserCalendarIds($id)
+    {
+        try {
+            $user = User::find($id);
+        } catch (Exception $e) {
+            return ApiController::createApiError("User not found");
+        }
+
+        return Response::Json($user->calendar_ids, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
+    }
+
+    /**
      * Creates a new user from the back-office side
      * @return mixed Returns a redirect
      */
