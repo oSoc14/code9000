@@ -51,7 +51,7 @@
             <li class="brand"><a class="nav brand" href="#top"><img class="nav"
                                                                     src="{{ asset('images/landing/logo_white.png') }}"
                                                                     alt="educal"></a></li>
-            <li><a class="nav " href="#werking">Hoe werkt het</a></li>
+            <li><a class="nav " href="#werking">Wat is educal?</a></li>
             <li><a class="nav " href="#waarom">Waarom educal?</a></li>
             <li><a class="nav " href="#school">Start met educal</a></li>
             <li class="right"><a class="nav-login" href="{{route('user.login')}}">Log in</a></li>
@@ -62,13 +62,13 @@
 <section class="page splash">
     <div class="container">
         <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-            <h1>Mijn school kalender</h1>
+            <h1>Mijn schoolkalender</h1>
 
             <h2>Zoek mijn school</h2>
 
             <form class="splash-search">
                 <label for="schoolsearch" class="sr-only">Naam van school</label>
-                <input type="text" id="schoolsearch" placeholder="Vb: het atheneum vilvoorde">
+                <input type="text" id="schoolsearch" placeholder="Vb: het Koninklijk Atheneum Gent">
                 <input type="submit" id="schoolsearchsubmit" value="&#xf002;">
             </form>
         </div>

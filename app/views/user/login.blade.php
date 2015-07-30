@@ -12,7 +12,7 @@
        ]), PHP_EOL }}
     <div class="form-group">
         {{Form::label('lemail', ucfirst(trans('educal.email')))}}
-        {{Form::email('lemail', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer e-mailadres in'])}}
+        {{Form::email('lemail', null , ['class'=>'form-control right', 'required' => true, 'placeholder' => 'Voer emailadres in'])}}
     </div>
     <div class="form-group">
         <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
