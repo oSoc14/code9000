@@ -53,23 +53,14 @@
       <div class="modal-body" ng-click="$event.stopPropagation();">
         <div class="close" ng-click="overlay=0">&times;</div>
         <h1 ng-bind="user.first_name+' '+user.last_name" ng-click="overlay=0" class="modal-title"></h1>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Toegang</th>
-              <th>Kalender</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="(c, cal) in cals | filter:search" ng-class="{saved:user.saved,error:user.error,dirty:user.dirty}">
-              <td class="td-checkbox" ng-class="{'td-checkbox--active':user.activated}"><label><input type="checkbox" name="name" ng-model="user.activated"></label></td>
-              <td class="td-inp"><label><input type="text" ng-model="user.first_name" ng-blur="save(u, user)" ng-change="user.dirty=1"></label></td>
-              <td class="td-inp"><label><input type="text" ng-model="user.last_name" ng-blur="save(u, user)" ng-change="user.dirty=1"></label></td>
-              <td class="td-inp"><label><input type="email" ng-model="user.email" ng-blur="save(u, user)" ng-change="user.dirty=1"></label></td>
-              <td ng-click="open(user)">Kalenders...</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="modal__columns">
+          <label ng-repeat="(c, cal) in calendars" class="modal__li" ng-class="{active:hasCal(cal.id)}">
+            <input type="checkbox" ng-checked="hasCal(cal.id)" ng-click="toggleCal(user, cal, !hasCal(cal.id))"> [[cal.name]]
+          </label>
+        </div>
+        <p class="btnbar">
+          <button type="submit" class="btn btn-success" ng-click="overlay=0">Klaar met bewerken</button>
+        </p>
       </div>
     </div>
   </div>
@@ -90,14 +81,23 @@ angular.module('users', ['ngResource'])
           var Users = $resource('{{ route('api.currentorg.users') }}/:id', {
         id: '@id'
       });
+    var UserCals = $resource('{{ route('api.currentorg.users') }}/:userid/calendars');
+    var Calendars = $resource('{{ route('api.currentorg.calendars') }}');
     $scope.users = Users.query();
+    $scope.calendars = Calendars.query();
     $scope.overlay = 0;
 
     $scope.addnew = function(user) {
-      Users.save(user);
+      Users.save(user, function(u) {
+        $scope.adduser = {};
+        $scope.users.push(u);
+      });
     }
 
     $scope.open = function(user) {
+      $scope.cals = UserCals.query({
+        userid: user.id
+      });
       $scope.user = user;
       $scope.overlay = 1;
     }
@@ -121,6 +121,28 @@ angular.module('users', ['ngResource'])
       });
     };
 
+    $scope.toggleCal = function(user, cal, allow) {
+      $http({
+        method: allow ? 'POST' : 'DELETE',
+        url: '{{ route('api.users.link') }}',
+        data: {
+          id: user.id,
+          calendar_id: cal.id
+        }
+      });
+    }
+
+    $scope.hasCal = function(cal) {
+      var O = Object($scope.cals);
+      var k = 0;
+      while (k < O.length) {
+        if (k in O && O[k] === cal) {
+          return true;
+        }
+        k++;
+      }
+      return false;
+    }
   }]);
 
 window.addEventListener('submit', function(e){

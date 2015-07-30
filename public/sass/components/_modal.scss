@@ -56,10 +56,24 @@ $modal-gutter: 15px !default;
   line-height: 30px;
   display: block;
 }
+.modal__columns {
+  -webkit-column-width: 10em;
+  -moz-column-width: 10em;
+  column-width: 10em;
+  &>label:first-child {
+    -webkit-column-span: all;
+    -moz-column-span: all;
+    column-span: all;
+  }
+}
+.modal__li {
+  display: block;
+  padding: 5px $modal-gutter;
+}
 @media only screen and (min-width: 35em) {
   .modal-container {
     padding: 3em 0;
-    width: 25em;
+    width: 32em;
     margin: 0 auto;
   }
   .modal-container.modal-medium {
