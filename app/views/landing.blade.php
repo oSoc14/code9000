@@ -64,13 +64,16 @@
         <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
             <h1>Plan.<br />Organiseer.<br />Deel.</h1>
 
-            <h2>Zoek mijn school</h2>
+            <a href="/register" class="btn btn-default">Start nu gratis</a>
+            <a href="{{route('user.login')}}" class="btn btn-subtle">Log in</a>
+
+            {{-- <h2>Zoek mijn school</h2>
 
             <form class="splash-search">
                 <label for="schoolsearch" class="sr-only">Naam van school</label>
                 <input type="text" id="schoolsearch" placeholder="Vb: het Koninklijk Atheneum Gent">
                 <input type="submit" id="schoolsearchsubmit" value="&#xf002;">
-            </form>
+            </form> --}}
         </div>
         <div class="col-lg-6 col-md-6 col-sm-4 hidden-xs">
             <img src="{{ asset('images/landing/splashimg.jpg') }}" class="splash-img">
@@ -152,7 +155,7 @@
                 <li><strong>Deel kalenders</strong> met ouders en leerkrachten</li>
             </ol>
 
-            <a class="btn btn-info" href="{{ route('school.register') }}">Start nu gratis</a>
+            <a class="btn btn-primary btn-block has-help-text" href="{{ route('school.register') }}">Start nu gratis</a>
             <span class="help-text">na 2 minuten ben je aan de slag :-)</span>
         </div>
     </div>
