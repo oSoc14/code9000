@@ -70,7 +70,7 @@ class SchoolController extends \BaseController
         // If validator fails, go back and show errors
         if ($validator->fails()) {
             $validator->getMessageBag()->add('errorMessage',
-                'School kon niet geregistreerd worden. Corrigeer de fouten en probeer opnieuw.');
+                'Je school kon niet geregistreerd worden. Corrigeer de aangegeven fouten en probeer opnieuw.');
 
             return Redirect::route('school.register')->withInput()
                 ->withErrors($validator);
