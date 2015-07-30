@@ -1,5 +1,6 @@
 .btn {
   display: inline-block;
+  font-weight: 500;
   border: 0;
   background: none;
   text-decoration: none;
@@ -21,7 +22,7 @@
 .btn-inverse {
 
   &.btn-primary {
-    border: 3px solid $brand;
+    border: 1px solid $brand;
     background-color: #ffffff;
     color: $brand;
     &:hover {
@@ -30,7 +31,7 @@
   }
 
   &.btn-success {
-    border: 3px solid #67af6a;
+    border: 1px solid #67af6a;
     background-color: #ffffff;
     color: #67af6a;
     &:hover {
