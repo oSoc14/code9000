@@ -84,9 +84,10 @@
 
 <section class="page" id="werking">
     <div class="container">
-        <div class="col-md-5">
+        <div class="col-md-12">
             <h2>Wat is Educal?</h2>
-
+        </div>
+        <div class="col-md-5">
             <ul>
                 <li>
                     <strong>Voor scholen</strong><br>
@@ -99,10 +100,7 @@
             </ul>
             <p><a href="#waarom" title="Waarom Educal">Waarom Educal &rarr;</a></p>
         </div>
-
         <div class="col-md-7">
-            {{-- <a class="btn btn-switch btn-switch-active" href="#">Ik ben leerkracht</a> --}}
-            {{-- <a class="btn btn-switch" href="#">Ik ben ouder</a> --}}
             <div class="video-16-9">
                 <iframe src="https://player.vimeo.com/video/134952726?color=8fafc6&title=0&byline=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
