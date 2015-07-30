@@ -500,7 +500,8 @@ class UserApiController extends \BaseController
             $resetCode = $user->getResetPasswordCode();
             $url = URL::route('user.resetPassword', [$resetCode]);
 
-            Mail::send('emails.adminpasswordreset', array('url' => $url), function ($message) use ($user) {
+            Mail::send('emails.adminpasswordreset', array('url' => $url, 'user' => $user),
+                function ($message) use ($user) {
                 $message->to($user->email,
                     $user->firstname . ' ' . $user->lastname)->subject('Educal: stel wachtwoord in');
             });
