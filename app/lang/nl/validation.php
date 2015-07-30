@@ -57,7 +57,7 @@ return array(
     ),
     "not_in"         => "Het formaat van :attribute is ongeldig.",
     "numeric"        => ":attribute moet een nummer zijn.",
-    "required" => "vergeet :attribute niet in te vullen.",
+    "required" => "vergeet je :attribute niet in te vullen.",
     "required_with"  => ":attribute is verplicht i.c.m. :values",
     "required_with_all" => ":attribute is verplicht i.c.m. :values",
     "required_without"     => ":attribute is verplicht als :values niet ingevuld is.",
