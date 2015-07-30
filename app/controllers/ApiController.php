@@ -69,6 +69,7 @@ class ApiController extends \BaseController
 
         // Loop through calendars to get all appointments
         foreach ($orgUsers as $user) {
+            $user->load('calendars'); //provide extra information
             array_push($users, $user);
         }
 

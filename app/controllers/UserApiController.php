@@ -112,8 +112,10 @@ class UserApiController extends \BaseController
         }
         $created->addGroup($role); // give role to user
 
+
+        $created->load('calendars'); //provide extra information
         // Return to previous page after everything is done
-        return ApiController::createApiOk("Created user");
+        return Response::Json($created, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
 
 
