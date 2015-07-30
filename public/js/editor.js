@@ -332,8 +332,8 @@ var editor = (function() {
       // Create readable date
       var readableDate = b;
       if (ev.allDay || ev.start.format('HHmm') === '0000') {
-        if (a === c && b == d - 1) {
-          readableDate += ev.end.format(' MMMM');
+        if (a === c && b == d) {
+          readableDate += ev.start.format(' MMMM');
         } else if (a === c) {
           readableDate += ev.end.format(' - DD MMMM');
         } else {
