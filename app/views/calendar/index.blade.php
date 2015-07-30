@@ -44,12 +44,14 @@
 @section('content')
     <div id="calendar">
         <div class="top-right">
-            @if(Sentry::check())
-                <button id="btn-addevent" class="btn btn-success">Voeg event toe</button>
-            @endif
-            <button id="btn-export" data-base="{{ route('export.index', [$org->slug, '']) }}" class="btn btn-primary">
+            <button id="btn-export" data-base="{{ route('export.index', [$org->slug, '']) }}"
+                    class="btn btn-primary @if(Sentry::check()) btn-inverse @endif">
                 Exporteer deze kalender
             </button>
+            @if(Sentry::check())
+                <button id="btn-addevent" class="btn btn-primary">Voeg event toe</button>
+            @endif
+
         </div>
     </div>
 

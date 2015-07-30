@@ -1,12 +1,15 @@
-.btn{
+.btn {
   display: inline-block;
   border: 0;
   background: none;
   text-decoration: none;
   padding: .5rem 1rem;
+
+  transition: all 300ms;
 }
-.btn-primary{
-  color: #fff;
+
+.btn-primary {
+  color: #ffffff;
   background: $brand;
 }
 
@@ -14,3 +17,29 @@
   color: #ffffff;
   background: #67af6a;
 }
+
+.btn-inverse {
+
+  &.btn-primary {
+    border: 3px solid $brand;
+    background-color: #ffffff;
+    color: $brand;
+    &:hover {
+      background-color: $brand;
+    }
+  }
+
+  &.btn-success {
+    border: 3px solid #67af6a;
+    background-color: #ffffff;
+    color: #67af6a;
+    &:hover {
+      background-color: #67af6a;
+    }
+  }
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
