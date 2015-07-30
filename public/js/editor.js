@@ -137,8 +137,14 @@ var editor = (function() {
     }
 
     // Open calendar that event was added to
-    var label = $('label[data-cal="' + formdata.calendar_id + '"]');
-    if(!label.find('input').prop('checked')){
+    var label = $('[data-cal="' + formdata.calendar_id + '"]');
+    if (label.hasClass('level--0') && !label.find('input').prop('checked')) {
+      label.click();
+      label.toggleClass('active', true);
+    } else if (label.hasClass('level--1')) {
+      label.click();
+      // Get child labels
+      label = $('label[data-parent="' + formdata.calendar_id + '"]');
       label.click();
       label.toggleClass('active', true);
     }
