@@ -62,7 +62,7 @@
 <section class="page splash">
     <div class="container">
         <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-            <h1>Mijn schoolkalender</h1>
+            <h1>Plan.<br />Organiseer.<br />Deel.</h1>
 
             <h2>Zoek mijn school</h2>
 
