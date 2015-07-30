@@ -313,7 +313,6 @@ class UserApiController extends \BaseController
             // If no permissions, redirect to calendar index
             return ApiController::createApiAccessError('You have to login first');
         }
-// JSON INPUT !!!
 
 //        if (!Input::has('id')) {
 //            return ApiController::createApiError("Missing user id");
@@ -324,12 +323,17 @@ class UserApiController extends \BaseController
 
         // Find active user and calendar information
         $user = Sentry::getUser();
-//        $calendar = Calendar::find(Input::get('calendar_id'));
-//        $selectedUser = Sentry::findUserById(Input::get('id'));
+        $calendar = Calendar::find(Input::get('calendar_id'));
+        $selectedUser = Sentry::findUserById(Input::get('id'));
 
+        // support for json
         $data = Input::all();
-        $calendar = Calendar::find($data['calendar_id']);
-        $selectedUser = Sentry::findUserById($data['id']);
+        if (isset($data['calendar_id'])) {
+            $calendar = Calendar::find($data['calendar_id']);
+        }
+        if (isset($data['id'])) {
+            $selectedUser = Sentry::findUserById($data['id']);
+        }
 
         // Permission checks
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
@@ -363,7 +367,6 @@ class UserApiController extends \BaseController
             // If no permissions, redirect to calendar index
             return ApiController::createApiAccessError('You have to login first');
         }
-        // JSON DATA !!!
 
 //        if (!Input::has('id')) {
 //            return ApiController::createApiError("Missing user id");
@@ -374,12 +377,17 @@ class UserApiController extends \BaseController
 
         // Find active user and calendar information
         $user = Sentry::getUser();
-//        $calendar = Calendar::find(Input::get('calendar_id'));
-//        $selectedUser = Sentry::findUserById(Input::get('id'));
+        $calendar = Calendar::find(Input::get('calendar_id'));
+        $selectedUser = Sentry::findUserById(Input::get('id'));
 
-        $data = Input::all();
-        $calendar = Calendar::find($data['calendar_id']);
-        $selectedUser = Sentry::findUserById($data['id']);
+        // support for json
+        $data = Request::json()->all(); // workaround for Input::all not working
+        if (isset($data['calendar_id'])) {
+            $calendar = Calendar::find($data['calendar_id']);
+        }
+        if (isset($data['id'])) {
+            $selectedUser = Sentry::findUserById($data['id']);
+        }
 
         // Permission checks
         if (!$user->hasAccess('superadmin') && !($user->hasAccess('admin') && $user->school_id == $calendar->school_id)) {
