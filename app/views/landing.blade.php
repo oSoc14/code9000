@@ -44,16 +44,16 @@
     <div class="container">
         <a class="mobile-header" id="toggle-menu-collapse" href="#"><img class="nav"
                                                                          src="{{ asset('images/landing/logo_white.png') }}"
-                                                                         alt="educal"><i
+                                                                         alt="Educal"><i
                     class="fa fa-bars right fa-2x"></i>
         </a>
         <ul class="nav" id="menu-collapse">
             <li class="brand"><a class="nav brand" href="#top"><img class="nav"
                                                                     src="{{ asset('images/landing/logo_white.png') }}"
-                                                                    alt="educal"></a></li>
-            <li><a class="nav " href="#werking">Wat is educal?</a></li>
-            <li><a class="nav " href="#waarom">Waarom educal?</a></li>
-            <li><a class="nav " href="#school">Start met educal</a></li>
+                                                                    alt="Educal"></a></li>
+            <li><a class="nav " href="#werking">Wat is Educal?</a></li>
+            <li><a class="nav " href="#waarom">Waarom Educal?</a></li>
+            <li><a class="nav " href="#school">Start met Educal</a></li>
             <li class="right"><a class="nav-login" href="{{route('user.login')}}">Log in</a></li>
         </ul>
     </div>
@@ -82,7 +82,7 @@
 <section class="page" id="werking">
     <div class="container">
         <div class="col-md-3">
-            <h2>Wat is educal?</h2>
+            <h2>Wat is Educal?</h2>
 
             <ul>
                 <li>
@@ -105,7 +105,7 @@
 <section class="page" id="waarom">
     <div class="container">
         <div class="col-md-12 text-center">
-            <h2>Voordelen van educal</h2>
+            <h2>Voordelen van Educal</h2>
         </div>
 
         <div class=" col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-0 col-why">
@@ -124,7 +124,7 @@
             <h3>Gratis &amp; Open Source</h3>
 
             <p>
-                De open source versie van educal is 100% gratis, voor&nbsp;altijd.
+                De open source versie van Educal is 100% gratis, voor&nbsp;altijd.
             </p>
         </div>
 
@@ -134,7 +134,7 @@
             <h3>Blijf verbonden</h3>
 
             <p>
-                Educal altijd op zak: exporteer educal naar een smartphone, tablet of&nbsp;computer.
+                Educal altijd op zak: exporteer Educal naar een smartphone, tablet of&nbsp;computer.
             </p>
         </div>
     </div>
@@ -142,7 +142,7 @@
 <section class="page register" id="school">
     <div class="container">
         <div class="col-md-6 col-md-offset-3">
-            <h2>Start met educal op mijn school</h2>
+            <h2>Start met Educal op mijn school</h2>
 
             <ol>
                 <li>Start <strong>100% gratis</strong></li>
