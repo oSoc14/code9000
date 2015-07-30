@@ -1,7 +1,6 @@
 @extends('layout.master-app')
 
 @section('header')
-{{ HTML::style("css/calendar.css") }}
 {{ HTML::style("css/admin.css") }}
 @stop
 
