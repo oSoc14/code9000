@@ -33,7 +33,7 @@
         <td class="td-inp"><label><input type="text" ng-model="adduser.first_name" placeholder="Vul voornaam in"></label></td>
         <td class="td-inp"><label><input type="text" ng-model="adduser.last_name" placeholder="Vul naam in"></label></td>
         <td class="td-inp"><label><input type="email" ng-model="adduser.email" placeholder="Vul e-mailadres in"></label></td>
-        <td class="td-btn" ng-click="addnew(user)">Bewaren</td>
+        <td class="td-btn" ng-click="addnew(adduser)">Bewaren</td>
       </tr>
       <tr ng-repeat="(u, user) in users | filter:search" ng-class="{saved:user.saved,error:user.error,dirty:user.dirty}">
         <td class="td-checkbox" ng-class="{'td-checkbox--active':user.activated}"><label><input type="checkbox" name="name" ng-model="user.activated"></label></td>
