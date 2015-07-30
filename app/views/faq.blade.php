@@ -9,8 +9,9 @@
         <div class="btn btn-primary">Kalenders</div>
 
         <article class="faq-question">
-            <div class="faq-question-header"><span>Hoe voeg ik een gebeurtenis toe?</span></div>
-            <div class="faq-question-content"><p>
+            <div class="faq-question-header"><span>Hoe voeg ik een gebeurtenis toe?</span><span
+                        class="faq-question-icon">▶</span></div>
+            <div class="faq-question-content" style="display:none"><p>
                     Om een event toe te voegen kan je in het vakje klikken van de dag waar je het event wilt aanmaken.
                     Je kan ook rechtsboven klikken op de knop "Voeg event toe".
                 </p>
@@ -22,8 +23,9 @@
         </article>
 
         <article class="faq-question">
-            <div class="faq-question-header"><span>Hoe bekijk ik een event?</span></div>
-            <div class="faq-question-content"><p>
+            <div class="faq-question-header"><span>Hoe bekijk ik een event?</span><span
+                        class="faq-question-icon">▶</span></div>
+            <div class="faq-question-content" style="display:none"><p>
                     Lorem ipsum dolor
                 </p></div>
         </article>
@@ -48,8 +50,10 @@
             $content.slideToggle(500, function () {
                 //execute this after slideToggle is done
                 //change text of header based on visibility of content div
-                $header.find('.faq-question-icon').toggleClass('glyphicon-chevron-down');
-                $header.find('.faq-question-icon').toggleClass('glyphicon-chevron-up');
+                $header.find('.faq-question-icon').text(function () {
+                    return $content.is(":visible") ? "▼" : "▶";
+                });
+
             });
 
         });
