@@ -62,19 +62,10 @@ class UserApiController extends \BaseController
         // Validate inputted data
         $validator = Validator::make(
             [
-                'first_name' => Input::get('first_name'),
-                'last_name' => Input::get('last_name'),
                 'email' => Input::get('email'),
-                'password' => Input::get('password'),
-                'password_confirmation' => Input::get('password_confirmation'),
-                'school' => Input::get('school'),
             ],
             [
-                'first_name' => 'first_name',
-                'last_name' => 'required',
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required|min:8|confirmed',
-                'school' => 'required|integer',
             ]
         );
 
@@ -84,9 +75,14 @@ class UserApiController extends \BaseController
 
             return ApiController::createApiValidationError($validator->errors());
         }
-        // If there are no validation errors, handle data in the correct way
-        // Get schoolId from the input field
-        $schoolId = Input::get('school');
+
+        // use the school of the admin creating this, or let a superadmin choose a school
+        if ($user->hasAccess('superadmin')) {
+            $schoolId = Input::get('school_id');
+        } else {
+            $schoolId = Sentry::getUser()->school->id;
+        }
+
 
         // If the superAdmin tries to make another superAdmin, then schoolId = null, because superadmins
         // don't belong to a school
