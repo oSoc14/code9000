@@ -3,6 +3,7 @@
 @section('header')
     {{ HTML::style("bower_components/fullcalendar/dist/fullcalendar.min.css") }}
     {{ HTML::style("bower_components/datetimepicker/jquery.datetimepicker.css") }}
+    {{ HTML::style("css/calendar.css") }}
     <script type="text/javascript">
         var org = {{ $school }};
         var user = {{ $user }};
@@ -45,11 +46,11 @@
     <div id="calendar">
         <div class="top-right">
             <button id="btn-export" data-base="{{ route('export.index', [$org->slug, '']) }}"
-                    class="btn btn-primary @if(Sentry::check()) btn-inverse @endif">
+                    class="btn btn--inline btn-primary @if(Sentry::check()) btn-inverse @endif">
                 Exporteer deze kalender
             </button>
             @if(Sentry::check())
-                <button id="btn-addevent" class="btn btn-primary">Voeg event toe</button>
+                <button id="btn-addevent" class="btn btn--inline btn-primary">Voeg event toe</button>
             @endif
 
         </div>

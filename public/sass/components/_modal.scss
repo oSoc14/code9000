@@ -19,11 +19,8 @@ $modal-gutter: 15px !default;
 .modal-body {
   position: relative;
   @include user-select(text);
-  padding: 0 0 2em;
   color: #000;
   background-color: #fff;
-
-
   .close {
     position: absolute;
     right: 0;
@@ -32,7 +29,7 @@ $modal-gutter: 15px !default;
     line-height: 1.5em;
     text-align: center;
     font-size: 2em;
-    opacity: .5;
+    opacity: 0.5;
     cursor: pointer;
     &:hover {
       opacity: 1;
@@ -48,7 +45,7 @@ $modal-gutter: 15px !default;
   color: #fff;
   padding: 1em;
 }
-.modal-title{
+.modal-title {
   margin: 0;
   padding: 15px $modal-gutter;
   font-size: 25px;

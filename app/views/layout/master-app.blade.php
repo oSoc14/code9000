@@ -6,8 +6,6 @@
   <title>{{ HTML::entities('educal') }}</title>
   <!-- Google Webfont -->
   {{ HTML::style("http://fonts.googleapis.com/css?family=Roboto:400,500") }}
-  <!-- Global styles for this template -->
-  {{ HTML::style("css/calendar.css") }}
   <!-- Extra styles -->
   @yield('header')
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

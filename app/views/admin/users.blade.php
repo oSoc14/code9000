@@ -1,7 +1,6 @@
 @extends('layout.master-app')
 
 @section('header')
-{{ HTML::style("css/calendar.css") }}
 {{ HTML::style("css/admin.css") }}
 @stop
 
@@ -78,7 +77,7 @@ angular.module('users', ['ngResource'])
   .controller('UserController', ['$scope', '$resource', '$http', '$timeout', function($scope, $resource, $http, $timeout) {
 
     // Resources
-          var Users = $resource('{{ route('api.currentorg.users') }}/:id', {
+    var Users = $resource('{{ route('api.currentorg.users') }}/:id', {
         id: '@id'
       });
     var UserCals = $resource('{{ route('api.currentorg.users') }}/:userid/calendars');
@@ -113,7 +112,7 @@ angular.module('users', ['ngResource'])
 
       user.$save(function(a, b) {
         user.saved = true;
-        $timeout(function(){
+        $timeout(function() {
           user.saved = false;
         }, 100);
       }, function(a, b) {
