@@ -33,7 +33,9 @@ $input-invalid: #c83233;
     -moz-border-radius: 0;
     border-radius: 0;
     height: 34px;
-
+    &:hover, &:focus, &:active {
+      box-shadow: none;
+    }
     &:invalid {
       border-bottom: 1px solid $input-invalid;
 

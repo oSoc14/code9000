@@ -52,7 +52,7 @@ class ApiController extends \BaseController
 
     /**
      * Return a listing of the users based on the organisation id
-     * @param int $id the organisation ID
+     * @param int $id the organisation ID. If zero, the id of the user's school will be used
      * @return JsonResponse Response with users
      */
     public function orgUsers($id = 0)

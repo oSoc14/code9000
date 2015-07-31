@@ -57,7 +57,6 @@ Route::group(['prefix' => 'profile'], function () {
     ]);
 
 
-
     // Show the view to edit a user
     Route::get('/{id?}', [
         'as' => 'user.edit',
@@ -148,7 +147,7 @@ Route::group(['prefix' => 'api/1'], function () {
 
 
     /**
-     * Get all users in an organisation
+     * Get all users in the organisation of the currently logged in user
      */
     Route::get('/users/', [
         'as' => 'api.currentorg.users',
@@ -313,12 +312,17 @@ Route::group(['prefix' => 'api/1'], function () {
 });
 
 
-// Home
+/**
+ * Redirect a user to it's school calendar
+ */
 Route::get('/calendar', [
     'as' => 'calendar.redirect',
     'uses' => 'CalendarViewController@goToCalendar'
 ]);
 
+/**
+ * Get a page with frequently asked questions
+ */
 Route::get('/faq', [
     'as' => 'static.faq',
     function () {
@@ -326,12 +330,15 @@ Route::get('/faq', [
     }
 ]);
 
+/**
+ * Superadmin interface
+ */
 Route::group(['prefix' => 'admin'], function () {
     // Index, lists all groups
     Route::get('/', [
-        'as' => 'admin.index',
+        'as' => 'superadmin.index',
         function () {
-            // TODO: implement
+            // TODO: implement superadmin
         }
     ]);
 
@@ -341,20 +348,29 @@ Route::pattern('org_slug', '[A-Za-z0-9\-]+');
 /**
  * All organisation pages (view, edit, ...)
  */
-Route::group(['prefix' => '{org_slug}'], function () {
-    // show the calendar for the organisation with the given slug
+Route::group(/**
+ *
+ */
+    ['prefix' => '{org_slug}'], function () {
+    /**
+     * Show the calendar for the organisation with given slug
+     */
     Route::get('/', [
         'as' => 'orgs.index',
         'uses' => 'CalendarViewController@index',
     ]);
-
+    /**
+     * Show the dashboard for the organisation with given slug
+     */
     Route::get('/dashboard', [
         'as' => 'admin.dashboard',
         'before' => 'admin',
         'uses' => 'SchoolController@dashboard',
     ]);
 
-    // Show the admin interface to manage users
+    /**
+     * Show the dashboard / manage users page
+     */
     Route::get('/users', [
         'as' => 'admin.users',
         'before' => 'admin',
@@ -363,7 +379,10 @@ Route::group(['prefix' => '{org_slug}'], function () {
         }
     ]);
 
-    // Show the admin interface to manage calendars
+
+    /**
+     * Show the dashboard / manage calendars page
+     */
     Route::get('/calendars', [
         'as' => 'admin.calendars',
         'before' => 'admin',
@@ -372,12 +391,19 @@ Route::group(['prefix' => '{org_slug}'], function () {
         }
     ]);
 
-    // e.g. educal.dev/school/calendar1/calendar2.ics to compile an ics file for calendar 1 and 2
+
+    /**
+     * Export an .ics file.
+     * @param calendar_slug string the calendar slugs, separated by + signs
+     */
     Route::get('/{calendar_slug}.ics', [
         'as' => 'export.ics',
         'uses' => 'IcalCalendarController@index'
     ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
-
+    /**
+     * Show the export page
+     * @param calendar_slug string the calendar slugs, separated by + signs
+     */
     Route::get('/{calendar_slug}', [
         'as' => 'export.index',
         function ($org, $calendar_slug) {
@@ -389,14 +415,18 @@ Route::group(['prefix' => '{org_slug}'], function () {
         }
     ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
 
-    // Update a school
+    /**
+     * Update a school
+     */
     Route::post('/edit', [
         'as' => 'school.update',
         'uses' => 'SchoolController@update',
         'before' => 'admin'
     ])->where('id', '[0-9]+');
 
-    // Delete a school
+    /**
+     * Delete a school
+     */
     Route::delete('/', [
         'as' => 'school.delete',
         'uses' => 'SchoolController@destroy',
