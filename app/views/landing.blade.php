@@ -165,6 +165,13 @@
 
             <a class="btn btn-primary btn-block has-help-text" href="{{ route('school.register') }}">Start nu gratis</a>
             <span class="help-text">na 2 minuten ben je aan de slag :-)</span>
+
+            <div class="supporters">
+                <p>Ontwikkeld op <a href="http://2015.summerofcode.be">#oSoc15</a> met lopende ondersteuning van</p>
+                <a href="http://digipolis.be"><img src="{{ asset('images/landing/digipolis.png') }}" alt="Digipolis" /></a>
+                <a href="http://stad.gent"><img src="{{ asset('images/landing/stadgent.png') }}" alt="Stad Gent" /></a>
+            </div>
+
         </div>
     </div>
 </section>

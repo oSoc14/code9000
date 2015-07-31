@@ -367,3 +367,17 @@ body {
     left: 0;
   }
 }
+
+.supporters {
+  padding-top: 10px;
+  margin-top: 30px;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  opacity: .5;
+  font-size: .8em;
+  img {
+    display: inline-block;
+    max-width: 100px;
+    margin: 0 10px;
+  }
+}
