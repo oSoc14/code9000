@@ -1,0 +1,35 @@
+.faq-container {
+  width: 30%;
+  float: left;
+  margin-right: 10px;
+}
+
+.faq-category {
+  color: #ffffff;
+  background-color: $brand;
+  padding: 14px 15px 11px;
+  margin: 10px 0;
+}
+
+.faq-question {
+  border-bottom: 1px solid $brand;
+  padding: 5px;
+}
+
+.faq-question-header {
+
+}
+
+.faq-question-content {
+  font-weight: 300;
+}
+
+.faq-question-icon {
+  float: right;
+  transition: all 500ms
+}
+
+.faq-question-icon-rotate {
+  transform: rotate(90deg);
+
+}

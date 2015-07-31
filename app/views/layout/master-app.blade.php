@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>{{ HTML::entities('educal') }}</title>
     <!-- Google Webfont -->
-    {{ HTML::style("http://fonts.googleapis.com/css?family=Roboto:400,500") }}
+    {{ HTML::style("http://fonts.googleapis.com/css?family=Roboto:300,400,500") }}
             <!-- Extra styles -->
     @yield('header')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

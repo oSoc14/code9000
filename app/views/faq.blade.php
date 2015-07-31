@@ -1,12 +1,12 @@
 @extends('layout.master-app')
 @section('header')
-    {{ HTML::style("css/calendar.css") }}
+    {{ HTML::style("css/admin.css") }}
 @stop
 
 @section('content')
     <h1>Veelgestelde vragen</h1>
-    <div class="col-md-3">
-        <div class="btn btn-primary">Kalenders</div>
+    <div class="faq-container">
+        <div class="faq-category">Kalenders</div>
 
         <article class="faq-question">
             <div class="faq-question-header"><span>Hoe voeg ik een gebeurtenis toe?</span><span
@@ -30,11 +30,13 @@
                 </p></div>
         </article>
     </div>
-    <div class="col-md-3">
-        <div class="btn btn-primary">Dashboard</div>
+    <div class="faq-container">
+        <div class="faq-category">Dashboard</div>
+
     </div>
-    <div class="col-md-3">
-        <div class="btn btn-primary">Exporteren</div>
+    <div class="faq-container">
+        <div class="faq-category">Exporteren</div>
+
     </div>
 @stop
 
@@ -47,15 +49,8 @@
             //getting the next element
             $content = $header.next();
             //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-            $content.slideToggle(500, function () {
-                //execute this after slideToggle is done
-                //change text of header based on visibility of content div
-                $header.find('.faq-question-icon').text(function () {
-                    return $content.is(":visible") ? "▼" : "▶";
-                });
-
-            });
-
+            $content.slideToggle(500, 'swing', false);
+            $header.find('.faq-question-icon').toggleClass('faq-question-icon-rotate');
         });
     </script>
 @stop
