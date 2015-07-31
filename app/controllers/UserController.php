@@ -43,55 +43,55 @@ class UserController extends \BaseController
             }
         } elseif ($method == 'POST') {
 
-                $user = User::where('reset_password_code', $hash)->first();
+            $user = User::where('reset_password_code', $hash)->first();
 
-                if (empty($user)) {
-                    return Redirect::route('landing');
-                }
-
-                // Set a hasher, this is lost because we use our own user model
-                $user->setHasher(new Cartalyst\Sentry\Hashing\NativeHasher);
-
-                // Check if the reset password code is valid (redundant)
-                if ($user->checkResetPasswordCode($hash)) {
-
-                    $post = Input::all();
-                    $password = $post['password'];
-                    $confirmation = $post['password_confirmation'];
-
-                    $validator = Validator::make(
-                        [
-                            'password' => $password,
-                            'password_confirmation' => $confirmation
-                        ],
-                        [
-                            'password' => 'required|min:8|confirmed',
-                        ]
-                    );
-
-                    if ($validator->fails()) {
-
-                        $validator->getMessageBag()->add('usererror', 'Failed to reset your password.');
-
-                        return Redirect::route('user.resetPassword', [$hash])
-                            ->withInput()
-                            ->withErrors($validator);
-
-                    } else {
-
-                        $user->password = $password;
-
-                        $user->save();
-                        Sentry::login($user, false);
-                        \Log::info("Successfully reset the password for user with id $user->id.");
-
-                        return Redirect::route('calendar.redirect');
-                    }
-                } else {
-                    // The provided password reset code is invalid
-                    return Redirect::route('landing');
-                }
+            if (empty($user)) {
+                return Redirect::route('landing');
             }
+
+            // Set a hasher, this is lost because we use our own user model
+            $user->setHasher(new Cartalyst\Sentry\Hashing\NativeHasher);
+
+            // Check if the reset password code is valid (redundant)
+            if ($user->checkResetPasswordCode($hash)) {
+
+                $post = Input::all();
+                $password = $post['password'];
+                $confirmation = $post['password_confirmation'];
+
+                $validator = Validator::make(
+                    [
+                        'password' => $password,
+                        'password_confirmation' => $confirmation
+                    ],
+                    [
+                        'password' => 'required|min:8|confirmed',
+                    ]
+                );
+
+                if ($validator->fails()) {
+
+                    $validator->getMessageBag()->add('usererror', 'Failed to reset your password.');
+
+                    return Redirect::route('user.resetPassword', [$hash])
+                        ->withInput()
+                        ->withErrors($validator);
+
+                } else {
+
+                    $user->password = $password;
+
+                    $user->save();
+                    Sentry::login($user, false);
+                    \Log::info("Successfully reset the password for user with id $user->id.");
+
+                    return Redirect::route('calendar.redirect');
+                }
+            } else {
+                // The provided password reset code is invalid
+                return Redirect::route('landing');
+            }
+        }
 
     }
 
@@ -447,7 +447,7 @@ class UserController extends \BaseController
             || ($user->hasAccess('user') && $user->school_id == $selectedUser->school_id)
         ) {
 
-            return View::make('user.edit')->with('user', $selectedUser);
+            return View::make('user.edit')->with(['user' => $selectedUser, 'org' => $user->school]);
 
         } else {
             // If no permissions, redirect to calendar index

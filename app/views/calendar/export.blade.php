@@ -4,8 +4,6 @@
 @stop
 @section('content')
     <section class="export-help">
-        <img src="{{ asset('images/landing/logo_black.svg') }}" class="brand center-block">
-
         <h2>Bedankt om educal te gebruiken</h2>
 
         <p>Afhankelijk van het platform waarop je je kalender wenst te importeren, dien je ofwel de URL op te geven,

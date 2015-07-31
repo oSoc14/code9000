@@ -482,13 +482,16 @@ class ApiController extends \BaseController
         $validator = Validator::make(
             [
                 'name' => e(Input::get('name')),
-                'school_id' => Input::get('school_id'),
             ],
             [
                 'name' => 'required',
-                'school_id' => 'required|integer'
             ]
         );
+
+        $school_id = Sentry::getUser()->school->id;
+        if (Sentry::getUser()->hasPermission("superadmin") && Input::has('school_id')) {
+            $school_id == Input::get('school_id');
+        }
 
         if ($validator->fails()) {
             return ApiController::createApiValidationError($validator->errors());
@@ -496,8 +499,8 @@ class ApiController extends \BaseController
 
         $calendar = new Calendar();
         $calendar->name = e(Input::get('name'));
-
-        $calendar->school_id = Input::get('school_id');
+        $calendar->slug = preg_replace('/[^a-zA-Z0-9]/', '-', e(strtolower(Input::get("name"))));
+        $calendar->school_id = $school_id;
         if (Input::has('description')) {
             $calendar->description = e(Input::get('description'));
         }
