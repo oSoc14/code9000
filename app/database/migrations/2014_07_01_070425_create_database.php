@@ -3,37 +3,36 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDatabase extends Migration {
+class CreateDatabase extends Migration
+{
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
         //CREATES SCHOOLS TABLE
-        Schema::create('schools', function($table)
-        {
+        Schema::create('schools', function ($table) {
             // TODO: Add additional school fields? (URL, ...)
             $table->increments('id');
-            $table->string('name',255);
+            $table->string('name', 255);
             $table->string('opening', 5);
             $table->string('city');
-            $table->string('lang',5)->default('nl');
+            $table->string('lang', 5)->default('nl');
             $table->timestamps();
             $table->softDeletes();
         });
 
         //CREATES USERS TABLE
-        Schema::create('users', function($table)
-        {
+        Schema::create('users', function ($table) {
             // TODO: Make permissions an intermediate column, or remove it alltogether and base permissions solely off groups.
             // TODO: Permissions are at the moment null for all, are they even needed here?
             $table->increments('id');
             $table->string('email');
             $table->string('password');
-            $table->string('lang',5)->nullable();
+            $table->string('lang', 5)->nullable();
             $table->text('permissions')->nullable();
             $table->boolean('activated')->default(0);
             $table->string('activation_code')->nullable();
@@ -58,8 +57,7 @@ class CreateDatabase extends Migration {
         });
 
         //CREATES GROUPS TABLE
-        Schema::create('groups', function($table)
-        {
+        Schema::create('groups', function ($table) {
             $table->increments('id');
             $table->string('name');
             $table->text('permissions')->nullable();
@@ -76,8 +74,7 @@ class CreateDatabase extends Migration {
         });
 
         //CREATE USER GROUPS PIVOT TABLE
-        Schema::create('users_groups', function($table)
-        {
+        Schema::create('users_groups', function ($table) {
             $table->integer('user_id')->unsigned();
             $table->integer('group_id')->unsigned();
 
@@ -91,8 +88,7 @@ class CreateDatabase extends Migration {
         });
 
         //CREATE THROTTLE TABLE
-        Schema::create('throttle', function($table)
-        {
+        Schema::create('throttle', function ($table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('ip_address')->nullable();
@@ -110,8 +106,7 @@ class CreateDatabase extends Migration {
         });
 
         //CREATES APPOINTMENTS TABLE
-        Schema::create('parent_appointments', function($table)
-        {
+        Schema::create('parent_appointments', function ($table) {
             $table->increments('id');
             $table->string('title');
             $table->text('description');
@@ -127,8 +122,7 @@ class CreateDatabase extends Migration {
         });
 
         //CREATES APPOINTMENTS TABLE
-        Schema::create('appointments', function($table)
-        {
+        Schema::create('appointments', function ($table) {
             $table->increments('id');
             $table->string('title');
             $table->text('description');
@@ -154,15 +148,15 @@ class CreateDatabase extends Migration {
             $table->foreign('parent_id')->references('id')->on('parent_appointments')->onDelete('set null');
         });
 
-	}
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('parent_appointments');
         Schema::dropIfExists('users_groups');
@@ -170,6 +164,6 @@ class CreateDatabase extends Migration {
         Schema::dropIfExists('groups');
         Schema::dropIfExists('schools');
         Schema::dropIfExists('throttle');
-	}
+    }
 
 }
