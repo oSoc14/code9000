@@ -1,0 +1,32 @@
+@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/popovers";
+@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+
+@import "components/flexbox";
+
+.text-muted{
+  opacity: .6;
+}
+
+.fade {
+  opacity: 0;
+  @include transition(opacity .15s linear);
+  &.in {
+    opacity: 1;
+  }
+}
+
+.text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.ng-cloak {
+ display: none !important;
+}

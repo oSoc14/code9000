@@ -1,0 +1,52 @@
+.navcals {
+  @include user-select(none);
+  margin: $gutter (-$gutter);
+  &>.level--0 {
+    padding: 10px $gutter;
+    line-height: 20px;
+    opacity: 0.7;
+    &.active {
+      opacity: 1;
+      display: block !important;
+    }
+    &:hover {
+      background: rgba(0,0,0,.5);
+      &>.checkbox {
+        border-color: #fff;
+      }
+    }
+  }
+  &>.level--1 {
+    margin: 5px 0;
+    padding: 10px $gutter;
+    line-height: 20px;
+    opacity: 0.7;
+    vertical-align: top;
+    &:hover,
+    &.active {
+      opacity: 1;
+    }
+    &.active svg{
+      @include rotate(180deg);
+    }
+    svg {
+      @include transition(transform .3s);
+      float: right;
+      pointer-events: none;
+    }
+  }
+  .checkbox {
+    transition: background 0.3s;
+    vertical-align: middle;
+    height: 16px;
+    width: 16px;
+    border-radius: 2px;
+    border: 1px solid #888;
+    display: inline-block;
+    text-align: center;
+    margin-right: 0.5em;
+    &>input {
+      visibility: hidden;
+    }
+  }
+}

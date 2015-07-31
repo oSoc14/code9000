@@ -11,7 +11,8 @@
     "thujohn/pdf": "dev-master",
     "msurguy/honeypot": "dev-master",
     "guzzlehttp/guzzle": "~4.0",
-    "ircmaxell/password-compat": "1.0.4"
+    "ircmaxell/password-compat": "1.0.4",
+    "doctrine/dbal": "*"
   },
   "autoload": {
     "classmap": [

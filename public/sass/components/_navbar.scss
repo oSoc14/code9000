@@ -1,0 +1,22 @@
+
+.navbar{
+  margin: 0;
+  padding: 0 15px;
+  line-height: 25px;
+  background: rgb(0, 189, 212);
+  color: #fff;
+  &>li{
+    display: inline-block;
+    &>a{
+      transition: opacity .3s;
+      display: block;
+      padding: 15px;
+      color: #fff;
+      opacity: .8;
+      text-decoration: none;
+      &:hover{
+        opacity: 1;
+      }
+    }
+  }
+}

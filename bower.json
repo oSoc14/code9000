@@ -1,0 +1,24 @@
+{
+  "name": "educal",
+  "version": "0.0.0",
+  "homepage": "https://github.com/oSoc15/educal",
+  "authors": [
+    "oSoc15"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fullcalendar": "~2.3.2",
+    "jquery": "~2.1.4",
+    "bootstrap-sass": "~3.3.5",
+    "datetimepicker": "~2.4.5",
+    "angular": "~1.4.2",
+    "angular-resource": "~1.4.2"
+  }
+}

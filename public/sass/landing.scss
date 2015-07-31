@@ -1,119 +1,383 @@
-@import "compass";
+/**
+ * Colours
+ */
 
-// General elements
-// ----------------------
+$blue: #8fafc6;
+$blue-darken: #6e8899;
+$blue-light: mix(#fff,$blue,7%);
 
-// Colors
-$pink: #f50064;
-$darkpink: #ab0046;
-$lightpink: #f95a93;
-$darkblue: #108a98;
-$blue: #00cde1;
-$lightblue: #46ddea;
-$lighterblue: #9bd2db;
-$hoverblue: #b3e9f0;
-$yellow: #e9e34b;
-$lightyellow: #edf48f;
-$darkyellow: #c9c315;
-$darkgrey: #333;
-$grey: #556066;
-$lightgrey: #f5f5f5;
+$cta-color: #e2a6a5;
+$text-color: mix(#000,$blue);
 
-*{
+$bg-input: #f7f7f7;
+
+$button-switch-text: #475966;
+$button-switch-active: #adc8da;
+$button-switch-active-line: $blue;
+$button-switch-text-inactive: $button-switch-active;
+$button-switch-inactive: #dae6ee;
+
+$input-valid: #007b8a;
+$input-invalid: #c83233;
+
+/**
+ * Imports
+ */
+
+@import "normalize";
+@import "bootstrap_landing";
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,400,700);
+@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
+
+/**
+ * Styles
+ */
+
+// Clearfix.
+// @extend %cf;
+%cf {
+  *zoom : 1;
+
+  &:before,
+  &:after {
+    display: table;
+    content : "";
+  }
+
+  &:after {
+    clear : both;
+  }
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-body{
-  background: #fff;
-  font-family: 'Open Sans', 'Helvetica', 'Arial';
-  color: $grey;
-}
-a{
-  color: $pink;
-  &:hover{
-    color: $lightpink;
-  }
-}
-img{
-  max-width: 100%;
+
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-h2{
-  font-weight: 700;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-weight: 400;
+  font-size: 17px;
+  font-family: Roboto, sans-serif;
+  color: $text-color;
 }
 
-// Buttons
-@mixin btn-educal($bgcolor, $color, $bghover, $bordercolor){
-  background: $bgcolor;
-  border: none;
-  border-bottom: 3px solid $bordercolor;
-  color: $color;
-  @include text-shadow(none);
-  &:hover{
-    background: $bghover;
-    color: $color;
-    border-bottom: 3px solid $bordercolor;
-    outline: none;
-  }
-  &:focus{
-    background: $bgcolor;
-    color: $color;
-    border-bottom: 3px solid $bordercolor;
-    outline: none;
-  }
-  &:active{
-    border: none;
-    position: relative;
-    top: 3px;
-    margin-bottom: 3px !important;
-  }
-}
+@import "staticnav";
 
-.btn-educal-danger{
-  @include btn-educal($pink, #fff, $lightpink, $darkpink);
-}
-.btn-educal-warning {
-  @include btn-educal($yellow, $darkgrey, $lightyellow, $darkyellow);
-}
-.btn-educal-primary{
-  @include btn-educal($blue, #fff, $lightblue, $darkblue);
-}
+.page {
+  min-height: 100%;
+  padding: 20px 0;
+  background-color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
 
-// Introduction
-// ----------------------
-.introduction-container {
-  background: url('images/introduction_bg.jpg') center center no-repeat #39acb0;
-  background-size: cover;
-  color: #fff;
-  height: 450px;
-}
-
-.introduction-content {
-  text-align: center;
-  display: table-cell;
-  padding: 70px 0 0 0;
-
-  h1{
-    margin-bottom: 20px;
+  .container {
+    margin: auto;
   }
-  .lead{
-    margin: 30px auto 0;
-    max-width: 600px;
+
+  &:nth-of-type(odd) {
+    background: #f3f3f3;
   }
-  .button-container{
-    margin: 32px 0;
-    .btn{
-      margin: 0 10px;
+
+  &:first-of-type {
+    background-color: $blue;
+  }
+
+  h2 {
+    margin: 0 0 30px;
+    font-weight: 100;
+    font-size: 40px;
+    line-height: 1;
+
+    @media (min-width: 40em) {
+      margin: 0 0 50px;
+      font-size: 60px;
     }
   }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: mix(#fff,$button-switch-text,21%);
+
+    li {
+      margin-bottom: 20px;
+      line-height: 24px;
+    }
+  }
+
+  ol {
+    counter-reset: li; /* Initiate a counter */
+    margin-left: 0; /* Remove the default left margin */
+    padding-left: 0; /* Remove the default left padding */
+
+    & > li {
+      position: relative; /* Create a positioning context */
+      margin: 0 0 30px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding: 4px 8px; /* Add some spacing around the content */
+      list-style: none; /* Disable the normal item numbering */
+    }
+    & > li:before {
+      content: counter(li); /* Use the counter as content */
+      counter-increment: li; /* Increment the counter by 1 */
+      /* Position and style the number */
+      position: absolute;
+      top: -.35em;
+      left: -.75em;
+      /* Some space between the number and the content in browsers that support
+         generated content but not positioning it (Camino 2 is one example) */
+      margin-right: 8px;
+
+      color: $blue;
+      font-size: 2.5em;
+      font-weight: 700;
+
+      text-align: center;
+    }
+  }
+
 }
 
-// Content
-// ----------------------
-.content-container{
-  margin-top: 20px;
-  margin-bottom: 50px;
+.splash {
+  // margin-top: -$nav-height;
+  // padding-top: calc(60px + 8%); // @TODO: fix hardcoded navbar height
+  h1, h2 {
+    color: #fff;
+    font-weight: 100;
+  }
+
+  h1 {
+    font-size: 72px;
+    line-height: 72px;
+  }
+
+  h2 {
+    margin: 15px 0;
+    padding-top: 10px;
+    font-size: 42px;
+    line-height: 50px;
+  }
+
+  .splash-img {
+    max-width: 100%;
+  }
+
+  .splash-search {
+    @extend %cf;
+    input {
+      padding: 5px;
+      height: 35px;
+      border: none;
+      border-radius: 0;
+      display: block;
+      float: left;
+    }
+    input[type=text] {
+      margin: 0;
+      width: 85%;
+      background-color: $bg-input;
+    }
+    input[type=submit] {
+      margin: 0;
+      width: 15%;
+      background-color: $blue-darken;
+      color: $bg-input;
+      text-decoration: inherit;
+      font-weight: normal;
+      font-style: normal;
+      font-family: FontAwesome;
+      transition: all .15s ease-in-out;
+
+      &:hover,
+      &:focus {
+        background-color: mix(#fff,$blue-darken,10%);
+      }
+    }
+  }
+
+  .arrow-readon {
+    position: absolute;
+    bottom: 57px;
+    left: 50%;
+    display: block;
+    margin-left: -25px;
+    width: 50px;
+    height: 30px;
+    color: #fff;
+    text-align: center;
+    transition: all .15s ease-in-out;
+
+    &:hover {
+      -webkit-transform: translateY(7px);
+      -moz-transform: translateY(7px);
+      transform: translateY(7px);
+    }
+  }
+
 }
 
-#registerUserModal .alert{
+.col-why {
+  text-align: center;
+  img {
+    max-width: 156px;
+  }
+}
+
+/**
+ * Buttons
+ */
+
+.btn {
+  display: inline-block;
+  margin: 0 0 30px 0;
+  padding: 2px 20px 0;
+  height: 50px;
+  font-size: 19px;
+  line-height: 43px;
+  border-radius: 0;
+  border: none;
+  transition: all .15s ease-in-out;
+}
+
+  .btn-primary {
+    color: #fff;
+    background-color: $cta-color;
+
+    &:hover,
+    &:focus {
+      background-color: mix(#fff,$cta-color,10%);
+    }
+  }
+
+  .btn-default {
+    background-color: #fff;
+    color: $blue-darken;
+
+    &:hover,
+    &:focus {
+      background-color: #fff;
+      color: #000;
+    }
+  }
+
+  .btn-subtle {
+    color: #fff;
+    background: transparent;
+    border: 2px solid #fff;
+    padding-top: 0;
+
+    &:hover,
+    &:focus {
+      background-color: #fff;
+    }
+  }
+
+// .btn-switch,
+// .btn-switch:link {
+
+//   background-color: $button-switch-inactive;
+//   color: $button-switch-text-inactive;
+//   text-align: center;
+//   width: 50%;
+//   margin-left: 0;
+//   margin-right: 0;
+//   display: inline-block;
+//   float: left;
+
+//   &:hover {
+//     color: $button-switch-text;
+//     text-decoration: none;
+//   }
+
+//   &.btn-switch-active,
+//   .btn-switch-active:link {
+//     border-bottom: 8px solid $button-switch-active-line;
+//     background-color: $button-switch-active;
+//     color: $button-switch-text;
+//   }
+
+//   @media screen and (max-width: 540px) {
+//     font-size: 12px;
+//   }
+// }
+
+.alert {
+  margin-left: 29%;
+  background: none;
+  border: 0;
+  color: $input-invalid;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.help-text {
+  display: block;
+  text-align: center;
+  color: #777;
+  font-size: .85em;
+}
+
+.btn.has-help-text {
   margin-bottom: 10px;
+}
+
+.clear {
+  clear: both;
+}
+
+.video-16-9 {
+  width: 100%;
+  height: 0;
+  padding-bottom: 57.5%;
+  position: relative;
+  overflow: hidden;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.supporters {
+  padding-top: 10px;
+  margin-top: 30px;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  opacity: .5;
+  font-size: .8em;
+  img {
+    display: inline-block;
+    max-width: 100px;
+    margin: 0 10px;
+  }
 }

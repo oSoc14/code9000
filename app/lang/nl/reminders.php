@@ -20,5 +20,6 @@ return array(
     "token"    => "Dit wachtwoord reset token is niet geldig.",
 
     "sent"     => "Wachtwoord herinnering verzonden!",
+    "resetmail" => "Klik op de volgende link om uw wachtwoord opnieuw in te stellen",
 
 );

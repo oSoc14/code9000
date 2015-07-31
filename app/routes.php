@@ -11,71 +11,58 @@
 |
 */
 
-if(Session::has('lang')){
+if (Session::has('lang')) {
     //Set the language
     App::setLocale(Session::get('lang'));
 }
 
 Route::get('/', [
-    'as'   => 'landing',
+    'as' => 'landing',
     'uses' => 'HomeController@showWelcome'
 ]);
 
-// About page
-Route::get('about', ['as' => 'about', function() {
-    return View::make('about');
-}]);
+// Create a new school
+Route::get('/register', [
+    'as' => 'school.register',
+    'uses' => 'SchoolController@showRegisterForm'
+]);
 
-// Info page
-Route::get('help', ['as' => 'help', function() {
-  return View::make('help');
-}]);
+// Create a new school
+Route::post('/register', [
+    'as' => 'school.store',
+    'uses' => 'SchoolController@store'
+]);
 
-Route::group(['prefix' => 'school'], function () {
-    // Create a new school
-    Route::post('/register', [
-        'as' => 'school.store',
-        'uses' => 'SchoolController@store'
+Route::get('/login', [
+    'as' => 'user.login',
+    function () {
+        return View::make('user.login');
+    }
+]);
+
+Route::group(['prefix' => 'profile'], function () {
+    /*
+      // Show list of users for a school
+      Route::get('/', [
+          'as' => 'user.index',
+          'uses' => 'UserController@index'
+      ]);
+  */
+
+    // Log user out TODO: post?
+    Route::get('/logout', [
+        'as' => 'user.logout',
+        'before' => 'guest',
+        'uses' => 'UserController@logout'
     ]);
 
-    // List all schools
-    Route::get('/', [
-        'as'   => 'school.index',
-        'uses' => 'SchoolController@index'
-    ]);
 
-    // Show details of a certain school
-    Route::get('/{id}', [
-        'as'   => 'school.detail',
-        'uses' => 'SchoolController@show'
+    // Show the view to edit a user
+    Route::get('/{id?}', [
+        'as' => 'user.edit',
+        'before' => 'auth',
+        'uses' => 'UserController@editUser'
     ])->where('id', '[0-9]+');
-
-    // Show the view to edit a school
-    Route::get('/edit/{id}', [
-        'as'   => 'school.edit',
-        'uses' => 'SchoolController@edit'
-    ])->where('id', '[0-9]+');
-
-    // Update a school
-    Route::post('/edit/{id}', [
-        'as'   => 'school.update',
-        'uses' => 'SchoolController@update'
-    ])->where('id', '[0-9]+');
-
-    // Delete a school
-    Route::get('/delete/{id}', [
-        'as'   => 'school.delete',
-        'uses' => 'SchoolController@destroy'
-    ])->where('id', '[0-9]+');
-});
-
-
-Route::group(['prefix' => 'user'], function () {
-    // Show list of users
-    Route::get('/', [
-        'as' => 'user.index',
-        'uses' => 'UserController@index'
-    ]);
 
     // Authenticate user
     Route::post('/auth', [
@@ -83,77 +70,28 @@ Route::group(['prefix' => 'user'], function () {
         'uses' => 'UserController@auth'
     ]);
 
-    // Register as a new user
-    Route::post('/register', [
-        'as' => 'user.register',
-        'uses' => 'UserController@store'
-    ]);
-
-    // Create a new user (backoffice side)
-    Route::post('/create', [
-        'as' => 'user.create',
-        'uses' => 'UserController@create'
-    ]);
-
-    // Log user out
-    Route::get('/logout', [
-        'as'   => 'user.logout',
-        'uses' => 'UserController@logout'
-    ]);
-
-    // Add user to group
-    Route::post('/group/add/{group_id}', [
-        'as'   => 'user.addToGroup',
-        'uses' => 'UserController@addToGroup'
-    ])->where('id', '[0-9]+');
-
-    // Active a user
-    Route::get('/activate/{id}', [
-        'as'   => 'user.activate',
-        'uses' => 'UserController@activateUser'
-    ])->where('id', '[0-9]+');
-
-    // Show the view to edit a user
-    Route::get('/edit/{id?}', [
-        'as'   => 'user.edit',
-        'uses' => 'UserController@editUser'
-    ])->where('id', '[0-9]+');
-
     // Update a user
-    Route::post('/update/{id}', [
-        'as'   => 'user.update',
+    Route::post('/{id}', [
+        'as' => 'user.update',
+        'before' => 'auth',
         'uses' => 'UserController@updateUser'
     ])->where('id', '[0-9]+');
 
-    // Remover a user from group
-    Route::get('/removeFromGroup/{id}/{groupId}', [
-        'as'   => 'user.removeFromGroup',
-        'uses' => 'UserController@removeFromGroup'
-    ])->where('id', '[0-9]+')
-        ->where('groupId', '[0-9]+');
-
-    // Destroy a user
-    Route::get('/delete/{id}', [
-        'as'   => 'user.removeUserFromSchool',
-        'uses' => 'UserController@removeUserFromSchool'
-    ])->where('id', '[0-9]+');
-
-    // GET: Reset the user's password
-    Route::get('/reset/{hash}', [
-        'as' => 'user.resetPassword',
-        'uses' => 'UserController@resetPassword',
-    ])->where([
-        'hash' => '[a-zA-Z0-9]+'
-    ]);
-
     // POST: send an email with the reset link
-    Route::any('/sendReset', [
+    Route::post('/sendReset', [
         'as' => 'user.sendResetLink',
         'uses' => 'UserController@sendResetLink'
     ]);
 
-    // POST: Reset the user's password
-    // GET: Reset the user's password
+    Route::get('/reset/', [
+        'as' => 'user.requestResetMail',
+        function () {
+            return View::make('user.passwordforgotten');
+        }
+    ]);
+
+    // POST: Reset the user's password: handle form
+    // GET: Reset the user's password with hash received by mail
     Route::any('/reset/{hash}', [
         'as' => 'user.resetPassword',
         'uses' => 'UserController@resetPassword',
@@ -163,124 +101,336 @@ Route::group(['prefix' => 'user'], function () {
 
 });
 
-
-/***
- * Manages all the calendar/event routes
+/**
+ * Api v1
+ * Used to show the calendar with AJAX
  */
-Route::group(['prefix' => 'calendar'], function ()
-{
-    // Home
-    Route::get('/', [
-        'as'   => 'calendar.index',
-        'uses' => 'CalendarController@index'
+Route::group(['prefix' => 'api/1'], function () {
+
+    /**
+     *  ! important
+     *  Don't filter API calls for auth, admin, ...
+     *  API methods have their own error responses and should not return empty 401 errors
+     */
+
+    /**
+     * Get all organisations
+     */
+    Route::get('/orgs', [
+        'as' => 'api.org.list',
+        'uses' => 'ApiController@orgs'
     ]);
 
-    // Shows creation form for events
-    Route::get('/event/create', [
-        'as'   => 'event.create',
-        'uses' => 'CalendarController@create'
+    /**
+     * Get all events for an organisation
+     */
+    Route::get('/orgs/{id}/events', [
+        'as' => 'api.org.events',
+        'uses' => 'ApiController@orgEvents'
     ]);
 
-    // Stores events
-    Route::post('/event/create', [
-        'as'   => 'event.store',
-        'uses' => 'CalendarController@store'
+    /**
+     * Get all users for an organisation
+     */
+    Route::get('/orgs/{id}/users', [
+        'as' => 'api.org.users',
+        'uses' => 'ApiController@orgUsers'
     ]);
 
-    // Shows creation form for events
-    Route::get('/event/edit/{id}', [
-        'as'   => 'event.edit',
-        'uses' => 'CalendarController@edit'
+    /**
+     * Get all calendars for an organisation
+     */
+    Route::get('/orgs/{id}/calendars', [
+        'as' => 'api.org.calendars',
+        'uses' => 'ApiController@orgCalendars'
+    ]);
+
+
+    /**
+     * Get all users in the organisation of the currently logged in user
+     */
+    Route::get('/users/', [
+        'as' => 'api.currentorg.users',
+        'uses' => 'ApiController@orgUsers'
+    ]);
+
+    /**
+     * Handle an event creation/update
+     */
+    Route::post('/events/', [
+        'as' => 'api.event.handle',
+        'uses' => 'ApiController@handleAppointment'
+    ]);
+
+    /**
+     * Delete an event
+     */
+    Route::delete('/events/', [
+        'as' => 'api.event.delete',
+        'uses' => 'ApiController@destroyAppointment'
+    ]);
+
+    /**
+     * Get all calendars for the currently logged in user's organisation
+     */
+    Route::get('/calendars/', [
+        'as' => 'api.currentorg.calendars',
+        'uses' => 'ApiController@orgCalendars'
+    ]);
+
+    /**
+     * Get a calendar, including all events
+     * id: calendar id
+     */
+    Route::get('/calendars/{id}', [
+        'as' => 'api.calendar.get',
+        'uses' => 'ApiController@calendarWithEvents'
+    ]);
+
+    /**
+     * Get an array of all events in a calendar
+     * id: calendar id
+     */
+    Route::get('/calendars/{id}/events', [
+        'as' => 'api.calendar.events',
+        'uses' => 'ApiController@calendarEvents'
+    ]);
+
+    /**
+     * Handle a calendar create/update
+     */
+    Route::post('/calendars/', [
+        'as' => 'api.calendar.handle',
+        'uses' => 'ApiController@handleCalendar'
+    ]);
+
+    /**
+     * Delete a calendar
+     */
+    Route::delete('/calendars/', [
+        'as' => 'api.calendar.delete',
+        'uses' => 'ApiController@destroyCalendar'
+    ]);
+
+    /**
+     * Check if user is logged in
+     */
+    Route::get('/users/logged', [
+        'as' => 'api.users.status',
+        'uses' => 'UserApiController@checkLoginState'
+    ]);
+    /**
+     * Create a new user (done from the backoffice side)
+     */
+    Route::get('/users/{id}', [
+        'as' => 'api.users.getUser',
+        'uses' => 'UserApiController@getUser'
     ])->where('id', '[0-9]+');
 
-    // Stores events
-    Route::post('/event/edit/{id}', [
-        'as'   => 'event.update',
-        'uses' => 'CalendarController@update'
+    /**
+     * Get the calendar id's for a specific user
+     */
+    Route::get('/users/{id}/calendars', [
+        'as' => 'api.users.getUserCalendarIds',
+        'uses' => 'UserApiController@getUserCalendarIds'
     ])->where('id', '[0-9]+');
 
-    // Deletes the event with the given ID
-    Route::get('/event/delete/{id}', [
-        'as'   => 'event.delete',
-        'uses' => 'CalendarController@destroy'
+    /**
+     * Resend an email to reset the password
+     */
+    Route::post('/users/{id}/mail', [
+        'as' => 'api.users.mail',
+        'uses' => 'UserApiController@sendPasswordLink'
     ])->where('id', '[0-9]+');
 
-    // Returns all events for the users school
-    Route::get('/api/events', [
-        'as'   => 'calendar.events',
-        'uses' => 'CalendarController@events'
+    /**
+     * Create a new user (done from the backoffice side)
+     */
+    Route::post('/users/', [
+        'as' => 'api.users.create',
+        'uses' => 'UserApiController@createUser'
+    ])->where('id', '[0-9]+');
+
+    /**
+     * Update an existing user
+     * id: the user id
+     */
+    Route::post('/users/{id}', [
+        'as' => 'api.users.update',
+        'uses' => 'UserApiController@updateUser'
+    ])->where('id', '[0-9]+');
+
+    /**
+     * Delete an existing user
+     * id: the user id
+     */
+    Route::delete('/users/{id}', [
+        'as' => 'api.users.delete',
+        'uses' => 'UserApiController@deleteUser'
+    ])->where('id', '[0-9]+');
+
+    /**
+     * Promote a user from editor to admin
+     * id: the id of the user to promote
+     */
+    Route::post('/users/{id}/roles', [
+        'as' => 'api.users.promote',
+        'uses' => 'UserApiController@addAdminRole'
+    ])->where('id', '[0-9]+');
+
+    /**
+     * Demote a user from admin to editor
+     * id: the id of the user to demote
+     */
+    Route::delete('/users/{id}/roles', [
+        'as' => 'api.users.demote',
+        'uses' => 'UserApiController@removeAdminRole'
+    ])->where('id', '[0-9]+');
+
+
+    /**
+     * Link a user to a calendar
+     * Post parameters:
+     * id: user id
+     * calendar_id: calendar id
+     */
+    Route::post('/users/link', [
+        'as' => 'api.users.link',
+        'uses' => 'UserApiController@addUserToCalendar'
+    ]);
+
+    /**
+     * Unlink a user from a calendar
+     * Post parameters:
+     * id: user id
+     * calendar_id: calendar id
+     */
+    Route::post('/users/unlink', [
+        'as' => 'api.users.unlink',
+        'uses' => 'UserApiController@removeUserFromCalendar'
     ]);
 });
 
-/***
- * Manages all the group routes
- */
-Route::group(['prefix' => 'group'], function()
-{
-    // Index, lists all groups
-    Route::get('/', [
-        'as'   => 'group.index',
-        'uses' => 'GroupController@index'
-    ]);
-
-    // Edit a group
-    Route::get('/{id}', [
-        'as'   => 'group.edit',
-        'uses' => 'GroupController@edit'
-    ])->where('id', '[0-9]+');
-
-    // Create a new group
-    Route::get('/create', [
-        'as'   => 'group.create',
-        'uses' => 'GroupController@create'
-    ]);
-
-    // Store a new group
-    Route::post('/create', [
-        'as'   => 'group.store',
-        'uses' => 'GroupController@store'
-    ]);
-
-    // Update a group
-    Route::post('/edit/{id}', [
-        'as'   => 'group.update',
-        'uses' => 'GroupController@update'
-    ])->where('id', '[0-9]+');
-
-    // Destroy a group
-    Route::get('/delete/{id}', [
-        'as'   => 'group.delete',
-        'uses' => 'GroupController@destroy'
-    ])->where('id', '[0-9]+');
-});
 
 /**
- * iCal routes and pdf-routes
- * returns iCal, .ics file or .pdf file
+ * Redirect a user to it's school calendar
  */
-Route::group(['prefix' => 'export'], function()
-{
-    // iCal Export route for a certain class
-    Route::get('/{school}/{class}', [
-        'as'   => 'export.group',
-        'uses' => 'IcalCalendarController@index'
-    ])->where(['school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
+Route::get('/calendar', [
+    'as' => 'calendar.redirect',
+    'uses' => 'CalendarViewController@goToCalendar'
+]);
 
-    // iCal Export route for a single appointment
-    Route::get('/appointment/find/{id}', [
-        'as'   => 'export.single',
-        'uses' => 'IcalCalendarController@show'
-    ])->where('id', '[0-9]+');
+/**
+ * Get a page with frequently asked questions
+ */
+Route::get('/faq', [
+    'as' => 'static.faq',
+    function () {
+        return View::make('faq');
+    }
+]);
 
-    // PDF Export route for a certain class
-    Route::get('/pdf/{school}/{class}', [
-        'as'   => 'export.group',
-        'uses' => 'PdfCalendarController@index'
-    ])->where(['school' => '[0-9a-z_\-]+', 'class' => '[0-9a-z_\-]+']);
+/**
+ * Superadmin interface
+ */
+Route::group(['prefix' => 'admin'], function () {
+    // Index, lists all groups
+    Route::get('/', [
+        'as' => 'superadmin.index',
+        function () {
+            // TODO: implement superadmin
+        }
+    ]);
 
-    // PDF Export route for a single appointment
-    Route::get('/appointment/pdf/{id}', [
-        'as'   => 'export.singlepdf',
-        'uses' => 'PdfCalendarController@show'
-    ])->where('id', '[0-9]+');
 });
+
+Route::pattern('org_slug', '[A-Za-z0-9\-]+');
+/**
+ * All organisation pages (view, edit, ...)
+ */
+Route::group(/**
+ *
+ */
+    ['prefix' => '{org_slug}'], function () {
+    /**
+     * Show the calendar for the organisation with given slug
+     */
+    Route::get('/', [
+        'as' => 'orgs.index',
+        'uses' => 'CalendarViewController@index',
+    ]);
+    /**
+     * Show the dashboard for the organisation with given slug
+     */
+    Route::get('/dashboard', [
+        'as' => 'admin.dashboard',
+        'before' => 'admin',
+        'uses' => 'SchoolController@dashboard',
+    ]);
+
+    /**
+     * Show the dashboard / manage users page
+     */
+    Route::get('/users', [
+        'as' => 'admin.users',
+        'before' => 'admin',
+        function ($slug) {
+            return View::make('admin.users')->with('org', SchoolController::getSchoolBySlug($slug));
+        }
+    ]);
+
+
+    /**
+     * Show the dashboard / manage calendars page
+     */
+    Route::get('/calendars', [
+        'as' => 'admin.calendars',
+        'before' => 'admin',
+        function ($slug) {
+            return View::make('admin.calendars')->with('org', SchoolController::getSchoolBySlug($slug));
+        }
+    ]);
+
+
+    /**
+     * Export an .ics file.
+     * @param calendar_slug string the calendar slugs, separated by + signs
+     */
+    Route::get('/{calendar_slug}.ics', [
+        'as' => 'export.ics',
+        'uses' => 'IcalCalendarController@index'
+    ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
+    /**
+     * Show the export page
+     * @param calendar_slug string the calendar slugs, separated by + signs
+     */
+    Route::get('/{calendar_slug}', [
+        'as' => 'export.index',
+        function ($org, $calendar_slug) {
+            return View::make('calendar.export')->with([
+                'org_slug' => $org,
+                'calendars' => $calendar_slug,
+                'org' => School::getBySlug($org)
+            ]);
+        }
+    ])->where('calendar_slug', '[0-9A-Za-z_\-+ ]+');
+
+    /**
+     * Update a school
+     */
+    Route::post('/edit', [
+        'as' => 'school.update',
+        'uses' => 'SchoolController@update',
+        'before' => 'admin'
+    ])->where('id', '[0-9]+');
+
+    /**
+     * Delete a school
+     */
+    Route::delete('/', [
+        'as' => 'school.delete',
+        'uses' => 'SchoolController@destroy',
+        'before' => 'admin'
+    ]);
+});
+

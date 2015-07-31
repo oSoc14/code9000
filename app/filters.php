@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest())
+    if (!Sentry::check())
 	{
 		if (Request::ajax())
 		{
@@ -43,16 +43,66 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+            return Redirect::route('landing');
 		}
 	}
 });
 
+Route::filter('superadmin', function () {
+    if (!Sentry::check()) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('landing');
+        }
+    }
 
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
+    if (!Sentry::getUser()->hasAccess('superadmin')) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('calendar.redirect');
+        }
+    }
 });
+
+Route::filter('admin', function () {
+    if (!Sentry::check()) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('landing');
+        }
+    }
+
+    if (!Sentry::getUser()->hasAccess('admin')) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('calendar.redirect');
+        }
+    }
+});
+
+
+Route::filter('editor', function () {
+    if (!Sentry::check()) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('landing');
+        }
+    }
+
+    if (!Sentry::getUser()->hasAccess('editor')) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::route('calendar.redirect');
+        }
+    }
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +138,12 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+ * -------------------------------------------------------------------------
+ * Admin Filter
+ * -------------------------------------------------------------------------
+ * Check whether the user is an admin (read SuperAdmin, with all permissions)
+ * If user is not an admin, redirect them back to calendar, as user, or to
+ * the landing, as guest.
+ */

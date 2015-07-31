@@ -9,3 +9,9 @@ Thumbs.db
 .idea
 /app/config/local
 .sass-cache
+node_modules
+Vagrantfile
+bower_components
+public/css
+public/js/build/production.js
+public/js/build/production.min.js

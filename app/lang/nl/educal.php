@@ -11,7 +11,7 @@ return array(
     |
     */
 
-    'lead' => 'EduCal is een applicatie voor scholen om eenvoudig kalenders aan te maken en te delen met de ouders.',
+    'lead' => 'Educal is een applicatie voor scholen om eenvoudig kalenders aan te maken en te delen met de ouders.',
     'login' => 'Log in',
     'loginaccount' => 'Log in op je account',
     'register' => 'Registreer',
@@ -23,13 +23,15 @@ return array(
     'startdate' => 'startdatum',
     'enddate' => 'einddatum',
     'date' => 'datum',
+    'loggedinas' => 'Aangemeld als: ',
 
     'delete' => 'verwijderen',
     'cancel' => 'annuleren',
     'confirmation' => 'bevestig',
+    'confirm' => 'bevestig',
     'confirmationmsg' => 'Bent u zeker dat u dit item wilt verwijderen?',
 
-    'email' => 'Email adres',
+    'email' => 'E-mailadres',
     'password' => 'Wachtwoord',
     'newpassword' => 'nieuw wachtwoord',
     'repeatpassword' => 'herhaal wachtwoord',
@@ -91,6 +93,8 @@ return array(
     'name' => 'naam',
     'firstname' => 'voornaam',
     'surname' => 'familienaam',
+    'schoolinfo' => 'School Informatie',
+    'personalinfo' => 'Persoonlijke Informatie',
 
 
     'editgroup' => 'groep aanpassen',

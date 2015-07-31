@@ -1,0 +1,73 @@
+.btn {
+  display: block;
+  padding: 14px 15px 11px;
+  line-height: 25px;
+  height: 50px;
+  width: 100%;
+  margin: 0;
+  vertical-align: middle;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  text-transform: uppercase;
+  font-weight: 500;
+  &--inline {
+    display: inline-block;
+    width: auto;
+  }
+}
+.btn-primary {
+  color: #fff;
+  background: $brand;
+}
+.btn-success {
+  color: #090;
+  text-align: right;
+}
+.btn-cancel {
+  color: #888;
+}
+.btn-danger {
+  color: #900;
+}
+.btn--default {
+  background: #555;
+  color: #eee;
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+}
+.btn--sm {
+  height: 30px;
+  padding: 4px 15px 1px;
+  font-size: 12px;
+  line-height: 25px;
+}
+.btn-inverse {
+  &.btn-primary {
+    border: 1px solid $brand;
+    background-color: #fff;
+    color: $brand;
+    &:hover {
+      background-color: $brand;
+    }
+  }
+  &.btn-success {
+    border: 1px solid #67af6a;
+    background-color: #fff;
+    color: #67af6a;
+    &:hover {
+      background-color: #67af6a;
+    }
+  }
+  &:hover {
+    color: #fff;
+  }
+}
+.label--error{
+  background: #fbb;
+  span{
+    color:#c00;
+  }
+}

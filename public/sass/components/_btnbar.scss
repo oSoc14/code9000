@@ -1,0 +1,15 @@
+.btnbar.btnbar {
+  @include flexbox;
+  margin: 0;
+  padding: 0;
+  button {
+    transition: border .3s;
+    height: auto;
+    line-height: 25px;
+    padding: 15px 15px 10px;
+    border-bottom: 5px solid transparent;
+    &:hover {
+      border-bottom: 5px solid;
+    }
+  }
+}

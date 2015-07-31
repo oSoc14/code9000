@@ -65,8 +65,8 @@ $(document).ready(function () {
     // If checkbox is already checked, show repeat-container on page load
     if ($('#repeat').prop('checked')) {
       $('.form-repeat-container').show();
-    }
-    ;
+    };
+
     $('input#repeat').click(function () {
       $('.form-repeat-container').slideToggle();
     });
