@@ -512,7 +512,7 @@ class ApiController extends \BaseController
 
         $user->calendars()->attach($calendar);
 
-        return ApiController::createApiOk('Changes saved');
+        return Response::Json($calendar, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
     }
 
@@ -561,13 +561,17 @@ class ApiController extends \BaseController
         if (Input::has('description')) {
             $calendar->description = e(Input::get('description'));
         }
-        if (Input::has('parent_id')) $calendar->parent_id = e(Input::get('parent_id'));
+        if (Input::has('parent_id')) {
+            $calendar->parent_id = e(Input::get('parent_id'));
+        }
 
-        if (Input::has('name')) $calendar->name = $calName;
-            // Save/update the calendar
-            $calendar->save();
+        if (Input::has('name')) {
+            $calendar->name = $calName;
+        }
+        // Save/update the calendar
+        $calendar->save();
 
-            return ApiController::createApiOk('Changes saved');
+        return Response::Json($calendar, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
 
     }
 
