@@ -44,7 +44,7 @@ var calnav = (function() {
     e.stopPropagation();
     var $target = $(e.target);
     if ($target.hasClass('level--1')) {
-      console.log('toggle')
+      $target.toggleClass('active');
       nav.find('.level--0[data-parent="' + $target.data('cal') + '"]').toggle();
     }
   };
