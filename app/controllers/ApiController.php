@@ -482,11 +482,11 @@ class ApiController extends \BaseController
         $validator = Validator::make(
             [
                 'name' => e(Input::get('name')),
-                'school' => Input::get('school'),
+                'school_id' => Input::get('school_id'),
             ],
             [
                 'name' => 'required',
-                'school' => 'integer'
+                'school_id' => 'required|integer'
             ]
         );
 
