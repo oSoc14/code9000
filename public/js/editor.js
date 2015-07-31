@@ -129,10 +129,10 @@ var editor = (function() {
 
     // Validate input?
     if (!formdata.title.length) {
-      $('.popover .input-title').on('keyup', function(){
-        $(this).parent().removeClass('label--error')
-      })
-      .parent().addClass('label--error').find('span').text('Titel vereist!');
+      $('.popover .input-title').on('keyup', function() {
+          $(this).parent().removeClass('label--error')
+        })
+        .parent().addClass('label--error').find('span').text('Titel vereist!');
       return false;
     }
 
@@ -142,6 +142,9 @@ var editor = (function() {
       update(formdata);
       return;
     }
+
+    // Root calendar is always opened
+    if (!calendars[formdata.calendar_id].parent_id) return;
 
     // Open calendar that event was added to
     var label = $('[data-cal="' + formdata.calendar_id + '"]');
@@ -333,8 +336,8 @@ var editor = (function() {
       $('.read-cal').text('Kalender ' + calendars[ev.calendar_id].name);
 
       // Remove empty fields
-      if(!ev.description)$('.read-descr').remove();
-      if(!ev.location)$('.read-location').remove();
+      if (!ev.description) $('.read-descr').remove();
+      if (!ev.location) $('.read-location').remove();
 
       var a = ev.start.format('MMM');
       var b = ev.start.format('DD');
