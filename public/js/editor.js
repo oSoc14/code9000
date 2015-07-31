@@ -329,6 +329,10 @@ var editor = (function() {
       $('.read-location').text(ev.location);
       $('.read-cal').text('Kalender ' + calendars[ev.calendar_id].name);
 
+      // Remove empty fields
+      if(!ev.description)$('.read-descr').remove();
+      if(!ev.location)$('.read-location').remove();
+
       var a = ev.start.format('MMM');
       var b = ev.start.format('DD');
       var c = ev.end ? ev.end.format('MMM') : ev.start.format('MMM');
