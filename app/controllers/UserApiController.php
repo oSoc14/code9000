@@ -2,7 +2,8 @@
 
 
 /**
- * Class UserController
+ * Class UserApiController
+ * Contains all API methods for users
  */
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UserApiController extends \BaseController
 {
     /**
-     * Check if a login
+     * Check if a user is logged in (get either a 403 or 200 status code)
      * @return \Illuminate\Http\JsonResponse
      */
     public function checkLoginState()
@@ -23,9 +24,9 @@ class UserApiController extends \BaseController
     }
 
     /**
-     * Get a user by ID
+     * Get a user by the user id
      *
-     * @param $id
+     * @param $id id of the user
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function getUser($id)
@@ -518,6 +519,11 @@ class UserApiController extends \BaseController
 
     }
 
+    /**
+     * Get a random string, can be used for random passwords etc
+     * @param int $length lenght of the random string
+     * @return string
+     */
     private static function generateRandomString($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
