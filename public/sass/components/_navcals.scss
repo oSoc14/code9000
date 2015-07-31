@@ -26,7 +26,11 @@
     &.active {
       opacity: 1;
     }
+    &.active svg{
+      @include rotate(180deg);
+    }
     svg {
+      @include transition(transform .3s);
       float: right;
       pointer-events: none;
     }
