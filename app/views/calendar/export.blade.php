@@ -9,8 +9,8 @@
         <p>Afhankelijk van het platform waarop je je kalender wenst te importeren, dien je ofwel de URL op te geven,
             ofwel het kalenderbestand te importeren. Hieronder vind je zowel een download link als URL naar de
             kalender.</p>
-        <label for="url">Link naar de door jou gekozen agenda's:</label>
-        <input name="url" type="text" value="{{ route('export.ics', [$org_slug,$calendars]) }}">
+        <label for="input-url">Link naar de door jou gekozen agenda's:</label>
+        <input id="input-url" name="url" type="text" value="{{ route('export.ics', [$org_slug,$calendars]) }}">
 
         <button class="btn btn-primary" onclick="location.href='{{ route('export.ics', [$org_slug,$calendars]) }}';">
             Klik hier

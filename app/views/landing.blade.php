@@ -62,7 +62,7 @@
 <section class="page splash">
     <div class="container">
         <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-            <h1>Plan.<br />Organiseer.<br />Deel.</h1>
+            <h1>Plan.<br/>Organiseer.<br/>Deel.</h1>
 
             <a href="#werking" class="btn btn-default">Leer meer over Educal</a>
             <a href="{{route('user.login')}}" class="btn btn-subtle">Log in</a>
@@ -91,18 +91,21 @@
             <ul>
                 <li>
                     <strong>Voor scholen</strong><br>
-                    Organiseer en plan evenementen op school-, jaar- en klasniveau met Educal. Deel de kalender met ouders en hun kinderen. Blije ouders, blije kinderen, top organisatie!
+                    Organiseer en plan evenementen op school-, jaar- en klasniveau met Educal. Deel de kalender met
+                    ouders en hun kinderen. Blije ouders, blije kinderen, top organisatie!
                 </li>
                 <li>
                     <strong>Voor ouders</strong><br>
-                    Bekijk alle activiteiten van je kind in een handig overzicht. Exporteer de activiteiten naar je eigen digitale agenda. Geef een zwembroek mee op zwemdag!
+                    Bekijk alle activiteiten van je kind in een handig overzicht. Exporteer de activiteiten naar je
+                    eigen digitale agenda. Geef een zwembroek mee op zwemdag!
                 </li>
             </ul>
             <p><a href="#waarom" title="Waarom Educal">Waarom Educal &rarr;</a></p>
         </div>
         <div class="col-md-7">
             <div class="video-16-9">
-                <iframe src="https://player.vimeo.com/video/134952726?color=8fafc6&title=0&byline=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <iframe src="https://player.vimeo.com/video/134952726?color=8fafc6&title=0&byline=0" frameborder="0"
+                        webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
         </div>
     </div>
