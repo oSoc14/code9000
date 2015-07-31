@@ -56,6 +56,7 @@ var calnav = (function() {
     var id = $label.data('cal');
     var activate = $target.is(":checked");
     var parent = calendars[calendars[id].parent_id];
+    if(!parent) return;
     console.log('change', id)
 
     // Apply to calendar
