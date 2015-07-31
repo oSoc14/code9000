@@ -129,7 +129,10 @@ var editor = (function() {
 
     // Validate input?
     if (!formdata.title.length) {
-      $('.popover .input-title').parent().addClass('label--error').find('span').text('Titel verplicht!');
+      $('.popover .input-title').on('keyup', function() {
+          $(this).parent().removeClass('label--error')
+        })
+        .parent().addClass('label--error').find('span').text('Titel vereist!');
       return false;
     }
 
@@ -139,6 +142,17 @@ var editor = (function() {
       update(formdata);
       return;
     }
+
+    // Apply to backend
+    api.postEvent(formdata).success(function(data) {
+      close();
+      $cal.fullCalendar('refetchEvents');
+    }).error(function(error) {
+      console.log(error)
+    });
+
+    // Root calendar is always opened
+    if (!calendars[formdata.calendar_id].parent_id) return;
 
     // Open calendar that event was added to
     var label = $('[data-cal="' + formdata.calendar_id + '"]');
@@ -152,14 +166,6 @@ var editor = (function() {
       label.click();
       label.toggleClass('active', true);
     }
-
-    // Apply to backend
-    api.postEvent(formdata).success(function(data) {
-      close();
-      $cal.fullCalendar('refetchEvents');
-    }).error(function(error) {
-      console.log(error)
-    });
   };
 
   // Default options
@@ -328,6 +334,10 @@ var editor = (function() {
       $('.read-descr').text(ev.description);
       $('.read-location').text(ev.location);
       $('.read-cal').text('Kalender ' + calendars[ev.calendar_id].name);
+
+      // Remove empty fields
+      if (!ev.description) $('.read-descr').remove();
+      if (!ev.location) $('.read-location').remove();
 
       var a = ev.start.format('MMM');
       var b = ev.start.format('DD');
