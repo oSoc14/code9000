@@ -1,0 +1,37 @@
+.actionbar {
+  @include flexbox;
+  margin: 0;
+  padding: 0;
+  background: #333;
+  &>.btn {
+    display: inline-block;
+    margin: 0;
+    padding: 10px 15px 5px;
+    width: auto;
+    height: 40px;
+    font-size: 12px;
+    line-height: 25px;
+    background: none;
+    color: #fff;
+    &:hover {
+      background: #000;
+    }
+    &:disabled {
+      opacity: .3;
+    }
+  }
+  &>.inp {
+    display: inline-block;
+    margin: 0;
+    padding: 4px 15px 1px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 25px;
+    border: 5px solid #333;
+    color: #000;
+    &:focus {
+      border-color: $brand;
+      outline: none;
+    }
+  }
+}
