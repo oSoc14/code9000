@@ -5,7 +5,7 @@ $td-padding: 0.25em 0.5em !default;
 table {
   width: 100%;
   white-space: nowrap;
-  tr{
+  tr {
     transition: background 2s;
   }
   .saved {
@@ -13,7 +13,7 @@ table {
     background: green;
   }
   .error {
-    transition: background .5s;
+    transition: background 0.5s;
     background: red;
   }
   .dirty {
@@ -64,5 +64,14 @@ td {
     &.ng-invalid {
       background: #faa;
     }
+  }
+}
+.td-btn {
+  cursor: pointer;
+  text-transform: uppercase;
+  background: $brand;
+  color: #fff;
+  &:hover {
+    background: #000;
   }
 }
