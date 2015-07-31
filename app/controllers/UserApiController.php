@@ -134,6 +134,7 @@ class UserApiController extends \BaseController
 
         $created = User::find($created->id);
         $this->sendPasswordLink($created->id);
+
         // Return to previous page after everything is done
         return Response::Json($created, 200, [], JSON_NUMERIC_CHECK)->setCallback(Input::get('callback'));
     }
@@ -504,9 +505,9 @@ class UserApiController extends \BaseController
 
             Mail::send('emails.adminpasswordreset', array('url' => $url, 'user' => $user),
                 function ($message) use ($user) {
-                $message->to($user->email,
-                    $user->firstname . ' ' . $user->lastname)->subject('Educal: stel wachtwoord in');
-            });
+                    $message->to($user->email,
+                        $user->firstname . ' ' . $user->lastname)->subject('Educal: stel wachtwoord in');
+                });
 
             \Log::info("Sent an email to " . $user->email . ", with the admin reset link: " . $url);
 

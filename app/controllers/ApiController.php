@@ -655,7 +655,7 @@ class ApiController extends \BaseController
 
     /**
      * Check if a date matches the m/d/Y format
-     * @param $date the date to check
+     * @param string $date the date to check
      * @return bool wheter or not this date complies with the m/d/Y format
      */
     private static function validateDate($date)

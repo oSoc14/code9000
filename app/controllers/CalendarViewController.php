@@ -44,7 +44,9 @@ class CalendarViewController extends \BaseController
         foreach ($orgCalendars as $calendar) {
             $calendar->load("appointments");
             $calendars[$calendar->id] = $calendar;
-            if(!$calendar->parent_id) $root = $calendar;
+            if (!$calendar->parent_id) {
+                $root = $calendar;
+            }
         }
 
         $userCalendars = [];
