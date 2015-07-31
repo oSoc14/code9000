@@ -129,7 +129,10 @@ var editor = (function() {
 
     // Validate input?
     if (!formdata.title.length) {
-      $('.popover .input-title').parent().addClass('label--error').find('span').text('Titel verplicht!');
+      $('.popover .input-title').on('keyup', function(){
+        $(this).parent().removeClass('label--error')
+      })
+      .parent().addClass('label--error').find('span').text('Titel vereist!');
       return false;
     }
 
