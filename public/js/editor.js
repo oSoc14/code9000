@@ -143,6 +143,14 @@ var editor = (function() {
       return;
     }
 
+    // Apply to backend
+    api.postEvent(formdata).success(function(data) {
+      close();
+      $cal.fullCalendar('refetchEvents');
+    }).error(function(error) {
+      console.log(error)
+    });
+
     // Root calendar is always opened
     if (!calendars[formdata.calendar_id].parent_id) return;
 
@@ -158,14 +166,6 @@ var editor = (function() {
       label.click();
       label.toggleClass('active', true);
     }
-
-    // Apply to backend
-    api.postEvent(formdata).success(function(data) {
-      close();
-      $cal.fullCalendar('refetchEvents');
-    }).error(function(error) {
-      console.log(error)
-    });
   };
 
   // Default options
