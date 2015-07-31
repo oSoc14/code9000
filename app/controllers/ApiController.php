@@ -4,13 +4,13 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * Class ApiController
- * This controller provides all API methods
+ * This controller provides all API methods, except for user methods (those are in userApiController.php)
  */
 class ApiController extends \BaseController
 {
 
     /**
-     * Return a listing of all organisations in the database
+     * Return a listing of all organisations in the database.
      * @return JsonResponse Response with appointments
      */
     public function orgs()
@@ -79,7 +79,7 @@ class ApiController extends \BaseController
     }
 
     /**
-     * Return a listing of the calendars for a given school
+     * Return a listing of the calendars for a given organisation
      * @param int $id the Id of the organisation for which you want to view events.
      * If empty, calendars will be shown for the organisation of the currently logged user.
      * @return JsonResponse Response with calendars
