@@ -27,13 +27,13 @@
         <label for="password">{{ucfirst(trans('educal.newpassword'))}}</label>
 
 
-            <input type="password" class="form-control" id="password" name="password">
+        <input type="password" class="form-control" id="password" name="password">
 
     </div>
     <div class="form-group">
         <label for="password_confirmation">{{ucfirst(trans('educal.repeatpassword'))}}</label>
-            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-        </div>
+        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+    </div>
     </div>
     <button type="submit"
             class="btn btn-info">Opslaan

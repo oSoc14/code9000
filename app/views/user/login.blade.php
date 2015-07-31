@@ -17,7 +17,7 @@
     <div class="form-group">
         <label for="login-password">{{ucfirst(trans('educal.password'))}}</label>
         <input type="password" class="form-control right" id="login-password" name="password"
-                required>
+               required>
         @if(Session::has('errorMessage'))
             <div class="alert alert-danger" role="alert">
                 {{ Session::get('errorMessage') }}
