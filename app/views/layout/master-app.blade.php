@@ -81,7 +81,7 @@
                     </li>
                 @endif
                 <li><a href="{{ route('user.edit') }}"><i class="icon icon--cog"></i>Profiel</a></li>
-                    <li><a href="{{ route('static.faq') }}"><i class="icon icon--cog"></i>FAQ</a></li>
+                    <li><a href="{{ route('static.faq') }}"><i class="icon icon--help"></i>FAQ</a></li>
                 <li>
                     <a href="{{ route('user.logout') }}" {{ Route::currentRouteName()=='school.index' ? ' class="active"' : '' }}>
                         <i class="icon icon--logout"></i>Uitloggen
